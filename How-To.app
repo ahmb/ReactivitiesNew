@@ -52,3 +52,6 @@ dotnet watch run
 #install react
 npx create-react-app client-app --use-npm --typescript
 
+#configure react 
+#install react dev tools
+ 
