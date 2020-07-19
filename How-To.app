@@ -48,3 +48,7 @@ var context = services.GetRequiredService<DataContext>();
 
 #move to the API folder and run dotnet watch run to restore the project from source as changes are made
 dotnet watch run
+
+#install react
+npx create-react-app client-app --use-npm --typescript
+
