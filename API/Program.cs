@@ -23,8 +23,14 @@ namespace API
                 var services = scope.ServiceProvider;
                 try
                 {
+                    //get the required datacontext entities
                     var context = services.GetRequiredService<DataContext>();
+
+                    //apply a EF migration to bring the database upto the current version
                     context.Database.Migrate();
+                    
+                    Seed.SeedData(context);
+                    Console.WriteLine("SEED DATA WRITTEN");
                 }
                 catch (Exception ex)
                 {
