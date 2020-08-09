@@ -24,7 +24,7 @@ namespace Application.Activities
             //handler that returns a list all the activities in the database context
             public async Task<List<Activity>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var activities = await _context.Activities.ToListAsync();
+                var activities = await _context.Activities.ToListAsync(cancellationToken);
                 return activities;
             }
         }
