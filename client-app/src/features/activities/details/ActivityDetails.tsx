@@ -35,7 +35,7 @@ export const ActivityDetails: React.FC<IProps> = ({
             content="Edit"
           />
           <Button
-            OnClick={() => setSelectedActivity(null)}
+            onClick={() => setSelectedActivity(null)}
             basic
             color="grey"
             content="Cancel"
