@@ -55,3 +55,11 @@ npx create-react-app client-app --use-npm --typescript
 #configure react 
 #install react dev tools
  
+
+ After creating an Activity Domain object, and then adding that class into the DataContext class
+ #dotnet ef migrations add "ActivitiesEntityAdded" -p Persistance/ -s API
+dotnet watch run
+
+
+#seeding data into sqllite Database
+
