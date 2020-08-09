@@ -10,11 +10,15 @@ const App = () => {
   const [selectedActivity, setSelectedActivity] = useState<IActivity|null>(
     null
   );
+  
+  const [editMode, setEditMode] = useState(false);
 
   const handleSelectActivity = (id: string) => {
     setSelectedActivity(activities.filter((a) => a.id === id)[0]);
   };
 
+
+  
   //useEffect is the equivalent of componentdidmount/update/delete
   //the second argument of the empty array tells it to only perform this effect once
   useEffect(() => {
@@ -33,6 +37,8 @@ const App = () => {
           activities={activities}
           selectActivity={handleSelectActivity}
           selectedActivity={selectedActivity!}
+          editMode={editMode}
+          setEditMode={setEditMode}
         />
       </Container>
     </Fragment>
