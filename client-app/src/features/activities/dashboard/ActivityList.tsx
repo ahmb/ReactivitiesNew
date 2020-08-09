@@ -10,7 +10,7 @@ interface IProps {
 
 export const ActivityList: React.FC<IProps> = ({activities, selectActivity}) => {
     return (
-        <Segment clearning>
+        <Segment clearing>
             <Item.Group divided>
                     {activities.map(activity =>(
                         <Item key={activity.id}>
