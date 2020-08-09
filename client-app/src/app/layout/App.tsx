@@ -17,8 +17,11 @@ const App = () => {
     setSelectedActivity(activities.filter((a) => a.id === id)[0]);
   };
 
+  const handleOpenCreateForm = () => {
+    setSelectedActivity(null);
+    setEditMode(true);
+  }
 
-  
   //useEffect is the equivalent of componentdidmount/update/delete
   //the second argument of the empty array tells it to only perform this effect once
   useEffect(() => {
@@ -31,7 +34,7 @@ const App = () => {
 
   return (
     <Fragment>
-      <NavBar />
+      <NavBar openCreateForm={handleOpenCreateForm}/>
       <Container style={{ marginTop: "7em" }}>
         <ActivityDashboard
           activities={activities}
@@ -39,6 +42,7 @@ const App = () => {
           selectedActivity={selectedActivity!}
           editMode={editMode}
           setEditMode={setEditMode}
+          setSelectedActivity={setSelectedActivity}
         />
       </Container>
     </Fragment>

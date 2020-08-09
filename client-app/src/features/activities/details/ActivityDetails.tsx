@@ -3,10 +3,15 @@ import { Card, Image, Icon, ButtonGroup, Button } from "semantic-ui-react";
 import { IActivity } from "../../../app/models/activity";
 
 interface IProps {
-    activity: IActivity;
-    setEditMode: (editMode: boolean) => void;
+  activity: IActivity;
+  setEditMode: (editMode: boolean) => void;
+  setSelectedActivity: (actvity: IActivity | null) => void;
 }
-export const ActivityDetails: React.FC<IProps> = ({activity, setEditMode}) => {
+export const ActivityDetails: React.FC<IProps> = ({
+  activity,
+  setEditMode,
+  setSelectedActivity,
+}) => {
   return (
     <Card fluid>
       <Image
@@ -19,14 +24,22 @@ export const ActivityDetails: React.FC<IProps> = ({activity, setEditMode}) => {
         <Card.Meta>
           <span>{activity.date}</span>
         </Card.Meta>
-        <Card.Description>
-          {activity.description}
-        </Card.Description>
+        <Card.Description>{activity.description}</Card.Description>
       </Card.Content>
       <Card.Content extra>
         <ButtonGroup widths={2}>
-            <Button onClick={()=>setEditMode(true)}basic color='blue' content='Edit' />
-            <Button basic color='grey' content='Cancel' />
+          <Button
+            onClick={() => setEditMode(true)}
+            basic
+            color="blue"
+            content="Edit"
+          />
+          <Button
+            OnClick={() => setSelectedActivity(null)}
+            basic
+            color="grey"
+            content="Cancel"
+          />
         </ButtonGroup>
       </Card.Content>
     </Card>
