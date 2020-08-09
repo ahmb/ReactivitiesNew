@@ -8,7 +8,7 @@ namespace Persistance
     public class Seed
     {
         public static void SeedData(DataContext context)
-        {
+        { 
             if (!context.Activities.Any())
             {
                 var activities = new List<Activity>
@@ -105,10 +105,12 @@ namespace Persistance
                     }
                 };
                 
+                //add seed data to the range of activities in the existing context
                 context.Activities.AddRange(activities);
+                //commit to the context
                 context.SaveChanges();
 
-            }
-        }
+            };
+        } 
     }
 }   

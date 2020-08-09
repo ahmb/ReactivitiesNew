@@ -60,6 +60,14 @@ npx create-react-app client-app --use-npm --typescript
  #dotnet ef migrations add "ActivitiesEntityAdded" -p Persistance/ -s API
 dotnet watch run
 
+Next chapter:
+-------------
+#seeding data into sqllite Database : Seed.cs
 
-#seeding data into sqllite Database
+Next chapter:
+-------------
+#Command and Queries: - Design Pattern
+    Command - Does something , modifies the state
+    Queries - Answeres a question, does not modify the state, should return a value 
 
+  
