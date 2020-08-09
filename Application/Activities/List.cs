@@ -6,25 +6,20 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistance;
 
-namespace Application.Activities
-{
-    public class List
-    {
-        public class Query: IRequest<List<Activity>>{};
+namespace Application.Activities {
+    public class List {
+        public class Query : IRequest<List<Activity>> { };
 
-        public class Handler : IRequestHandler<Query, List<Activity>>
-        {
+        public class Handler : IRequestHandler<Query, List<Activity>> {
             private readonly DataContext _context;
 
-            public Handler(DataContext context)
-            {
+            public Handler (DataContext context) {
                 this._context = context;
             }
-    
+
             //handler that returns a list all the activities in the database context
-            public async Task<List<Activity>> Handle(Query request, CancellationToken cancellationToken)
-            {
-                var activities = await _context.Activities.ToListAsync(cancellationToken);
+            public async Task<List<Activity>> Handle (Query request, CancellationToken cancellationToken) {
+                var activities = await _context.Activities.ToListAsync (cancellationToken);
                 return activities;
             }
         }
