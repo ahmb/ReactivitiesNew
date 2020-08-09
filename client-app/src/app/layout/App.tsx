@@ -1,40 +1,32 @@
-import React, {Component} from 'react';
-import { Header, List } from 'semantic-ui-react'
-import axios  from "axios";
-import { IActivity } from '../models/activity';
+import React, { useState, useEffect, Fragment } from "react";
+import { Header, List, Container } from "semantic-ui-react";
+import axios from "axios";
+import { IActivity } from "../models/activity";
+import { NavBar } from "../../features/nav/NavBar";
+import ActivityDashboard from "../../features/activities/dashboard/ActivityDashboard";
 
-interface IState {
-  activities: IActivity[]
-}
+const App = () => {
+  const [activities, setActivities] = useState<IActivity[]>([]);
 
-class App extends Component<{}, IState> {
-  readonly state: IState = {
-    activities: []
-  };
-  
-  componentDidMount(){
-    axios.get<IActivity[]>('http://localhost:5000/api/activities')
+
+  //useEffect is the equivalent of componentdidmount/update/delete
+  //the second argument of the empty array tells it to only perform this effect once
+  useEffect(()=>{
+        axios.get<IActivity[]>('http://localhost:5000/api/activities')
     .then((response)=>{
-      this.setState({
-        activities: response.data
+      setActivities(response.data)
       });
-    });
-  }
+    }, []);
 
-  render()
-  {
-    return (
-      <div>
-        <Header as='h2' icon='users' content='Reactivities' />
-        <List>
-            {this.state.activities.map((activity) => (
-              <List.Item key={activity.id}>{activity.title}</List.Item>
-            ))}
-        </List>
 
-      </div>
-    );
-  }
-}
+  return (
+    <Fragment>
+      <NavBar />
+      <Container style={{marginTop: "7em"}}>
+        <ActivityDashboard activities={activities}/>
+      </Container>
+    </Fragment>
+  );
+};
 
 export default App;

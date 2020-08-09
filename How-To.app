@@ -59,6 +59,7 @@ npx create-react-app client-app --use-npm --typescript
  After creating an Activity Domain object, and then adding that class into the DataContext class
  #dotnet ef migrations add "ActivitiesEntityAdded" -p Persistance/ -s API
 dotnet watch run
+npm start 
 
 Next chapter:
 -------------
@@ -73,3 +74,4 @@ Next chapter:
   
 #option shift F - format c# code
 
+#snippet for react fuctional component /hooks : rfc
