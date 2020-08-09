@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from "react";
-import { Header, List, Container } from "semantic-ui-react";
+import { Container } from "semantic-ui-react";
 import axios from "axios";
 import { IActivity } from "../models/activity";
 import { NavBar } from "../../features/nav/NavBar";
@@ -20,6 +20,14 @@ const App = () => {
   const handleOpenCreateForm = () => {
     setSelectedActivity(null);
     setEditMode(true);
+  }
+
+  const handleCreateActivity = (activity: IActivity) => {
+    setActivities([...activities, activity]);
+  }
+
+  const handleEditActivity = (activity: IActivity) => {
+    setActivities([...activities.filter(a => a.id !== activity.id), activity]);
   }
 
   //useEffect is the equivalent of componentdidmount/update/delete
@@ -43,6 +51,8 @@ const App = () => {
           editMode={editMode}
           setEditMode={setEditMode}
           setSelectedActivity={setSelectedActivity}
+          createActivity={handleCreateActivity}
+          editActivity={handleEditActivity}
         />
       </Container>
     </Fragment>
