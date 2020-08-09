@@ -71,3 +71,5 @@ Next chapter:
     Queries - Answeres a question, does not modify the state, should return a value 
 
   
+#option shift F - format c# code
+
