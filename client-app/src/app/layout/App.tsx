@@ -35,6 +35,11 @@ const App = () => {
     setEditMode(false);
   }
 
+  const handleDeleteActivity = (id: string) => {
+    setActivities([...activities.filter(a=> a.id !== id)]);
+    setEditMode(false);
+  }
+
   //useEffect is the equivalent of componentdidmount/update/delete
   //the second argument of the empty array tells it to only perform this effect once
   useEffect(() => {
@@ -64,6 +69,7 @@ const App = () => {
           setSelectedActivity={setSelectedActivity}
           createActivity={handleCreateActivity}
           editActivity={handleEditActivity}
+          deleteActivity = {handleDeleteActivity}
         />
       </Container>
     </Fragment>
