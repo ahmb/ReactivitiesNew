@@ -75,3 +75,8 @@ Next chapter:
 #option shift F - format c# code
 
 #snippet for react fuctional component /hooks : rfc
+
+
+
+#drop Database
+dotnet ef database drop -p Persistance/ -s API/
