@@ -13,7 +13,7 @@ class ActivityStore {
   @observable submitting = false;
 
   @computed get activitiesByDate() {
-    return this.activities.sort((a,b)=> Date.parse(a.date) - Date.parse(b.date))
+    return Array.from(this.activityRegistry.values()).sort((a,b)=> Date.parse(a.date) - Date.parse(b.date))
   }
 
   //need an action that modifies the state of an observable
@@ -26,7 +26,7 @@ class ActivityStore {
             //this code removes the 6 levels of accuracy in the datetime value
             activity.date = activity.date.split(".")[0];
             //use this below to reference clas sproperties
-            this.activities.push(activity)
+            this.activityRegistry.set(activity.id, activity)
         });
         this.loadingInitial = false;
     }catch(error ){
@@ -39,7 +39,9 @@ class ActivityStore {
       this.submitting = true;
       try{
           await agent.Activities.create(activity);
-          this.activities.push(activity);
+          this.activityRegistry.set(activity.id, activity)
+          //activity.push is similar to adding it to the registry set , observable map above ^
+          //this.activities.push(activity);
           this.editMode = false;
           this.submitting = false;
       }catch(error){
@@ -56,7 +58,7 @@ class ActivityStore {
 
 
   @action selectActivity = (id: string) => {
-    this.selectedActivity = this.activities.find((a) => a.id === id);
+    this.selectedActivity = this.activityRegistry.get(id);
     this.editMode = false;
   };
 }
