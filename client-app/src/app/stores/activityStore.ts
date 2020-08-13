@@ -1,13 +1,20 @@
-import { observable, action, isAction } from "mobx";
+import { observable, action, computed } from "mobx";
 import { createContext } from "react";
 import { IActivity } from "../models/activity";
 import agent from "../api/agent";
 
 class ActivityStore {
+
+  @observable activityRegistry = new Map();
   @observable activities: IActivity[] = [];
   @observable loadingInitial = false;
   @observable selectedActivity: IActivity | undefined = undefined;
   @observable editMode = false;
+  @observable submitting = false;
+
+  @computed get activitiesByDate() {
+    return this.activities.sort((a,b)=> Date.parse(a.date) - Date.parse(b.date))
+  }
 
   //need an action that modifies the state of an observable
   //implemented using async await
@@ -27,6 +34,26 @@ class ActivityStore {
         this.loadingInitial = false;
     }
   };
+
+  @action createActivity = async (activity: IActivity) => {
+      this.submitting = true;
+      try{
+          await agent.Activities.create(activity);
+          this.activities.push(activity);
+          this.editMode = false;
+          this.submitting = false;
+      }catch(error){
+        this.submitting = false;
+        console.log(error);
+      }
+  }
+
+  @action openCreateForm = () => {
+      this.editMode = true;
+      this.selectedActivity = undefined;
+  }
+
+
 
   @action selectActivity = (id: string) => {
     this.selectedActivity = this.activities.find((a) => a.id === id);

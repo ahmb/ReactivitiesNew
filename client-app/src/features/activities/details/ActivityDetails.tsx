@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { Card, Image, ButtonGroup, Button } from "semantic-ui-react";
 import { IActivity } from "../../../app/models/activity";
 import ActivityStore from '../../../app/stores/activityStore';
-import { observable } from "mobx";
 import { observer } from "mobx-react-lite";
 
 interface IProps {
