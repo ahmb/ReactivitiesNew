@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
 import { Menu, Container, Button } from "semantic-ui-react";
 import ActivityStore from "../../app/stores/activityStore";
+import { observer } from "mobx-react-lite";
 
 interface IProps {}
 
-export const NavBar: React.FC<IProps> = () => {
+const NavBar: React.FC<IProps> = () => {
   const activityStore = useContext(ActivityStore);
   return (
     <Menu fixed="top" inverted>
@@ -29,3 +30,5 @@ export const NavBar: React.FC<IProps> = () => {
     </Menu>
   );
 };
+
+export default observer(NavBar);
