@@ -5,7 +5,7 @@ import agent from "../api/agent";
 
 configure({ enforceActions: "always" });
 
-export class ActivityStore {
+class ActivityStore {
   @observable activityRegistry = new Map();
   // @observable activities: IActivity[] = [];
   @observable loadingInitial = false;
