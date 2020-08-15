@@ -2,6 +2,7 @@ import { observable, action, computed, configure, runInAction } from "mobx";
 import { createContext, SyntheticEvent } from "react";
 import { IActivity } from "../models/activity";
 import agent from "../api/agent";
+import 'mobx-react-lite/batchingForReactDom'
 
 configure({ enforceActions: "always" });
 
@@ -9,7 +10,7 @@ class ActivityStore {
   @observable activityRegistry = new Map();
   // @observable activities: IActivity[] = [];
   @observable loadingInitial = false;
-  @observable activity: IActivity | undefined;
+  @observable activity: IActivity | null = null;
   @observable editMode = false;
   //loading indicator
   @observable submitting = false;
@@ -65,7 +66,11 @@ class ActivityStore {
     }
   }
 
-  getActivity = (id: string): IActivity | undefined => {
+  @action clearActivity = () => {
+    this.activity = null;
+  }
+
+  getActivity = (id: string) => {
     return this.activityRegistry.get(id);
   }
 
@@ -131,7 +136,7 @@ class ActivityStore {
 
   @action openCreateForm = () => {
     this.editMode = true;
-    this.activity = undefined;
+    this.activity = null;
   };
 
   @action openEditForm = (id: string) => {
@@ -140,7 +145,7 @@ class ActivityStore {
   };
 
   @action cancelSelectedActivity = () => {
-    this.activity = undefined;
+    this.activity = null;
   };
 
   @action cancelFormOpen = () => {
