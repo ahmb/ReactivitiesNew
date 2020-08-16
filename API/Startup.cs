@@ -1,4 +1,5 @@
 using Application.Activities;
+using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -37,7 +38,11 @@ namespace API
 
             services.AddMediatR(typeof(List.Handler).Assembly);
 
-            services.AddControllers();
+            //registers all the validators from the assembly that contains the create class
+            services.AddControllers()
+                .AddFluentValidation(cfg => {
+                    cfg.RegisterValidatorsFromAssemblyContaining<Create>();
+                });
 
         }
 
