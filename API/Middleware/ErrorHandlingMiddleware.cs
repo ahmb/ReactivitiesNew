@@ -16,8 +16,8 @@ namespace API.Middleware
             _logger = logger;
         }
 
-        public RequestDelegate _next { get; }
-        public ILogger<ErrorHandlingMiddleware> _logger { get; }
+        private RequestDelegate _next { get; set; }
+        private ILogger<ErrorHandlingMiddleware> _logger { get; set; }
 
         public async Task Invoke(HttpContext context)
         {
