@@ -68,9 +68,7 @@ class ActivityStore {
         runInAction('get activitiy error', ()=> {
           this.loadingInitial = false;
         })
-        // console.log(error);
-        //throw it up to the react component: activity details
-        throw error;
+        console.log(error);
       }
     }
   }
