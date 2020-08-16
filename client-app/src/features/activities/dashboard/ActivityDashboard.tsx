@@ -1,33 +1,31 @@
-import React, { useContext } from "react";
-import { Grid, GridColumn } from "semantic-ui-react";
-import  ActivityList  from "./ActivityList";
-import ActivityDetails  from "../details/ActivityDetails";
-import  ActivityForm  from "../form/ActivityForm";
+import React, { useEffect, useContext } from "react";
+import { Grid } from "semantic-ui-react";
+import ActivityList from "./ActivityList";
 import { observer } from "mobx-react-lite";
+import { LoadingComponent } from "../../../app/layout/LoadingComponent";
 import ActivityStore from "../../../app/stores/activityStore";
 
-//demonstrates :
-//1. Inherit from React FC (Functional Component) which can take props
-//2. destructring the activities out of props
-//3. loop over the array of Activities
 const ActivityDashboard: React.FC = () => {
   const activityStore = useContext(ActivityStore);
-  const { editMode, activity } = activityStore;
+
+  //useEffect is the equivalent of componentdidmount/update/delete
+  //the second argument of the empty array tells it to only perform this effect once
+  useEffect(() => {
+    activityStore.loadActivities();
+  }, [activityStore]);
+
+  if (activityStore.loadingInitial)
+    return <LoadingComponent content="Loading activities..." />;
+
   return (
     <Grid>
-      <GridColumn width={10}>
+      <Grid.Column width={10}>
         <ActivityList />
-      </GridColumn>
-      <GridColumn width={6}>
+      </Grid.Column>
+      <Grid.Column width={6}>
         <h2>Activity Filters</h2>
-        {/* {activity && !editMode && (<ActivityDetails />)}
-        {editMode && (
-          <ActivityForm
-            key={(activity && activity.id) || 0}
-            activity={activity!}
-          />
-        )} */}
-      </GridColumn>
+        <h2> This is a filter</h2>
+      </Grid.Column>
     </Grid>
   );
 };

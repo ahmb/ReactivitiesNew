@@ -1,9 +1,7 @@
-import React, { useEffect, Fragment, useContext } from "react";
+import React, {  Fragment } from "react";
 import { Container } from "semantic-ui-react";
 import NavBar from "../../features/nav/NavBar";
 import ActivityDashboard from "../../features/activities/dashboard/ActivityDashboard";
-import { LoadingComponent } from "./LoadingComponent";
-import ActivityStore from "../stores/activityStore";
 import { observer } from "mobx-react-lite";
 import { Route, withRouter, RouteComponentProps } from "react-router-dom";
 import HomePage from "../../features/home/HomePage";
@@ -12,16 +10,6 @@ import ActivityDetails from "../../features/activities/details/ActivityDetails";
 import "mobx-react-lite/batchingForReactDom";
 
 const App: React.FC<RouteComponentProps> = ({ location }) => {
-  const activityStore = useContext(ActivityStore);
-
-  //useEffect is the equivalent of componentdidmount/update/delete
-  //the second argument of the empty array tells it to only perform this effect once
-  useEffect(() => {
-    activityStore.loadActivities();
-  }, [activityStore]);
-
-  if (activityStore.loadingInitial)
-    return <LoadingComponent content="Loading activities..." />;
 
   return (
     <Fragment>
