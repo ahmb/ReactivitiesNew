@@ -10,14 +10,16 @@ namespace API.Middleware
 {
     public class ErrorHandlingMiddleware
     {
+        private readonly RequestDelegate _next;
+        private readonly ILogger<ErrorHandlingMiddleware> _logger;
+
         public ErrorHandlingMiddleware(RequestDelegate next, ILogger<ErrorHandlingMiddleware> logger)
         {
             _next = next;
             _logger = logger;
         }
 
-        private RequestDelegate _next { get; set; }
-        private ILogger<ErrorHandlingMiddleware> _logger { get; set; }
+
 
         public async Task Invoke(HttpContext context)
         {
