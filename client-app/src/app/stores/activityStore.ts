@@ -19,14 +19,16 @@ class ActivityStore {
 
   groupActivitiesByDate(activities: IActivity[]){
     const sortedActivities = activities.sort(
-      (a, b) => Date.parse(a.date) - Date.parse(b.date) Date.
+      (a, b) => a.date!.getTime() - b.date!.getTime()
     )
+    
     return Object.entries(sortedActivities.reduce((activities, activity) => {
-        const date = activity.date.split('T')[0];
+        const date = activity.date!.toISOString().split('T')[0];
         activities[date] = activities[date] ? [...activities[date],activity]: [activity];
         return activities;
     }, {} as {[key: string] : IActivity[]}));
   }
+  
 
   //need an action that modifies the state of an observable
   //implemented using async await
@@ -37,7 +39,7 @@ class ActivityStore {
       runInAction('loading activities', () => {
         activities.forEach((activity) => {
           //this code removes the 6 levels of accuracy in the datetime value
-          activity.date = activity.date.split(".")[0];
+          activity.date = new Date(activity.date!);
           //use this below to reference clas sproperties
           this.activityRegistry.set(activity.id, activity);
         });
@@ -61,6 +63,7 @@ class ActivityStore {
       try{
         activity = await agent.Activities.details(id);
         runInAction('getting activity',()=> {
+          activity.date = new Date(activity.date)
           this.activity = activity;
           this.loadingInitial = false;
         })
