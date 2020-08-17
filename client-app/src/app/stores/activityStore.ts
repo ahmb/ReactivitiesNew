@@ -19,7 +19,7 @@ class ActivityStore {
 
   groupActivitiesByDate(activities: IActivity[]){
     const sortedActivities = activities.sort(
-      (a, b) => Date.parse(a.date) - Date.parse(b.date)
+      (a, b) => Date.parse(a.date) - Date.parse(b.date) Date.
     )
     return Object.entries(sortedActivities.reduce((activities, activity) => {
         const date = activity.date.split('T')[0];
