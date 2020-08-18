@@ -11,6 +11,8 @@ const DateInput: React.FC<IProps> = ({
   placeholder,
   meta: { touched, error },
   id,
+  date= false,
+  time = false,
   ...rest
 }) => { 
   return (
@@ -20,6 +22,9 @@ const DateInput: React.FC<IProps> = ({
         value={input.value || null}
         onChange={input.onChange}
         id={id?.toString()}
+        format={undefined}//{(value: any) => value === '' ? undefined : new Date(value)}
+        date={date}
+        time={time}
         {...rest}
       />
       {touched && error && (
