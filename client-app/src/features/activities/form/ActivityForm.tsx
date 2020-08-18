@@ -44,21 +44,15 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
   });
 
   useEffect(() => {
-    if (match.params.id && activity.id) {
+    if (match.params.id) {
       loadActivity(match.params.id).then(
-        () => initialFormState && setActivity(initialFormState)
+        (activity) => setActivity(activity)
       );
     }
-    //unsubscribe method
-    return () => {
-      clearActivity();
-    };
+  
   }, [
     loadActivity,
     match.params.id,
-    clearActivity,
-    initialFormState,
-    activity.id,
   ]);
 
   const handleFinalFormSubmit = (values: any) => {
