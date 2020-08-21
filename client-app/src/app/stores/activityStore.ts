@@ -3,6 +3,8 @@ import { createContext, SyntheticEvent } from "react";
 import { IActivity } from "../models/activity";
 import agent from "../api/agent";
 import 'mobx-react-lite/batchingForReactDom'
+import { history } from "../..";
+import { toast } from "react-toastify";
 
 configure({ enforceActions: "always" });
 
@@ -66,6 +68,7 @@ class ActivityStore {
         runInAction('getting activity',()=> {
           activity.date = new Date(activity.date)
           this.activity = activity;
+          this.activityRegistry.set(activity.id, activity);
           this.loadingInitial = false;
         })
         return activity;
@@ -95,12 +98,15 @@ class ActivityStore {
         //activity.push is similar to adding it to the registry set , observable map above ^
         //this.activities.push(activity);
         this.submitting = false;
+        history.push(`/activities/${activity.id}`)
+        
       })
     } catch (error) {
       runInAction('create activity error', ()=> {
         this.submitting = false;
-        console.log(error);
-      })
+      });
+      console.log(error.response);
+      toast.error('Problem Submitting data');
     }
   };
 
@@ -113,10 +119,13 @@ class ActivityStore {
         this.activity = activity;
         this.submitting = false;
       } )
+      history.push(`/activities/${activity.id}`)
     } catch (error) {
       runInAction('edit activity error', ()=> {
         this.submitting = false;
-        console.log(error);
+        console.log(error);        
+        toast.error('Problem Submitting data');
+
       })
     }
   };
