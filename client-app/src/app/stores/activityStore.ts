@@ -56,6 +56,9 @@ class ActivityStore {
     }
   };
 
+
+
+
   @action loadActivity = async (id: string) => {
     let activity = this.getActivity(id);
     if(activity){

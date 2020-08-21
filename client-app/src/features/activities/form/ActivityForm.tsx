@@ -27,7 +27,7 @@ const validate = combineValidators({
     hasLengthGreaterThan(4)({
       message: "Description needs to be atleast 5 characters",
     })
-  )('Description'),
+  )("Description"),
   city: isRequired("City"),
   venue: isRequired("Venue"),
   date: isRequired("Date"),
@@ -62,7 +62,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
         .then((activity) => setActivity(new ActivityFormValues(activity)))
         .finally(() => setLoading(false));
     }
-  }, [loadActivity, match.params.id, activity]);
+  }, [loadActivity, match.params.id]);
 
   const handleFinalFormSubmit = (values: any) => {
     const dateAndTime = combineDateAndTime(values.date, values.time);
