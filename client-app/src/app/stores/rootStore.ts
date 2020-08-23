@@ -1,6 +1,10 @@
 import ActivityStore from "./activityStore";
 import UserStore from "./userStore";
 import { createContext } from "react";
+import { configure } from "mobx";
+
+//global mobx strict mode confguration
+configure({ enforceActions: "always" });
 
 export class RootStore {
 
