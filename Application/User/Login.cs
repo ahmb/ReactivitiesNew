@@ -7,7 +7,7 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Persistance;
 using System.Net;
-
+using Application.Interfaces;
 
 namespace Application.User
 {
@@ -33,9 +33,11 @@ namespace Application.User
         {
             private readonly UserManager<AppUser> _userManager;
             private readonly SignInManager<AppUser> _signinManager;
+            private readonly IJwtGenerator _jwtGenerator;
 
-            public Handler(UserManager<AppUser> userManager, SignInManager<AppUser> signinManager)
+            public Handler(UserManager<AppUser> userManager, SignInManager<AppUser> signinManager, IJwtGenerator jwtGenerator)
             {
+                _jwtGenerator = jwtGenerator;
                 _signinManager = signinManager;
                 _userManager = userManager;
 
@@ -53,11 +55,13 @@ namespace Application.User
 
                 var result = await _signinManager.CheckPasswordSignInAsync(user, request.Password, false);
 
-                if(result.Succeeded){
+                if (result.Succeeded)
+                {
                     //TODO: generate token
-                    return new User {
+                    return new User
+                    {
                         DisplayName = user.DisplayName,
-                        Token = "This will be a token",
+                        Token = _jwtGenerator.CreateToken(user),
                         Username = user.UserName,
                         Image = null
                     };
