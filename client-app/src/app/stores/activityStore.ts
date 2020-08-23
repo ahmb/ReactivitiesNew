@@ -5,10 +5,15 @@ import agent from "../api/agent";
 import 'mobx-react-lite/batchingForReactDom'
 import { history } from "../..";
 import { toast } from "react-toastify";
+import { RootStore } from "./rootStore";
 
 configure({ enforceActions: "always" });
 
-class ActivityStore {
+export default class ActivityStore {
+  rootStore: RootStore
+  constructor(rootStore: RootStore){
+    this.rootStore = rootStore;
+  }
   @observable activityRegistry = new Map();
   @observable loadingInitial = false;
   @observable activity: IActivity | null = null;
@@ -158,4 +163,3 @@ class ActivityStore {
   };
 
 
-export default createContext(new ActivityStore());

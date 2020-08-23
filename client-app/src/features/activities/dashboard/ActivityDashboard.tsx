@@ -3,18 +3,21 @@ import { Grid } from "semantic-ui-react";
 import ActivityList from "./ActivityList";
 import { observer } from "mobx-react-lite";
 import { LoadingComponent } from "../../../app/layout/LoadingComponent";
-import ActivityStore from "../../../app/stores/activityStore";
+import { RootStoreContext } from "../../../app/stores/rootStore";
 
 const ActivityDashboard: React.FC = () => {
-  const activityStore = useContext(ActivityStore);
+
+  const rootStore = useContext(RootStoreContext);
+
+  const {loadActivities, loadingInitial} = rootStore.activityStore
 
   //useEffect is the equivalent of componentdidmount/update/delete
   //the second argument of the empty array tells it to only perform this effect once
   useEffect(() => {
-    activityStore.loadActivities();
-  }, [activityStore]);
+    loadActivities();
+  }, [loadActivities]);
 
-  if (activityStore.loadingInitial)
+  if (loadingInitial)
     return <LoadingComponent content="Loading activities..." />;
 
   return (
