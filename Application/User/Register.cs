@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Application.Errors;
 using Application.Interfaces;
+using Application.Validators;
 using Domain;
 using FluentValidation;
 using MediatR;
@@ -30,10 +31,8 @@ namespace Application.User
             {
                 RuleFor(x => x.DisplayName).NotEmpty();
                 RuleFor(x => x.Username).NotEmpty();
-                RuleFor(x => x.Email).NotEmpty();
-                RuleFor(x => x.Password).NotEmpty();
-
-
+                RuleFor(x => x.Email).NotEmpty().EmailAddress();
+                RuleFor(x => x.Password).Password();
             }
         }
 
@@ -68,8 +67,10 @@ namespace Application.User
 
                 var result = await _userManager.CreateAsync(user, request.Password);
 
-                if (result.Succeeded)  {
-                    return new User{
+                if (result.Succeeded)
+                {
+                    return new User
+                    {
                         DisplayName = user.DisplayName,
                         Token = _jwtGenerator.CreateToken(user),
                         Username = user.UserName,
@@ -77,7 +78,7 @@ namespace Application.User
                     };
                 };
 
-                throw new Exception("Problem saving changes.");
+                throw new Exception("Problem creating user.");
 
             }
         }
