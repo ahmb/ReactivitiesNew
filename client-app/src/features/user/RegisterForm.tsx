@@ -6,20 +6,22 @@ import { RootStoreContext } from "../../app/stores/rootStore";
 import { IUserFormValues } from "../../app/models/user";
 import { FORM_ERROR } from "final-form";
 import { combineValidators, isRequired } from "revalidate";
-import ErrorMessage from "../../app/common/form/ErrorMessage";
+import  ErrorMessage  from "../../app/common/form/ErrorMessage";
 
 const validate = combineValidators({
   email: isRequired("email"),
   password: isRequired("password"),
+  username: isRequired("username"),
+  displayName: isRequired("displayname"),
 });
 
-const LoginForm = () => {
+const RegisterForm = () => {
   const rootStore = useContext(RootStoreContext);
-  const { login } = rootStore.userStore;
+  const { register } = rootStore.userStore;
   return (
     <FinalForm
       onSubmit={(values: IUserFormValues) =>
-        login(values).catch((error) => ({ [FORM_ERROR]: error }))
+        register(values).catch((error) => ({ [FORM_ERROR]: error }))
       }
       validate={validate}
       render={({
@@ -30,12 +32,18 @@ const LoginForm = () => {
         pristine,
         dirtySinceLastSubmit,
       }) => (
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} error>
           <Header
             as="h2"
-            content="Login to Reactivities"
+            content="SignUp to Reactivities"
             color="teal"
             textAlign="center"
+          />
+          <Field name="username" component={TextInput} placeholder="Username" />
+          <Field
+            name="displayName"
+            component={TextInput}
+            placeholder="Display Name"
           />
           <Field name="email" component={TextInput} placeholder="Email" />
           <Field
@@ -45,13 +53,13 @@ const LoginForm = () => {
             type="password"
           />
           {submitError && !dirtySinceLastSubmit && (
-            <ErrorMessage error={submitError} text='Invalid username or password.'/>
+            <ErrorMessage error={submitError} />
           )}
           <Button
-            color='teal'
+            color="teal"
             loading={submitting}
             disabled={(invalid && !dirtySinceLastSubmit) || pristine}
-            content="Login"
+            content="Register"
             fluid
           />
           {/* <pre>{JSON.stringify(form.getState(), null, 2)}</pre> */}
@@ -61,4 +69,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default RegisterForm;
