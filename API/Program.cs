@@ -1,6 +1,8 @@
 using System;
+using Domain;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -26,12 +28,11 @@ namespace API
                 {
                     //get the required datacontext entities
                     var context = services.GetRequiredService<DataContext>();
-
+                    var userManager = services.GetRequiredService<UserManager<AppUser>>();
                     //apply a EF migration to bring the database upto the current version
                     context.Database.Migrate();
                     
-                    Seed.SeedData(context);
-                    Console.WriteLine("SEED DATA WRITTEN");
+                    Seed.SeedData(context, userManager).Wait();
                 }
                 catch (Exception ex)
                 {

@@ -22,7 +22,7 @@ namespace Persistance
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.Entity<Value>()
+            _ = builder.Entity<Value>()
                 .HasData(
                     new Value { Id = 1, Name = "Value 101" },
                     new Value { Id = 2, Name = "Value 102" },

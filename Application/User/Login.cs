@@ -1,0 +1,64 @@
+using System.Threading;
+using System.Threading.Tasks;
+using Application.Errors;
+using Domain;
+using FluentValidation;
+using MediatR;
+using Microsoft.AspNetCore.Identity;
+using Persistance;
+using System.Net;
+
+
+namespace Application.User
+{
+    public class Login
+    {
+        public class Query : IRequest<AppUser>
+        {
+            public string Email { get; set; }
+
+            public string Password { get; set; }
+        };
+
+        public class QueryValidator : AbstractValidator<Query>
+        {
+            public QueryValidator()
+            {
+                RuleFor(x => x.Email).EmailAddress<Query>();
+                RuleFor(x => x.Password).NotEmpty();
+            }
+        }
+
+        public class Handler : IRequestHandler<Query, AppUser>
+        {
+            private readonly UserManager<AppUser> _userManager;
+            private readonly SignInManager<AppUser> _signinManager;
+
+            public Handler(UserManager<AppUser> userManager, SignInManager<AppUser> signinManager)
+            {
+                _signinManager = signinManager;
+                _userManager = userManager;
+
+            }
+
+            //handler that returns a list all the activities in the database context
+            public async Task<AppUser> Handle(Query request, CancellationToken cancellationToken)
+            {
+                var user = await _userManager.FindByEmailAsync(request.Email);
+
+                if (user == null)
+                {
+                    throw new RestException(HttpStatusCode.Unauthorized);
+                }
+
+                var result = await _signinManager.CheckPasswordSignInAsync(user, request.Password, false);
+
+                if(result.Succeeded){
+                    //TODO: generate token
+                    return user;
+                }
+                throw new RestException(HttpStatusCode.Unauthorized);
+            }
+        }
+    }
+}
