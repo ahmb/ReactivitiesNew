@@ -25,13 +25,13 @@ namespace Application.Activities {
             }
 
             public async Task<ActivityDto> Handle (Query request, CancellationToken cancellationToken) {
-                var activity = await _context.Activities
+                Activity activity = await _context.Activities
                     .FindAsync(request.Id);
 
                 if (activity == null)
                     throw new RestException (HttpStatusCode.NotFound, new { activity = "Not found" });
 
-                var activityToReturn = _mapper.Map<Activity,ActivityDto>(activity);
+                ActivityDto activityToReturn = _mapper.Map<Activity,ActivityDto>(activity);
 
                 return activityToReturn;
             }

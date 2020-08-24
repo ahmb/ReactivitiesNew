@@ -30,14 +30,14 @@ namespace Application.Activities
             {
                 //add command handler logic
 
-                var activity = await _context.Activities.FindAsync(request.Id);
+                Domain.Activity activity = await _context.Activities.FindAsync(request.Id);
 
                 if (activity == null)
                     throw new RestException(HttpStatusCode.NotFound, new { activity = "Not found" });
 
                 _context.Remove(activity);
 
-                var success = await _context.SaveChangesAsync() > 0;
+                bool success = await _context.SaveChangesAsync() > 0;
 
                 if (success) return Unit.Value;
 
