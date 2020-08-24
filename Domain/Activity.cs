@@ -15,7 +15,8 @@ namespace Domain
         public string City { get; set; }
         public string Venue { get; set; }
 
-        public ICollection<UserActivity> UserActivities { get; set; }
+        //the virtual keyword is used here so it can be used with Proxies for lazy loading
+        public virtual ICollection<UserActivity> UserActivities { get; set; }
 
     }
 }

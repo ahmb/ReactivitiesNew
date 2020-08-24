@@ -38,6 +38,8 @@ namespace API
             //add the DbContext as a service so that class libs can use it
             services.AddDbContext<DataContext>(opt =>
             {
+                //for lazy loading
+                opt.UseLazyLoadingProxies();
                 opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
             });
             services.AddCors(opt =>

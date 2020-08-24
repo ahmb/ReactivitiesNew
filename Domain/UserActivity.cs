@@ -7,10 +7,12 @@ namespace Domain
     {
         public string AppUserId { get; set; }
 
-        public AppUser AppUser { get; set; }
+        //added virtual because itll be lazily loaded
+        public virtual AppUser AppUser { get; set; }
         public Guid ActivityId { get; set; }
 
-        public Activity Activity { get; set; }
+        //added virtual because itll be lazily loaded
+        public virtual Activity Activity { get; set; }
 
         public DateTime DateJoined { get; set; }
         public bool IsHost { get; set; }
