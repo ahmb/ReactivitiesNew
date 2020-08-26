@@ -22,20 +22,18 @@ import ModalContainer from "../common/modals/ModalContainer";
 
 const App: React.FC<RouteComponentProps> = ({ location }) => {
   const rootStore = useContext(RootStoreContext);
-  const {setAppLoaded, token} = rootStore.commonStore;
+  const {setAppLoaded, token, appLoaded} = rootStore.commonStore;
   const {getUser} = rootStore.userStore;
 
-  useEffect(()=> {
-    if(token) {
-      getUser().finally(()=> setAppLoaded())
-    }else{
-      setAppLoaded()
+  useEffect(() => {
+    if (token) {
+      getUser().finally(() => setAppLoaded())
+    } else {
+      setAppLoaded();
     }
-  },[getUser, setAppLoaded, token])
+  }, [getUser, setAppLoaded, token])
 
-  if(!setAppLoaded){
-    return <LoadingComponent content='Loading app...'/>
-  }
+  if (!appLoaded)  return <LoadingComponent content='Loading app...' />
 
   return (
     <Fragment>

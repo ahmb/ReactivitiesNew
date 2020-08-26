@@ -11,12 +11,8 @@ const NavBar: React.FC = () => {
     <Menu fixed="top" inverted>
       <Container>
         <Menu.Item header as={NavLink} exact to="/">
-          <img
-            src="/assets/logo.png"
-            alt="logo"
-            style={{ marginRight: 10 }}
-          />
-          WannaGo
+          <img src="/assets/logo.png" alt="logo" style={{ marginRight: 10 }} />
+          Reactivities
         </Menu.Item>
         <Menu.Item name="Activities" as={NavLink} to="/activities" />
         <Menu.Item>
@@ -29,7 +25,11 @@ const NavBar: React.FC = () => {
         </Menu.Item>
         {user && (
           <Menu.Item position="right">
-            <Image avatar spaced="right" src={user.image || "/assets/user.png"} />
+            <Image
+              avatar
+              spaced="right"
+              src={user.image || "/assets/user.png"}
+            />
             <Dropdown pointing="top left" text={user.displayName}>
               <Dropdown.Menu>
                 <Dropdown.Item
@@ -38,7 +38,7 @@ const NavBar: React.FC = () => {
                   text="My profile"
                   icon="user"
                 />
-                <Dropdown.Item text="Logout" icon="power" onClick={logout}/>
+                <Dropdown.Item onClick={logout} text="Logout" icon="power" />
               </Dropdown.Menu>
             </Dropdown>
           </Menu.Item>

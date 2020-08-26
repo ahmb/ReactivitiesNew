@@ -8,6 +8,7 @@ export default class UserStore {
   rootStore: RootStore;
   constructor(rootStore: RootStore) {
     this.rootStore = rootStore;
+    this.getUser();
   }
   @observable user: IUser | null = null;
 
@@ -51,6 +52,7 @@ export default class UserStore {
   @action getUser = async () => {
     try{
       const user = await agent.User.current();
+      
       runInAction(()=> {
         this.user = user;
       })

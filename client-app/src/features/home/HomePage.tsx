@@ -7,8 +7,8 @@ import RegisterForm from "../user/RegisterForm";
 
 const HomePage = () => {
   const rootStore = useContext(RootStoreContext);
-  const { isLoggedIn, user } = rootStore.userStore;
-  const {openModal} = rootStore.modalStore;
+  const { user, isLoggedIn } = rootStore.userStore;
+  const { openModal } = rootStore.modalStore;
   return (
     <Segment inverted textAlign="center" vertical className="masthead">
       <Container text>
@@ -19,29 +19,38 @@ const HomePage = () => {
             alt="logo"
             style={{ marginBottom: 12 }}
           />
-          WannaGo
+          Reactivities
         </Header>
         {isLoggedIn && user ? (
           <Fragment>
-            <Header as="h2" inverted content={`Welcome back ${user.displayName}`} />
+            <Header
+              as="h2"
+              inverted
+              content={`Welcome back ${user.displayName}`}
+            />
             <Button as={Link} to="/activities" size="huge" inverted>
               Go to activities!
             </Button>
           </Fragment>
-        ):
-        (
+        ) : (
           <Fragment>
-            <Header as="h2" inverted content='Welcome to Reactivities' />
-            <Button onClick={()=>openModal(<LoginForm/>)} to="/login" size="huge" inverted>
+            <Header as="h2" inverted content={`Welcome to Reactivitities`} />
+            <Button
+              onClick={() => openModal(<LoginForm />)}
+              size="huge"
+              inverted
+            >
               Login
             </Button>
-            <Button onClick={()=>openModal(<RegisterForm/>)} to="/register" size="huge" inverted>
+            <Button
+              onClick={() => openModal(<RegisterForm />)}
+              size="huge"
+              inverted
+            >
               Register
             </Button>
           </Fragment>
-
-        )
-        }
+        )}
       </Container>
     </Segment>
   );
