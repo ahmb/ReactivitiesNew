@@ -6,6 +6,7 @@ export interface IActivity {
     date: Date;
     city: string;
     venue: string;
+    attendees: IAttendee[];
 }
 
 
@@ -30,4 +31,11 @@ export class ActivityFormValues implements IActivityFormValues {
         }
 
     }
+}
+
+export interface IAttendee {
+    username: string;
+    displayName: string;
+    image: string;
+    isHost: boolean;
 }
