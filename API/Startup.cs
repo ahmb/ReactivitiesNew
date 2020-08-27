@@ -77,7 +77,7 @@ namespace API
 
             services.AddScoped<IJwtGenerator, JwtGenerator>();
             services.AddScoped<IUserAccessor, UserAccessor>();
-            services.AddScoped<IPhotoAccessor, PhotosAccessor>();
+            services.AddScoped<IPhotoAccessor, PhotoAccessor>();
 
             //pull out the user secrets and api key : saved via dotnet user-secrets set
             services.Configure<CloudinarySettings>(Configuration.GetSection("Cloudinary"));
