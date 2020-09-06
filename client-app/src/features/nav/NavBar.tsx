@@ -7,6 +7,7 @@ import { RootStoreContext } from "../../app/stores/rootStore";
 const NavBar: React.FC = () => {
   const rootStore = useContext(RootStoreContext);
   const { user, logout } = rootStore.userStore;
+  // console.log(user);
   return (
     <Menu fixed="top" inverted>
       <Container>
@@ -34,7 +35,7 @@ const NavBar: React.FC = () => {
               <Dropdown.Menu>
                 <Dropdown.Item
                   as={Link}
-                  to={`/profile/username`}
+                  to={`/profile/${user.username}`}
                   text="My profile"
                   icon="user"
                 />
