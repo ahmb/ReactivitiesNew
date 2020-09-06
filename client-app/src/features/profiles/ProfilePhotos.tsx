@@ -6,12 +6,19 @@ import { observer } from "mobx-react-lite";
 
 const ProfilePhotos = () => {
   const rootStore = useContext(RootStoreContext);
-  const { profile, isCurrentUser, uploadPhoto, uploadingPhoto } = rootStore.profileStore;
-  const [addPhotoMode, setAddPhotoMode] = useState(true);
+  const {
+    profile,
+    isCurrentUser,
+    uploadPhoto,
+    uploadingPhoto,
+    setMainPhoto,
+    loading
+  } = rootStore.profileStore;
+  const [addPhotoMode, setAddPhotoMode] = useState(false);
 
-const handleUploadImage = (photo: Blob) => {
-  uploadPhoto(photo).then(()=>setAddPhotoMode(false) )
-}
+  const handleUploadImage = (photo: Blob) => {
+    uploadPhoto(photo).then(() => setAddPhotoMode(false));
+  };
 
   return (
     <Tab.Pane>
@@ -29,7 +36,10 @@ const handleUploadImage = (photo: Blob) => {
         </Grid.Column>
         <Grid.Column width={16}>
           {addPhotoMode ? (
-            <PhotoUploadWidget uploadPhoto={handleUploadImage} loading={uploadingPhoto}/>
+            <PhotoUploadWidget
+              uploadPhoto={handleUploadImage}
+              loading={uploadingPhoto}
+            />
           ) : (
             <Card.Group itemsPerRow={5}>
               {profile &&
@@ -38,7 +48,13 @@ const handleUploadImage = (photo: Blob) => {
                     <Image src={photo.url} />
                     {isCurrentUser && (
                       <Button.Group fluid widths={2}>
-                        <Button basic positive content="Main" />
+                        <Button
+                          onClick={() => setMainPhoto(photo)}
+                          loading={loading}
+                          basic
+                          positive
+                          content="Main"
+                        />
                         <Button basic negative icon="trash" />
                       </Button.Group>
                     )}
