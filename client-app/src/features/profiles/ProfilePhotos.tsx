@@ -13,9 +13,13 @@ const ProfilePhotos = () => {
     uploadingPhoto,
     setMainPhoto,
     loading,
+    deletePhoto,
   } = rootStore.profileStore;
   const [addPhotoMode, setAddPhotoMode] = useState(false);
   const [target, setTarget] = useState<string | undefined>(undefined);
+  const [deleteTarget, setDeleteTarget] = useState<string | undefined>(
+    undefined
+  );
 
   const handleUploadImage = (photo: Blob) => {
     uploadPhoto(photo).then(() => setAddPhotoMode(false));
@@ -61,7 +65,18 @@ const ProfilePhotos = () => {
                           positive
                           content="Main"
                         />
-                        <Button basic negative icon="trash" />
+                        <Button
+                          name={photo.id}
+                          disabled={photo.isMain}
+                          onClick={(e) => {
+                            deletePhoto(photo);
+                            setDeleteTarget(e.currentTarget.name);
+                          }}
+                          loading={loading && deleteTarget === photo.id}
+                          basic
+                          negative
+                          icon="trash"
+                        />
                       </Button.Group>
                     )}
                   </Card>
