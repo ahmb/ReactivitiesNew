@@ -15,6 +15,7 @@ namespace API.SignalR
             _mediator = mediator;
         }
 
+        //the client calls this method name by referring to its name
         public async Task SendComment(Create.Command command)
         {
             var username =

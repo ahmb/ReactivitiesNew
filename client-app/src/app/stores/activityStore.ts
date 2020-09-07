@@ -61,6 +61,17 @@ export default class ActivityStore {
     this.hubConnection!.stop();
   };
 
+  //to match the create comment command , the property in values should match
+  @action addComment = async (values: any) => {
+    values.activityId = this.activity!.id;
+    try {
+      //this SendComment must match directly with the
+      await this.hubConnection!.invoke("SendComment", values);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   groupActivitiesByDate(activities: IActivity[]) {
     const sortedActivities = activities.sort(
       (a, b) => a.date.getTime() - b.date.getTime()
