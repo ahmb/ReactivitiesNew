@@ -18,5 +18,8 @@ namespace Domain
         //the virtual keyword is used here so it can be used with Proxies for lazy loading
         public virtual ICollection<UserActivity> UserActivities { get; set; }
 
+        public virtual ICollection<Comment> Comments { get; set; }
+
+
     }
 }

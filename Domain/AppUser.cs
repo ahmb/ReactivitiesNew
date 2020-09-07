@@ -13,5 +13,8 @@ namespace Domain
 
         public virtual ICollection<Photo> Photos { get; set; }
 
+        public virtual ICollection<Comment> Comment { get; set; }
+
+
     }
 }

@@ -33,7 +33,7 @@ const LoginForm = () => {
         <Form onSubmit={handleSubmit}>
           <Header
             as="h2"
-            content="Login to Reactivities"
+            content="Login to WannaGo"
             color="teal"
             textAlign="center"
           />
