@@ -1,4 +1,5 @@
 using System.Text;
+using System.Threading.Tasks;
 using API.Middleware;
 using API.SignalR;
 using Application.Activities;
@@ -46,11 +47,11 @@ namespace API
             });
             services.AddCors(opt =>
             {
-                opt.AddPolicy("CorsPolicy", policy => 
+                opt.AddPolicy("CorsPolicy", policy =>
                 {
-                  policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();//.WithOrigins("http://localhost:3000");
+                    policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();//.WithOrigins("http://localhost:3000");
                 });
-            }); 
+            });
 
             services.AddMediatR(typeof(List.Handler).Assembly);
 
@@ -59,11 +60,13 @@ namespace API
             services.AddSignalR();
 
             //registers all the validators from the assembly that contains the create class
-            services.AddControllers(opt => {
+            services.AddControllers(opt =>
+            {
                 var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
                 opt.Filters.Add(new AuthorizeFilter(policy));
             })
-                .AddFluentValidation(cfg => {
+                .AddFluentValidation(cfg =>
+                {
                     cfg.RegisterValidatorsFromAssemblyContaining<Create>();
                 });
 
@@ -71,8 +74,10 @@ namespace API
             var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
             identityBuilder.AddEntityFrameworkStores<DataContext>();
             identityBuilder.AddSignInManager<SignInManager<AppUser>>();
-            services.AddAuthorization(opt=> {
-                opt.AddPolicy("IsActivityHost", policy=> {
+            services.AddAuthorization(opt =>
+            {
+                opt.AddPolicy("IsActivityHost", policy =>
+                {
                     policy.Requirements.Add(new IsHostRequirement());
                 });
             });
@@ -86,13 +91,31 @@ namespace API
             services.Configure<CloudinarySettings>(Configuration.GetSection("Cloudinary"));
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenKey"]));
-            
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt => {
-                opt.TokenValidationParameters = new TokenValidationParameters{
-                            ValidateIssuerSigningKey = true,
-                            IssuerSigningKey = key,
-                            ValidateAudience = false,
-                            ValidateIssuer = false
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
+            {
+                opt.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = key,
+                    ValidateAudience = false,
+                    ValidateIssuer = false
+                };
+                //hook into the on message recieved for the singalR event
+                opt.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = msgRecvContext =>
+                    {
+                        //will pull the token out of the request
+                        Microsoft.Extensions.Primitives.StringValues accessToken = msgRecvContext.Request.Query["access_token"];
+                        //get a reference to the path of the request thats coming in
+                        Microsoft.AspNetCore.Http.PathString path = msgRecvContext.HttpContext.Request.Path;
+                        if (!string.IsNullOrEmpty(accessToken) && (path.StartsWithSegments("/chat")))
+                        {
+                            msgRecvContext.Token = accessToken;
+                        }
+                        return Task.CompletedTask;
+                    }
                 };
             });
 
@@ -112,7 +135,7 @@ namespace API
             //app.UseHttpsRedirection();
             app.UseRouting();
             app.UseCors("CorsPolicy");
-            
+
             app.UseAuthentication();
             app.UseAuthorization();
 
@@ -121,6 +144,6 @@ namespace API
                 endpoints.MapControllers();
                 endpoints.MapHub<ChatHub>("/chat");
             });
-        } 
+        }
     }
 }
