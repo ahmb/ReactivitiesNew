@@ -7,6 +7,11 @@ import { history } from "../..";
 import { toast } from "react-toastify";
 import { RootStore } from "./rootStore";
 import { setActivityProps, createAttendee } from "../common/util/util";
+import {
+  HubConnection,
+  HubConnectionBuilder,
+  LogLevel,
+} from "@microsoft/signalr";
 
 export default class ActivityStore {
   rootStore: RootStore;
@@ -25,6 +30,36 @@ export default class ActivityStore {
       Array.from(this.activityRegistry.values())
     );
   }
+
+  //only loaded on the activity details page, or else this is null
+  @observable.ref hubConnection: HubConnection | null = null;
+
+  @action createHubConnection = () => {
+    //configure the hubconnection
+    this.hubConnection = new HubConnectionBuilder()
+      .withUrl("http://localhost:5000/chat", {
+        accessTokenFactory: () => this.rootStore.commonStore.token!,
+      })
+      .configureLogging(LogLevel.Information)
+      .build();
+
+    //start the connection
+    this.hubConnection
+      .start()
+      .then(() => console.log(this.hubConnection?.state))
+      .catch((error) => console.log("Error establishing connection: ", error));
+
+    //configure the hubconnection what to do when it recieves a comment
+    //"RecieveComment" is in the ChatHub.cs
+    this.hubConnection.on("RecieveComment", (comment) => {
+      //add the comment to the comments array inside the activity object
+      this.activity!.comments.push(comment);
+    });
+  };
+
+  @action stopHubConnection = () => {
+    this.hubConnection!.stop();
+  };
 
   groupActivitiesByDate(activities: IActivity[]) {
     const sortedActivities = activities.sort(
