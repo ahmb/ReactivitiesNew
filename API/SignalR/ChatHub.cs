@@ -19,8 +19,7 @@ namespace API.SignalR
         //the client calls this method name by referring to its name
         public async Task SendComment(Create.Command command)
         {
-            string username =
-                Context.User?.Claims?.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier)?.Value;
+            string username = GetUsername();
 
             command.Username = username;
 
@@ -28,7 +27,28 @@ namespace API.SignalR
             CommentDto comment = await _mediator.Send(command);
 
             //send the comment to all the clients
-            await Clients.All.SendAsync("RecieveComment", comment);
+            await Clients.Group(command.ActivityId.ToString()).SendAsync("RecieveComment", comment);
+        }
+
+        private string GetUsername()
+        {
+            return Context.User?.Claims?.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier)?.Value;
+        }
+
+        public async Task AddToGroup(string groupName)
+        {
+            await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
+            var username = GetUsername();
+
+            await Clients.Group(groupName).SendAsync("Send", $"{username} has joined the group");
+        }
+
+        public async Task RemoveFromGroup(string groupName)
+        {
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
+            var username = GetUsername();
+
+            await Clients.Group(groupName).SendAsync("Send", $"{username} has left the group");
         }
     }
 }
