@@ -1,5 +1,6 @@
 using System.Text;
 using API.Middleware;
+using API.SignalR;
 using Application.Activities;
 using Application.Interfaces;
 using AutoMapper;
@@ -54,6 +55,8 @@ namespace API
             services.AddMediatR(typeof(List.Handler).Assembly);
 
             services.AddAutoMapper(typeof(List.Handler));
+
+            services.AddSignalR();
 
             //registers all the validators from the assembly that contains the create class
             services.AddControllers(opt => {
@@ -116,6 +119,7 @@ namespace API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<ChatHub>("/chat");
             });
         } 
     }
