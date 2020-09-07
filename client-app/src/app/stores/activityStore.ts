@@ -34,7 +34,7 @@ export default class ActivityStore {
   //only loaded on the activity details page, or else this is null
   @observable.ref hubConnection: HubConnection | null = null;
 
-  @action createHubConnection = () => {
+  @action createHubConnection = (activityId: string) => {
     //configure the hubconnection
     this.hubConnection = new HubConnectionBuilder()
       .withUrl("http://localhost:5000/chat", {
@@ -43,22 +43,42 @@ export default class ActivityStore {
       .configureLogging(LogLevel.Information)
       .build();
 
-    //start the connection
-    this.hubConnection
-      .start()
-      .then(() => console.log(this.hubConnection?.state))
-      .catch((error) => console.log("Error establishing connection: ", error));
+    if (this.hubConnection?.state === "Disconnected") {
+      //start the connection
+      this.hubConnection
+        .start()
+        .then(() => {
+          console.log("Attempting to join group");
+          if (this.hubConnection!.state === "Connected")
+            this.hubConnection?.invoke("AddToGroup", activityId);
+        })
+        .then(() => console.log(this.hubConnection?.state))
+        .catch((error) =>
+          console.log("Error establishing connection: ", error)
+        );
 
-    //configure the hubconnection what to do when it recieves a comment
-    //"RecieveComment" is in the ChatHub.cs
-    this.hubConnection.on("RecieveComment", (comment) => {
-      //add the comment to the comments array inside the activity object
-      runInAction(() => this.activity!.comments.push(comment));
+      //configure the hubconnection what to do when it recieves a comment
+      //"RecieveComment" is in the ChatHub.cs
+      this.hubConnection.on("RecieveComment", (comment) => {
+        //add the comment to the comments array inside the activity object
+        runInAction(() => this.activity!.comments.push(comment));
+      });
+    }
+
+    this.hubConnection.on("Send", (message) => {
+      toast.info(message);
     });
   };
 
   @action stopHubConnection = () => {
-    this.hubConnection!.stop();
+    if (this.hubConnection?.state === "Connected") {
+      this.hubConnection!.invoke("RemoveFromGroup", this.activity!.id)
+        .then(() => {
+          this.hubConnection!.stop();
+        })
+        .then(() => console.log("Connection stopped"))
+        .catch((err) => console.log("error", err));
+    }
   };
 
   //to match the create comment command , the property in values should match

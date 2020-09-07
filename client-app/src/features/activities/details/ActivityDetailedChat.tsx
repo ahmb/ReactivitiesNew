@@ -19,11 +19,12 @@ const ActivityDetailedChat = () => {
   } = rootStore.activityStore;
 
   useEffect(() => {
-    createHubConnection();
+    //updated
+    createHubConnection(activity!.id);
     return () => {
       stopHubConnection();
     };
-  }, [createHubConnection, stopHubConnection]);
+  }, [createHubConnection, stopHubConnection, activity]);
 
   return (
     <Fragment>
