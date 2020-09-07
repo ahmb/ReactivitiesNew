@@ -6,6 +6,7 @@ import TextInput from "../../../app/common/form/TextInput";
 import TextAreaInput from "../../../app/common/form/TextAreaInput";
 import { Link } from "react-router-dom";
 import { observer } from "mobx-react-lite";
+import  {formatDistance } from 'date-fns'
 
 const ActivityDetailedChat = () => {
   //bring in the activity store
@@ -47,7 +48,7 @@ const ActivityDetailedChat = () => {
                     {comment.displayName}
                   </Comment.Author>
                   <Comment.Metadata>
-                    <div>{comment.createdAt}</div>
+                    <div>{formatDistance(new Date(comment.createdAt), new Date())}</div>
                   </Comment.Metadata>
                   <Comment.Text>{comment.body}</Comment.Text>
                 </Comment.Content>
