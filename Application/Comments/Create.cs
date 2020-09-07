@@ -61,7 +61,7 @@ namespace Application.Comments
 
                 //if successfully added the comment to the database then:
                 //return back the Comment DTO object which is generated from the comment object/paramter to Map
-                if (success) return _mapper.Map<CommentDto>(comment);
+                if (success) return _mapper.Map<Comment, CommentDto>(comment);
 
                 throw new Exception("Problem saving changes.");
 

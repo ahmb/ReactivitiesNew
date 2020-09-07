@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Application.Comments;
 using Domain;
 
 namespace Application.Activities
@@ -23,7 +24,7 @@ namespace Application.Activities
         public ICollection<AttendeeDto> UserActivities { get; set; }
 
         //comments which are returned with the comments
-        public ICollection<Comment> Comments { get; set; }
+        public ICollection<CommentDto> Comments { get; set; }
 
 
     }

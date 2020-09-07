@@ -53,7 +53,7 @@ export default class ActivityStore {
     //"RecieveComment" is in the ChatHub.cs
     this.hubConnection.on("RecieveComment", (comment) => {
       //add the comment to the comments array inside the activity object
-      this.activity!.comments.push(comment);
+      runInAction(() => this.activity!.comments.push(comment));
     });
   };
 
@@ -63,7 +63,7 @@ export default class ActivityStore {
 
   //to match the create comment command , the property in values should match
   @action addComment = async (values: any) => {
-    values.activityId = this.activity!.id;
+    values.ActivityId = this.activity!.id;
     try {
       //this SendComment must match directly with the
       await this.hubConnection!.invoke("SendComment", values);
