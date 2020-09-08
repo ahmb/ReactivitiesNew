@@ -1,20 +1,11 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Tab, Grid, Header, Card } from "semantic-ui-react";
 import { RootStoreContext } from "../../app/stores/rootStore";
 import ProfileCard from "./ProfileCard";
 
 const ProfileFollowings = () => {
   const rootStore = useContext(RootStoreContext);
-  const {
-    profile,
-    followings,
-    loadFollowings,
-    loading,
-  } = rootStore.profileStore;
-
-  useEffect(() => {
-    loadFollowings("following");
-  }, [loadFollowings]);
+  const { profile, followings, loading, activeTab } = rootStore.profileStore;
 
   return (
     <Tab.Pane loading={loading}>
@@ -24,7 +15,7 @@ const ProfileFollowings = () => {
             floated="left"
             icon="user"
             content={
-              true
+              activeTab === 3
                 ? `People following ${profile!.displayName}`
                 : `People ${profile!.displayName} is following`
             }
@@ -34,7 +25,7 @@ const ProfileFollowings = () => {
           <Card.Group itemsPerRow={5}>
             {followings.length > 0 &&
               followings.map((profile) => (
-                <ProfileCard key={profile.username} profile={profile}/>
+                <ProfileCard key={profile.username} profile={profile} />
               ))}
           </Card.Group>
         </Grid.Column>
