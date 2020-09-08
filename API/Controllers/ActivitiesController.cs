@@ -15,9 +15,9 @@ namespace API.Controllers
 
         //Get a list of activities
         [HttpGet]
-        public async Task<ActionResult<List<ActivityDto>>> List(CancellationToken ct)
+        public async Task<ActionResult<List.ActivitiesEnvelope>> List(int? limit, int? offset)
         {
-            return await Mediator.Send(new List.Query(), ct);
+            return await Mediator.Send(new List.Query(limit, offset));
         }
 
         [HttpGet("{id}")]
@@ -34,7 +34,7 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize(Policy="IsActivityHost")]
+        [Authorize(Policy = "IsActivityHost")]
         public async Task<ActionResult<Unit>> Edit(Guid id, Edit.Command command)
         {
             command.Id = id;
@@ -42,7 +42,7 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Policy="IsActivityHost")]
+        [Authorize(Policy = "IsActivityHost")]
         public async Task<ActionResult<Unit>> Delete(Guid id)
         {
             return await Mediator.Send(new Delete.Command { Id = id });
@@ -55,8 +55,9 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}/attend")]
-        public async Task<ActionResult<Unit>> Unattend(Guid id){
-            return await Mediator.Send(new Unattend.Command{Id=id});
+        public async Task<ActionResult<Unit>> Unattend(Guid id)
+        {
+            return await Mediator.Send(new Unattend.Command { Id = id });
         }
 
 
