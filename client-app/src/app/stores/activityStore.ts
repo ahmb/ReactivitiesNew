@@ -23,7 +23,7 @@ export default class ActivityStore {
     reaction(
       //the condition for the reaction to run
       () => this.predicate.keys(),
-      //actions to take i.e. reset state and then pull latest state
+      //actions to take i.e. reset state and then pull latest `
       () => {
         this.page = 0;
         this.activityRegistry.clear();
