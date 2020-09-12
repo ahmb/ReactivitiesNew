@@ -39,20 +39,12 @@ namespace Application.Profiles
                     .OrderBy(a => a.Activity.Date)
                     .AsQueryable();
 
-                switch (request.Predicate)
+                queryable = request.Predicate switch
                 {
-                    case "past":
-                        queryable = queryable.Where(a => a.Activity.Date <= DateTime.Now);
-                        break;
-                    case "hosting":
-                        queryable = queryable.Where(a => a.IsHost);
-                        break;
-                    default:
-                        //all future activities
-                        queryable = queryable.Where(a => a.Activity.Date >= DateTime.Now);
-                        break;
-                }
-
+                    "past" => queryable.Where(a => a.Activity.Date <= DateTime.Now),
+                    "hosting" => queryable.Where(a => a.IsHost),
+                    _ => queryable.Where(a => a.Activity.Date >= DateTime.Now),//all future activities
+                };
                 var activities = queryable.ToList();
                 var activitiesToReturn = new List<UserActivityDto>();
 
