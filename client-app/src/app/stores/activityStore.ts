@@ -12,6 +12,7 @@ import {
   HubConnectionBuilder,
   LogLevel,
 } from "@microsoft/signalr";
+import { useHistory } from "react-router-dom";
 
 const LIMIT = 2;
 
@@ -169,9 +170,10 @@ export default class ActivityStore {
         this.loadingInitial = false;
       });
     } catch (error) {
-      console.log(error);
+      console.log("activity error",error);
       runInAction("load activities error", () => {
         this.loadingInitial = false;
+        history.push('/');
       });
     }
   };
