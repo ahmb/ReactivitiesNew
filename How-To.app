@@ -80,3 +80,13 @@ Next chapter:
 
 #drop Database
 dotnet ef database drop -p Persistance/ -s API/
+
+#reload bashprofile
+. ~/.bash_profile
+
+#open mysql
+mysql -u root -p 
+show databases;
+CREATE USER 'appuser'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Pa$$w0rd';
+GRANT ALL PRIVILEGES ON *.* TO 'appuser'@'localhost' WITH GRANT OPTION;
+flush privileges;
