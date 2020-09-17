@@ -6,6 +6,7 @@ import LoginForm from "../user/LoginForm";
 import RegisterForm from "../user/RegisterForm";
 
 const HomePage = () => {
+  const token = window.localStorage.getItem('jwt');
   const rootStore = useContext(RootStoreContext);
   const { user, isLoggedIn } = rootStore.userStore;
   const { openModal } = rootStore.modalStore;
@@ -21,7 +22,7 @@ const HomePage = () => {
           />
           WannaGo
         </Header>
-        {isLoggedIn && user ? (
+        {isLoggedIn && token && user ? (
           <Fragment>
             <Header
               as="h2"

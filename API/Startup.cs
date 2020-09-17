@@ -51,7 +51,7 @@ namespace API
                 opt.AddPolicy("CorsPolicy", policy =>
                 {
                     //the allow credentials is used for SignalR
-                    policy.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:3000");
+                    policy.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithExposedHeaders("WWW-Authenticate").WithOrigins("http://localhost:3000");
                 });
             });
 
@@ -103,7 +103,8 @@ namespace API
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = key,
                     ValidateAudience = false,
-                    ValidateIssuer = false
+                    ValidateIssuer = false,
+                    ValidateLifetime = true,
                 };
                 //hook into the on message recieved for the singalR event
                 opt.Events = new JwtBearerEvents
