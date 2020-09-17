@@ -10,6 +10,7 @@
 
 # production
 /build
+api/wwwroot
 
 # misc
 .DS_Store
