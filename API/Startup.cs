@@ -36,8 +36,8 @@ namespace API
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+
+        public void ConfigureDevelopmentServices(IServiceCollection services)
         {
             //add the DbContext as a service so that class libs can use it
             services.AddDbContext<DataContext>(opt =>
@@ -46,6 +46,24 @@ namespace API
                 opt.UseLazyLoadingProxies();
                 opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
             });
+            ConfigureServices(services);
+        }
+
+        public void ConfigureProductionServices(IServiceCollection services)
+        {
+            //add the DbContext as a service so that class libs can use it
+            services.AddDbContext<DataContext>(opt =>
+            {
+                //for lazy loading
+                opt.UseLazyLoadingProxies();
+                opt.UseMySql(Configuration.GetConnectionString("DefaultConnection"));
+            });
+            ConfigureServices(services);
+        }
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
+        {
+
             services.AddCors(opt =>
             {
                 opt.AddPolicy("CorsPolicy", policy =>

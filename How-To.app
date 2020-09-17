@@ -90,3 +90,5 @@ show databases;
 CREATE USER 'appuser'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Pa$$w0rd';
 GRANT ALL PRIVILEGES ON *.* TO 'appuser'@'localhost' WITH GRANT OPTION;
 flush privileges;
+#
+ dotnet user-secrets list
