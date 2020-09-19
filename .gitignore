@@ -5,6 +5,7 @@ obj
 appsettings.json
 *.db
 wwwroot
+publish
 
 # dependencies
 /node_modules

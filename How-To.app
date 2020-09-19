@@ -92,3 +92,53 @@ GRANT ALL PRIVILEGES ON *.* TO 'appuser'@'localhost' WITH GRANT OPTION;
 flush privileges;
 #
  dotnet user-secrets list
+
+
+ #how to
+ ssh 68.183.19.105
+ mysql -u root -p
+#setup mysql
+ - follow the install steps here: https://docs.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
+- configure apache
+a2enmod proxy proxy_http proxy_html rewrite
+
+sudo nano /etc/apache2/sites-available/reactivities.configure
+<VirtualHost *:80>
+ProxyPreserveHost On
+ProxyPass / http://127.0.0.1:5000
+ProxyPassReverse / http://127.0.01:5000
+
+ErrorLog /var/log/apache2/reactivities-error.log
+CustomLog /var/log/apache2/reactivities-access.log common
+
+RewriteEngine on
+RewriteCond %{HTTP:UPGRADE} ^WebSocet$ [NC]
+RewriteCond %{HTTP:CONNECTION} Upgrade$ [NC]
+RewriteRule /(.*) ws://127.0.0.1:5000/$1 [P]
+
+</VirtualHost>
+
+a2ensite reactivities
+
+There is some syntax error in the file apache2.conf.
+
+In a terminal, type:
+
+cd /etc/apache2
+Then:
+
+apache2ctl configtest
+
+There is some syntax error in the file apache2.conf.
+
+In a terminal, type:
+
+cd /etc/apache2
+Then:
+
+apache2ctl configtest
+
+--------
+BUILD
+use: npm run build
+to build the react app and deploy it into the API projects wwwroot folder
