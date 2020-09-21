@@ -1,11 +1,13 @@
-import React, { useEffect, useContext, useState } from "react";
-import { Grid, Loader } from "semantic-ui-react";
+import React, { useEffect, useContext, useState, Fragment } from "react";
+import { Button, Grid, Loader } from "semantic-ui-react";
 import ActivityList from "./ActivityList";
 import { observer } from "mobx-react-lite";
 import { RootStoreContext } from "../../../app/stores/rootStore";
 import InfiniteScroll from "react-infinite-scroller";
 import ActivityFilters from "./ActivityFilters";
 import ActivityListItemPlaceholder from "./ActivityListItemPlaceholder";
+import Map from "../../../app/common/map/Map";
+import { NavLink } from "react-router-dom";
 
 const ActivityDashboard: React.FC = () => {
   const rootStore = useContext(RootStoreContext);
@@ -33,41 +35,42 @@ const ActivityDashboard: React.FC = () => {
   }, [loadActivities]);
 
   return (
-    <Grid>
-      {/* <Grid.Row>
-        <Segment clearing>
-        <ActivityMap
-          isMarkerShown
-          googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIWR5j2ebr6JoplIEQyn5fh4_Pw-7Pr3c&v=3.exp"
-          loadingElement={<div style={{ height: `100%`, width: `100%` }} />}
-          containerElement={<div style={{ height: `400px` , width: `400`}} />}
-          mapElement={<div style={{ height: `100%` , width: `100%`}} />}
+    <Fragment>
+
+      <Grid className="mainPageGrid">
+        <Button
+          as={NavLink}
+          to="/createActivity"
+          positive
+          // content="Create Activity"
+          icon="plus"
+          circular
+          size="massive"
+          className="createActivityBtn"
         />
-        </Segment>
-      </Grid.Row> */}
-      <Grid.Row>
-        <Grid.Column width={10}>
-          {loadingInitial && page === 0 ? (
-            <ActivityListItemPlaceholder />
-          ) : (
-            <InfiniteScroll
-              pageStart={0}
-              loadMore={handlerGetNext}
-              hasMore={!loadingNext && page + 1 < totalPages}
-              initialLoad={false}
-            >
-              <ActivityList />
-            </InfiniteScroll>
-          )}
-        </Grid.Column>
-        <Grid.Column width={6}>
+        <Grid.Row>
+          <Grid.Column width={16}>
           <ActivityFilters />
-        </Grid.Column>
-        <Grid.Column width={10}>
-          <Loader active={loadingNext} />
-        </Grid.Column>
-      </Grid.Row>
-    </Grid>
+            {loadingInitial && page === 0 ? (
+              <ActivityListItemPlaceholder />
+            ) : (
+              <InfiniteScroll
+                pageStart={0}
+                loadMore={handlerGetNext}
+                hasMore={!loadingNext && page + 1 < totalPages}
+                initialLoad={false}
+              >
+                <ActivityList />
+              </InfiniteScroll>
+            )}
+          </Grid.Column>
+
+          <Grid.Column width={16}>
+            <Loader active={loadingNext} />
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+    </Fragment>
   );
 };
 

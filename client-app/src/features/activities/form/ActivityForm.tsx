@@ -82,7 +82,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
 
   return (
     <Grid>
-      <Grid.Column width={10}>
+      <Grid.Column width={16} className='activityForm'>
         <Segment clearing>
           <FinalForm
             validate={validate}
@@ -152,8 +152,8 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
                 <Button
                   onClick={
                     activity.id
-                      ? () => history.push("/activities")
-                      : () => history.push(`/activities/${activity.id}`)
+                      ? () => history.push(`/activities/${activity.id}`)
+                      : () => history.push("/activities")
                   }
                   floated="right"
                   type="button"

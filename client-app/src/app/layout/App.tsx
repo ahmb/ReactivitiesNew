@@ -20,11 +20,13 @@ import { LoadingComponent } from "./LoadingComponent";
 import ModalContainer from "../common/modals/ModalContainer";
 import ProfilePage from "../../features/profiles/ProfilePage";
 import PrivateRoute from "./PrivateRoute";
+import Map from "../common/map/Map";
 
 const App: React.FC<RouteComponentProps> = ({ location }) => {
   const rootStore = useContext(RootStoreContext);
   const { setAppLoaded, token, appLoaded } = rootStore.commonStore;
   const { getUser } = rootStore.userStore;
+  const isHomePage = location.pathname === "/activities";
 
   useEffect(() => {
     if (token) {
@@ -46,16 +48,28 @@ const App: React.FC<RouteComponentProps> = ({ location }) => {
         render={() => (
           <Fragment>
             <NavBar />
-            <Container style={{ marginTop: "7em" }}>
+            {isHomePage && <Map />}
+            {/* <Container style={{ marginTop: "7em" }}> */}
+            <Container>
               <Switch>
-                <PrivateRoute exact path="/activities" component={ActivityDashboard} />
-                <PrivateRoute path="/activities/:id" component={ActivityDetails} />
+                <PrivateRoute
+                  exact
+                  path="/activities"
+                  component={ActivityDashboard}
+                />
+                <PrivateRoute
+                  path="/activities/:id"
+                  component={ActivityDetails}
+                />
                 <PrivateRoute
                   key={location.key}
                   path={["/createActivity", "/manage/:id"]}
                   component={ActivityForm}
                 />
-                <PrivateRoute path="/profile/:username" component={ProfilePage} />
+                <PrivateRoute
+                  path="/profile/:username"
+                  component={ProfilePage}
+                />
                 <Route component={NotFound} />
               </Switch>
             </Container>

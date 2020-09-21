@@ -34,7 +34,7 @@ const ActivityListItem: React.FC<{ activity: IActivity }> = ({ activity }) => {
                   <Label
                     basic
                     color="green"
-                    content="You are hosting this activity"
+                    content="HOSTING"
                   />
                 </Item.Description>
               )}
@@ -43,7 +43,7 @@ const ActivityListItem: React.FC<{ activity: IActivity }> = ({ activity }) => {
                   <Label
                     basic
                     color="orange"
-                    content="You are attending this activity"
+                    content="ATTENDING"
                   />
                 </Item.Description>
               )}

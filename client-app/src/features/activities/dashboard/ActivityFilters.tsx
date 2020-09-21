@@ -7,43 +7,56 @@ import { observer } from "mobx-react-lite";
 const ActivityFilters = () => {
   const rootStore = useContext(RootStoreContext);
   const { predicate, setPredicate } = rootStore.activityStore;
+  const { openModal } = rootStore.modalStore;
 
   return (
     <Fragment>
-      <Menu vertical size={"large"} style={{ width: "100%", marginTop: 50 }}>
-        <Header icon={"filter"} attached color={"teal"} content={"Filters"} />
+      <Menu className='filtersHeader' horizontal size={"large"} style={{ width: "100%"}}>
+        <Header icon={"filter"} attached color={"blue"} content={"Filters"} />
         <Menu.Item
           active={predicate.size === 0}
           onClick={() => setPredicate("all", "true")}
           color={"blue"}
           name={"all"}
-          content={"All Activities"}
+          content={"All"}
         />
         <Menu.Item
           active={predicate.has("isGoing")}
           onClick={() => setPredicate("isGoing", "true")}
           color={"blue"}
           name={"username"}
-          content={"I'm Going"}
+          content={"Attending"}
         />
         <Menu.Item
           active={predicate.has("isHost")}
           onClick={() => setPredicate("isHost", "true")}
           color={"blue"}
           name={"host"}
-          content={"I'm hosting"}
+          content={"Hosting"}
+        />
+        <Menu.Item
+          color={"blue"}
+          name={"calendar"}
+          content={"Date"}
+          icon="calendar"
+          onClick={()=> openModal(
+            <Calendar
+              onChange={(date) => setPredicate("startDate", date!)}
+              value={predicate.get("startDate") || new Date()}
+            />
+          )}
         />
       </Menu>
-      <Header
+      {/* <Header
         icon={"calendar"}
         attached
-        color={"teal"}
+        color={"blue"}
         content={"Select Date"}
       />
       <Calendar
         onChange={(date) => setPredicate("startDate", date!)}
         value={predicate.get("startDate") || new Date()}
-      />
+      /> */}
     </Fragment>
   );
 };
