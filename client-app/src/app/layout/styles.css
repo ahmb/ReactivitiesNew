@@ -40,10 +40,23 @@ a.ui.massive.circular.icon.positive.button.createActivityBtn {
 
 .ui.large.filtersHeader.menu{
   margin-top:0px;
+  width:100%;
 }
 
 .activityForm {
   margin-top: 100px;
+}
+
+.sticky {
+  top:0; 
+  position: -webkit-sticky; /* Safari */;
+  position: sticky;
+  z-index: 100;
+}
+.stickyWrapper{
+  padding-top: 50px;
+  margin-bottom: 10px;
+  margin-top: -50px;
 }
 
 /*home page styles*/

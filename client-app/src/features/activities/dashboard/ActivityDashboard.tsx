@@ -1,4 +1,9 @@
-import React, { useEffect, useContext, useState, Fragment } from "react";
+import React, {
+  useEffect,
+  useContext,
+  useState,
+  Fragment,
+} from "react";
 import { Button, Grid, Loader } from "semantic-ui-react";
 import ActivityList from "./ActivityList";
 import { observer } from "mobx-react-lite";
@@ -6,7 +11,6 @@ import { RootStoreContext } from "../../../app/stores/rootStore";
 import InfiniteScroll from "react-infinite-scroller";
 import ActivityFilters from "./ActivityFilters";
 import ActivityListItemPlaceholder from "./ActivityListItemPlaceholder";
-import Map from "../../../app/common/map/Map";
 import { NavLink } from "react-router-dom";
 
 const ActivityDashboard: React.FC = () => {
@@ -36,7 +40,6 @@ const ActivityDashboard: React.FC = () => {
 
   return (
     <Fragment>
-
       <Grid className="mainPageGrid">
         <Button
           as={NavLink}
@@ -50,7 +53,8 @@ const ActivityDashboard: React.FC = () => {
         />
         <Grid.Row>
           <Grid.Column width={16}>
-          <ActivityFilters />
+            <ActivityFilters />
+
             {loadingInitial && page === 0 ? (
               <ActivityListItemPlaceholder />
             ) : (

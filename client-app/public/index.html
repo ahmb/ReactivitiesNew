@@ -4,7 +4,10 @@
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v11/mapbox-gl.css' rel='stylesheet' />
+    <link
+      href="https://api.tiles.mapbox.com/mapbox-gl-js/v11/mapbox-gl.css"
+      rel="stylesheet"
+    />
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
@@ -27,7 +30,7 @@
     -->
     <title>WannaGo</title>
   </head>
-  <body style="background-image:url(bg.png);background-repeat: repeat;">
+  <body style="background-image: url(bg.png); background-repeat: repeat">
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root">
       <div
@@ -50,4 +53,19 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
   </body>
+  <script>
+    // Get the navbar
+    var navbar = document.getElementById("filterBar");
+
+    // Get the offset position of the navbar
+    var sticky = navbar.offsetTop;
+    const stickyFunct = () => {
+      if (window.pageYOffset >= sticky) {
+        navbar.classList.add("sticky");
+      } else {
+        navbar.classList.remove("sticky");
+      }
+    };
+    window.onscroll = stickyFunct();
+  </script>
 </html>

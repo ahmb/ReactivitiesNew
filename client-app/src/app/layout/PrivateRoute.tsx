@@ -7,7 +7,6 @@ import { observer } from 'mobx-react-lite';
 
 interface IProps extends RouteProps {
     component: React.ComponentType<RouteComponentProps<any>>
-
 }
 
 const PrivateRoute: React.FC<IProps> = ({component: Component, ...rest}) => {
