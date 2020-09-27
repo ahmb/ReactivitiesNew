@@ -20,7 +20,7 @@ import { LoadingComponent } from "./LoadingComponent";
 import ModalContainer from "../common/modals/ModalContainer";
 import ProfilePage from "../../features/profiles/ProfilePage";
 import PrivateRoute from "./PrivateRoute";
-import Map from "../common/map/Map";
+import Mapi from "../common/map/Map";
 
 const App: React.FC<RouteComponentProps> = ({ location }) => {
   const rootStore = useContext(RootStoreContext);
@@ -48,7 +48,7 @@ const App: React.FC<RouteComponentProps> = ({ location }) => {
         render={() => (
           <Fragment>
             <NavBar />
-            {isHomePage && <Map />}
+            {isHomePage && <Mapi />}
             {/* <Container style={{ marginTop: "7em" }}> */}
             <Container>
               <Switch>

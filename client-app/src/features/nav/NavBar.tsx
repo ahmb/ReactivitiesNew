@@ -9,7 +9,7 @@ const NavBar: React.FC = () => {
   const { user, logout } = rootStore.userStore;
   // console.log(user);
   return (
-    <Menu fixed="top" inverted borderless size='large'>
+    <Menu fixed="top" inverted borderless size='small'>
       <Container>
         <Menu.Item header as={NavLink} exact to="/activities" >
           <img src="/assets/logo.png" alt="logo" style={{ marginRight: 10 }} />
@@ -26,8 +26,8 @@ const NavBar: React.FC = () => {
             circular
           />
         </Menu.Item> */}
-        <Menu.Item name="Messages" as={NavLink} to="/" />
-        <Menu.Item name="My Activities" as={NavLink} to="/activities" />
+        <Menu.Item name="Explore" as={NavLink} to="/" />
+        <Menu.Item name="Mesages" as={NavLink} to="/activities" />
 
         {user && (
           <Menu.Item position="right">

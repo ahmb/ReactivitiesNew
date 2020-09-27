@@ -18,6 +18,9 @@ namespace Application.Activities
 
         public string City { get; set; }
         public string Venue { get; set; }
+        public double Latitude { get; set; }
+
+        public double Longitude { get; set; }
 
         //list of AppUsers attending an activity i.e. Attendees
         [JsonPropertyName("attendees")]

@@ -58,6 +58,8 @@ namespace Persistance
                         Category = "Drinks",
                         City = "London",
                         Venue = "Pub",
+                        Latitude = 43.665991758d,
+                        Longitude = -79.411582548d,
                         UserActivities = new List<UserActivity>
                         {
                             new UserActivity
@@ -76,6 +78,8 @@ namespace Persistance
                         Category = "Culture",
                         City = "Paris",
                         Venue = "The Louvre",
+                        Latitude = 43.670706062d,
+                        Longitude = -79.385879814d,
                         UserActivities = new List<UserActivity>
                         {
                             new UserActivity
@@ -100,6 +104,8 @@ namespace Persistance
                         Category = "Music",
                         City = "London",
                         Venue = "Wembly Stadium",
+                        Latitude = 43.660665098d,
+                        Longitude = -79.435955802d,
                         UserActivities = new List<UserActivity>
                         {
                             new UserActivity
@@ -124,6 +130,8 @@ namespace Persistance
                         Category = "Food",
                         City = "London",
                         Venue = "Jamies Italian",
+                        Latitude = 43.667647755d,
+                        Longitude = -79.403758401d,
                         UserActivities = new List<UserActivity>
                         {
                             new UserActivity
@@ -148,6 +156,8 @@ namespace Persistance
                         Category = "Drinks",
                         City = "London",
                         Venue = "Pub",
+                        Latitude = 43.676861715d,
+                        Longitude = -79.358523845d,
                         UserActivities = new List<UserActivity>
                         {
                             new UserActivity
@@ -172,6 +182,8 @@ namespace Persistance
                         Category = "Culture",
                         City = "London",
                         Venue = "British Museum",
+                        Latitude = 43.676861715d,
+                        Longitude = -79.358523845d,
                         UserActivities = new List<UserActivity>
                         {
                             new UserActivity
@@ -190,6 +202,8 @@ namespace Persistance
                         Category = "Drinks",
                         City = "London",
                         Venue = "Punch and Judy",
+                        Latitude = 43.68414917d,
+                        Longitude = -79.323527235d,
                         UserActivities = new List<UserActivity>
                         {
                             new UserActivity
@@ -214,6 +228,8 @@ namespace Persistance
                         Category = "Music",
                         City = "London",
                         Venue = "O2 Arena",
+                        Latitude = 43.694320822d,
+                        Longitude = -79.290318935d,
                         UserActivities = new List<UserActivity>
                         {
                             new UserActivity
@@ -238,6 +254,8 @@ namespace Persistance
                         Category = "Travel",
                         City = "Berlin",
                         Venue = "All",
+                        Latitude = 43.732118151d,
+                        Longitude = -79.265698446d,
                         UserActivities = new List<UserActivity>
                         {
                             new UserActivity
@@ -262,6 +280,8 @@ namespace Persistance
                         Category = "Drinks",
                         City = "London",
                         Venue = "Pub",
+                        Latitude = 43.648804442d,
+                        Longitude = -79.511540512d,
                         UserActivities = new List<UserActivity>
                         {
                             new UserActivity

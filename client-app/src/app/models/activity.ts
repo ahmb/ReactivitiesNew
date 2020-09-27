@@ -1,4 +1,4 @@
-export interface IActivitiesEnvelope{
+export interface IActivitiesEnvelope {
   activities: IActivity[];
   activityCount: number;
 }
@@ -11,13 +11,15 @@ export interface IActivity {
   date: Date;
   city: string;
   venue: string;
+  latitude: number;
+  longitude: number;
   isGoing: boolean;
   isHost: boolean;
   attendees: IAttendee[];
   comments: IComment[];
 }
 
-//created to match the comment DTO 
+//created to match the comment DTO
 export interface IComment {
   id: string;
   createdAt: Date;

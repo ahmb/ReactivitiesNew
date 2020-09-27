@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Domain
 {
@@ -9,6 +10,8 @@ namespace Domain
 
         //added virtual because itll be lazily loaded
         public virtual AppUser AppUser { get; set; }
+        
+        [MaxLength(255)]
         public Guid ActivityId { get; set; }
 
         //added virtual because itll be lazily loaded

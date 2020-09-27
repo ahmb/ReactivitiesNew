@@ -1,10 +1,9 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Persistance.Migrations
 {
-    public partial class RefreshMySql : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,7 +17,9 @@ namespace Persistance.Migrations
                     Category = table.Column<string>(nullable: true),
                     Date = table.Column<DateTime>(nullable: false),
                     City = table.Column<string>(nullable: true),
-                    Venue = table.Column<string>(nullable: true)
+                    Venue = table.Column<string>(nullable: true),
+                    Longitude = table.Column<double>(nullable: false),
+                    Latitude = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -71,7 +72,7 @@ namespace Persistance.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -84,7 +85,7 @@ namespace Persistance.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -105,7 +106,7 @@ namespace Persistance.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -261,7 +262,7 @@ namespace Persistance.Migrations
                 columns: table => new
                 {
                     AppUserId = table.Column<string>(nullable: false),
-                    ActivityId = table.Column<Guid>(nullable: false),
+                    ActivityId = table.Column<Guid>(maxLength: 255, nullable: false),
                     DateJoined = table.Column<DateTime>(nullable: false),
                     IsHost = table.Column<bool>(nullable: false)
                 },

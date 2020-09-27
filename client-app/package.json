@@ -36,7 +36,7 @@
     "react-google-maps": "^9.4.5",
     "react-infinite-scroller": "^1.2.4",
     "react-map-gl": "^5.2.8",
-    "react-map-gl-geocoder": "^2.1.2",
+    "react-map-gl-geocoder": "^2.1.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.3",
     "react-sticky-nav": "^4.0.6",
