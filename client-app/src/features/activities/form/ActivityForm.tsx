@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, Fragment } from "react";
 import { Form, Segment, Button, Grid } from "semantic-ui-react";
 import { ActivityFormValues } from "../../../app/models/activity";
 import { v4 as uuid } from "uuid";
@@ -18,6 +18,7 @@ import {
   composeValidators,
 } from "revalidate";
 import { RootStoreContext } from "../../../app/stores/rootStore";
+import LocationInput from "../../../app/common/form/LocationInput";
 
 const validate = combineValidators({
   title: isRequired({ message: "The event title is required" }),
@@ -81,91 +82,133 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
   };
 
   return (
-    <Grid>
-      <Grid.Column width={16} className='activityForm'>
-        <Segment clearing>
-          <FinalForm
-            validate={validate}
-            initialValues={activity}
-            onSubmit={handleFinalFormSubmit}
-            render={({ handleSubmit, invalid, pristine }) => (
-              <Form onSubmit={handleSubmit} loading={loading}>
-                <Field
-                  name="title"
-                  placeholder="Title"
-                  value={activity.title}
-                  component={TextInput}
-                />
-                <Field
-                  name="description"
-                  component={TextAreaInput}
-                  rows={3}
-                  placeholder="Description"
-                  value={activity.description}
-                />
-                <Field
-                  name="category"
-                  placeholder="Category"
-                  component={SelectInput}
-                  value={activity.category}
-                  options={category}
-                />
-                <Form.Group widths="equal">
+    <Fragment>
+      <Grid>
+        <Grid.Column width={16} className="activityForm">
+          <Segment clearing>
+            <FinalForm
+              validate={validate}
+              initialValues={activity}
+              onSubmit={handleFinalFormSubmit}
+              render={({ handleSubmit, invalid, pristine }) => (
+                <Form onSubmit={handleSubmit} loading={loading}>
                   <Field
-                    name="date"
-                    // type="datetime-local"
-                    placeholder="Date"
-                    component={DateInput}
-                    value={activity.date}
-                    date={true}
+                    name="title"
+                    placeholder="Title"
+                    value={activity.title}
+                    component={TextInput}
                   />
                   <Field
-                    name="time"
-                    // type="datetime-local"
-                    placeholder="Time"
-                    component={DateInput}
-                    value={activity.time}
-                    time={true}
+                    name="description"
+                    component={TextAreaInput}
+                    rows={3}
+                    placeholder="Description"
+                    value={activity.description}
                   />
-                </Form.Group>
+                  <Field
+                    name="category"
+                    placeholder="Category"
+                    component={SelectInput}
+                    value={activity.category}
+                    options={category}
+                  />
+                  <Form.Group widths="equal">
+                    <Field
+                      name="date"
+                      // type="datetime-local"
+                      placeholder="Date"
+                      component={DateInput}
+                      value={activity.date}
+                      date={true}
+                    />
+                    <Field
+                      name="time"
+                      // type="datetime-local"
+                      placeholder="Time"
+                      component={DateInput}
+                      value={activity.time}
+                      time={true}
+                    />
+                  </Form.Group>
 
-                <Field
-                  name="city"
-                  placeholder="City"
-                  component={TextInput}
-                  value={activity.city}
-                />
-                <Field
-                  name="venue"
+                  <Field
+                    name="city"
+                    placeholder="City"
+                    component={TextInput}
+                    value={activity.city}
+                  />
+                  {/* <Field
+                    name="venue"
+                    placeholder="Venue"
+                    component={TextInput}
+                    value={activity.venue}
+                  /> */}
+                  <Field
+                    name="venue"
+                    placeholder="Venue"
+                    component={LocationInput}
+                    value={activity.venue}
+                  />
+
+                  {/* <div ref={geocoderContainerRef}/> */}
+                  {/* <Geocoder
+                  // containerRef={geocoderContainerRef}
+                  mapboxApiAccessToken={MAPBOX_TOKEN}
+                  className="geoCoder"
+                  mapRef = {mapRef}
+                  onResult= {()=>console.log('mapboxResult')}
+                /> */}
+                  {/* <Field
+                  name="venuee"
                   placeholder="Venue"
-                  component={TextInput}
-                  value={activity.venue}
-                />
-                <Button
-                  loading={submitting}
-                  floated="right"
-                  positive
-                  type="submit"
-                  content="Submit"
-                  disabled={loading || pristine || invalid}
-                />
-                <Button
-                  onClick={
-                    activity.id
-                      ? () => history.push(`/activities/${activity.id}`)
-                      : () => history.push("/activities")
-                  }
-                  floated="right"
-                  type="button"
-                  content="Cancel"
-                  disabled={loading}
-                />
-              </Form>
-            )}
-          />
-        </Segment>
-      </Grid.Column>
-    </Grid>
+                  ref={geocoderContainerRef}
+                  component={((props) => (
+                    <Fragment>
+                      <div 
+                      ref={geocoderContainerRef} 
+                      />
+                      <Geocoder
+                        containerRef={geocoderContainerRef}
+                        mapboxApiAccessToken={MAPBOX_TOKEN}
+                        className="geoCoder"
+                        
+                      />
+                    </Fragment>
+                  ))}
+                /> */}
+
+                  {/* <Geocoder
+                  containerRef={geocoderContainerRef}
+                  mapboxApiAccessToken={MAPBOX_TOKEN}
+                  className="geoCoder"
+                  
+                /> */}
+                  <Button
+                    loading={submitting}
+                    floated="right"
+                    positive
+                    type="submit"
+                    content="Submit"
+                    disabled={loading || pristine || invalid}
+                  />
+                  <Button
+                    onClick={
+                      activity.id
+                        ? () => history.push(`/activities/${activity.id}`)
+                        : () => history.push("/activities")
+                    }
+                    floated="right"
+                    type="button"
+                    content="Cancel"
+                    disabled={loading}
+                  />
+                </Form>
+              )}
+            />
+          </Segment>
+        </Grid.Column>
+      </Grid>
+    </Fragment>
   );
 };
 

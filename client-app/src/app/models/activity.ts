@@ -42,6 +42,8 @@ export class ActivityFormValues implements IActivityFormValues {
   time?: Date = undefined;
   city: string = "";
   venue: string = "";
+  latitude: number = 0;
+  longitude: number = 0;
 
   constructor(init?: IActivityFormValues) {
     if (init && init.date) {

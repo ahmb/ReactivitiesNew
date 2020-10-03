@@ -41,14 +41,6 @@ const Mapi: React.FC = () => {
     display: "none",
   };
 
-  // const [popUpMap, setPopUpMap] = useState<
-  //   {
-  //     popUpId: string;
-  //     popUpState: boolean;
-  //   }[]
-  // >([{ popUpId: "", popUpState: false }]);
-
-
   const [toolTipArray, setToolTipArray] = useState<string[]>([]);
 
   const geolocateStyle: React.CSSProperties = {
@@ -57,13 +49,6 @@ const Mapi: React.FC = () => {
     left: 200,
     margin: 10,
   };
-
-  //   return (
-  //     <ReactMapGL
-  //       {...viewport}
-  //       mapboxApiAccessToken={MAPBOX_TOKEN}
-  //       onViewportChange={nextViewport => setViewport(nextViewport)}
-  //     />
 
   return (
     <div style={{}}>
@@ -98,15 +83,37 @@ const Mapi: React.FC = () => {
         {Array.from(activityRegistry.values()).map((activity: IActivity) => (
           <Fragment key={activity.id + "f"}>
             <div
-              onClick={() => {
-                var find = toolTipArray.find(element => element === activity.id);
-                if(find){
-                  setToolTipArray(toolTipArray.filter(el => el !== activity.id));
-                }else {
-                  setToolTipArray([...toolTipArray,activity.id]);
+              onMouseOver={() => {
+                var find = toolTipArray.find(
+                  (element) => element === activity.id
+                );
+                if (!find) {
+                  setToolTipArray([...toolTipArray, activity.id]);
                 }
-                console.log(toolTipArray);
               }}
+              onMouseLeave={() => {
+                var find = toolTipArray.find(
+                  (element) => element === activity.id
+                );
+                if (find) {
+                  setToolTipArray(
+                    toolTipArray.filter((el) => el !== activity.id)
+                  );
+                }
+              }}
+              // onClick={() => {
+              //   var find = toolTipArray.find(
+              //     (element) => element === activity.id
+              //   );
+              //   if (find) {
+              //     setToolTipArray(
+              //       toolTipArray.filter((el) => el !== activity.id)
+              //     );
+              //   } else {
+              //     setToolTipArray([...toolTipArray, activity.id]);
+              //   }
+              //   // console.log(toolTipArray);
+              // }}
             >
               <Marker
                 key={activity.id}
@@ -116,22 +123,23 @@ const Mapi: React.FC = () => {
                 <Pin size={30} />
               </Marker>
             </div>
+            
 
-            {toolTipArray.some((v,i,a) => v === activity.id) &&
+            {toolTipArray.some((v, i, a) => v === activity.id) && (
               <Popup
                 key={activity.id + "p"}
-                offsetLeft={10}
-                offsetTop={20}
+                offsetLeft={15}
+                offsetTop={0}
                 latitude={activity.latitude}
                 longitude={activity.longitude}
-                anchor="top"
+                anchor="bottom"
                 tipSize={10}
                 closeButton={false}
                 closeOnClick={false}
               >
                 <div>{activity.title}</div>
               </Popup>
-            }
+            )}
           </Fragment>
         ))}
       </MapGL>
