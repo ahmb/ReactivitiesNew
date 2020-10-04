@@ -10,18 +10,10 @@ body {
 
 .mapboxMap {
   z-index: -1;
+  overflow: visible;
+  margin-top:20px;
 }
 
-/* src/App.css */
-.map-container {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 300px;
-  width: 300px;
-}
 
 .mainPageGrid {
   background-color: rgb(234, 234, 234) !important;
@@ -50,8 +42,9 @@ a.ui.massive.circular.icon.positive.button.createActivityBtn {
 }
 
 .ui.large.filtersHeader.menu{
-  margin-top:0px;
+  margin-top:15px;
   width:100%;
+  margin-bottom: 10px;
 }
 
 .activityForm {
@@ -63,12 +56,17 @@ a.ui.massive.circular.icon.positive.button.createActivityBtn {
 
 }
 
+.react-geocoder-results{
+  color: white;
+  outline: black;
+}
+
 .sticky {
   position: -webkit-sticky; /* Safari */;
   position: sticky;
   z-index: 100;
-  padding-top: 55px;
-  margin-top: -55px;
+  padding-top: 35px;
+  margin-top: -40px;
   /* animation: moveDown 0.5s ease-in-out; */
 }
 @keyframes moveDown {

@@ -56,6 +56,23 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
 
   const [activity, setActivity] = useState(new ActivityFormValues());
 
+  const [longitude, setLongitude] = useState(0);
+  const [latitude, setLatitude] = useState(0);
+
+
+  const updateLatLong = (latitide: number, longitude: number) => {
+      activity.longitude = longitude;
+      activity.latitude = latitide;
+    setActivity(activity);
+    setLongitude(longitude);
+    setLatitude(latitide);
+    console.log("updateLatLong:");
+    console.log(activity);
+    console.log(latitude);
+    console.log(longitude);
+  }
+
+
   useEffect(() => {
     if (match.params.id) {
       setLoading(true);
@@ -66,9 +83,16 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
   }, [loadActivity, match.params.id]);
 
   const handleFinalFormSubmit = (values: any) => {
+    console.log("these are the values being submitted:" + values);
     const dateAndTime = combineDateAndTime(values.date, values.time);
     const { date, time, ...activity } = values;
+    console.log(latitude);
+    console.log(longitude);
     activity.date = dateAndTime;
+    activity.longitude = longitude;
+    activity.latitude = latitude;
+    console.log(activity)
+
 
     if (!activity.id) {
       let newActivity = {
@@ -148,41 +172,8 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
                     placeholder="Venue"
                     component={LocationInput}
                     value={activity.venue}
+                    setLatLong={updateLatLong}
                   />
-
-                  {/* <div ref={geocoderContainerRef}/> */}
-                  {/* <Geocoder
-                  // containerRef={geocoderContainerRef}
-                  mapboxApiAccessToken={MAPBOX_TOKEN}
-                  className="geoCoder"
-                  mapRef = {mapRef}
-                  onResult= {()=>console.log('mapboxResult')}
-                /> */}
-                  {/* <Field
-                  name="venuee"
-                  placeholder="Venue"
-                  ref={geocoderContainerRef}
-                  component={((props) => (
-                    <Fragment>
-                      <div 
-                      ref={geocoderContainerRef} 
-                      />
-                      <Geocoder
-                        containerRef={geocoderContainerRef}
-                        mapboxApiAccessToken={MAPBOX_TOKEN}
-                        className="geoCoder"
-                        
-                      />
-                    </Fragment>
-                  ))}
-                /> */}
-
-                  {/* <Geocoder
-                  containerRef={geocoderContainerRef}
-                  mapboxApiAccessToken={MAPBOX_TOKEN}
-                  className="geoCoder"
-                  
-                /> */}
                   <Button
                     loading={submitting}
                     floated="right"

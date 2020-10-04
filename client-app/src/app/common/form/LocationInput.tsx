@@ -11,7 +11,7 @@ interface IProps
 const mapboxApiKey = process.env.REACT_APP_MAPBOX_TOKEN || "";
 
 const params = {
-  country: "ca",
+  country: "ca,us",
 };
 
 const LocationInput: React.FC<IProps> = ({
@@ -21,22 +21,30 @@ const LocationInput: React.FC<IProps> = ({
   rows,
   placeholder,
   meta,
+  setLatLong,
 }) => {
-  const { value } = input;
+//   const { value } = input;
 
   const [viewPort, setViewPort] = useState({
-    latitude: 45.50884,
-    longitude: -73.58781,
+    latitude: 0,
+    longitude: 0,
     zoom: 15,
   });
- const {touched, error } = meta
+  const { touched, error } = meta;
   const onSelected = (viewport: any, item: any) => {
     console.log(viewport);
     console.log(item);
+    console.log(item.place_name);
+    input.onChange(item.place_name);
+    setLatLong(item.center[1],item.center[0])
+  };
+
+  const onChange = (e: any, data: any) => {
+ console.log(e, data)
   };
 
   useEffect(() => {
-    console.log(value);
+    console.log(input.value);
     console.log(placeholder);
   });
 
@@ -48,32 +56,33 @@ const LocationInput: React.FC<IProps> = ({
       width={width}
     >
       {/* <input {...input} placeholder={placeholder} /> */}
-      {value &&
-            <Geocoder
-            mapboxApiAccessToken={mapboxApiKey}
-            hideOnSelect={false}
-            updateInputOnSelect={true}
-            queryParams={params}
-            onSelected={onSelected}
-            initialInputValue={value}
-            // initialInputValue={value}
-            viewport={viewPort}
-            limit={4}
-            // inputComponent={<TextInput input={input} meta={meta} placeholder={placeholder}/>}
-          />
-      }
-   {!value &&    <Geocoder
-        mapboxApiAccessToken={mapboxApiKey}
-        hideOnSelect={false}
-        updateInputOnSelect={true}
-        queryParams={params}
-        onSelected={onSelected}
-        initialInputValue={placeholder}
-        // initialInputValue={value}
-        viewport={viewPort}
-        limit={4}
-        // inputComponent={<TextInput input={input} meta={meta} placeholder={placeholder}/>}
-      />}
+      {input.value && (
+        <Geocoder
+          mapboxApiAccessToken={mapboxApiKey}
+          hideOnSelect={false}
+          updateInputOnSelect={true}
+          queryParams={params}
+          onSelected={onSelected}
+          initialInputValue={input.value}
+          viewport={viewPort}
+          limit={4}
+          // inputComponent={<TextInput input={input} meta={meta} placeholder={placeholder}/>}
+        />
+      )}
+      {!input.value && (
+        <Geocoder
+          mapboxApiAccessToken={mapboxApiKey}
+          hideOnSelect={false}
+          updateInputOnSelect={true}
+          queryParams={params}
+          onSelected={onSelected}
+          initialInputValue={placeholder}
+          // initialInputValue={value}
+          viewport={viewPort}
+          limit={4}
+          // inputComponent={<TextInput input={input} meta={meta} placeholder={placeholder}/>}
+        />
+      )}
       {touched && error && (
         <Label basic color="red">
           {error}

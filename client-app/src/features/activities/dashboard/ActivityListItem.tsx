@@ -72,8 +72,8 @@ const ActivityListItem: React.FC<{ activity: IActivity }> = ({ activity }) => {
           to={`/activities/${activity.id}`}
           // onClick={() => selectActivity(activity.id)}
           floated="right"
-          content="View"
-          color="blue"
+          content="Details"
+          color="twitter"
         />
       </Segment>
     </Segment.Group>

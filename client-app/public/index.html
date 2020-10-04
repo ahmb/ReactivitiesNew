@@ -56,15 +56,19 @@
   </body>
   <script>
     // Get the navbar
-    var navbar = document.getElementById("filterBar");
 
     // Get the offset position of the navbar
-    var sticky = navbar.offsetTop;
+
     const stickyFunct = () => {
-      if (window.pageYOffset >= sticky) {
-        navbar.classList.add("sticky");
-      } else {
-        navbar.classList.remove("sticky");
+      var navbar = document.getElementById("filterBar");
+      var stickyOffset = 0;
+      if (navbar) {
+        stickyOffset = navbar.offsetTop;
+        if (window.pageYOffset >= stickyOffset) {
+          navbar.classList.add("sticky");
+        } else {
+          navbar.classList.remove("sticky");
+        }
       }
     };
     window.onscroll = stickyFunct();

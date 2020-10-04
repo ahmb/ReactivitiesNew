@@ -48,7 +48,7 @@ const App: React.FC<RouteComponentProps> = ({ location }) => {
         render={() => (
           <Fragment>
             <NavBar />
-            {isHomePage && <Mapi />}
+            {/* {isHomePage && <Mapi />} */}
             {/* <Container style={{ marginTop: "7em" }}> */}
             <Container>
               <Switch>

@@ -24,6 +24,9 @@ namespace Application.Activities
 
             public string City { get; set; }
             public string Venue { get; set; }
+            public double Latitude { get; set; }
+
+            public double Longitude { get; set; }
 
         }
 
@@ -37,6 +40,8 @@ namespace Application.Activities
                 RuleFor(x => x.Date).NotEmpty();
                 RuleFor(x => x.Venue).NotEmpty();
                 RuleFor(x => x.City).NotEmpty();
+                RuleFor(x => x.Longitude).NotEmpty();
+                RuleFor(x => x.Latitude).NotEmpty();
             }
         }
 
@@ -61,13 +66,17 @@ namespace Application.Activities
                     Category = request.Category,
                     Date = request.Date,
                     City = request.City,
-                    Venue = request.Venue
+                    Venue = request.Venue,
+                    Longitude = request.Longitude,
+                    Latitude = request.Latitude,
+
                 };
                 _context.Activities.Add(activity);
 
                 AppUser user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUsername());
 
-                UserActivity attendee = new UserActivity{
+                UserActivity attendee = new UserActivity
+                {
                     AppUser = user,
                     Activity = activity,
                     IsHost = true,

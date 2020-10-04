@@ -87,7 +87,7 @@ const ActivityFilters: React.FC = () => {
               )
             }
           />
-          {isSticky && (
+          
             <Menu.Menu position="right">
               <Button
                 as={NavLink}
@@ -101,7 +101,7 @@ const ActivityFilters: React.FC = () => {
                 id='stickyButton'
               />
             </Menu.Menu>
-          )}
+          
         </Menu>
       </div>
     </Fragment>

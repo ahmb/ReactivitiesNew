@@ -36,6 +36,7 @@ const Mapi: React.FC = () => {
   );
   const geocoderContainerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<InteractiveMap | null>(null);
+  const contextRef = useRef();
 
   const popUpStyle: React.CSSProperties = {
     display: "none",
@@ -45,9 +46,9 @@ const Mapi: React.FC = () => {
 
   const geolocateStyle: React.CSSProperties = {
     position: "absolute",
-    top: 200,
-    left: 200,
-    margin: 10,
+    // top: 200,
+    // left: 200,
+    margin: 20,
   };
 
   return (
@@ -58,22 +59,24 @@ const Mapi: React.FC = () => {
       />
       <MapGL
         {...viewport}
-        width="100vw"
-        height="70vh"
-        mapStyle="mapbox://styles/mapbox/streets-v11"
+        // width="100vw"
+        // height="70vh"
+        width='100%'
+        height='95vh'
+       mapStyle="mapbox://styles/mapbox/streets-v11"
         onViewportChange={(nextViewport) => setViewport(nextViewport)}
         mapboxApiAccessToken={MAPBOX_TOKEN}
         className="mapboxMap"
         ref={mapRef}
       >
-        <Geocoder
+        {/* <Geocoder
           mapRef={mapRef}
           containerRef={geocoderContainerRef}
           onViewportChange={handleViewportChange}
           mapboxApiAccessToken={MAPBOX_TOKEN}
           position="top-left"
           className="geoCoder"
-        />
+        /> */}
         <GeolocateControl
           style={geolocateStyle}
           positionOptions={{ enableHighAccuracy: true }}
@@ -119,8 +122,11 @@ const Mapi: React.FC = () => {
                 key={activity.id}
                 longitude={activity.longitude}
                 latitude={activity.latitude}
+                offsetTop={-30}
+                offsetLeft={-15}
+                draggable={true}
               >
-                <Pin size={30} />
+                <Pin size={40} />
               </Marker>
             </div>
             
@@ -128,12 +134,12 @@ const Mapi: React.FC = () => {
             {toolTipArray.some((v, i, a) => v === activity.id) && (
               <Popup
                 key={activity.id + "p"}
-                offsetLeft={15}
-                offsetTop={0}
+                offsetLeft={10}
+                offsetTop={-20}
                 latitude={activity.latitude}
                 longitude={activity.longitude}
                 anchor="bottom"
-                tipSize={10}
+                tipSize={15}
                 closeButton={false}
                 closeOnClick={false}
               >
