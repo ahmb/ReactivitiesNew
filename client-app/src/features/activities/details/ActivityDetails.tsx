@@ -32,12 +32,18 @@ const ActivityDetails: React.FC<RouteComponentProps<DetailParams>> = ({
 
   return (
     <Grid>
+      
       <Grid.Column width={10}>
+      <div style={{ marginTop: "70px" }} />
+
         <ActivityDetailedHeader activity={activity} />
         <ActivityDetailedInfo activity={activity} />
         <ActivityDetailedChat />
       </Grid.Column>
+
       <Grid.Column width={6}>
+      <div style={{ marginTop: "70px" }} />
+
         <ActivityDetailedSidebar attendees={activity.attendees}/>
       </Grid.Column>
     </Grid>

@@ -1,5 +1,12 @@
 import React, { useContext } from "react";
-import { Menu, Container, Dropdown, Image } from "semantic-ui-react";
+import {
+  Menu,
+  Container,
+  Dropdown,
+  Image,
+  Button,
+  Input,
+} from "semantic-ui-react";
 import { observer } from "mobx-react-lite";
 import { NavLink, Link } from "react-router-dom";
 import { RootStoreContext } from "../../app/stores/rootStore";
@@ -9,14 +16,14 @@ const NavBar: React.FC = () => {
   const { user, logout } = rootStore.userStore;
   // console.log(user);
   return (
-    <Menu fixed="top" inverted borderless size='small'>
+    <Menu fixed="top" borderless pointing secondary  size="small">
       <Container>
-        <Menu.Item header as={NavLink} exact to="/activities" >
-          <img src="/assets/logo.png" alt="logo" style={{ marginRight: 10 }} />
-          WannaGo
+        <Menu.Item header as={NavLink} exact to="/">
+          {/* <img src="/assets/logo.png" alt="logo" style={{ marginRight: 10 }} /> */}
+        <span id="logo">WannaGo</span>
         </Menu.Item>
-        <Menu.Menu position='right'>
-        {/* <Menu.Item >
+        <Menu.Menu position="right">
+          {/* <Menu.Item >
           <Button
             as={NavLink}
             to="/createActivity"
@@ -26,29 +33,48 @@ const NavBar: React.FC = () => {
             circular
           />
         </Menu.Item> */}
-        <Menu.Item name="Explore" as={NavLink} to="/" />
-        <Menu.Item name="Mesages" as={NavLink} to="/activities" />
-
-        {user && (
-          <Menu.Item position="right">
-            <Image
-              avatar
-              spaced="right"
-              src={user.image || "/assets/profpic.svg" || "/assets/user.png"}
-            />
-            <Dropdown pointing="top left" text={user.displayName}>
-              <Dropdown.Menu>
-                <Dropdown.Item
-                  as={Link}
-                  to={`/profile/${user.username}`}
-                  text="My profile"
-                  icon="user"
-                />
-                <Dropdown.Item onClick={logout} text="Logout" icon="power" />
-              </Dropdown.Menu>
-            </Dropdown>
+  
+          <Menu.Item name="Home" as={NavLink} exact to="/home" />
+          <Menu.Item name="Explore" as={NavLink} exact to="/activities" />
+          <Menu.Item name="Mesages" as={NavLink} exact to="/messages" />
+          <Menu.Item>
+            <Input icon="search" iconPosition='left' placeholder="Search..." className='searchInput' />
           </Menu.Item>
-        )}
+
+          {user && (
+            <Menu.Item position="right">
+              <Image
+                avatar
+                spaced="right"
+                src={user.image || "/assets/profpic.svg" || "/assets/user.png"}
+              />
+              <Dropdown pointing="top" text={user.displayName}>
+                <Dropdown.Menu>
+                  <Dropdown.Item
+                    as={Link}
+                    to={`/profile/${user.username}`}
+                    text="My profile"
+                    icon="user"
+                  />
+                  <Dropdown.Item onClick={logout} text="Logout" icon="power" />
+                </Dropdown.Menu>
+              </Dropdown>
+            </Menu.Item>
+          )}
+          {/* <Menu.Menu position="right"> */}
+          <Button
+            as={NavLink}
+            to="/createActivity"
+            positive
+            icon="plus"
+            size="tiny"
+            // style={{ marginTop: "13px", padding: "15px" }}
+            content="Post Activity"
+            circular
+            className="navbarPostBtn"
+            // id="stickyButton"
+          />
+          {/* </Menu.Menu> */}
         </Menu.Menu>
       </Container>
     </Menu>

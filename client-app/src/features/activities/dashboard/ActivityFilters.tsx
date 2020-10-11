@@ -49,7 +49,7 @@ const ActivityFilters: React.FC = () => {
           id="filterBar"
           compact={true}
         >
-          <Header icon={"filter"} attached color={"blue"} />
+          <Header icon={"filter"} attached color={"blue"} className={'filterMenuIcon'} />
           <Menu.Item
             active={predicate.size === 0}
             onClick={() => setPredicate("all", "true")}

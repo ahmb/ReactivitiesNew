@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { observer } from "mobx-react-lite";
 import { Item, Button, Segment, Icon, Label } from "semantic-ui-react";
 import { Link } from "react-router-dom";
@@ -11,42 +11,66 @@ const ActivityListItem: React.FC<{ activity: IActivity }> = ({ activity }) => {
 
   return (
     <Segment.Group>
-      <Segment>
+      <Segment padded>
         <Item.Group>
           <Item>
-            <Item.Image
-              size="tiny"
-              circular
-              src={host.image || "/assets/user.png"}
-              style={{ marginBottom: 3 }}
-            />
             <Item.Content>
               <Item.Header as={Link} to={`/activities/${activity.id}`}>
+                {activity.isHost && (
+                  <Fragment>
+                    <Label basic color="green" content="HOSTING" circular />
+                    <br />
+                    <br />
+                  </Fragment>
+                )}
+                {activity.isGoing && !activity.isHost && (
+                  <Fragment>
+                    <Label basic color="orange" content="ATTENDING" circular />
+                    <br />
+                    <br />
+                  </Fragment>
+                )}{" "}
                 {activity.title}
               </Item.Header>
-              <Item.Description>
+              <br />
+              <Item.Extra>
+                <Icon name="clock" /> {format(activity.date, "h:mm a")}{" "}
+                <Icon name="sliders horizontal" /> {activity.category}{" "}
+                <Icon name="tags" /> TAG 1 TAG 2{" "}
+              </Item.Extra>
+              <br />
+              <Link to={`/profile/${host.username}`}>
+                <Item.Image
+                  size="tiny"
+                  circular
+                  src={host.image || "/assets/user.png"}
+                  style={{ marginBottom: 3 }}
+                  floated="left"
+                />
+              </Link>
+
+              {/* <Item.Description>
                 Hosted by
                 <Link to={`/profile/${host.username}`}> {host.displayName}
                 </Link>
+              </Item.Description> */}
+
+              <Item.Description>
+                {" "}
+                <span>{activity.description.substring(0, 200)}</span>
               </Item.Description>
-              {activity.isHost && (
-                <Item.Description>
-                  <Label
-                    basic
-                    color="green"
-                    content="HOSTING"
-                  />
-                </Item.Description>
-              )}
-              {activity.isGoing && !activity.isHost && (
-                <Item.Description>
-                  <Label
-                    basic
-                    color="orange"
-                    content="ATTENDING"
-                  />
-                </Item.Description>
-              )}
+              <Item.Description>
+                <Button
+                  as={Link}
+                  to={`/activities/${activity.id}`}
+                  // onClick={() => selectActivity(activity.id)}
+                  floated="right"
+                  content="Details"
+                  color="twitter"
+                  size="small"
+                  circular
+                />
+              </Item.Description>
 
               {/* <Button
                 name={activity.id}
@@ -60,21 +84,10 @@ const ActivityListItem: React.FC<{ activity: IActivity }> = ({ activity }) => {
           </Item>
         </Item.Group>
       </Segment>
-      <Segment>
-        <Icon name="clock" /> {format(activity.date, "h:mm a")}
-        <Icon name="marker" /> {activity.venue}, {activity.city}
-      </Segment>
-      <ActivityListItemAttendees attendees={activity.attendees} />
-      <Segment clearing>
-        <span>{activity.description}</span>
-        <Button
-          as={Link}
-          to={`/activities/${activity.id}`}
-          // onClick={() => selectActivity(activity.id)}
-          floated="right"
-          content="Details"
-          color="twitter"
-        />
+
+      {/* <ActivityListItemAttendees attendees={activity.attendees} /> */}
+      <Segment clearing padded>
+        INSERT IMAGE HERE
       </Segment>
     </Segment.Group>
   );

@@ -59,10 +59,9 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
   const [longitude, setLongitude] = useState(0);
   const [latitude, setLatitude] = useState(0);
 
-
   const updateLatLong = (latitide: number, longitude: number) => {
-      activity.longitude = longitude;
-      activity.latitude = latitide;
+    activity.longitude = longitude;
+    activity.latitude = latitide;
     setActivity(activity);
     setLongitude(longitude);
     setLatitude(latitide);
@@ -70,8 +69,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
     console.log(activity);
     console.log(latitude);
     console.log(longitude);
-  }
-
+  };
 
   useEffect(() => {
     if (match.params.id) {
@@ -91,8 +89,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
     activity.date = dateAndTime;
     activity.longitude = longitude;
     activity.latitude = latitude;
-    console.log(activity)
-
+    console.log(activity);
 
     if (!activity.id) {
       let newActivity = {
@@ -109,6 +106,10 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
     <Fragment>
       <Grid>
         <Grid.Column width={16} className="activityForm">
+          <Segment.Group>
+          <Segment style={{textAlign:'center', color:'#DC493A'}}>
+            <span><b>Post an Activity</b></span>
+          </Segment>
           <Segment clearing>
             <FinalForm
               validate={validate}
@@ -154,26 +155,26 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
                       time={true}
                     />
                   </Form.Group>
-
+                  {/* 
                   <Field
                     name="city"
                     placeholder="City"
                     component={TextInput}
                     value={activity.city}
-                  />
+                  /> */}
                   {/* <Field
                     name="venue"
                     placeholder="Venue"
                     component={TextInput}
                     value={activity.venue}
                   /> */}
-                  <Field
+                  {/* <Field
                     name="venue"
                     placeholder="Venue"
                     component={LocationInput}
                     value={activity.venue}
                     setLatLong={updateLatLong}
-                  />
+                  /> */}
                   <Button
                     loading={submitting}
                     floated="right"
@@ -197,6 +198,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
               )}
             />
           </Segment>
+          </Segment.Group>
         </Grid.Column>
       </Grid>
     </Fragment>

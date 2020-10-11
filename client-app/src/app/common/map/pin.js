@@ -9,8 +9,8 @@ const circleICON = `M10 35L10 36A20 20 180 1010 35Z`;
 
 const pinStyle = {
   // fill: '#d00',
-  fill:'red',
-  stroke: 'grey'
+  fill:'#4d9ee6',
+  stroke: 'white'
 };
 
 // interface IProps {

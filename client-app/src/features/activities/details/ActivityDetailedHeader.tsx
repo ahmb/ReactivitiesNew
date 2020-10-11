@@ -28,13 +28,13 @@ const ActivityDetailedHeader: React.FC<{ activity: IActivity }> = ({
 
   return (
     <Segment.Group>
-      <Segment basic attached="top" style={{ padding: "0" }}>
+      <Segment basic attached="top" style={{ padding: "0" }} raised>
         <Image
           src={`/assets/categoryImages/${activity.category}.jpg`}
           fluid
           style={activityImageStyle}
         />
-        <Segment basic style={activityImageTextStyle}>
+        <Segment basic style={activityImageTextStyle} raised>
           <Item.Group>
             <Item>
               <Item.Content>
@@ -53,22 +53,25 @@ const ActivityDetailedHeader: React.FC<{ activity: IActivity }> = ({
           </Item.Group>
         </Segment>
       </Segment>
-      <Segment clearing attached="bottom">
+      <Segment clearing attached="bottom" raised>
         {activity.isHost ? (
           <Button
             as={Link}
             to={`/manage/${activity.id}`}
-            color="orange"
-            floated="right"
+            color="red"
+            floated="left"
+            inverted
+            circular
+            // style={{backgroundColor: "#DC493A"}}
           >
-            Manage Event
+            Edit Event
           </Button>
         ) : activity.isGoing ? (
           <Button loading={loading} onClick={cancelAttendance}>
             Cancel attendance
           </Button>
         ) : (
-          <Button loading={loading} onClick={attendActivity} color="teal">
+          <Button loading={loading} onClick={attendActivity} color="green">
             Join Activity
           </Button>
         )}

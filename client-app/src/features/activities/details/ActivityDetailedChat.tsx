@@ -26,17 +26,17 @@ const ActivityDetailedChat = () => {
   }, [createHubConnection, stopHubConnection, activity]);
 
   return (
-    <Fragment>
+    <Fragment> <Segment.Group>
       <Segment
         textAlign="center"
-        attached="top"
         inverted
-        color="teal"
-        style={{ border: "none" }}
+        padded
+        raised
+        style={{ border: "none" , backgroundColor: "#DC493A"}}
       >
-        <Header>Chat about this event</Header>
+        <Header>Discussion</Header>
       </Segment>
-      <Segment attached>
+      <Segment raised >
         <Comment.Group>
           {activity &&
             activity.comments &&
@@ -65,17 +65,18 @@ const ActivityDetailedChat = () => {
                   placeholder="Add your comment"
                 />
                 <Button
-                  content="Add Reply"
+                  content="Submit Comment"
                   labelPosition="left"
-                  icon="edit"
-                  primary
+                  icon="reply"
+                  // primary
                   loading={submitting}
+                  color="green"
                 />
               </Form>
             )}
           />
         </Comment.Group>
-      </Segment>
+      </Segment></Segment.Group>
     </Fragment>
   );
 };

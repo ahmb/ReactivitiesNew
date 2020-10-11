@@ -5,7 +5,15 @@ import React, {
   Fragment,
   useRef,
 } from "react";
-import { Button, Grid, GridRow, Loader, Ref, Sticky } from "semantic-ui-react";
+import {
+  Button,
+  Grid,
+  GridRow,
+  Loader,
+  Menu,
+  Ref,
+  Sticky,
+} from "semantic-ui-react";
 import ActivityList from "./ActivityList";
 import { observer } from "mobx-react-lite";
 import { RootStoreContext } from "../../../app/stores/rootStore";
@@ -27,6 +35,7 @@ const ActivityDashboard: React.FC = () => {
   } = rootStore.activityStore;
 
   const [loadingNext, setLoadingNext] = useState(false);
+  const activeItem = useState();
 
   const handlerGetNext = () => {
     setLoadingNext(true);
@@ -43,8 +52,8 @@ const ActivityDashboard: React.FC = () => {
 
   return (
     <Fragment>
-      <Grid centered columns={2} className="mainPageGrid">
-        <Button
+      <Grid className="mainPageGrid">
+        {/* <Button
           as={NavLink}
           to="/createActivity"
           positive
@@ -53,36 +62,65 @@ const ActivityDashboard: React.FC = () => {
           circular
           size="massive"
           className="createActivityBtn"
-        />
-        <Grid.Row height='90vh'>
-          <Grid.Column height='85vh'>
-            <ActivityFilters />
+        /> */}
+        <Grid.Column width={4}>
+          {/* <Mapi /> */}
+          <div style={{ marginTop: "70px" }} />
+          <Menu text vertical>
+            <Menu.Item header>Sort By</Menu.Item>
+            <Menu.Item
+              name="closest"
+              // active={activeItem === 'closest'}
+              // onClick={this.handleItemClick}
+            />
+            <Menu.Item
+              name="mostComments"
+              // active={activeItem === 'mostComments'}
+              // onClick={this.handleItemClick}
+            />
+            <Menu.Item
+              name="mostPopular"
+              // active={activeItem === 'mostPopular'}
+              // onClick={this.handleItemClick}
+            />
+          </Menu>
+          <div style={{ marginTop: "70px" }} />
+          <Menu text vertical>
+            <Menu.Item header>Categories</Menu.Item>
+            <Menu.Item
+              name="Cinema"
+              // active={activeItem === 'closest'}
+              // onClick={this.handleItemClick}
+            />
+            <Menu.Item
+              name="mostComments"
+              // active={activeItem === 'mostComments'}
+              // onClick={this.handleItemClick}
+            />
+            <Menu.Item
+              name="mostPopular"
+              // active={activeItem === 'mostPopular'}
+              // onClick={this.handleItemClick}
+            />
+          </Menu>
+        </Grid.Column>
+        <Grid.Column width={12}>
+          {/* <ActivityFilters /> */}
 
-            {loadingInitial && page === 0 ? (
-              <ActivityListItemPlaceholder />
-            ) : (
-              <InfiniteScroll
-                pageStart={0}
-                loadMore={handlerGetNext}
-                hasMore={!loadingNext && page + 1 < totalPages}
-                initialLoad={false}
-              >
-                <ActivityList/>
-              </InfiniteScroll>
-            )}
-          </Grid.Column>
-          <Grid.Column>
-            <Mapi />
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row>
-          <Grid.Column >
-            <Loader active={loadingNext} />
-          </Grid.Column>
-          <Grid.Column>
-
-          </Grid.Column>
-        </Grid.Row>
+          {loadingInitial && page === 0 ? (
+            <ActivityListItemPlaceholder />
+          ) : (
+            <InfiniteScroll
+              pageStart={0}
+              loadMore={handlerGetNext}
+              hasMore={!loadingNext && page + 1 < totalPages}
+              initialLoad={false}
+            >
+              <ActivityList />
+            </InfiniteScroll>
+          )}
+          <Loader active={loadingNext} />
+        </Grid.Column>
       </Grid>
     </Fragment>
   );
