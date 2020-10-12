@@ -4,6 +4,7 @@ import { observer } from "mobx-react-lite";
 import ActivityListItem from "./ActivityListItem";
 import { RootStoreContext } from "../../../app/stores/rootStore";
 import { format } from "date-fns";
+import ActivityListItemPlaceholder from "./ActivityListItemPlaceholder";
 
 const ActivityList: React.FC = () => {
   const rootStore = useContext(RootStoreContext);

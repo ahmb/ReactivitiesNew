@@ -65,7 +65,9 @@ const ActivityDetailedChat: React.FC<IProps> = ({ displayHeight }) => {
     createHubConnection(activity!.id);
     var objDiv = document.getElementById("commentGroup");
     if (objDiv) {
-      objDiv.scrollTop = objDiv.scrollHeight;
+      objDiv.animate({top:objDiv.scrollHeight}, 500)
+      // objDiv.scrollTop = objDiv.scrollHeight;
+      // objDiv.scrollTop = objDiv.scrollHeight;
     }
     return () => {
       stopHubConnection();
