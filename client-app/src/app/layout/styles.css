@@ -38,13 +38,21 @@ body {
 .searchInput {
   border-radius: 100px;
 }
-.ui.secondary.pointing.menu .active.item  {
+/* .ui.secondary.pointing.menu .active.item  {
   color: #009ee6;
   border-color: #009ee6;
 }
 .ui.secondary.pointing.menu .active.item:hover  {
   color: #009ee6;
   border-color: #009ee6;
+} */
+.ui.secondary.pointing.menu .active.item  {
+  color: #3F3D56;
+  border-color: #3F3D56;
+}
+.ui.secondary.pointing.menu .active.item:hover  {
+  color: #3F3D56;
+  border-color: #3F3D56;
 }
 .ui.secondary.pointing.menu .item:hover {
   color:darkgray;
@@ -187,4 +195,41 @@ body ::-webkit-scrollbar-track {
   font-weight: normal;
 }
 
+/* ACTIVITY FORM styles */
+
+textarea, .ui.form textarea ,.ui.form .field>.selection.dropdown{
+  border-radius:10px;
+}
+input {
+  border-radius:10px;
+}
+.ui.form input:not([type]), .ui.form input[type=date], .ui.form input[type=datetime-local], .ui.form input[type=email], .ui.form input[type=file], .ui.form input[type=number], .ui.form input[type=password], .ui.form input[type=search], .ui.form input[type=tel], .ui.form input[type=text], .ui.form input[type=time], .ui.form input[type=url]{
+  border-radius:10px;
+}
+
+.ui.form .field.error input:not([type]):focus, .ui.form .field.error input[type=date]:focus, .ui.form .field.error input[type=datetime-local]:focus, .ui.form .field.error input[type=email]:focus, .ui.form .field.error input[type=file]:focus, .ui.form .field.error input[type=number]:focus, .ui.form .field.error input[type=password]:focus, .ui.form .field.error input[type=search]:focus, .ui.form .field.error input[type=tel]:focus, .ui.form .field.error input[type=text]:focus, .ui.form .field.error input[type=time]:focus, .ui.form .field.error input[type=url]:focus, .ui.form .field.error select:focus, .ui.form .field.error textarea:focus 
+{
+  border-radius:10px;
+}
+.ui.form input:not([type]):focus,.ui.form textarea:focus , .ui.form input[type=date]:focus, .ui.form input[type=datetime-local]:focus, .ui.form input[type=email]:focus, .ui.form input[type=file]:focus, .ui.form input[type=number]:focus, .ui.form input[type=password]:focus, .ui.form input[type=search]:focus, .ui.form input[type=tel]:focus, .ui.form input[type=text]:focus, .ui.form input[type=time]:focus, .ui.form input[type=url]:focus 
+{
+  border-radius:10px;
+}
+.rw-widget>.rw-widget-container, .rw-widget-picker>.rw-select  {
+  border: none;
+}
+
+.rw-widget-picker>.rw-select {
+  border-radius: 10px;
+  border-color: #DC493A;
+}
+
+[type=reset], [type=submit], button, html [type=button] {
+  border-radius: 100px;
+  background:#3f3d56;
+  color:white;
+  }
+button.ui.icon.inverted.left.labeled.button{
+border-radius: 100px;
+  }
 /*end home page styles*/

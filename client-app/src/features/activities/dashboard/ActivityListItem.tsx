@@ -35,7 +35,7 @@ const ActivityListItem: React.FC<{ activity: IActivity }> = ({ activity }) => {
               <br />
               <Item.Extra>
                 <Icon name="clock" /> {format(activity.date, "h:mm a")}{" "}
-                <Icon name="sliders horizontal" /> {activity.category}{" "}
+                <Icon name="chart pie" /> {activity.category}{" "}
                 <Icon name="tags" /> TAG 1 TAG 2{" "}
               </Item.Extra>
               <br />
@@ -57,17 +57,23 @@ const ActivityListItem: React.FC<{ activity: IActivity }> = ({ activity }) => {
 
               <Item.Description>
                 {" "}
-                <span>{activity.description.substring(0, 200)}</span>
+                <span>{activity.description.substring(0, 280)} 
+                Im planning on working out at the Goodlife gym , focusing on my biceps. Lemme know if you wanna workout together!
+                </span>
+                
+       
               </Item.Description>
               <Item.Description>
                 <Button
                   as={Link}
                   to={`/activities/${activity.id}`}
                   // onClick={() => selectActivity(activity.id)}
-                  floated="right"
+                  floated="left"
                   content="Details"
-                  color="twitter"
-                  size="small"
+                  // color="twitter"
+                  inverted
+                  style={{backgroundColor:'#3f3d56'}}
+                  size="tiny"
                   circular
                 />
               </Item.Description>

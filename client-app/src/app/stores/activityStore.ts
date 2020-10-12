@@ -12,9 +12,8 @@ import {
   HubConnectionBuilder,
   LogLevel,
 } from "@microsoft/signalr";
-import { useHistory } from "react-router-dom";
 
-const LIMIT = 2;
+const LIMIT = 5;
 
 export default class ActivityStore {
   rootStore: RootStore;

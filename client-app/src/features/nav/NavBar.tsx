@@ -35,8 +35,8 @@ const NavBar: React.FC = () => {
         </Menu.Item> */}
   
           <Menu.Item name="Home" as={NavLink} exact to="/home" />
-          <Menu.Item name="Explore" as={NavLink} exact to="/activities" />
-          <Menu.Item name="Mesages" as={NavLink} exact to="/messages" />
+          <Menu.Item name="Explore" as={NavLink}  to="/activities" />
+          <Menu.Item name="Mesages" as={NavLink}  to="/messages" />
           <Menu.Item>
             <Input icon="search" iconPosition='left' placeholder="Search..." className='searchInput' />
           </Menu.Item>
@@ -66,7 +66,8 @@ const NavBar: React.FC = () => {
             as={NavLink}
             to="/createActivity"
             positive
-            icon="plus"
+            // icon="plus"
+            icon="lightbulb"
             size="tiny"
             // style={{ marginTop: "13px", padding: "15px" }}
             content="Post Activity"

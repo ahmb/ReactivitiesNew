@@ -53,7 +53,7 @@ const ActivityDetailedHeader: React.FC<{ activity: IActivity }> = ({
           </Item.Group>
         </Segment>
       </Segment>
-      <Segment clearing attached="bottom" raised>
+      <Segment clearing attached="bottom">
         {activity.isHost ? (
           <Button
             as={Link}
