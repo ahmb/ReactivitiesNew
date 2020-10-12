@@ -19,7 +19,7 @@ const ActivityDetailedSidebar: React.FC<IProps> = ({ attendees }) => {
           type="button"
           circular
           size="medium"
-          style={{ border: "none", backgroundColor: "#DC493A" }}
+          style={{ border: "none", backgroundColor: "#DC493A", marginTop:-15, marginLeft:-15}}
           icon="long arrow alternate left"
           content="Back"
           inverted

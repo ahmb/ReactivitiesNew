@@ -104,15 +104,15 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
 
   return (
     <Fragment>
-      <Grid >
+      <Grid>
         <Grid.Column width="6">
-        <Grid.Row
+          <Grid.Row
             centered
             style={{
               textAlign: "center",
               color: "#DC493A",
               borderBottom: "red",
-              marginTop:'140px'
+              marginTop: "140px",
             }}
           >
             <svg
@@ -409,16 +409,29 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
         <Grid.Column width={10} className="activityForm">
           <Segment.Group raised>
             <Segment clearing>
-              <Header
-                size="large"
-                style={{
-                  textAlign: "center",
-                  color: "#DC493A",
-                  borderBottom: "red",
-                }}
-                content="Post an Activity"
-              />
-              <br/>
+              {!activity.id && (
+                <Header
+                  size="large"
+                  style={{
+                    textAlign: "center",
+                    color: "#DC493A",
+                    borderBottom: "red",
+                  }}
+                  content="Post an Activity"
+                />
+              )}
+              {activity.id && (
+                <Header
+                  size="large"
+                  style={{
+                    textAlign: "center",
+                    color: "#DC493A",
+                    borderBottom: "red",
+                  }}
+                  content="Edit an Activity"
+                />
+              )}
+              <br />
               <FinalForm
                 validate={validate}
                 initialValues={activity}

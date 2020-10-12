@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { observer } from "mobx-react-lite";
-import { Item, Button, Segment, Icon, Label } from "semantic-ui-react";
+import { Item, Button, Segment, Icon, Label, Image } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { IActivity } from "../../../app/models/activity";
 import { format } from "date-fns";
@@ -16,21 +16,17 @@ const ActivityListItem: React.FC<{ activity: IActivity }> = ({ activity }) => {
           <Item>
             <Item.Content>
               <Item.Header as={Link} to={`/activities/${activity.id}`}>
+                {activity.title}{" "}
                 {activity.isHost && (
                   <Fragment>
-                    <Label basic color="green" content="HOSTING" circular />
-                    <br />
-                    <br />
+                    <Label basic color="green" content="HOSTING" circular  size="mini"/>
                   </Fragment>
                 )}
                 {activity.isGoing && !activity.isHost && (
                   <Fragment>
-                    <Label basic color="orange" content="ATTENDING" circular />
-                    <br />
-                    <br />
+                    <Label basic color="orange" content="ATTENDING" circular size="mini"/>
                   </Fragment>
-                )}{" "}
-                {activity.title}
+                )}
               </Item.Header>
               <br />
               <Item.Extra>
@@ -38,14 +34,13 @@ const ActivityListItem: React.FC<{ activity: IActivity }> = ({ activity }) => {
                 <Icon name="chart pie" /> {activity.category}{" "}
                 <Icon name="tags" /> TAG 1 TAG 2{" "}
               </Item.Extra>
-              <br />
               <Link to={`/profile/${host.username}`}>
                 <Item.Image
                   size="tiny"
                   circular
                   src={host.image || "/assets/user.png"}
                   style={{ marginBottom: 3 }}
-                  floated="left"
+                  floated="right"
                 />
               </Link>
 
@@ -57,11 +52,11 @@ const ActivityListItem: React.FC<{ activity: IActivity }> = ({ activity }) => {
 
               <Item.Description>
                 {" "}
-                <span>{activity.description.substring(0, 280)} 
-                Im planning on working out at the Goodlife gym , focusing on my biceps. Lemme know if you wanna workout together!
+                <span>
+                  {activity.description.substring(0, 280)}
+                  Im planning on working out at the Goodlife gym , focusing on
+                  my biceps. Lemme know if you wanna workout together!
                 </span>
-                
-       
               </Item.Description>
               <Item.Description>
                 <Button
@@ -72,7 +67,7 @@ const ActivityListItem: React.FC<{ activity: IActivity }> = ({ activity }) => {
                   content="Details"
                   // color="twitter"
                   inverted
-                  style={{backgroundColor:'#3f3d56'}}
+                  style={{ backgroundColor: "#3f3d56" }}
                   size="tiny"
                   circular
                 />
@@ -89,12 +84,23 @@ const ActivityListItem: React.FC<{ activity: IActivity }> = ({ activity }) => {
             </Item.Content>
           </Item>
         </Item.Group>
+
+        <div style={{ overflow: "hidden", height: "15vh", borderRadius: 10 }}>
+          <Image
+            src={`/assets/categoryImages/${activity.category}.jpg`}
+            // height="100px"
+            // width="100%"
+            fluid
+            centered
+            // style={activityImageStyle}
+            style={{ borderRadius: 10 }}
+          />
+        </div>
       </Segment>
 
       {/* <ActivityListItemAttendees attendees={activity.attendees} /> */}
-      <Segment clearing padded>
-        INSERT IMAGE HERE
-      </Segment>
+      {/* <Segment  clearing style={{overflow:'hidden', height:'15vh'}} > */}
+      {/* </Segment> */}
     </Segment.Group>
   );
 };
