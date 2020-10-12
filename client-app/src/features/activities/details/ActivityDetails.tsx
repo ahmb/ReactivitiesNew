@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Grid, Segment } from "semantic-ui-react";
+import { Button, Grid, Segment } from "semantic-ui-react";
 import { observer } from "mobx-react-lite";
 import { RouteComponentProps } from "react-router-dom";
 import { LoadingComponent } from "../../../app/layout/LoadingComponent";
@@ -9,6 +9,7 @@ import ActivityDetailedChat from "./ActivityDetailedChat";
 import ActivityDetailedSidebar from "./ActivityDetailedSidebar";
 import { RootStoreContext } from "../../../app/stores/rootStore";
 import ActivityDetailsHeader from "./ActivityDetailsHeader";
+import { history } from "../../../../src/index";
 
 interface DetailParams {
   id: string;
@@ -33,24 +34,52 @@ const ActivityDetails: React.FC<RouteComponentProps<DetailParams>> = ({
 
   return (
     <Grid>
-      <Grid.Column width={6}>
-        <div style={{ marginTop: "70px" }} />
+      <Grid.Row>
+        <Grid.Column width={16}>
+        <span style={{ display: "inline-Block" }}>
+          {" "}
+          <Button
+            onClick={() => history.push("/activities")}
+            floated="left"
+            type="button"
+            circular
+            size="medium"
+            style={{
+              border: "none",
+              backgroundColor: "#3f3d56",
+              // backgroundColor: "#DC493A",
+              marginTop: 70,
+              marginLeft: 20,
+              // position: "absolute",
+              zIndex: 10,
+              borderColor: "white",
+            }}
+            icon="long arrow alternate left"
+            content="Back"
+            inverted
+          />
+        </span>
 
-        <ActivityDetailedSidebar attendees={activity.attendees} />
-      </Grid.Column>
+        </Grid.Column>
+      </Grid.Row>
+
       <Grid.Column width={10}>
-        <div style={{ marginTop: "70px" }} />
-
+        
         {/* <ActivityDetailedHeader activity={activity} /> */}
-        <Segment.Group basic raised>
+        <Segment.Group basic="true" raised>
           <Segment>
             <ActivityDetailsHeader activity={activity} />
 
             <ActivityDetailedInfo activity={activity} />
-
-            <ActivityDetailedChat />
+            <ActivityDetailedSidebar attendees={activity.attendees} />
           </Segment>
         </Segment.Group>
+      </Grid.Column>
+      <Grid.Column width={6}>
+        {/* <Segment style={{ marginBottom: 30, marginTop: 0 }} basic> */}
+
+        {/* </Segment> */}
+        <ActivityDetailedChat displayHeight="50vh" />
       </Grid.Column>
     </Grid>
   );

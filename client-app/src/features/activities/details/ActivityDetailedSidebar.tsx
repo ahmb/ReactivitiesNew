@@ -1,5 +1,13 @@
 import React, { Fragment } from "react";
-import { Segment, List, Item, Label, Image, Button } from "semantic-ui-react";
+import {
+  Segment,
+  List,
+  Item,
+  Label,
+  Image,
+  Button,
+  Header,
+} from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { IAttendee } from "../../../app/models/activity";
 import { observer } from "mobx-react-lite";
@@ -12,21 +20,9 @@ interface IProps {
 const ActivityDetailedSidebar: React.FC<IProps> = ({ attendees }) => {
   return (
     <Fragment>
-      <Segment style={{ marginBottom: 30, marginTop: 0 }} basic>
-        <Button
-          onClick={() => history.push("/activities")}
-          floated="left"
-          type="button"
-          circular
-          size="medium"
-          style={{ border: "none", backgroundColor: "#DC493A", marginTop:-15, marginLeft:-15}}
-          icon="long arrow alternate left"
-          content="Back"
-          inverted
-        />
-      </Segment>
+        <Header> Attendees </Header>
       <Segment.Group>
-        <Segment
+        {/* <Segment
           raised
           textAlign="center"
           style={{ border: "none", backgroundColor: "#3f3d56" }}
@@ -35,7 +31,7 @@ const ActivityDetailedSidebar: React.FC<IProps> = ({ attendees }) => {
         >
           {attendees.length} {attendees.length === 1 ? "person" : "people"}{" "}
           attending
-        </Segment>
+        </Segment> */}
         <Segment raised attached>
           <List relaxed divided>
             {attendees.map((attendee) => (

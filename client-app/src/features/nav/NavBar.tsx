@@ -37,14 +37,14 @@ const NavBar: React.FC = () => {
           <Menu.Item name="Home" as={NavLink} exact to="/home" />
           <Menu.Item name="Explore" as={NavLink} to="/activities" />
           <Menu.Item name="Mesages" as={NavLink} to="/messages" />
-          <Menu.Item>
+          {/* <Menu.Item>
             <Input
               icon="search"
               iconPosition="left"
-              placeholder="Search..."
+              placeholder="Search...COMING SOON"
               className="searchInput"
             />
-          </Menu.Item>
+          </Menu.Item> */}
 
           {user && (
             <Fragment>
