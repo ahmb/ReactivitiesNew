@@ -8,7 +8,12 @@
 }
 .ui.inverted.button:hover, button.ui.icon.inverted.left.labeled.button:focus {
   box-shadow: 0 0 0 0 black inset !important;
-  color:#009ee6;
+  color:black;
+}
+
+.categoryIconSmall {
+  filter: grayscale(100%);
+
 }
 
 
@@ -59,19 +64,19 @@ body {
   border-color: #009ee6;
 } */
 .ui.secondary.pointing.menu .active.item {
-  color: #3f3d56;
-  border-color: #3f3d56;
+  color: #dc493a;
+  border-color: #dc493a;
 }
 .ui.secondary.pointing.menu .active.item:hover {
-  color: #3f3d56;
-  border-color: #3f3d56;
+  color: #dc493a;
+  border-color: #dc493a;
 }
 .ui.secondary.pointing.menu .item:hover {
-  color: darkgray;
+  color: #3f3d56;
 }
 
 .ui.secondary.pointing.menu .dropdown.item:hover, .ui.secondary.pointing.menu .link.item:hover, .ui.secondary.pointing.menu a.item:hover {
-  color: #009ee6;
+  color: #3f3d56;
 }
 
 /* .mainPageGrid {
@@ -239,6 +244,12 @@ textarea,
 .ui.form .field > .selection.dropdown {
   border-radius: 10px;
 }
+
+/* validation error messages  */
+.ui.red.basic.label{
+  border:none;
+}
+
 input {
   border-radius: 10px;
 }
@@ -291,6 +302,7 @@ input {
 .rw-widget > .rw-widget-container,
 .rw-widget-picker > .rw-select {
   border: none;
+  background-color: transparent;
 }
 
 .rw-widget-picker > .rw-select {
@@ -308,6 +320,10 @@ html [type="button"] {
 }
 button.ui.icon.inverted.left.labeled.button {
   border-radius: 100px;
+}
+
+.ui.form .field .field{
+  margin-bottom: 0;
 }
 
 /* ACTIVITY FORM Calendar Styles */

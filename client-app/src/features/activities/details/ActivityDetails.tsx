@@ -46,10 +46,9 @@ const ActivityDetails: React.FC<RouteComponentProps<DetailParams>> = ({
             size="medium"
             style={{
               border: "none",
-              backgroundColor: "#3f3d56",
-              // backgroundColor: "#DC493A",
+              // backgroundColor: "#009EE6",
+              backgroundColor: "#DC493A",
               marginTop: 70,
-              marginLeft: 20,
               // position: "absolute",
               zIndex: 10,
               borderColor: "white",
@@ -63,7 +62,7 @@ const ActivityDetails: React.FC<RouteComponentProps<DetailParams>> = ({
         </Grid.Column>
       </Grid.Row>
 
-      <Grid.Column width={10}>
+      <Grid.Column width={8}>
         
         {/* <ActivityDetailedHeader activity={activity} /> */}
         <Segment.Group basic="true" raised>
@@ -75,7 +74,7 @@ const ActivityDetails: React.FC<RouteComponentProps<DetailParams>> = ({
           </Segment>
         </Segment.Group>
       </Grid.Column>
-      <Grid.Column width={6}>
+      <Grid.Column width={8}>
         {/* <Segment style={{ marginBottom: 30, marginTop: 0 }} basic> */}
 
         {/* </Segment> */}

@@ -7,15 +7,21 @@ import { IUserFormValues } from "../../app/models/user";
 import { FORM_ERROR } from "final-form";
 import { combineValidators, isRequired } from "revalidate";
 import ErrorMessage from "../../app/common/form/ErrorMessage";
+import {history} from '../..'
 
 const validate = combineValidators({
   email: isRequired("email"),
   password: isRequired("password"),
 });
 
-const LoginForm = () => {
+interface IProps {
+
+}
+
+const LoginForm: React.FC<IProps> = () => {
   const rootStore = useContext(RootStoreContext);
-  const { login } = rootStore.userStore;
+  const { login , isLoggedIn} = rootStore.userStore;
+  {isLoggedIn && history.push('/activities')};
   return (
     <FinalForm
       onSubmit={(values: IUserFormValues) =>
@@ -29,6 +35,7 @@ const LoginForm = () => {
         invalid,
         pristine,
         dirtySinceLastSubmit,
+        values
       }) => (
         <Form onSubmit={handleSubmit}>
           <Header
@@ -44,9 +51,10 @@ const LoginForm = () => {
             placeholder="Password"
             type="password"
           />
-          {submitError && !dirtySinceLastSubmit && (
+          {/* {submitError && !dirtySinceLastSubmit && (
             <ErrorMessage error={submitError} text='Invalid username or password.'/>
-          )}
+          )} */}
+           {submitError && <div className="error">{submitError.statusText}{console.log(submitError)}</div>}
           <Button
             color='teal'
             loading={submitting}
@@ -54,7 +62,8 @@ const LoginForm = () => {
             content="Login"
             fluid
           />
-          {/* <pre>{JSON.stringify(form.getState(), null, 2)}</pre> */}
+          <pre>{JSON.stringify(values, null, 2)}</pre>
+
         </Form>
       )}
     />

@@ -48,7 +48,7 @@ const ActivityDetailedHeader: React.FC<{ activity: IActivity }> = ({
                   as={Link}
                   to={`/manage/${activity.id}`}
                   // color="twitter"
-                  style={{ backgroundColor: "#3f3d56" }}
+                  style={{ backgroundColor: "#009EE6" }}
                   floated="right"
                   inverted
                   circular

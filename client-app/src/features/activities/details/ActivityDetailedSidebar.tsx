@@ -18,6 +18,7 @@ interface IProps {
 }
 
 const ActivityDetailedSidebar: React.FC<IProps> = ({ attendees }) => {
+  
   return (
     <Fragment>
         <Header> Attendees </Header>

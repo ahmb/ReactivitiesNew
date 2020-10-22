@@ -74,7 +74,8 @@ namespace Application.User
                         DisplayName = user.DisplayName,
                         Token = _jwtGenerator.CreateToken(user),
                         Username = user.UserName,
-                        Image = user.Photos.FirstOrDefault(x=>x.IsMain)?.Url
+                        //commented out the image as the user hasnt uploaded any image upon registering
+                        // Image = user.Photos.FirstOrDefault(x=>x.IsMain)?.Url
 
                     };
                 };

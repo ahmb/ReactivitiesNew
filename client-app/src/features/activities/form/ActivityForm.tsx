@@ -21,16 +21,21 @@ import { RootStoreContext } from "../../../app/stores/rootStore";
 import LocationInput from "../../../app/common/form/LocationInput";
 
 const validate = combineValidators({
-  title: isRequired({ message: "The event title is required" }),
+  title: composeValidators(
+    isRequired("Title"),
+    hasLengthGreaterThan(10)({
+      message: "Title needs to be atleast 10 characters",
+    }))("Title"),
+  // title: isRequired({ message: "The activity title is required" }),
   category: isRequired("Category"),
   description: composeValidators(
     isRequired("Description"),
-    hasLengthGreaterThan(4)({
-      message: "Description needs to be atleast 5 characters",
+    hasLengthGreaterThan(25)({
+      message: "Description needs to be atleast 25 characters",
     })
   )("Description"),
-  city: isRequired("City"),
-  venue: isRequired("Venue"),
+  // city: isRequired("City"),
+  // venue: isRequired("Venue"),
   date: isRequired("Date"),
   time: isRequired("Time"),
 });
@@ -450,6 +455,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
                       rows={3}
                       placeholder="Description"
                       value={activity.description}
+                      // style={{marginBotton:0}}
                     />
                     <Field
                       name="category"
@@ -477,7 +483,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
                     />
                     {/* </Form.Group> */}
 
-                    <Field
+                    {/* <Field
                       name="city"
                       placeholder="City"
                       component={TextInput}
@@ -488,7 +494,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
                       placeholder="Venue"
                       component={TextInput}
                       value={activity.venue}
-                    />
+                    /> */}
                     {/* <Field
                     name="venue"
                     placeholder="Venue"

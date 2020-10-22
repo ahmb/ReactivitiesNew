@@ -27,7 +27,6 @@ export default class UserStore {
       this.rootStore.modalStore.closeModal();
       history.push('/activities');
     } catch (error) {
-
       throw error
     }
   }
@@ -41,11 +40,18 @@ export default class UserStore {
   @action register = async (values: IUserFormValues) => {
     try{
       const user = await agent.User.register(values);
+      console.log("RETURNED USER:");
+      console.log(user);
       this.rootStore.commonStore.setToken(user.token);
       this.rootStore.modalStore.closeModal();
-      history.push('/activities')
+      runInAction(()=>{
+        this.user = user;
+      })
+      history.push('/activities');
     }catch(error){
       throw error;
+      console.log("REGISTER ERROR:");
+      console.log(error);
     }
   }
 

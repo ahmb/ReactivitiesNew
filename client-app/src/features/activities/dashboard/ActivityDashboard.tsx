@@ -22,6 +22,7 @@ import ActivityFilters from "./ActivityFilters";
 import ActivityListItemPlaceholder from "./ActivityListItemPlaceholder";
 import { NavLink } from "react-router-dom";
 import Mapi from "../../../app/common/map/Map";
+import ActivityFiltersText from "./ActivityFiltersText";
 
 const ActivityDashboard: React.FC = () => {
   const rootStore = useContext(RootStoreContext);
@@ -66,49 +67,18 @@ const ActivityDashboard: React.FC = () => {
         <Grid.Column width={4}>
           {/* <Mapi /> */}
           <div style={{ marginTop: "70px" }} />
-          <Menu text vertical>
-            <Menu.Item header>Sort By</Menu.Item>
-            <Menu.Item
-              name="closest"
-              // active={activeItem === 'closest'}
-              // onClick={this.handleItemClick}
-            />
-            <Menu.Item
-              name="mostComments"
-              // active={activeItem === 'mostComments'}
-              // onClick={this.handleItemClick}
-            />
-            <Menu.Item
-              name="mostPopular"
-              // active={activeItem === 'mostPopular'}
-              // onClick={this.handleItemClick}
-            />
-          </Menu>
           <div style={{ marginTop: "70px" }} />
-          <Menu text vertical>
-            <Menu.Item header>Categories</Menu.Item>
-            <Menu.Item
-              name="Cinema"
-              // active={activeItem === 'closest'}
-              // onClick={this.handleItemClick}
-            />
-            <Menu.Item
-              name="mostComments"
-              // active={activeItem === 'mostComments'}
-              // onClick={this.handleItemClick}
-            />
-            <Menu.Item
-              name="mostPopular"
-              // active={activeItem === 'mostPopular'}
-              // onClick={this.handleItemClick}
-            />
-          </Menu>
+          <ActivityFiltersText/>
         </Grid.Column>
         <Grid.Column width={12}>
           {/* <ActivityFilters /> */}
 
           {loadingInitial && page === 0 ? (
-            <ActivityListItemPlaceholder />
+            <Fragment>
+              <ActivityListItemPlaceholder />
+              <ActivityListItemPlaceholder />
+              <ActivityListItemPlaceholder />
+            </Fragment>
           ) : (
             <InfiniteScroll
               pageStart={0}
