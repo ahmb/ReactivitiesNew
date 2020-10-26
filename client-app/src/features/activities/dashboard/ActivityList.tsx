@@ -18,7 +18,7 @@ const ActivityList: React.FC = () => {
       {activitiesByDate.map(([group, activities]) => (
         <Segment raised key={group}>
           <Label color="red" ribbon={true}>
-            {format(new Date(group), "eeee do MMMM")}
+            {format(new Date(parseInt(group.split('-')[0]),parseInt(group.split('-')[1])-1,(parseInt(group.split('-')[2]))), "eeee do MMMM")}
           </Label>
           <Item.Group divided>
             {activities.map((activity) => (

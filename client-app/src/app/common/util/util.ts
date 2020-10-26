@@ -1,5 +1,6 @@
 import { IUser } from "../../models/user";
 import { IActivity, IAttendee } from "../../models/activity";
+import { DateTimePicker } from "react-widgets";
 
 export const combineDateAndTime = (date: Date, time: Date) => {
   // const timeString = time.getHours() + ":" + time.getMinutes() + ":00";
@@ -11,9 +12,19 @@ export const combineDateAndTime = (date: Date, time: Date) => {
   // console.log("THIS IS THE DATESTRING " + dateString);
   const dateString = date.toISOString().split('T')[0];
   const timeString = time.toISOString().split('T')[1];
-
   return new Date(dateString + 'T' + timeString);
 };
+
+export const covertDateUTCtoLocal = (date: Date) => {
+  return new Date(Date.UTC(date.getFullYear(),date.getMonth(),date.getDate(),date.getHours(),date.getMinutes()));
+}
+
+export const stringCapitalize = (s:string) => {
+  if (typeof s !== 'string') return ''
+  return s.charAt(0).toUpperCase() + s.slice(1)
+}
+
+
 
 export const setActivityProps = (activity: IActivity, user: IUser) => {
   if(!user.username)

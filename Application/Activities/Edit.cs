@@ -20,6 +20,7 @@ namespace Application.Activities
             public DateTime? Date { get; set; }
             public string City { get; set; }
             public string Venue { get; set; }
+            public string Tags { get; set; }
 
             public double Latitude { get; set; }
 
@@ -58,7 +59,6 @@ namespace Application.Activities
                 if (activity == null)
                     throw new RestException(HttpStatusCode.NotFound, new { activity = "Not found" });
 
-
                 activity.Title = request.Title ?? activity.Title;
                 activity.Category = request.Category ?? activity.Category;
                 activity.Description = request.Description ?? activity.Description;
@@ -67,6 +67,8 @@ namespace Application.Activities
                 activity.Venue = request.Venue ?? activity.Venue;
                 activity.Longitude = request.Longitude;
                 activity.Latitude = request.Latitude;
+                activity.Tags = request.Tags;
+
 
 
                 var success = await _context.SaveChangesAsync() > 0;

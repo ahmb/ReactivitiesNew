@@ -20,7 +20,8 @@ const NavBar: React.FC = () => {
       <Container>
         <Menu.Item header as={NavLink} exact to="/">
           {/* <img src="/assets/logo.png" alt="logo" style={{ marginRight: 10 }} /> */}
-          <span id="logo">WannaGo</span>
+          <span id="logo">Wanna</span>
+          <span id="logo2">Go</span>
         </Menu.Item>
         <Menu.Menu position="right">
           {/* <Menu.Item >

@@ -22,7 +22,7 @@ namespace Application.Activities
 
         public class Query : IRequest<ActivitiesEnvelope>
         {
-            public Query(int? limit, int? offset, bool isGoing, bool isHost, DateTime? startDate)
+            public Query(int? limit, int? offset, bool isGoing, bool isHost, DateTime? startDate, string category)
             {
 
                 Limit = limit;
@@ -30,12 +30,15 @@ namespace Application.Activities
                 IsGoing = isGoing;
                 IsHost = isHost;
                 StartDate = startDate ?? DateTime.Now;
+                Category = category;
             }
             public int? Limit { get; set; }
             public int? Offset { get; set; }
             public bool IsGoing { get; }
             public bool IsHost { get; }
             public DateTime? StartDate { get; }
+
+            public string Category { get; }
         };
 
         public class Handler : IRequestHandler<Query, ActivitiesEnvelope>
@@ -71,6 +74,9 @@ namespace Application.Activities
                         .Where(x => x.UserActivities.Any(a => a.AppUser.UserName == _userAccessor.GetCurrentUsername() && a.IsHost));
                 }
 
+                if(request.Category != null &&  request.Category.Length > 0) {
+                    queryable = queryable.Where(x => x.Category.ToLower() == request.Category.ToLower());
+                }
 
                 var activities = await queryable
                     .Skip(request.Offset ?? 0)

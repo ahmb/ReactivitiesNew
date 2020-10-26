@@ -25,7 +25,8 @@ const validate = combineValidators({
     isRequired("Title"),
     hasLengthGreaterThan(10)({
       message: "Title needs to be atleast 10 characters",
-    }))("Title"),
+    })
+  )("Title"),
   // title: isRequired({ message: "The activity title is required" }),
   category: isRequired("Category"),
   description: composeValidators(
@@ -70,10 +71,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
     setActivity(activity);
     setLongitude(longitude);
     setLatitude(latitide);
-    console.log("updateLatLong:");
     console.log(activity);
-    console.log(latitude);
-    console.log(longitude);
   };
 
   useEffect(() => {
@@ -86,8 +84,12 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
   }, [loadActivity, match.params.id]);
 
   const handleFinalFormSubmit = (values: any) => {
-    console.log("these are the values being submitted:" + values);
+    // console.log("these are the values being submitted:" );
+    // console.log(values);
+    // console.log('the time being submitted:');
+    // console.log(values.time);
     const dateAndTime = combineDateAndTime(values.date, values.time);
+    console.log(dateAndTime);
     const { date, time, ...activity } = values;
     console.log(latitude);
     console.log(longitude);
@@ -444,6 +446,13 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
                 render={({ handleSubmit, invalid, pristine }) => (
                   <Form onSubmit={handleSubmit} loading={loading}>
                     <Field
+                      name="category"
+                      placeholder="Category"
+                      component={SelectInput}
+                      value={activity.category}
+                      options={category}
+                    />
+                    <Field
                       name="title"
                       placeholder="Title"
                       value={activity.title}
@@ -458,11 +467,10 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
                       // style={{marginBotton:0}}
                     />
                     <Field
-                      name="category"
-                      placeholder="Category"
-                      component={SelectInput}
-                      value={activity.category}
-                      options={category}
+                      name="tags"
+                      placeholder="#Tags"
+                      value={activity.tags}
+                      component={TextInput}
                     />
                     {/* <Form.Group widths="equal"> */}
                     <Field

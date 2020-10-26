@@ -24,6 +24,8 @@ namespace Application.Activities
 
             public string City { get; set; }
             public string Venue { get; set; }
+            public string Tags { get; set; }
+
             public double Latitude { get; set; }
 
             public double Longitude { get; set; }
@@ -69,6 +71,7 @@ namespace Application.Activities
                     Venue = request.Venue,
                     Longitude = request.Longitude,
                     Latitude = request.Latitude,
+                    Tags = request.Tags,
 
                 };
                 _context.Activities.Add(activity);

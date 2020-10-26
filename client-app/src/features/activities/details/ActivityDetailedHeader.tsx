@@ -5,6 +5,7 @@ import { observer } from "mobx-react-lite";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import { RootStoreContext } from "../../../app/stores/rootStore";
+import { covertDateUTCtoLocal } from "../../../app/common/util/util";
 
 const activityImageStyle = {
   filter: "brightness(30%)",
@@ -14,7 +15,7 @@ const activityImageTextStyle = {
   position: "absolute",
   bottom: "5%",
   left: "5%",
-  width: "100%",
+  width: "auto",
   height: "auto",
   color: "white",
 };
@@ -30,7 +31,7 @@ const ActivityDetailedHeader: React.FC<{ activity: IActivity }> = ({
     <Segment.Group>
       <Segment basic attached="top" style={{ padding: "0" }} raised>
         <Image
-          src={`/assets/categoryImages/${activity.category}.jpg`}
+          src={`/assets/categoryImages/${activity.category.replace(' ','').replace('&','').toLowerCase()}.jpg`}
           fluid
           style={activityImageStyle}
         />

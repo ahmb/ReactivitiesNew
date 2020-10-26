@@ -19,6 +19,8 @@ namespace Domain
 
         public Double Longitude { get; set; }
         public Double Latitude { get; set; }
+        public string Tags { get; set; }
+
 
 
         //the virtual keyword is used here so it can be used with Proxies for lazy loading

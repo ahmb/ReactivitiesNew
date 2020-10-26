@@ -1,4 +1,11 @@
-import { observable, action, computed, runInAction, reaction, toJS } from "mobx";
+import {
+  observable,
+  action,
+  computed,
+  runInAction,
+  reaction,
+  toJS,
+} from "mobx";
 import { SyntheticEvent } from "react";
 import { IActivity } from "../models/activity";
 import agent from "../api/agent";
@@ -6,7 +13,11 @@ import "mobx-react-lite/batchingForReactDom";
 import { history } from "../..";
 import { toast } from "react-toastify";
 import { RootStore } from "./rootStore";
-import { setActivityProps, createAttendee } from "../common/util/util";
+import {
+  setActivityProps,
+  createAttendee,
+  covertDateUTCtoLocal,
+} from "../common/util/util";
 import {
   HubConnection,
   HubConnectionBuilder,
@@ -162,6 +173,7 @@ export default class ActivityStore {
       const { activities, activityCount } = activitiesEnvelope;
       runInAction("loading activities", () => {
         activities.forEach((activity) => {
+          activity.date = covertDateUTCtoLocal(new Date(activity.date));
           setActivityProps(activity, this.rootStore.userStore.user!);
           this.activityRegistry.set(activity.id, activity);
         });
@@ -169,10 +181,10 @@ export default class ActivityStore {
         this.loadingInitial = false;
       });
     } catch (error) {
-      console.log("activity error",error);
+      console.log("activity error", error);
       runInAction("load activities error", () => {
         this.loadingInitial = false;
-        history.push('/');
+        history.push("/");
       });
     }
   };
@@ -189,6 +201,7 @@ export default class ActivityStore {
         activity = await agent.Activities.details(id);
         runInAction("getting activity", () => {
           setActivityProps(activity, this.rootStore.userStore.user!);
+          activity.date = covertDateUTCtoLocal(activity.date);
           this.activity = activity;
           this.activityRegistry.set(activity.id, activity);
           this.loadingInitial = false;
@@ -224,7 +237,7 @@ export default class ActivityStore {
       activity.isHost = true;
       runInAction("creating activity", () => {
         this.activityRegistry.set(activity.id, activity);
-        //activity.push is similar to adding it to the registry set , observable map above ^
+        //activity.push is simila r to adding it to the registry set , observable map above ^
         //this.activities.push(activity);
         this.submitting = false;
         history.push(`/activities/${activity.id}`);
@@ -241,6 +254,8 @@ export default class ActivityStore {
   @action editActivity = async (activity: IActivity) => {
     this.submitting = true;
     try {
+      console.log("POSTing activity");
+      console.log(activity);
       await agent.Activities.update(activity);
       runInAction("editing an activity", () => {
         this.activityRegistry.set(activity.id, activity);

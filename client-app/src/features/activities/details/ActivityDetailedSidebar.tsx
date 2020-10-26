@@ -21,7 +21,7 @@ const ActivityDetailedSidebar: React.FC<IProps> = ({ attendees }) => {
   
   return (
     <Fragment>
-        <Header> Attendees </Header>
+        <Header> Guest List </Header>
       <Segment.Group>
         {/* <Segment
           raised

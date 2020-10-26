@@ -15,10 +15,10 @@ namespace API.Controllers
 
         //Get a list of activities
         [HttpGet]
-        public async Task<ActionResult<List.ActivitiesEnvelope>> List(int? limit, int? offset, bool isGoing, bool isHost, DateTime? startDate)
+        public async Task<ActionResult<List.ActivitiesEnvelope>> List(int? limit, int? offset, bool isGoing, bool isHost, string category, DateTime? startDate)
         {
             return await Mediator.Send(new List.Query(limit, 
-                offset, isGoing, isHost, startDate));
+                offset, isGoing, isHost, startDate, category));
         }
 
         [HttpGet("{id}")]

@@ -22,6 +22,9 @@ namespace Application.Activities
 
         public double Longitude { get; set; }
 
+        public string Tags { get; set; }
+
+
         //list of AppUsers attending an activity i.e. Attendees
         [JsonPropertyName("attendees")]
         public ICollection<AttendeeDto> UserActivities { get; set; }

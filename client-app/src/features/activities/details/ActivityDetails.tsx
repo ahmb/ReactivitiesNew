@@ -36,49 +36,43 @@ const ActivityDetails: React.FC<RouteComponentProps<DetailParams>> = ({
     <Grid>
       <Grid.Row>
         <Grid.Column width={16}>
-        <span style={{ display: "inline-Block" }}>
-          {" "}
-          <Button
-            onClick={() => history.push("/activities")}
-            floated="left"
-            type="button"
-            circular
-            size="medium"
-            style={{
-              border: "none",
-              // backgroundColor: "#009EE6",
-              backgroundColor: "#DC493A",
-              marginTop: 70,
-              // position: "absolute",
-              zIndex: 10,
-              borderColor: "white",
-            }}
-            icon="long arrow alternate left"
-            content="Back"
-            inverted
-          />
-        </span>
-
+          <span style={{ display: "inline-Block" }}>
+            {" "}
+            <Button
+              onClick={() => history.push("/activities")}
+              floated="left"
+              type="button"
+              circular
+              size="medium"
+              style={{
+                border: "none",
+                // backgroundColor: "#009EE6",
+                backgroundColor: "#DC493A",
+                marginTop: 70,
+                // position: "absolute",
+                zIndex: 10,
+                borderColor: "white",
+              }}
+              icon="long arrow alternate left"
+              content="Back"
+              inverted
+            />
+          </span>
         </Grid.Column>
       </Grid.Row>
 
-      <Grid.Column width={8}>
-        
+      <Grid.Column width={16}>
         {/* <ActivityDetailedHeader activity={activity} /> */}
         <Segment.Group basic="true" raised>
           <Segment>
+            <ActivityDetailedChat displayHeight="60vh" />
+
             <ActivityDetailsHeader activity={activity} />
 
             <ActivityDetailedInfo activity={activity} />
             <ActivityDetailedSidebar attendees={activity.attendees} />
           </Segment>
         </Segment.Group>
-      </Grid.Column>
-      <Grid.Column width={8}>
-        {/* <Segment style={{ marginBottom: 30, marginTop: 0 }} basic> */}
-
-        {/* </Segment> */}
-        <ActivityDetailedChat displayHeight="50vh" />
       </Grid.Column>
     </Grid>
   );

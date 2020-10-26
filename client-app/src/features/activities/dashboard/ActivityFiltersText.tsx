@@ -68,15 +68,18 @@ const ActivityFiltersText: React.FC = () => {
           {category.map((cat) => (
             <Fragment>
             <Menu.Item
-              name={`${cat.text}`}
-              
+              key={cat.key}
+              name={`${cat.value}`}
+              active={Array.from(predicate.values()).filter((x)=> x === cat.value).length>0}
+              onClick={() => setPredicate("category", cat.value)}
+              color={"blue"}
               // active={activeItem === 'closest'}
               // onClick={this.handleItemClick}
             >
             <Image
             avatar
             circular
-            src={`/assets/categoryImages/${cat.value}.png`}
+            src={`/assets/categoryImages/${cat.key}.png`}
             style={{width:'1.5em', height:'1.5em'}}
           />
           {cat.text}

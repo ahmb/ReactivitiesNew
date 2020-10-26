@@ -1,11 +1,20 @@
 import React, { Fragment } from "react";
 import { observer } from "mobx-react-lite";
-import { Item, Button, Segment, Icon, Label, Image, Divider } from "semantic-ui-react";
+import {
+  Item,
+  Button,
+  Segment,
+  Icon,
+  Label,
+  Image,
+  Divider,
+} from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { IActivity } from "../../../app/models/activity";
 import { format } from "date-fns";
 import ActivityListItemAttendees from "./ActivityListItemAttendees";
 import { category } from "../../../app/common/options/categoryOptions";
+import { stringCapitalize } from "../../../app/common/util/util";
 
 const ActivityListItem: React.FC<{ activity: IActivity }> = ({ activity }) => {
   const host = activity.attendees.filter((x) => x.isHost)[0];
@@ -23,7 +32,7 @@ const ActivityListItem: React.FC<{ activity: IActivity }> = ({ activity }) => {
                   src={host.image || "/assets/user.png"}
                   style={{ marginBottom: 3 }}
                   floated="left"
-                />
+                />{" "}
               </Link>
               <Item.Header as={Link} to={`/activities/${activity.id}`}>
                 {activity.title}{" "}
@@ -35,7 +44,7 @@ const ActivityListItem: React.FC<{ activity: IActivity }> = ({ activity }) => {
                       content="HOSTING"
                       circular
                       size="mini"
-                      style={{marginLeft:10}}
+                      style={{ marginLeft: 10 }}
                     />
                   </Fragment>
                 )}
@@ -47,7 +56,7 @@ const ActivityListItem: React.FC<{ activity: IActivity }> = ({ activity }) => {
                       content="ATTENDING"
                       circular
                       size="mini"
-                      style={{marginLeft:10}}
+                      style={{ marginLeft: 10 }}
                     />
                   </Fragment>
                 )}
@@ -55,31 +64,61 @@ const ActivityListItem: React.FC<{ activity: IActivity }> = ({ activity }) => {
 
               <br />
               <Item.Extra>
-                    
-                <Icon name="clock" style={{width:'1.5em', height:'1.5em'}} /> {format(activity.date, "h:mm a")}{" "}
-                {category.filter((e) => e.key === activity.category).length >
-                  0 && (
+                <p style={{marginTop:0}}>
+                  {"with "}
+                  <Link to={`/profile/${host.username}`}>
+                    {host.displayName}
+                  </Link>
+                </p>
+                <Icon
+                  name="clock outline"
+                  style={{ width: "1.5em", height: "1.5em" }}
+                />{" "}
+                {format(activity.date, "h:mm a")}{" "}
+                {/* display icon related to the category or show the default icon */}
+                {category.filter(
+                  (e) => e.key.toLowerCase() === activity.category.toLowerCase()
+                ).length > 0 && (
                   <Image
                     avatar
                     circular
-                    className='categoryIconSmall'
+                    className="categoryIconSmall"
                     src={`/assets/categoryImages/${activity.category}.png`}
-                    style={{width:'1.5em', height:'1.5em'}}
+                    style={{ width: "1.5em", height: "1.5em" }}
                   />
                 )}
-                {category.filter((e) => e.key === activity.category).length ===
-                  0 && (
+                {category.filter(
+                  (e) => e.key.toLowerCase() === activity.category.toLowerCase()
+                ).length === 0 && (
                   <Image
                     avatar
                     circular
-                    className='categoryIconSmall'
+                    className="categoryIconSmall"
                     src={"/assets/categoryImages/misc.png"}
+                    style={{ marginBotton: -13, marginTop: -3 }}
                   />
                 )}
-                {activity.category} <Icon name="tags" style={{width:'1.5em', height:'1.5em'}}/> TAG 1 TAG 2{" "}
+                {stringCapitalize(activity.category)}{" "}
+                <Icon
+                  name="hashtag"
+                  style={{ width: "1.5em", height: "1.5em" }}
+                />{" "}
+                {activity.tags}{" "}
               </Item.Extra>
+              {/* <Button
+                  as={Link}
+                  to={`/activities/${activity.id}`}
+                  // onClick={() => selectActivity(activity.id)}
+                  floated="right"
+                  content="Details"
+                  // color="twitter"
+                  inverted
+                  style={{ backgroundColor: "#009EE6", marginTop:10 }}
+                  size="tiny"
+                  circular
+                /> */}
 
-              {/* <Item.Description>
+              {/* <Item.Description></Item.Description>
                 Hosted by
                 <Link to={`/profile/${host.username}`}> {host.displayName}
                 </Link>
@@ -88,26 +127,42 @@ const ActivityListItem: React.FC<{ activity: IActivity }> = ({ activity }) => {
               <Item.Description>
                 {" "}
                 <span>
-                  {activity.description.substring(0, 280)}
-                  Im planning on working out at the Goodlife gym , focusing on
-                  my biceps. Lemme know if you wanna workout together!
+                  {activity.description.length > 280 &&
+                    activity.description.substring(0, 280) + "..."}
+                  {activity.description.length < 280 && activity.description}
+                  <p>
+                    <Link to={`/activities/${activity.id}`}> Details </Link>
+                  </p>
                 </span>
               </Item.Description>
-              <Item.Description>
-                <Button
-                  as={Link}
-                  to={`/activities/${activity.id}`}
-                  // onClick={() => selectActivity(activity.id)}
-                  floated="left"
-                  content="Details"
-                  // color="twitter"
-                  inverted
-                  style={{ backgroundColor: "#DC493A" }}
-                  size="tiny"
-                  circular
-                />
-                {/* <Link to={`/activities/${activity.id}`}> Activity Details & Chat  </Link> */}
-              </Item.Description>
+              {category.filter(
+                (e) => e.key.toLowerCase() === activity.category.replace("&", "").replace(/\s/g, "").toLowerCase()
+              ).length > 0 && (
+                <Item.Description>
+                  <div
+                    style={{
+                      overflow: "hidden",
+                      height: "15vh",
+                      borderRadius: 10,
+                    }}
+                  >
+                    <Image
+                      src={`/assets/categoryImages/${activity.category
+                        .replace("&", "")
+                        .replace(/\s/g, "")
+                        .toLowerCase()}.jpg`}
+                      // height="100px"
+                      // width="100%"
+                      fluid
+                      centered
+                      // style={activityImageStyle}
+                      style={{ borderRadius: 10 }}
+                    />
+                  </div>
+
+                  {/* <Link to={`/activities/${activity.id}`}> Activity Details & Chat  </Link> */}
+                </Item.Description>
+              )}
 
               {/* <Button
                 name={activity.id}
@@ -120,18 +175,6 @@ const ActivityListItem: React.FC<{ activity: IActivity }> = ({ activity }) => {
             </Item.Content>
           </Item>
         </Item.Group>
-
-        <div style={{ overflow: "hidden", height: "15vh", borderRadius: 10 }}>
-          <Image
-            src={`/assets/categoryImages/${activity.category}.jpg`}
-            // height="100px"
-            // width="100%"
-            fluid
-            centered
-            // style={activityImageStyle}
-            style={{ borderRadius: 10 }}
-          />
-        </div>
       </Segment>
 
       {/* <ActivityListItemAttendees attendees={activity.attendees} /> */}
