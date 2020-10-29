@@ -20,7 +20,6 @@ import { LoadingComponent } from "./LoadingComponent";
 import ModalContainer from "../common/modals/ModalContainer";
 import ProfilePage from "../../features/profiles/ProfilePage";
 import PrivateRoute from "./PrivateRoute";
-import Mapi from "../common/map/Map";
 
 const App: React.FC<RouteComponentProps> = ({ location }) => {
   const rootStore = useContext(RootStoreContext);
@@ -39,7 +38,7 @@ const App: React.FC<RouteComponentProps> = ({ location }) => {
   if (!appLoaded) return <LoadingComponent content="Loading app..." />;
 
   return (
-    <Fragment>
+    <Container fluid>
       <ModalContainer />
       <ToastContainer position="bottom-right" />
       <Route exact path="/" component={HomePage} />
@@ -47,10 +46,12 @@ const App: React.FC<RouteComponentProps> = ({ location }) => {
         path={"/(.+)"}
         render={() => (
           <Fragment>
+
             <NavBar />
+
+
             {/* {isHomePage && <Mapi />} */}
-            {/* <Container style={{ marginTop: "7em" }}> */}
-            <Container>
+            <Container style={{ marginTop: '7em' }}>
               <Switch>
                 <PrivateRoute
                   exact
@@ -76,7 +77,7 @@ const App: React.FC<RouteComponentProps> = ({ location }) => {
           </Fragment>
         )}
       />
-    </Fragment>
+    </Container>
   );
 };
 

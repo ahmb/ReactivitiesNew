@@ -22,7 +22,7 @@ const ActivityFiltersText: React.FC = () => {
     <Fragment>
       <Grid.Row>
         <Menu className="filtersHeader" borderless compact={true} text vertical>
-          <Menu.Item header>Filter By</Menu.Item>
+          <Menu.Item header><b>Filter By</b></Menu.Item>
 
           <Menu.Item
             active={predicate.size === 0}
@@ -60,13 +60,14 @@ const ActivityFiltersText: React.FC = () => {
               )
             }
           />
+          
         </Menu>
       </Grid.Row>
       <Grid.Row>
         <Menu className="filtersHeader" borderless compact={true} text vertical>
           <Menu.Item header>Categories</Menu.Item>
           {category.map((cat) => (
-            <Fragment>
+            <Fragment key={cat.key}>
             <Menu.Item
               key={cat.key}
               name={`${cat.value}`}

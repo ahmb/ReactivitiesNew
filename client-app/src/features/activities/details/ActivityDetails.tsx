@@ -48,7 +48,6 @@ const ActivityDetails: React.FC<RouteComponentProps<DetailParams>> = ({
                 border: "none",
                 // backgroundColor: "#009EE6",
                 backgroundColor: "#DC493A",
-                marginTop: 70,
                 // position: "absolute",
                 zIndex: 10,
                 borderColor: "white",

@@ -53,7 +53,7 @@ const ActivityDashboard: React.FC = () => {
 
   return (
     <Fragment>
-      <Grid className="mainPageGrid">
+      <Grid centered className="mainPageGrid">
         {/* <Button
           as={NavLink}
           to="/createActivity"
@@ -64,11 +64,10 @@ const ActivityDashboard: React.FC = () => {
           size="massive"
           className="createActivityBtn"
         /> */}
-        <Grid.Column width={4}>
+        <Grid.Column width={3}>
           {/* <Mapi /> */}
-          <div style={{ marginTop: "70px" }} />
-          <div style={{ marginTop: "70px" }} />
-          <ActivityFiltersText/>
+
+          <ActivityFiltersText />
         </Grid.Column>
         <Grid.Column width={12}>
           {/* <ActivityFilters /> */}
@@ -91,6 +90,7 @@ const ActivityDashboard: React.FC = () => {
           )}
           <Loader active={loadingNext} />
         </Grid.Column>
+
       </Grid>
     </Fragment>
   );

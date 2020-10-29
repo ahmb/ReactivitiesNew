@@ -119,7 +119,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
               textAlign: "center",
               color: "#DC493A",
               borderBottom: "red",
-              marginTop: "140px",
+              marginTop: "70px",
             }}
           >
             <svg

@@ -134,6 +134,11 @@ a.ui.massive.circular.icon.positive.button.createActivityBtn {
   margin-bottom: 10px;
   border-radius: 100px;
 }
+::-webkit-scrollbar {
+  /* display: none; */
+  background: rgba(0, 0, 0, 0);
+  width: 5px;
+}
 
 .ui.attached:not(.top):not(.bottom).header {
   border-radius: 100px;

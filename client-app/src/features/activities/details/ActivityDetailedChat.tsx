@@ -85,8 +85,8 @@ const ActivityDetailedChat: React.FC<IProps> = ({ displayHeight }) => {
 
   return (
     <Fragment>
-      <Segment.Group raised> 
-        <Segment raised>
+      <Segment.Group > 
+        <Segment >
           <Header>Group Chat</Header>
           <div
             id="commentGroup"

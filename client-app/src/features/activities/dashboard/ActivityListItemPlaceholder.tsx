@@ -3,7 +3,7 @@ import { Segment, Button, Placeholder } from "semantic-ui-react";
 const ActivityListItemPlaceholder = () => {
   return (
     <Fragment>
-      <Placeholder fluid style={{ marginTop: 50 }}>
+      <Placeholder fluid>
         <Segment.Group>
           <Segment style={{ minHeight: 110 }}>
             <Placeholder fluid>
@@ -20,16 +20,6 @@ const ActivityListItemPlaceholder = () => {
               </Placeholder.Paragraph>
             </Placeholder>
             <br/>
-              <Button
-                disabled
-                // onClick={() => selectActivity(activity.id)}
-                content="Details"
-                // color="twitter"
-                inverted
-                style={{ backgroundColor: "#3f3d56" }}
-                size="tiny"
-                circular
-              />
           </Segment>
           <Segment>
             <Placeholder fluid>

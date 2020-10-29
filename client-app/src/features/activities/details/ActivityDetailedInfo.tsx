@@ -15,15 +15,15 @@ const ActivityDetailedInfo: React.FC<{ activity: IActivity }> = ({
     <Fragment>
       <Grid>
         <Grid.Column width={1}>
-          {category.filter((e) => e.key === activity.category).length > 0 && (
+          {category.filter((e) => e.value === activity.category).length > 0 && (
             <Image
               avatar
               circular
-              src={`/assets/categoryImages/${activity.category}.png`}
+              src={`/assets/categoryImages/${activity.category.replace("&", "").replace(/\s/g, "").toLowerCase()}.png`}
               // style={{ width: "1.5em", height: "1.5em" }}
             />
           )}
-          {category.filter((e) => e.key === activity.category).length === 0 && (
+          {category.filter((e) => e.value === activity.category).length === 0 && (
             <Image
               avatar
               circular
@@ -33,7 +33,7 @@ const ActivityDetailedInfo: React.FC<{ activity: IActivity }> = ({
           )}
         </Grid.Column>
         <Grid.Column width={15}>
-          <p>{stringCapitalize(activity.category)}</p>
+          <p><b>{stringCapitalize(activity.category)}</b></p>
         </Grid.Column>
       </Grid>
       <Grid>

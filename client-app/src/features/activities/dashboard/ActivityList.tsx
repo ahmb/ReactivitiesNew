@@ -14,7 +14,6 @@ const ActivityList: React.FC = () => {
   return (
     // <div style={{ height: "90vh", overflow: "auto" }}>
     <Fragment>
-      <div style={{marginTop:"70px"}}/>
       {activitiesByDate.map(([group, activities]) => (
         <Segment raised key={group}>
           <Label color="red" ribbon={true}>

@@ -77,18 +77,18 @@ const ActivityListItem: React.FC<{ activity: IActivity }> = ({ activity }) => {
                 {format(activity.date, "h:mm a")}{" "}
                 {/* display icon related to the category or show the default icon */}
                 {category.filter(
-                  (e) => e.key.toLowerCase() === activity.category.toLowerCase()
+                  (e) => e.key.toLowerCase() === activity.category.replace("&", "").replace(/\s/g, "").toLowerCase()
                 ).length > 0 && (
                   <Image
                     avatar
                     circular
                     className="categoryIconSmall"
-                    src={`/assets/categoryImages/${activity.category}.png`}
+                    src={`/assets/categoryImages/${activity.category.replace("&", "").replace(/\s/g, "").toLowerCase()}.png`}
                     style={{ width: "1.5em", height: "1.5em" }}
                   />
                 )}
                 {category.filter(
-                  (e) => e.key.toLowerCase() === activity.category.toLowerCase()
+                  (e) => e.key.toLowerCase() === activity.category.replace("&", "").replace(/\s/g, "").toLowerCase()
                 ).length === 0 && (
                   <Image
                     avatar
@@ -135,10 +135,12 @@ const ActivityListItem: React.FC<{ activity: IActivity }> = ({ activity }) => {
                   </p>
                 </span>
               </Item.Description>
+
               {category.filter(
                 (e) => e.key.toLowerCase() === activity.category.replace("&", "").replace(/\s/g, "").toLowerCase()
               ).length > 0 && (
-                <Item.Description>
+              <Item.Description>
+
                   <div
                     style={{
                       overflow: "hidden",
@@ -158,10 +160,10 @@ const ActivityListItem: React.FC<{ activity: IActivity }> = ({ activity }) => {
                       // style={activityImageStyle}
                       style={{ borderRadius: 10 }}
                     />
-                  </div>
 
                   {/* <Link to={`/activities/${activity.id}`}> Activity Details & Chat  </Link> */}
-                </Item.Description>
+                </div>
+              </Item.Description>
               )}
 
               {/* <Button
