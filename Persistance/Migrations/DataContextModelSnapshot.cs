@@ -131,10 +131,11 @@ namespace Persistance.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("ActivityId")
-                        .HasColumnType("TEXT");
+                    b.Property<Guid>("ActivityId")
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("AuthorId")
+                    b.Property<string>("AppUserId")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Body")
@@ -147,7 +148,7 @@ namespace Persistance.Migrations
 
                     b.HasIndex("ActivityId");
 
-                    b.HasIndex("AuthorId");
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("Comments");
                 });
@@ -373,11 +374,14 @@ namespace Persistance.Migrations
                 {
                     b.HasOne("Domain.Activity", "Activity")
                         .WithMany("Comments")
-                        .HasForeignKey("ActivityId");
+                        .HasForeignKey("ActivityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Domain.AppUser", "Author")
-                        .WithMany()
-                        .HasForeignKey("AuthorId");
+                        .WithMany("Comments")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Domain.Photo", b =>

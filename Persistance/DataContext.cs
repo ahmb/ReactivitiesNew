@@ -39,20 +39,42 @@ namespace Persistance
                     new Value { Id = 3, Name = "Value 103" }
                 );
 
+            builder.Entity<Comment>()
+                .HasOne(comment => comment.Activity)
+                .WithMany(acivity => acivity.Comments)
+                .HasForeignKey(comment => comment.ActivityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Comment>()
+                .HasOne(comment => comment.Author)
+                .WithMany(appUser => appUser.Comments)
+                .HasForeignKey(comment => comment.AppUserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
             //build joint table UserActivity table between User and Activity tables
             builder.Entity<UserActivity>(x => x.HasKey(ua => new { ua.AppUserId, ua.ActivityId }));
 
             //model the first side of the one to many relationship after decomoposing the many-to-many relationship
             builder.Entity<UserActivity>()
+            //AppUser is the principal entity here , and its lazy loaded, and has a collection object navigation property
                 .HasOne(u => u.AppUser)
+            //userActivities is the depdenent entity here, since the model has a single object navigation property
                 .WithMany(a => a.UserActivities)
-                .HasForeignKey(u => u.AppUserId);
+                .HasForeignKey(u => u.AppUserId)
+                // specify the action which should take place on a dependent entity in a relationship when the principal is deleted.
+                .OnDelete(DeleteBehavior.Cascade);
 
             //model the second side of the one to many relationship after decomoposing the many-to-many relationship
             builder.Entity<UserActivity>()
+            //Activity is the principal entity here , and its lazy loaded, and has a collection object navigation property
                 .HasOne(a => a.Activity)
+            //userActivities is the depdenent entity here, since the model has a single object navigation property
                 .WithMany(a => a.UserActivities)
-                .HasForeignKey(u => u.ActivityId);
+                .HasForeignKey(u => u.ActivityId)
+                // specify the action which should take place on a dependent entity in a relationship when the principal is deleted.
+                .OnDelete(DeleteBehavior.Cascade);
+
 
             builder.Entity<UserFollowing>(b =>
             {
@@ -63,7 +85,7 @@ namespace Persistance
                     .WithMany(f => f.Followings)
                     .HasForeignKey(o => o.ObserverId)
                     .OnDelete(DeleteBehavior.Restrict);
-                    
+
                 //define the second side of the on to many relationship between UserFollowing and AppUser 
                 b.HasOne(o => o.Target)
                     .WithMany(f => f.Followers)

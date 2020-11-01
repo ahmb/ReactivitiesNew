@@ -62,7 +62,7 @@ const NavBar: React.FC = () => {
                     <Dropdown.Item
                       as={Link}
                       to={`/profile/${user.username}`}
-                      text="My profile"
+                      text="Profile"
                       icon="eye"
                     />
                     <Dropdown.Item

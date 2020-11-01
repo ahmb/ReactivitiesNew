@@ -1,7 +1,9 @@
 using System;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Application.Errors;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Persistance;
@@ -27,13 +29,16 @@ namespace Infrastructure.Security
         {
             string currentUserName = _httpContextAccessor.HttpContext.User?.Claims?.SingleOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
 
-            Guid activityId = Guid.Parse(_httpContextAccessor.HttpContext.Request.RouteValues.SingleOrDefault(x=>x.Key == "id").Value.ToString());
+            Guid activityId = Guid.Parse(_httpContextAccessor.HttpContext.Request.RouteValues.SingleOrDefault(x => x.Key == "id").Value.ToString());
 
             Domain.Activity activity = _context.Activities.FindAsync(activityId).Result;
 
+            if (activity == null)
+                throw new RestException(HttpStatusCode.NotFound, new { Activity = "Could not find activity" });
+
             Domain.UserActivity host = activity.UserActivities.FirstOrDefault(x => x.IsHost);
 
-            if(host?.AppUser?.UserName == currentUserName)
+            if (host?.AppUser?.UserName == currentUserName)
                 context.Succeed(requirement);
 
             return Task.CompletedTask;

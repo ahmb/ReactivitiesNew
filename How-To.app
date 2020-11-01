@@ -58,6 +58,7 @@ npx create-react-app client-app --use-npm --typescript
 
  After creating an Activity Domain object, and then adding that class into the DataContext class
  #dotnet ef migrations add "ActivitiesEntityAdded" -p Persistance/ -s API
+ #dotnet ef migrations add "Updated referential constraint useractivities " -p Persistance/ -s API
 dotnet watch run
 npm start 
 

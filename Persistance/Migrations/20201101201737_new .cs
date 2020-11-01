@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Persistance.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class @new : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,7 +19,8 @@ namespace Persistance.Migrations
                     City = table.Column<string>(nullable: true),
                     Venue = table.Column<string>(nullable: true),
                     Longitude = table.Column<double>(nullable: false),
-                    Latitude = table.Column<double>(nullable: false)
+                    Latitude = table.Column<double>(nullable: false),
+                    Tags = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -192,8 +193,8 @@ namespace Persistance.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Body = table.Column<string>(nullable: true),
-                    AuthorId = table.Column<string>(nullable: true),
-                    ActivityId = table.Column<Guid>(nullable: true),
+                    AppUserId = table.Column<string>(nullable: true),
+                    ActivityId = table.Column<Guid>(maxLength: 255, nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -204,13 +205,13 @@ namespace Persistance.Migrations
                         column: x => x.ActivityId,
                         principalTable: "Activities",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Comments_AspNetUsers_AuthorId",
-                        column: x => x.AuthorId,
+                        name: "FK_Comments_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -341,9 +342,9 @@ namespace Persistance.Migrations
                 column: "ActivityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_AuthorId",
+                name: "IX_Comments_AppUserId",
                 table: "Comments",
-                column: "AuthorId");
+                column: "AppUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Followings_TargetId",

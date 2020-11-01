@@ -134,13 +134,9 @@ const ActivityListItem: React.FC<{ activity: IActivity }> = ({ activity }) => {
                     <Link to={`/activities/${activity.id}`}> Details </Link>
                   </p>
                 </span>
-              </Item.Description>
-
               {category.filter(
                 (e) => e.key.toLowerCase() === activity.category.replace("&", "").replace(/\s/g, "").toLowerCase()
               ).length > 0 && (
-              <Item.Description>
-
                   <div
                     style={{
                       overflow: "hidden",
@@ -160,11 +156,10 @@ const ActivityListItem: React.FC<{ activity: IActivity }> = ({ activity }) => {
                       // style={activityImageStyle}
                       style={{ borderRadius: 10 }}
                     />
+                  </div>
 
-                  {/* <Link to={`/activities/${activity.id}`}> Activity Details & Chat  </Link> */}
-                </div>
-              </Item.Description>
               )}
+              </Item.Description>
 
               {/* <Button
                 name={activity.id}

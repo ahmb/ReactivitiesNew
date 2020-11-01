@@ -20,14 +20,14 @@ namespace Application.Profiles
 
         public async Task<Profile> ReadProfile(string username)
         {
-            var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == username);
+            Domain.AppUser user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == username);
             if (user == null)
             {
                 throw new RestException(HttpStatusCode.NotFound, new { User = "Not found" });
             }
-            var currentUser = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUsername());
+            Domain.AppUser currentUser = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUsername());
 
-            var profile = new Profile
+            Profile profile = new Profile
             {
                 DisplayName = user.DisplayName,
                 Username = user.UserName,
@@ -38,8 +38,10 @@ namespace Application.Profiles
                 FollowingCount = user.Followings.Count()
             };
 
-            if(currentUser.Followings.Any(x=>x.TargetId == user.Id))
+            if (currentUser.Followings.Any(x => x.TargetId == user.Id))
+            {
                 profile.IsFollowed = true;
+            }
 
             return profile;
         }

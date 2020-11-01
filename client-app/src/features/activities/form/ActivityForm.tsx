@@ -58,6 +58,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
     editActivity,
     submitting,
     loadActivity,
+    deleteActivity,
   } = rootStore.activityStore;
 
   const [activity, setActivity] = useState(new ActivityFormValues());
@@ -519,6 +520,21 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
                       disabled={loading || pristine || invalid}
                       circular
                     />
+
+                    {activity.id && (
+                      <Button
+                        loading={submitting}
+                        floated="right"
+                        negative
+                        type="button"
+                        content="Delete"
+                        circular
+                        onClick={(e) => {
+                          deleteActivity(e, activity.id!);
+                          history.push("/activities");
+                        }}
+                      />
+                    )}
                     <Button
                       onClick={
                         activity.id
