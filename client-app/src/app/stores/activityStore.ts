@@ -42,6 +42,7 @@ export default class ActivityStore {
       }
     );
   }
+
   @observable activityRegistry = new Map();
   @observable loadingInitial = false;
   @observable activity: IActivity | null = null;
@@ -51,6 +52,7 @@ export default class ActivityStore {
   @observable activityCount = 0;
   @observable page = 0;
   @observable predicate = new Map();
+  @observable onlineUsers: {[id:string]: Set<string>} = {};
 
   @action setPredicate = (predicate: string, value: string | Date) => {
     this.predicate.clear();
@@ -63,6 +65,7 @@ export default class ActivityStore {
     const params = new URLSearchParams();
     params.append("limit", String(LIMIT));
     params.append("offset", `${this.page ? this.page * LIMIT : 0}`);
+
     this.predicate.forEach((value, key) => {
       if (key === "startDate") {
         params.append(key, value.toISOString());
@@ -91,6 +94,7 @@ export default class ActivityStore {
   @observable.ref hubConnection: HubConnection | null = null;
 
   @action createHubConnection = (activityId: string) => {
+
     //configure the hubconnection
     this.hubConnection = new HubConnectionBuilder()
       .withUrl(process.env.REACT_APP_API_CHAT_URL!, {
@@ -121,8 +125,28 @@ export default class ActivityStore {
       });
     }
 
-    this.hubConnection.on("Send", (message) => {
-      toast.info(message);
+    this.hubConnection.on("Send", (message: string) => {
+      // toast.info(message);TODO:uncomment if you want to get toasts
+      if(message.includes('online')){
+        if(this.onlineUsers[this.activity?.id!] == null){
+          let mySet = new Set<string>();
+          runInAction(() => {
+            this.onlineUsers[this.activity?.id!] = mySet.add(message.split('>>')[0].trim());
+          })
+        }
+        else{
+          runInAction(()=> {
+            this.onlineUsers[this.activity?.id!].add(message.split('>>')[0].trim());
+          })
+        }
+      }
+      if(message.includes('offline')){
+        runInAction(()=> {
+          this.onlineUsers[this.activity?.id!].delete(message.split('>>')[0].trim());
+        })
+      }
+      console.log(Array.from(this.onlineUsers[Object.keys(this.onlineUsers)[0]]));
+      console.log(Array.from(this.onlineUsers[this.activity?.id!]));
     });
   };
 

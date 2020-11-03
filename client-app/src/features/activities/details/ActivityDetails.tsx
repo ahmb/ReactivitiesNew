@@ -59,20 +59,28 @@ const ActivityDetails: React.FC<RouteComponentProps<DetailParams>> = ({
           </span>
         </Grid.Column>
       </Grid.Row>
-
-      <Grid.Column width={16}>
+<Grid.Row>
+      <Grid.Column width={13}>
         {/* <ActivityDetailedHeader activity={activity} /> */}
-        <Segment.Group basic="true" raised>
-          <Segment>
-            <ActivityDetailedChat displayHeight="60vh" />
-
+        <Segment.Group basic="true" raised style={{borderRadius:'30px'}}>
+          <Segment style={{borderRadius:'30px 30px 30px 30px'}}>
             <ActivityDetailsHeader activity={activity} />
 
             <ActivityDetailedInfo activity={activity} />
-            <ActivityDetailedSidebar attendees={activity.attendees} />
           </Segment>
         </Segment.Group>
       </Grid.Column>
+      <Grid.Column width={3}>
+        <ActivityDetailedSidebar attendees={activity.attendees} />
+      </Grid.Column>
+      </Grid.Row>
+      <Grid.Row>
+      <Grid.Column width={13}>          
+      <ActivityDetailedChat displayHeight="60vh" />
+
+      </Grid.Column>
+      </Grid.Row>
+
     </Grid>
   );
 };

@@ -16,7 +16,7 @@ const NavBar: React.FC = () => {
   const { user, logout } = rootStore.userStore;
   // console.log(user);
   return (
-    <Menu secondary fixed="top" pointing size="tiny">
+    <Menu secondary fixed="top" pointing size="tiny" style={{backgroundColor:'aliceBlue'}}>
       <Container>
         <Menu.Item header as={NavLink} exact to="/">
           {/* <img src="/assets/logo.png" alt="logo" style={{ marginRight: 10 }} /> */}

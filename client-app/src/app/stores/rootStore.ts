@@ -16,8 +16,8 @@ export class RootStore {
     profileStore: ProfileStore;
 
     constructor() {
-        this.activityStore = new ActivityStore(this);
         this.userStore = new UserStore(this);
+        this.activityStore = new ActivityStore(this);
         this.commonStore = new CommonStore(this);
         this.modalStore = new ModalStore(this);
         this.profileStore = new ProfileStore(this);

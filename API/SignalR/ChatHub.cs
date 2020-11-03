@@ -1,10 +1,11 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Application.Comments;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using System;
 
 namespace API.SignalR
 {
@@ -34,21 +35,30 @@ namespace API.SignalR
         {
             return Context.User?.Claims?.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier)?.Value;
         }
-
         public async Task AddToGroup(string groupName)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
             var username = GetUsername();
-
-            await Clients.Group(groupName).SendAsync("Send", $"{username.ToUpper()} has joined the group chat");
+            if(ConnectedUser.Ids.ContainsKey(groupName)){
+                ConnectedUser.Ids[groupName].Add(GetUsername().ToString());  
+            }
+            else{
+                List<string> userArray = new List<string>();
+                userArray.Add(GetUsername().ToString());
+                ConnectedUser.Ids.Add(groupName,new HashSet<string>(userArray));
+            }
+            // await Clients.Group(groupName).SendAsync("Send", $"{username} >> is online");
+            foreach(var value in ConnectedUser.Ids[groupName]){
+                await Clients.Group(groupName).SendAsync("Send", $"{value} >> is online");
+            }
         }
 
         public async Task RemoveFromGroup(string groupName)
         {
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
             var username = GetUsername();
-
-            await Clients.Group(groupName).SendAsync("Send", $"{username.ToUpper()} has left the group chat");
+            ConnectedUser.Ids[groupName].Remove(username);  
+            await Clients.Group(groupName).SendAsync("Send", $"{username} >> went offline");
         }
     }
 }

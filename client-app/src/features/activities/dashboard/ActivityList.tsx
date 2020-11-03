@@ -3,7 +3,7 @@ import { Icon, Item, Label, Segment } from "semantic-ui-react";
 import { observer } from "mobx-react-lite";
 import ActivityListItem from "./ActivityListItem";
 import { RootStoreContext } from "../../../app/stores/rootStore";
-import { format } from "date-fns";
+import { format, formatDistance } from "date-fns";
 import ActivityListItemPlaceholder from "./ActivityListItemPlaceholder";
 
 const ActivityList: React.FC = () => {
@@ -15,9 +15,13 @@ const ActivityList: React.FC = () => {
     // <div style={{ height: "90vh", overflow: "auto" }}>
     <Fragment>
       {activitiesByDate.map(([group, activities]) => (
-        <Segment raised key={group}>
+        <Segment  key={group} style={{backgroundColor:"aliceblue"}}>
           <Label color="red" ribbon={true}>
             {format(new Date(parseInt(group.split('-')[0]),parseInt(group.split('-')[1])-1,(parseInt(group.split('-')[2]))), "eeee do MMMM")}
+            {' , in ' + formatDistance(
+                            new Date(group),
+                            new Date()
+                          )}
           </Label>
           <Item.Group divided>
             {activities.map((activity) => (

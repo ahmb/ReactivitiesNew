@@ -21,8 +21,8 @@ const ActivityDetailedSidebar: React.FC<IProps> = ({ attendees }) => {
   
   return (
     <Fragment>
-        <Header> Guest List </Header>
-      <Segment.Group>
+        <Header id='funkyHeader'> Guest List </Header>
+      <Segment.Group style={{borderRadius:'30px'}}>
         {/* <Segment
           raised
           textAlign="center"
@@ -33,7 +33,7 @@ const ActivityDetailedSidebar: React.FC<IProps> = ({ attendees }) => {
           {attendees.length} {attendees.length === 1 ? "person" : "people"}{" "}
           attending
         </Segment> */}
-        <Segment raised attached>
+        <Segment raised attached style={{borderRadius:'30px'}}>
           <List relaxed divided>
             {attendees.map((attendee) => (
               <Item key={attendee.username} style={{ position: "relative" }}>

@@ -1,25 +1,27 @@
 @import url("https://fonts.googleapis.com/css?family=Pacifico");
 @import url("https://fonts.googleapis.com/css?family=OpenSans");
 /* ACTIVITY LIST styles */
-html, body {
+html,
+body {
   margin: 0;
   height: 100%;
-  width:100%;
+  width: 100%;
 }
 
-.ui.inverted.button{
+
+
+.ui.inverted.button {
   box-shadow: 0 0 0 0 black inset !important;
 }
-.ui.inverted.button:hover, button.ui.icon.inverted.left.labeled.button:focus {
+.ui.inverted.button:hover,
+button.ui.icon.inverted.left.labeled.button:focus {
   box-shadow: 0 0 0 0 black inset !important;
-  color:#004767;
+  color: #004767;
 }
 
 .categoryIconSmall {
   filter: grayscale(100%);
-
 }
-
 
 body {
   /* background-color: rgb(234, 234, 234) !important; */
@@ -44,7 +46,7 @@ body {
 #logo2 {
   font-family: Pacifico;
   font-size: 25px;
-  color: #3f3d56;
+  color: #009EE6;
 }
 
 .ui.menu .item > .input input {
@@ -85,7 +87,9 @@ body {
   color: #3f3d56;
 }
 
-.ui.secondary.pointing.menu .dropdown.item:hover, .ui.secondary.pointing.menu .link.item:hover, .ui.secondary.pointing.menu a.item:hover {
+.ui.secondary.pointing.menu .dropdown.item:hover,
+.ui.secondary.pointing.menu .link.item:hover,
+.ui.secondary.pointing.menu a.item:hover {
   color: #3f3d56;
 }
 
@@ -119,7 +123,7 @@ a.ui.tiny.circular.positive.button.navbarPostBtn {
 a.ui.tiny.circular.positive.button.navbarPostBtn:hover {
   margin: auto;
   padding: 15px;
-  color: #FFEE88;
+  color: #ffee88;
 }
 
 /* 
@@ -199,6 +203,19 @@ body ::-webkit-scrollbar-track {
   color: #dc493a;
 }
 
+.activityListItemImgDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.activityListItemImg {
+  flex-shrink: 0;
+  min-width: 100%;
+  min-height: 100%;
+}
+
 /*home page styles*/
 
 .masthead {
@@ -242,6 +259,13 @@ body ::-webkit-scrollbar-track {
   border-radius: 100px;
 }
 
+#funkyHeader{
+  font-family: Pacifico;
+  color: #dc493a;
+  text-align: center;
+  font-size: 26px;
+}
+
 /* ACTIVITY FORM styles */
 
 textarea,
@@ -251,8 +275,8 @@ textarea,
 }
 
 /* validation error messages  */
-.ui.red.basic.label{
-  border:none;
+.ui.red.basic.label {
+  border: none;
 }
 
 input {
@@ -327,10 +351,9 @@ button.ui.icon.inverted.left.labeled.button {
   border-radius: 100px;
 }
 
-.ui.form .field .field{
+.ui.form .field .field {
   margin-bottom: 0;
 }
-
 /* ACTIVITY FORM Calendar Styles */
 .rw-cell.rw-state-selected,
 .rw-cell.rw-state-selected:hover {

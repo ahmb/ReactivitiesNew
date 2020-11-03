@@ -1,5 +1,5 @@
 import React, { Fragment, useContext, useEffect } from "react";
-import { Segment, Header, Form, Button, Comment } from "semantic-ui-react";
+import { Segment, Header, Form, Button, Comment, List, Icon } from "semantic-ui-react";
 import { RootStoreContext } from "../../../app/stores/rootStore";
 import { Form as FinalForm, Field } from "react-final-form";
 import TextAreaInput from "../../../app/common/form/TextAreaInput";
@@ -12,14 +12,17 @@ import {
   combineValidators,
   isRequired,
   hasLengthGreaterThan,
-  composeValidators, matchesPattern
+  composeValidators,
+  matchesPattern,
 } from "revalidate";
 
-let emptySpace = new RegExp('[^ ]');
-let carriageReturn = new RegExp('[^\\r]');
-let tab = new RegExp('[^\\t]');
-let lineFeed = new RegExp('[^\\n]');
-let legalCharacters = new RegExp(String.raw`[A-Za-z0-9\!\"\#\$\%\&\'\(\)\*\+\,\-\.\/\:\;\<\>\=\?\@\[\]\{\}\\\^\_\`\~]`);
+let emptySpace = new RegExp("[^ ]");
+let carriageReturn = new RegExp("[^\\r]");
+let tab = new RegExp("[^\\t]");
+let lineFeed = new RegExp("[^\\n]");
+let legalCharacters = new RegExp(
+  String.raw`[A-Za-z0-9\!\"\#\$\%\&\'\(\)\*\+\,\-\.\/\:\;\<\>\=\?\@\[\]\{\}\\\^\_\`\~]`
+);
 
 const validate = combineValidators({
   body: composeValidators(
@@ -57,6 +60,7 @@ const ActivityDetailedChat: React.FC<IProps> = ({ displayHeight }) => {
     stopHubConnection,
     addComment,
     activity,
+    onlineUsers,
   } = rootStore.activityStore;
   var { comments } = activity!;
 
@@ -65,10 +69,13 @@ const ActivityDetailedChat: React.FC<IProps> = ({ displayHeight }) => {
     createHubConnection(activity!.id);
     var objDiv = document.getElementById("commentGroup");
     if (objDiv) {
-      objDiv.animate({top:objDiv.scrollHeight}, 500)
+      objDiv.animate({ top: objDiv.scrollHeight }, 500);
       // objDiv.scrollTop = objDiv.scrollHeight;
       // objDiv.scrollTop = objDiv.scrollHeight;
     }
+    //FIXME:the component gets mounted and prints out null, but then when the value is updated
+    // console.log("ON DETAILED CHAT COMP MOUNT");
+    // console.log(onlineUsers[activity?.id!]);
     return () => {
       stopHubConnection();
     };
@@ -85,14 +92,38 @@ const ActivityDetailedChat: React.FC<IProps> = ({ displayHeight }) => {
 
   return (
     <Fragment>
-      <Segment.Group > 
-        <Segment >
-          <Header>Group Chat</Header>
+      <Header id='funkyHeader'> Group Chat </Header>
+      <Segment.Group raised  style={{borderRadius:'30px'}}>
+        <Segment style={{borderRadius:'30px 30px 0 0'}}>
+          <Header as="h5" disabled style={{}}>
+            online:
+          </Header>
+          <List horizontal>
+            {onlineUsers[activity?.id!] !== undefined &&
+              onlineUsers[activity?.id!] !== null &&
+              Array.from(onlineUsers[activity?.id!]).map((i) => {
+                return <List.Item key={i}> <span><Icon name='circle' color='green'/></span>{i} </List.Item>;
+              })}
+          </List>
+          {/* 
+          {Array.from(onlineUsers[activity?.id!]).length > 0 &&
+            Array.from(onlineUsers[activity?.id!]).forEach((i) => {
+              return <p>{i}</p>;
+            })} */}
+        </Segment>
+
+        <Segment>
           <div
             id="commentGroup"
             style={{ maxHeight: displayHeight, overflow: "auto" }}
           >
             <Comment.Group>
+              {activity && activity.comments.length == 0 && (
+                <Header disabled as="a4">
+                  Start the conversation
+                </Header>
+              )}
+
               {activity &&
                 activity.comments &&
                 activity.comments.map((comment) => (
@@ -123,7 +154,7 @@ const ActivityDetailedChat: React.FC<IProps> = ({ displayHeight }) => {
             </Comment.Group>
           </div>
         </Segment>
-        <Segment>
+        <Segment style={{borderRadius:'0 0 30px 30px'}}>
           <FinalForm
             onSubmit={addComment}
             validate={validate}
