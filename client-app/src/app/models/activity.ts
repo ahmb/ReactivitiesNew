@@ -17,6 +17,7 @@ export interface IActivity {
   longitude: number;
   isGoing: boolean;
   isHost: boolean;
+  isApproved: boolean;
   attendees: IAttendee[];
   comments: IComment[];
   tags: string;
@@ -78,4 +79,5 @@ export interface IAttendee {
   image: string;
   isHost: boolean;
   following?: boolean;
+  isApproved: boolean;
 }

@@ -70,9 +70,11 @@ const UnreadActivitiesList: React.FC = () => {
                           "/assets/profpic.svg" ||
                           "/assets/user.png"
                         }
+                        as={NavLink}
+                        to={`/profile/${a.requestorUserName}`}
                       />
                       <Card.Description>
-                        {a.requestorName} sent a request to join your activty!
+                        <Link to={`/profile/${a.requestorUserName}`}>{a.requestorName}</Link> sent a request to join your activty!
                       </Card.Description>
                       <Card.Content extra style={{marginTop:10}} >
                         <span   >
@@ -94,7 +96,7 @@ const UnreadActivitiesList: React.FC = () => {
                             size="mini"
                             circular
                             icon='times'
-                            onClick={(e)=>rejectAttendance(e,a)}
+                            onClick={(e)=>rejectAttendance(e,a.activityId,a.requestorUserName)}
                             loading={target === a.activityId+a.requestorUserName+'reject' && loading}
                             name={a.activityId+a.requestorUserName+'reject'}
                           />

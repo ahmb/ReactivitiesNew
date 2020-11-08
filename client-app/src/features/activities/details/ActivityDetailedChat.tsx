@@ -94,7 +94,7 @@ const ActivityDetailedChat: React.FC<IProps> = ({ displayHeight }) => {
     <Fragment>
       <Header id='funkyHeader'> Group Chat </Header>
       <Segment.Group raised  style={{borderRadius:'30px'}}>
-        <Segment style={{borderRadius:'30px 30px 0 0', backgroundColor:"aliceblue"}}>
+        <Segment style={{borderRadius:'30px 30px 0 0', backgroundColor:"aliceblue", border:"none"}}>
           <Header as="h5" disabled style={{}}>
             online:
           </Header>
@@ -112,7 +112,7 @@ const ActivityDetailedChat: React.FC<IProps> = ({ displayHeight }) => {
             })} */}
         </Segment>
 
-        <Segment>
+        <Segment style={{border:"none"}}>
           <div
             id="commentGroup"
             style={{ maxHeight: displayHeight, overflow: "auto" }}
@@ -154,7 +154,7 @@ const ActivityDetailedChat: React.FC<IProps> = ({ displayHeight }) => {
             </Comment.Group>
           </div>
         </Segment>
-        <Segment style={{borderRadius:'0 0 30px 30px', backgroundColor:"aliceblue"}}>
+        <Segment style={{borderRadius:'0 0 30px 30px', backgroundColor:"aliceblue", border:"none"}}>
           <FinalForm
             onSubmit={addComment}
             validate={validate}

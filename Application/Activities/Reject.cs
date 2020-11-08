@@ -56,17 +56,26 @@ namespace Application.Activities
                     throw new RestException(HttpStatusCode.BadRequest, new { Attendance = "Provided user is not attending this activity." });
 
                 //FIXME: the rejection feature needs to be built in below now that approval is completed
+                bool changed = false;
 
-                //do not approve attendance and just mark it as read to imply rejection
-                if(attendance.Read == true || attendance.IsApproved == true){
-                    attendance.IsApproved = false;
+                if (attendance.Read == false)
+                {
                     attendance.Read = true;
+                    changed = true;
+                }
 
 
+                if (attendance.IsApproved == true)
+                {
+                    attendance.IsApproved = false;
+                    changed = true;
+                }
+
+                if (changed)
+                {
                     var success = await _context.SaveChangesAsync() > 0;
 
                     if (success) return Unit.Value;
-
                 }
 
 

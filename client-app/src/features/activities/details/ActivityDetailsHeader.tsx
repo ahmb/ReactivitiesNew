@@ -55,7 +55,7 @@ const ActivityDetailedHeader: React.FC<{ activity: IActivity }> = ({
             {/* Hosted by <Link to={`/profile/${host.username}`}>
                   <strong>{host.displayName}</strong></Link> */}
 
-            {activity.isHost ? (
+            {activity.isHost && (
               <Button
                 as={Link}
                 to={`/manage/${activity.id}`}
@@ -68,7 +68,8 @@ const ActivityDetailedHeader: React.FC<{ activity: IActivity }> = ({
               >
                 Edit Activity
               </Button>
-            ) : activity.isGoing ? (
+            )}
+            {activity.isGoing && activity.isApproved && (
               <Button
                 loading={loading}
                 onClick={cancelAttendance}
@@ -77,7 +78,13 @@ const ActivityDetailedHeader: React.FC<{ activity: IActivity }> = ({
               >
                 Cancel attendance
               </Button>
-            ) : (
+            )}
+            {!activity.isHost && activity.isGoing && !activity.isApproved && (
+              <Button floated="right" circular disabled>
+                Pending Approval
+              </Button>
+            )}
+            {!activity.isGoing && 
               <Button
                 loading={loading}
                 onClick={attendActivity}
@@ -87,7 +94,7 @@ const ActivityDetailedHeader: React.FC<{ activity: IActivity }> = ({
               >
                 Join Activity
               </Button>
-            )}
+            }
           </Item.Content>
         </Item>
       </Item.Group>

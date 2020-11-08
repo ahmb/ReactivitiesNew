@@ -12,6 +12,11 @@ namespace Application.Activities
         public bool Following { get; set; }
 
         public bool IsApproved { get; set; }
+
+        public int Rating { get; set; }
+
+        public bool Read { get; set; }
+
         
     }
 }

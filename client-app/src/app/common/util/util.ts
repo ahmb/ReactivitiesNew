@@ -36,6 +36,9 @@ export const setActivityProps = (activity: IActivity, user: IUser) => {
   activity.isHost = activity.attendees.some(
     (a) => a.username === user.username && a.isHost
   );
+  activity.isApproved = activity.attendees.some(
+    (a) => a.username === user.username && a.isApproved
+  );
   return activity;
 };
 
@@ -44,8 +47,23 @@ export const createAttendee = (user: IUser): IAttendee => {
     displayName: user.displayName,
     isHost: false,
     username: user.username,
-    image: user.image!
+    image: user.image!,
+    isApproved: false
   }
+}
+
+export function filterInPlace<T>(a: T[], condition: any, thisArg: any) {
+  let j = 0;
+
+  a.forEach((e, i) => { 
+    if (condition.call(thisArg, e, i, a)) {
+      if (i!==j) a[j] = e; 
+      j++;
+    }
+  });
+
+  a.length = j;
+  return a;
 }
 
 function getDistanceFromLatLonInKm(lat1:number,lon1:number,lat2:number,lon2:number) {

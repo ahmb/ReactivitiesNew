@@ -59,28 +59,35 @@ const ActivityDetails: React.FC<RouteComponentProps<DetailParams>> = ({
           </span>
         </Grid.Column>
       </Grid.Row>
-<Grid.Row>
-      <Grid.Column width={13}>
-        {/* <ActivityDetailedHeader activity={activity} /> */}
-        <Segment.Group basic="true" raised style={{borderRadius:'30px', backgroundColor:"aliceblue"}}>
-          <Segment style={{borderRadius:'30px 30px 30px 30px', backgroundColor:"aliceblue"}}>
-            <ActivityDetailsHeader activity={activity} />
+      <Grid.Row>
+        <Grid.Column width={13}>
+          {/* <ActivityDetailedHeader activity={activity} /> */}
+          <Segment.Group
+            basic="true"
+            raised
+            style={{ borderRadius: "30px", backgroundColor: "aliceblue" }}
+          >
+            <Segment
+              style={{
+                borderRadius: "30px 30px 30px 30px",
+                backgroundColor: "aliceblue",
+              }}
+            >
+              <ActivityDetailsHeader activity={activity} />
 
-            <ActivityDetailedInfo activity={activity} />
-          </Segment>
-        </Segment.Group>
-      </Grid.Column>
-      <Grid.Column width={3}>
-        <ActivityDetailedSidebar attendees={activity.attendees} />
-      </Grid.Column>
+              <ActivityDetailedInfo activity={activity} />
+            </Segment>
+          </Segment.Group>
+        </Grid.Column>
+        <Grid.Column width={3}>
+          <ActivityDetailedSidebar activity={activity} />
+        </Grid.Column>
       </Grid.Row>
       <Grid.Row>
-      <Grid.Column width={13}>          
-      <ActivityDetailedChat displayHeight="60vh" />
-
-      </Grid.Column>
+        <Grid.Column width={13}>
+          {(activity.isApproved || activity.isHost ) && <ActivityDetailedChat displayHeight="60vh" />}
+        </Grid.Column>
       </Grid.Row>
-
     </Grid>
   );
 };

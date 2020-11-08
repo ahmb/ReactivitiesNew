@@ -147,3 +147,13 @@ apache2ctl configtest
 BUILD
 use: npm run build
 to build the react app and deploy it into the API projects wwwroot folder
+
+
+
+
+-------------------
+
+UPDATE DB:
+
+update UserActivities
+SET IsApproved = 0

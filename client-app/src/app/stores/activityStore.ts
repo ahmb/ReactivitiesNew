@@ -7,7 +7,7 @@ import {
   toJS,
 } from "mobx";
 import { SyntheticEvent } from "react";
-import { IActivity, IUserActivitiesUnreadDto } from "../models/activity";
+import { IActivity, IAttendee, IUserActivitiesUnreadDto } from "../models/activity";
 import agent from "../api/agent";
 import "mobx-react-lite/batchingForReactDom";
 import { history } from "../..";
@@ -17,6 +17,7 @@ import {
   setActivityProps,
   createAttendee,
   covertDateUTCtoLocal,
+  filterInPlace
 } from "../common/util/util";
 import {
   HubConnection,
@@ -292,28 +293,27 @@ export default class ActivityStore {
 
   @action loadActivity = async (id: string) => {
     let activity = this.getActivity(id);
-    if (activity) {
-      this.activity = activity;
-      //use the toJS method to convert the observable to a plain JS object
-      return toJS(activity);
-    } else {
-      this.loadingInitial = true;
-      try {
-        activity = await agent.Activities.details(id);
-        runInAction("getting activity", () => {
-          setActivityProps(activity, this.rootStore.userStore.user!);
-          activity.date = covertDateUTCtoLocal(activity.date);
-          this.activity = activity;
-          this.activityRegistry.set(activity.id, activity);
-          this.loadingInitial = false;
-        });
-        return activity;
-      } catch (error) {
-        runInAction("get activitiy error", () => {
-          this.loadingInitial = false;
-        });
-        console.log(error);
-      }
+    // if (activity) {
+    //   this.activity = activity;
+    //   //use the toJS method to convert the observable to a plain JS object
+    //   return toJS(activity);
+    // } else {
+    this.loadingInitial = true;
+    try {
+      activity = await agent.Activities.details(id);
+      runInAction("getting activity", () => {
+        setActivityProps(activity, this.rootStore.userStore.user!);
+        activity.date = covertDateUTCtoLocal(activity.date);
+        this.activity = activity;
+        this.activityRegistry.set(activity.id, activity);
+        this.loadingInitial = false;
+      });
+      return activity;
+    } catch (error) {
+      runInAction("get activitiy error", () => {
+        this.loadingInitial = false;
+      });
+      console.log(error);
     }
   };
 
@@ -426,6 +426,7 @@ export default class ActivityStore {
             (a) => a.username !== this.rootStore.userStore.user!.username
           );
           this.activity.isGoing = false;
+          this.activity.isApproved = false;
           this.activityRegistry.set(this.activity.id, this.activity);
           this.loading = false;
         }
@@ -469,20 +470,24 @@ export default class ActivityStore {
 
   @action rejectAttendance = async (
     event: SyntheticEvent<HTMLButtonElement>,
-    unreadActvity: IUserActivitiesUnreadDto
+    activityId: string,
+    requestorUserName: string
   ) => {
     this.loading = true;
     this.target = event.currentTarget.name;
     try {
-      await agent.Activities.reject(
-        unreadActvity.activityId,
-        unreadActvity.requestorUserName
-      );
+      await agent.Activities.reject(activityId, requestorUserName);
       runInAction(() => {
         if (this.unreadActivitiesArray) {
           this.unreadActivitiesArray = this.unreadActivitiesArray.filter(
-            (a) => a !== unreadActvity
+            (a) => {
+              return (a.requestorUserName !== requestorUserName ||
+                a.activityId !== activityId);
+            }
           );
+          if(this.activity?.id == activityId){
+            this.activity.attendees = this.activity.attendees.filter((a)=> a.username !== requestorUserName);
+          }
           this.loading = false;
           this.target = "";
         }
