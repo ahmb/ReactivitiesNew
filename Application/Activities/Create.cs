@@ -40,6 +40,8 @@ namespace Application.Activities
                 RuleFor(x => x.Description).NotEmpty();
                 RuleFor(x => x.Category).NotEmpty();
                 RuleFor(x => x.Date).NotEmpty();
+                //TODO:Perform a check to see if categroy is one of the categories allowed
+                
                 // RuleFor(x => x.Venue).NotEmpty();
                 // RuleFor(x => x.City).NotEmpty();
                 // RuleFor(x => x.Longitude).NotEmpty();
@@ -83,7 +85,8 @@ namespace Application.Activities
                     AppUser = user,
                     Activity = activity,
                     IsHost = true,
-                    DateJoined = DateTime.Now
+                    DateJoined = DateTime.Now.ToUniversalTime(),
+                    IsApproved = true
                 };
 
                 _context.UserActivities.Add(attendee);

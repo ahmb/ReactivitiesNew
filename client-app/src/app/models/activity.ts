@@ -32,6 +32,19 @@ export interface IComment {
   image: string;
 }
 
+export interface IUserActivitiesUnreadDto 
+{
+  requestorName: string;
+  requestorUserName: string;
+  requestDateTime: Date;
+  activityId: string;
+  activityName: string;
+  activityDateTime: Date;
+  requestorImage:string
+}
+
+
+
 export interface IActivityFormValues extends Partial<IActivity> {
   time?: Date;
 }

@@ -40,7 +40,11 @@ dotnet add reference ../Domain/
  dotnet tool install --global dotnet-ef
 
 dotnet ef migrations add InitialCreate -p Persistance/ -s API/
- 
+
+ dotnet ef migrations add 'xxx' -p Persistance/ -s API/
+
+
+
  #check if db is there, and if it isn then create it
 # create this in these in the program class
 var context = services.GetRequiredService<DataContext>();

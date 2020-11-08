@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { IActivity, IActivitiesEnvelope } from "../models/activity";
+import { IActivity, IActivitiesEnvelope, IUserActivitiesUnreadDto } from "../models/activity";
 import { history } from "../..";
 import { toast } from "react-toastify";
 import { IUser, IUserFormValues } from "../models/user";
@@ -20,7 +20,7 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(undefined, (error) => {
   if (error.message === "Network Error" && !error.response) {
-    toast.error("Network error - make sure API is running!");
+    toast.error("Network error - Sorry, we are unable to connect to the server currently.");
   }
   const { status, data, config, headers } = error.response;
   if (status === 404) {
@@ -88,6 +88,10 @@ const Activities = {
   delete: (id: string) => requests.del(`/activities/${id}`),
   attend: (id: string) => requests.post(`/activities/${id}/attend`, {}),
   unattend: (id: string) => requests.del(`/activities/${id}/attend`),
+  unread: () => requests.get(`/activities/unread`),
+  approve: (id: string, user:string) => requests.post(`/activities/${id}/approve/${user}`, {}),
+  reject: (id: string, user:string) => requests.del(`/activities/${id}/reject/${user}`),
+
 };
 
 const User = {

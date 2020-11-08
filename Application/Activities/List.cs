@@ -29,7 +29,7 @@ namespace Application.Activities
                 Offset = offset;
                 IsGoing = isGoing;
                 IsHost = isHost;
-                StartDate = startDate ?? DateTime.Now;
+                StartDate = startDate ?? DateTime.Now; //TODO:should this be updated to UTC? what about ither instances of DateTime.Now?
                 Category = category;
             }
             public int? Limit { get; set; }

@@ -94,7 +94,7 @@ const ActivityDetailedChat: React.FC<IProps> = ({ displayHeight }) => {
     <Fragment>
       <Header id='funkyHeader'> Group Chat </Header>
       <Segment.Group raised  style={{borderRadius:'30px'}}>
-        <Segment style={{borderRadius:'30px 30px 0 0'}}>
+        <Segment style={{borderRadius:'30px 30px 0 0', backgroundColor:"aliceblue"}}>
           <Header as="h5" disabled style={{}}>
             online:
           </Header>
@@ -144,7 +144,7 @@ const ActivityDetailedChat: React.FC<IProps> = ({ displayHeight }) => {
                           {formatDistance(
                             new Date(comment.createdAt),
                             new Date()
-                          )}
+                          )} ago
                         </div>
                       </Comment.Metadata>
                       <Comment.Text>{comment.body}</Comment.Text>
@@ -154,7 +154,7 @@ const ActivityDetailedChat: React.FC<IProps> = ({ displayHeight }) => {
             </Comment.Group>
           </div>
         </Segment>
-        <Segment style={{borderRadius:'0 0 30px 30px'}}>
+        <Segment style={{borderRadius:'0 0 30px 30px', backgroundColor:"aliceblue"}}>
           <FinalForm
             onSubmit={addComment}
             validate={validate}

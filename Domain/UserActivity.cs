@@ -10,7 +10,7 @@ namespace Domain
 
         //added virtual because itll be lazily loaded
         public virtual AppUser AppUser { get; set; }
-        
+
         [MaxLength(255)]
         public Guid ActivityId { get; set; }
 
@@ -19,6 +19,12 @@ namespace Domain
 
         public DateTime DateJoined { get; set; }
         public bool IsHost { get; set; }
+
+        public bool IsApproved { get; set; }
+
+        public int Rating { get; set; }
+
+        public bool Read { get; set; }
 
     }
 }

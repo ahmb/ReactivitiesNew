@@ -27,6 +27,10 @@ namespace Persistance
 
         public DbSet<UserFollowing> Followings { get; set; }
 
+        public DbSet<Notification> Notifications { get; set; }
+        public DbSet<Message> Messages { get; set; }
+
+
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -50,6 +54,13 @@ namespace Persistance
                 .WithMany(appUser => appUser.Comments)
                 .HasForeignKey(comment => comment.AppUserId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+
+            builder.Entity<Notification>()
+                .HasOne(notification => notification.Reciever)
+                .WithMany(appUser => appUser.Notifications)
+                .HasForeignKey(notification => notification.RecieverId)
+                .OnDelete(DeleteBehavior.Restrict);
 
 
             //build joint table UserActivity table between User and Activity tables
@@ -92,6 +103,25 @@ namespace Persistance
                     .HasForeignKey(o => o.TargetId)
                     .OnDelete(DeleteBehavior.Restrict);
             });
+
+            builder.Entity<Message>(b =>
+            {
+                b.HasKey(m => new { m.RecieverId, m.SenderId});
+
+                //define the first side of the on to many relationship between Message and AppUser 
+                b.HasOne(m => m.Sender)
+                    .WithMany(u => u.MessagesSent)
+                    .HasForeignKey(m => m.SenderId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                //define the second side of the on to many relationship between Message and AppUser 
+                b.HasOne(m => m.Reciever)
+                    .WithMany(u => u.MessagesRecieved)
+                    .HasForeignKey(m => m.RecieverId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            
         }
     }
 }

@@ -18,6 +18,7 @@ const activityImageTextStyle = {
   width: "auto",
   height: "auto",
   color: "white",
+  borderColor:"aliceblue"
 };
 
 const ActivityDetailedHeader: React.FC<{ activity: IActivity }> = ({
@@ -28,8 +29,8 @@ const ActivityDetailedHeader: React.FC<{ activity: IActivity }> = ({
   const host = activity.attendees.filter((x) => x.isHost)[0];
 
   return (
-    <Segment.Group>
-      <Segment basic attached="top" style={{ padding: "0" }} raised>
+    <Segment.Group >
+      <Segment basic attached="top" style={{ padding: "0" , borderColor:"aliceblue"}} raised>
         <Image
           src={`/assets/categoryImages/${activity.category.replace(' ','').replace('&','').toLowerCase()}.jpg`}
           fluid
@@ -54,7 +55,7 @@ const ActivityDetailedHeader: React.FC<{ activity: IActivity }> = ({
           </Item.Group>
         </Segment>
       </Segment>
-      <Segment clearing attached="bottom">
+      <Segment clearing attached="bottom" style={{borderColor:"aliceblue"}}>
         {activity.isHost ? (
           <Button
             as={Link}

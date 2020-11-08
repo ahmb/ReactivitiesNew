@@ -61,6 +61,31 @@ namespace API.Controllers
             return await Mediator.Send(new Unattend.Command { Id = id });
         }
 
+        [HttpPost("{id}/approve/{username}")]
+        [Authorize(Policy = "IsActivityHost")]
+        public async Task<ActionResult<Unit>> Approve(Guid id, string username)
+        {
+            return await Mediator.Send(new Approve.Command { Id = id, Username = username });
+        }
+
+        [HttpDelete("{id}/reject/{username}")]
+        [Authorize(Policy = "IsActivityHost")]
+        public async Task<ActionResult<Unit>> Reject(Guid id, string username)
+        {
+            return await Mediator.Send(new Reject.Command { Id = id, Username = username });
+        }
+
+
+
+        [HttpGet("unread")]
+        [Authorize]
+        public async Task<ActionResult<List<UserActivitiesUnreadDto>>> Unread()
+        {
+            return await Mediator.Send(new Unread.Query());
+        }
+
+
+
 
     }
 }

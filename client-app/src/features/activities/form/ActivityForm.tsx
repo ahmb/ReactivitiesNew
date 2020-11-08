@@ -415,31 +415,14 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
           </Grid.Row>
         </Grid.Column>
         <Grid.Column width={10} className="activityForm">
-          <Segment.Group raised>
-            <Segment clearing>
-              {!activity.id && (
-                <Header
-                  size="large"
-                  style={{
-                    textAlign: "center",
-                    color: "#DC493A",
-                    borderBottom: "red",
-                  }}
-                  content="Post an Activity"
-                />
-              )}
-              {activity.id && (
-                <Header
-                  size="large"
-                  style={{
-                    textAlign: "center",
-                    color: "#DC493A",
-                    borderBottom: "red",
-                  }}
-                  content="Edit an Activity"
-                />
-              )}
-              <br />
+          {!activity.id && (
+            <Header size="large" id="funkyHeader" content="Post an Activity" />
+          )}
+          {activity.id && (
+            <Header size="large" id="funkyHeader" content="Edit an Activity" />
+          )}
+          <Segment.Group raised style={{ borderRadius: "30px" }}>
+            <Segment clearing style={{ borderRadius: "30px", backgroundColor: 'aliceblue' }}>
               <FinalForm
                 validate={validate}
                 initialValues={activity}

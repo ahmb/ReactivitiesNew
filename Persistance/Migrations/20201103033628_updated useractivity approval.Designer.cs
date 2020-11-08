@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistance;
 
 namespace Persistance.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20201103033628_updated useractivity approval")]
+    partial class updateduseractivityapproval
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -153,65 +155,6 @@ namespace Persistance.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("Domain.Message", b =>
-                {
-                    b.Property<string>("RecieverId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("SenderId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Body")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("Id")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("SentAt")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("RecieverId", "SenderId");
-
-                    b.HasIndex("SenderId");
-
-                    b.ToTable("Messages");
-                });
-
-            modelBuilder.Entity("Domain.Notification", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("ActivityId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsRead")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Message")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("RecieverId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("SenderId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Type")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ActivityId");
-
-                    b.HasIndex("RecieverId");
-
-                    b.HasIndex("SenderId");
-
-                    b.ToTable("Notifications");
-                });
-
             modelBuilder.Entity("Domain.Photo", b =>
                 {
                     b.Property<string>("Id")
@@ -252,9 +195,6 @@ namespace Persistance.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("Rating")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("Read")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("AppUserId", "ActivityId");
@@ -450,39 +390,6 @@ namespace Persistance.Migrations
                         .WithMany("Comments")
                         .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Domain.Message", b =>
-                {
-                    b.HasOne("Domain.AppUser", "Reciever")
-                        .WithMany("MessagesRecieved")
-                        .HasForeignKey("RecieverId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Domain.AppUser", "Sender")
-                        .WithMany("MessagesSent")
-                        .HasForeignKey("SenderId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Domain.Notification", b =>
-                {
-                    b.HasOne("Domain.Activity", "Activity")
-                        .WithMany()
-                        .HasForeignKey("ActivityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.AppUser", "Reciever")
-                        .WithMany("Notifications")
-                        .HasForeignKey("RecieverId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Domain.AppUser", "Sender")
-                        .WithMany()
-                        .HasForeignKey("SenderId");
                 });
 
             modelBuilder.Entity("Domain.Photo", b =>

@@ -7,7 +7,7 @@ import {
   toJS,
 } from "mobx";
 import { SyntheticEvent } from "react";
-import { IActivity } from "../models/activity";
+import { IActivity, IUserActivitiesUnreadDto } from "../models/activity";
 import agent from "../api/agent";
 import "mobx-react-lite/batchingForReactDom";
 import { history } from "../..";
@@ -52,7 +52,11 @@ export default class ActivityStore {
   @observable activityCount = 0;
   @observable page = 0;
   @observable predicate = new Map();
-  @observable onlineUsers: {[id:string]: Set<string>} = {};
+  @observable onlineUsers: { [id: string]: Set<string> } = {};
+  @observable unreadActivitiesRegistry = new Map();
+  @observable unreadActivitiesArray: Array<IUserActivitiesUnreadDto> = [];
+  @observable testBool: boolean = false;
+  // activities: IActivity[];
 
   @action setPredicate = (predicate: string, value: string | Date) => {
     this.predicate.clear();
@@ -90,11 +94,17 @@ export default class ActivityStore {
     );
   }
 
+  //FIXME:
+  @computed get unreadActivitiesByActivity() {
+    return this.groupUerActivitiesbyActivity(
+      Array.from(this.unreadActivitiesArray.values())
+    );
+  }
+
   //only loaded on the activity details page, or else this is null
   @observable.ref hubConnection: HubConnection | null = null;
 
   @action createHubConnection = (activityId: string) => {
-
     //configure the hubconnection
     this.hubConnection = new HubConnectionBuilder()
       .withUrl(process.env.REACT_APP_API_CHAT_URL!, {
@@ -127,25 +137,32 @@ export default class ActivityStore {
 
     this.hubConnection.on("Send", (message: string) => {
       // toast.info(message);TODO:uncomment if you want to get toasts
-      if(message.includes('online')){
-        if(this.onlineUsers[this.activity?.id!] == null){
+      if (message.includes("online")) {
+        if (this.onlineUsers[this.activity?.id!] == null) {
           let mySet = new Set<string>();
           runInAction(() => {
-            this.onlineUsers[this.activity?.id!] = mySet.add(message.split('>>')[0].trim());
-          })
-        }
-        else{
-          runInAction(()=> {
-            this.onlineUsers[this.activity?.id!].add(message.split('>>')[0].trim());
-          })
+            this.onlineUsers[this.activity?.id!] = mySet.add(
+              message.split(">>")[0].trim()
+            );
+          });
+        } else {
+          runInAction(() => {
+            this.onlineUsers[this.activity?.id!].add(
+              message.split(">>")[0].trim()
+            );
+          });
         }
       }
-      if(message.includes('offline')){
-        runInAction(()=> {
-          this.onlineUsers[this.activity?.id!].delete(message.split('>>')[0].trim());
-        })
+      if (message.includes("offline")) {
+        runInAction(() => {
+          this.onlineUsers[this.activity?.id!].delete(
+            message.split(">>")[0].trim()
+          );
+        });
       }
-      console.log(Array.from(this.onlineUsers[Object.keys(this.onlineUsers)[0]]));
+      console.log(
+        Array.from(this.onlineUsers[Object.keys(this.onlineUsers)[0]])
+      );
       console.log(Array.from(this.onlineUsers[this.activity?.id!]));
     });
   };
@@ -188,6 +205,25 @@ export default class ActivityStore {
     );
   }
 
+  groupUerActivitiesbyActivity(unreadActivities: IUserActivitiesUnreadDto[]) {
+    const sortedUserActivities = unreadActivities.sort(
+      (a, b) =>
+        new Date(a.activityDateTime).getDate() -
+        new Date(b.activityDateTime).getDate()
+    );
+
+    return Object.entries(
+      sortedUserActivities.reduce((unreadActivities, unreadAcivity) => {
+        unreadActivities[unreadAcivity.activityName] = unreadActivities[
+          unreadAcivity.activityName
+        ]
+          ? [...unreadActivities[unreadAcivity.activityName], unreadAcivity]
+          : [unreadAcivity];
+        return unreadActivities;
+      }, {} as { [key: string]: IUserActivitiesUnreadDto[] })
+    );
+  }
+
   //need an action that modifies the state of an observable
   //implemented using async await
   @action loadActivities = async () => {
@@ -207,6 +243,47 @@ export default class ActivityStore {
     } catch (error) {
       console.log("activity error", error);
       runInAction("load activities error", () => {
+        this.loadingInitial = false;
+        history.push("/");
+      });
+    }
+  };
+
+  @action loadUnreadApprovals = async () => {
+    this.loadingInitial = true;
+    try {
+      let unreadActivities = await agent.Activities.unread();
+      runInAction(() =>
+        this.unreadActivitiesArray.splice(0, this.unreadActivitiesArray.length)
+      );
+      runInAction(() => {
+        unreadActivities.map((a: IUserActivitiesUnreadDto) => {
+          this.unreadActivitiesArray.push(a);
+        });
+      });
+
+      //Broken
+      // this.unreadActivitiesArray.forEach(
+      //   (unreadActivity: IUserActivitiesUnreadDto) => {
+      //     runInAction("loading unreads", () => {
+      //       this.unreadActivitiesRegistry.set(
+      //         unreadActivity.activityId,
+      //         unreadActivity
+      //       );
+      //       console.log("inside action again");
+      //       console.log(this.unreadActivitiesRegistry);
+      //       this.testBool = true;
+      //     });
+      //   }
+      // );
+      runInAction(
+        "setting load inital to false",
+        () => (this.loadingInitial = false)
+      );
+      // })
+    } catch (error) {
+      console.log("unred error", error);
+      runInAction("load unread activities error", () => {
         this.loadingInitial = false;
         history.push("/");
       });
@@ -358,6 +435,64 @@ export default class ActivityStore {
         this.loading = false;
       });
       toast.error("Problem cancelling attendance.");
+    }
+  };
+
+  @action approveAttendance = async (
+    event: SyntheticEvent<HTMLButtonElement>,
+    unreadActvity: IUserActivitiesUnreadDto
+  ) => {
+    this.loading = true;
+    this.target = event.currentTarget.name;
+    try {
+      await agent.Activities.approve(
+        unreadActvity.activityId,
+        unreadActvity.requestorUserName
+      );
+      runInAction(() => {
+        if (this.unreadActivitiesArray) {
+          this.unreadActivitiesArray = this.unreadActivitiesArray.filter(
+            (a) => a !== unreadActvity
+          );
+          this.loading = false;
+          this.target = "";
+        }
+      });
+    } catch (error) {
+      runInAction(() => {
+        this.loading = false;
+        this.target = "";
+      });
+      toast.error("Problem approving attendance.");
+    }
+  };
+
+  @action rejectAttendance = async (
+    event: SyntheticEvent<HTMLButtonElement>,
+    unreadActvity: IUserActivitiesUnreadDto
+  ) => {
+    this.loading = true;
+    this.target = event.currentTarget.name;
+    try {
+      await agent.Activities.reject(
+        unreadActvity.activityId,
+        unreadActvity.requestorUserName
+      );
+      runInAction(() => {
+        if (this.unreadActivitiesArray) {
+          this.unreadActivitiesArray = this.unreadActivitiesArray.filter(
+            (a) => a !== unreadActvity
+          );
+          this.loading = false;
+          this.target = "";
+        }
+      });
+    } catch (error) {
+      runInAction(() => {
+        this.loading = false;
+        this.target = "";
+      });
+      toast.error("Problem approving attendance.");
     }
   };
 }

@@ -8,6 +8,7 @@ namespace Domain
         public string DisplayName { get; set; }
 
         public string Bio { get; set; }
+        
 
         public virtual ICollection<UserActivity> UserActivities { get; set; }
 
@@ -20,6 +21,9 @@ namespace Domain
 
         public virtual ICollection<UserFollowing> Followers { get; set; }
 
+        public virtual ICollection<Notification> Notifications { get; set; }
+        public virtual ICollection<Message> MessagesSent { get; set; }
+        public virtual ICollection<Message> MessagesRecieved { get; set; }
 
     }
 }

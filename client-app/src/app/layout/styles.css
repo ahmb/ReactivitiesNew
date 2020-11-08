@@ -266,6 +266,10 @@ body ::-webkit-scrollbar-track {
   font-size: 26px;
 }
 
+.ui.segment {
+  border: none;
+}
+
 /* ACTIVITY FORM styles */
 
 textarea,

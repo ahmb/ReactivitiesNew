@@ -10,6 +10,8 @@ namespace Application.Activities
         public bool IsHost { get; set; }
 
         public bool Following { get; set; }
+
+        public bool IsApproved { get; set; }
         
     }
 }

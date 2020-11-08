@@ -49,7 +49,8 @@ namespace Application.Activities
                     Activity = activity,
                     AppUser = user,
                     IsHost = false,
-                    DateJoined = DateTime.Now
+                    DateJoined = DateTime.Now,
+                    IsApproved = false
                 };
 
                 _context.UserActivities.Add(attendance);

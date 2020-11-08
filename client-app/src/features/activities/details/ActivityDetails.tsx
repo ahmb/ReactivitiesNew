@@ -62,8 +62,8 @@ const ActivityDetails: React.FC<RouteComponentProps<DetailParams>> = ({
 <Grid.Row>
       <Grid.Column width={13}>
         {/* <ActivityDetailedHeader activity={activity} /> */}
-        <Segment.Group basic="true" raised style={{borderRadius:'30px'}}>
-          <Segment style={{borderRadius:'30px 30px 30px 30px'}}>
+        <Segment.Group basic="true" raised style={{borderRadius:'30px', backgroundColor:"aliceblue"}}>
+          <Segment style={{borderRadius:'30px 30px 30px 30px', backgroundColor:"aliceblue"}}>
             <ActivityDetailsHeader activity={activity} />
 
             <ActivityDetailedInfo activity={activity} />
