@@ -16,6 +16,7 @@ import {
 import { LoadingComponent } from "../../../app/layout/LoadingComponent";
 import { IUserActivitiesUnreadDto } from "../../../app/models/activity";
 import { RootStoreContext } from "../../../app/stores/rootStore";
+import NoNotificationsGraphic from "../../graphics/NoNotificationsGraphic";
 import ActivityListItem from "../dashboard/ActivityListItem";
 import UnreadActivityItemPlaceholder from "./UnreadActivityItemPlaceholder";
 
@@ -31,9 +32,12 @@ const UnreadActivitiesList: React.FC = () => {
     target,
   } = rootStore.activityStore;
 
+  const [loadingFinished,setLoadingFinished] = useState(false);
+
   useEffect(() => {
     if (unreadActivitiesByActivity.length == 0) {
       loadUnreadApprovals();
+      setLoadingFinished(true);
     }
 
     // loadUnreadApprovals();
@@ -56,6 +60,14 @@ const UnreadActivitiesList: React.FC = () => {
               <UnreadActivityItemPlaceholder />
             </Fragment>
           )}
+          {loadingFinished && unreadActivitiesByActivity.length == 0 && 
+            <Fragment>
+              <Header size="large">No new notifications! </Header>
+              <Header size="medium" >You're all caught up</Header>
+              {/* //wdith is 10% more than height */}
+              <NoNotificationsGraphic width={300} height={250} style={{ display: "block", margin: "auto", marginTop: 70 , textAlign: 'center'}}/>
+            </Fragment>
+          }
 
           {unreadActivitiesByActivity.map(([group, unreadActivities]) => (
             <div key={group} style={{ marginTop: 10, marginBottom: 20 }}>
