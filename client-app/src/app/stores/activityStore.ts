@@ -451,12 +451,13 @@ export default class ActivityStore {
         unreadActvity.requestorUserName
       );
       runInAction(() => {
-        if (this.unreadActivitiesArray) {
+        if (this.unreadActivitiesArray.length > 0) {
           this.unreadActivitiesArray = this.unreadActivitiesArray.filter(
             (a) => a !== unreadActvity
           );
           this.loading = false;
           this.target = "";
+          let v = this.unreadActivitiesByActivity;
         }
       });
     } catch (error) {
@@ -490,6 +491,7 @@ export default class ActivityStore {
           }
           this.loading = false;
           this.target = "";
+          let v = this.unreadActivitiesByActivity;
         }
       });
     } catch (error) {

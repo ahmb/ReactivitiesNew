@@ -218,6 +218,10 @@ body ::-webkit-scrollbar-track {
 
 /*home page styles*/
 
+/* .ui.placeholder .paragraph:not(:first-child):before,.ui.placeholder .image.header:after{
+  background-color: aliceblue;
+} */
+
 .masthead {
   display: flex;
   align-items: center;

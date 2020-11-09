@@ -88,7 +88,7 @@ const Activities = {
   delete: (id: string) => requests.del(`/activities/${id}`),
   attend: (id: string) => requests.post(`/activities/${id}/attend`, {}),
   unattend: (id: string) => requests.del(`/activities/${id}/attend`),
-  unread: () => requests.get(`/activities/unread`),
+  unread: () => requests.get(`/activities/unread`),//.then(sleep(3000)).then(responseBody),
   approve: (id: string, user:string) => requests.post(`/activities/${id}/approve/${user}`, {}),
   reject: (id: string, user:string) => requests.del(`/activities/${id}/reject/${user}`),
 
@@ -120,6 +120,12 @@ const Profiles = {
   listActivities: (username: string, predciate: string) =>
     requests.get(`/profiles/${username}/activities?predicate=${predciate}`),
 };
+
+const sleep = (ms: number) => (response: AxiosResponse) =>
+  new Promise<AxiosResponse>((resolve) =>
+    setTimeout(() => resolve(response), ms)
+  );
+
 
 export default {
   Activities,
