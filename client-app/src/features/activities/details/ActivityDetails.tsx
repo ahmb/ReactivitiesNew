@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from "react";
-import { Button, Grid, Segment } from "semantic-ui-react";
+import React, { Fragment, useContext, useEffect } from "react";
+import { Button, Grid, Header, Icon, Image, Segment } from "semantic-ui-react";
 import { observer } from "mobx-react-lite";
 import { RouteComponentProps } from "react-router-dom";
 import { LoadingComponent } from "../../../app/layout/LoadingComponent";
@@ -85,7 +85,18 @@ const ActivityDetails: React.FC<RouteComponentProps<DetailParams>> = ({
       </Grid.Row>
       <Grid.Row>
         <Grid.Column width={13}>
-          {(activity.isApproved || activity.isHost ) && <ActivityDetailedChat displayHeight="60vh" />}
+          {(activity.isApproved || activity.isHost) && (
+            <ActivityDetailedChat displayHeight="60vh" />
+          )}
+          {(!activity.isApproved && !activity.isHost) && (
+            <div style={{textAlign:'center'}}>
+              <Header size='large' textAlign='center' style={{textAlign:'-webkit-center'}}  >
+                {/* <Icon name="lock" /> */}
+                <Image  src='https://img.icons8.com/ios/48/000000/lock--v1.png' style={{height:30,width:30}} />
+                <Header.Content>Join activity to view the Chat!</Header.Content>
+              </Header>
+            </div>
+          )}
         </Grid.Column>
       </Grid.Row>
     </Grid>

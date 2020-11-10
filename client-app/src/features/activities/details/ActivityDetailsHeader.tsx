@@ -80,11 +80,16 @@ const ActivityDetailedHeader: React.FC<{ activity: IActivity }> = ({
               </Button>
             )}
             {!activity.isHost && activity.isGoing && !activity.isApproved && (
-              <Button floated="right" circular disabled>
-                Pending Approval
+              <Button
+                floated="right"
+                circular
+                loading={loading}
+                onClick={cancelAttendance}
+              >
+                Pending Approval - Cancel Request
               </Button>
             )}
-            {!activity.isGoing && 
+            {!activity.isGoing && (
               <Button
                 loading={loading}
                 onClick={attendActivity}
@@ -92,9 +97,9 @@ const ActivityDetailedHeader: React.FC<{ activity: IActivity }> = ({
                 floated="right"
                 circular
               >
-                Join Activity
+                Request to Join
               </Button>
-            }
+            )}
           </Item.Content>
         </Item>
       </Item.Group>

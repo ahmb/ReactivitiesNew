@@ -16,7 +16,7 @@ const ActivityList: React.FC = () => {
     <Fragment>
       {activitiesByDate.map(([group, activities]) => (
         <Segment  key={group} style={{backgroundColor:"aliceblue"}}>
-          <Label color="red" ribbon={true}>
+          <Label color="red" ribbon={true} size='large'>
             {format(new Date(parseInt(group.split('-')[0]),parseInt(group.split('-')[1])-1,(parseInt(group.split('-')[2]))), "eeee do MMMM")}
             {' , in ' + formatDistance(
                             new Date(group),

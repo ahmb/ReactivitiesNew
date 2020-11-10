@@ -11,7 +11,7 @@ const NotFound = () => {
         404 - Page Not Found
       </Header>
       <Header size="small">
-        Sorry - we could not find the page you are looking for. IT support has
+        Sorry, we could not find the page you requested. IT support has
         been notified!
       </Header>
 

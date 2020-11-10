@@ -26,6 +26,7 @@ const UnreadActivitiesList: React.FC = () => {
     loadUnreadApprovals,
     loadingInitial,
     unreadActivitiesByActivity,
+    unreadActivitiesArray,
     approveAttendance,
     rejectAttendance,
     loading,
@@ -60,7 +61,7 @@ const UnreadActivitiesList: React.FC = () => {
               <UnreadActivityItemPlaceholder />
             </Fragment>
           )}
-          {loadingFinished && unreadActivitiesByActivity.length == 0 && 
+          {loadingFinished && unreadActivitiesArray.length == 0 && 
             <Fragment>
               <Header size="large">No new notifications! </Header>
               <Header size="medium" >You're all caught up</Header>
