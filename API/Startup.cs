@@ -89,6 +89,8 @@ namespace API
                 {
                     cfg.RegisterValidatorsFromAssemblyContaining<Create>();
                 });
+    //             .AddNewtonsoftJson(options =>
+    // options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             var builder = services.AddIdentityCore<AppUser>();
             var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
@@ -151,22 +153,22 @@ namespace API
 
             if (env.IsDevelopment())
             {
-            //    app.UseDeveloperExceptionPage();
+                //    app.UseDeveloperExceptionPage();
 
             }
             app.UseXContentTypeOptions();
-            app.UseReferrerPolicy((opt)=>opt.NoReferrer());
+            app.UseReferrerPolicy((opt) => opt.NoReferrer());
             app.UseXXssProtection(opt => opt.EnabledWithBlockMode());
-            app.UseXfo(opt=>opt.Deny());
+            app.UseXfo(opt => opt.Deny());
             //app.UseCspReportOnly(opt=> opt...) if you just wanna test it out
-            app.UseCspReportOnly(opt=> opt
+            app.UseCspReportOnly(opt => opt
                 .BlockAllMixedContent()
-                .StyleSources(s=>s.Self())
-                .FontSources(s=>s.Self())
-                .FormActions(s=>s.Self())
-                .FrameAncestors(s=>s.Self())
-                .ImageSources(s=>s.Self())
-                .ScriptSources(s=>s.Self())
+                .StyleSources(s => s.Self())
+                .FontSources(s => s.Self())
+                .FormActions(s => s.Self())
+                .FrameAncestors(s => s.Self())
+                .ImageSources(s => s.Self())
+                .ScriptSources(s => s.Self())
             );
 
             //app.UseHttpsRedirection();

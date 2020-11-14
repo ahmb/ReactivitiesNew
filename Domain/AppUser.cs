@@ -25,5 +25,13 @@ namespace Domain
         public virtual ICollection<Message> MessagesSent { get; set; }
         public virtual ICollection<Message> MessagesRecieved { get; set; }
 
+        public virtual ICollection<ThreadParticipant> ThreadPartipants { get; set; }
+        public virtual ICollection<Msg> Messages { get; set; }
+        public virtual ICollection<MsgReadState> MsgReadStates { get; set; }
+
+
+
+
+
     }
 }
