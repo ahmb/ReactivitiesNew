@@ -38,11 +38,11 @@ namespace API.Controllers
         }
 
 
-        [HttpPost("{id}/attend")]
+        [HttpPost("add")]
         [Authorize]
-        public async Task<ActionResult<Unit>> Reply(Guid id)
+        public async Task<ActionResult<Unit>> Reply(CreateMessage.Command command)
         {
-            return await Mediator.Send(new Attend.Command { Id = id });
+            return await Mediator.Send(command);
         }
 
 
