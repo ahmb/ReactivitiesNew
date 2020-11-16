@@ -1,6 +1,5 @@
-import React, { Fragment } from "react";
-import { Segment, Button, Header, Icon } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { Header } from "semantic-ui-react";
 import LookingGraphic from "../../features/graphics/LookingGraphic";
 
 const NotFound = () => {

@@ -23,7 +23,7 @@ namespace API.Controllers
         }
 
 
-        [HttpGet("threads/{id}")]
+        [HttpGet("thread/{id}")]
         [Authorize]
         public async Task<ActionResult<ThreadDto>> Details(Guid id)
         {
@@ -38,10 +38,11 @@ namespace API.Controllers
         }
 
 
-        [HttpPost("add")]
+        [HttpPost("add/{threadId}")]
         [Authorize]
-        public async Task<ActionResult<Unit>> Reply(CreateMessage.Command command)
+        public async Task<ActionResult<MsgDto>> Add(Guid threadId,CreateMessage.Command command)
         {
+            command.ThreadId = threadId;
             return await Mediator.Send(command);
         }
 

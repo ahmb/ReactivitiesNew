@@ -13,6 +13,7 @@ namespace Application.Messages
         public DateTime SentDateTime { get; set; }
 
         public string Body { get; set; }
+        public string ThreadId { get; set; }
 
 
     }

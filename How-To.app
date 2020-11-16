@@ -155,5 +155,6 @@ to build the react app and deploy it into the API projects wwwroot folder
 
 UPDATE DB:
 
+-- SQLite
 update UserActivities
-SET IsApproved = 0
+SET IsApproved = 0 , Read = 0

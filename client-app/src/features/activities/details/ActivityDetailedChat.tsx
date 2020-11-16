@@ -154,7 +154,7 @@ const ActivityDetailedChat: React.FC<IProps> = ({ displayHeight }) => {
             </Comment.Group>
           </div>
         </Segment>
-        <Segment style={{borderRadius:'0 0 30px 30px', backgroundColor:"aliceblue", border:"none"}}>
+        <Segment style={{borderRadius:'0 0 30px 30px', backgroundColor:"white", border:"none"}}>
           <FinalForm
             onSubmit={addComment}
             validate={validate}

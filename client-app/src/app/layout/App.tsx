@@ -21,6 +21,7 @@ import ModalContainer from "../common/modals/ModalContainer";
 import ProfilePage from "../../features/profiles/ProfilePage";
 import PrivateRoute from "./PrivateRoute";
 import UnreadActivitiesList from "../../features/activities/homepage/UnreadActivitiesList";
+import MessagesDashboard from "../../features/messages/MessagesDashboard";
 
 const App: React.FC<RouteComponentProps> = ({ location }) => {
   const rootStore = useContext(RootStoreContext);
@@ -69,6 +70,10 @@ const App: React.FC<RouteComponentProps> = ({ location }) => {
                 <PrivateRoute
                   path="/profile/:username"
                   component={ProfilePage}
+                />
+                <PrivateRoute
+                  path="/messages"
+                  component={MessagesDashboard}
                 />
                 <PrivateRoute path="/home" component={UnreadActivitiesList} />
                 <Route component={NotFound} />

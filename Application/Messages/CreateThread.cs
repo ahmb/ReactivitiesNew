@@ -1,6 +1,8 @@
 using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Errors;
 using Application.Interfaces;
 using Domain;
 using FluentValidation;
@@ -53,7 +55,17 @@ namespace Application.Messages
             {
                 AppUser user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUsername());
 
+               if(user == null){
+                    throw new RestException(HttpStatusCode.NotFound, new { user = "Could not senders Id in the system" });
+                }
+
                 AppUser sendToUser = await _context.Users.SingleOrDefaultAsync(x => x.UserName == request.To);
+
+
+                if(sendToUser == null){
+                    throw new RestException(HttpStatusCode.NotFound, new { user = "Could not locate recipient user" });
+                }
+
 
                 var thread = new Domain.Thread
                 {

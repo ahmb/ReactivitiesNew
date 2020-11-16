@@ -1,9 +1,14 @@
 import axios, { AxiosResponse } from "axios";
-import { IActivity, IActivitiesEnvelope, IUserActivitiesUnreadDto } from "../models/activity";
+import {
+  IActivity,
+  IActivitiesEnvelope,
+  IUserActivitiesUnreadDto,
+} from "../models/activity";
 import { history } from "../..";
 import { toast } from "react-toastify";
 import { IUser, IUserFormValues } from "../models/user";
 import { IProfile, IPhoto } from "../models/profile";
+import { IMessage, IThread } from "../models/message";
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
@@ -20,7 +25,9 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(undefined, (error) => {
   if (error.message === "Network Error" && !error.response) {
-    toast.error("Network error - Sorry, we are unable to connect to the server currently.");
+    toast.error(
+      "Network error - Sorry, we are unable to connect to the server currently."
+    );
   }
   const { status, data, config, headers } = error.response;
   if (status === 404) {
@@ -58,11 +65,12 @@ const responseBody = (response: AxiosResponse) => response.data;
 
 const requests = {
   get: (url: string) => axios.get(url).then(responseBody),
-  post: (url: string, body: {}) =>
-    axios.post(url, body).then(responseBody),
+  post: (url: string, body: {}) => axios.post(url, body).then(responseBody),
   put: (url: string, body: {}) =>
-    
-    axios.put(url, body).then(responseBody).then(() => console.log(body)),
+    axios
+      .put(url, body)
+      .then(responseBody)
+      .then(() => console.log(body)),
   del: (url: string) => axios.delete(url).then(responseBody),
   postForm: (url: string, file: Blob) => {
     let formData = new FormData();
@@ -77,9 +85,7 @@ const requests = {
 
 const Activities = {
   list: (params: URLSearchParams): Promise<IActivitiesEnvelope> =>
-    axios
-      .get("/activities", { params: params })
-      .then(responseBody),
+    axios.get("/activities", { params: params }).then(responseBody),
   //requests.get(`/activities?limit=${limit}&offset=${page ? page * limit!: 0}`),
   details: (id: string) => requests.get(`/activities/${id}`),
   create: (activity: IActivity) => requests.post("/activities", activity),
@@ -88,10 +94,11 @@ const Activities = {
   delete: (id: string) => requests.del(`/activities/${id}`),
   attend: (id: string) => requests.post(`/activities/${id}/attend`, {}),
   unattend: (id: string) => requests.del(`/activities/${id}/attend`),
-  unread: () => requests.get(`/activities/unread`),//.then(sleep(3000)).then(responseBody),
-  approve: (id: string, user:string) => requests.post(`/activities/${id}/approve/${user}`, {}),
-  reject: (id: string, user:string) => requests.del(`/activities/${id}/reject/${user}`),
-
+  unread: () => requests.get(`/activities/unread`), //.then(sleep(3000)).then(responseBody),
+  approve: (id: string, user: string) =>
+    requests.post(`/activities/${id}/approve/${user}`, {}),
+  reject: (id: string, user: string) =>
+    requests.del(`/activities/${id}/reject/${user}`),
 };
 
 const User = {
@@ -126,9 +133,18 @@ const sleep = (ms: number) => (response: AxiosResponse) =>
     setTimeout(() => resolve(response), ms)
   );
 
+const Messages = {
+  list: () => requests.get(`/messages`),
+  //requests.get(`/activities?limit=${limit}&offset=${page ? page * limit!: 0}`),
+  details: (id: string) => requests.get(`/messages/thread/${id}`),
+  create: (thread: IThread) => requests.post("/messages", thread),
+  add: (message: IMessage) =>
+    requests.put(`/messages/add/${message.threadId}`, message)
+};
 
 export default {
   Activities,
   User,
   Profiles,
+  Messages,
 };

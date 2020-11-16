@@ -6,6 +6,7 @@ using Application.Comments;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
 using System;
+using Application.Messages;
 
 namespace API.SignalR
 {
@@ -31,6 +32,19 @@ namespace API.SignalR
             await Clients.Group(command.ActivityId.ToString()).SendAsync("RecieveComment", comment);
         }
 
+        public async Task SendMessage(CreateMessage.Command command)
+        {
+            string username = GetUsername();
+
+            command.Username = username;
+
+            //handle the comment create command, this will create the proper entry in the DBAdd
+            var message = await _mediator.Send(command);
+
+            //send the comment to all the clients
+            await Clients.Group(command.ThreadId.ToString()).SendAsync("RecieveMessage", message);
+        }
+
         private string GetUsername()
         {
             return Context.User?.Claims?.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier)?.Value;
@@ -39,16 +53,25 @@ namespace API.SignalR
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
             var username = GetUsername();
-            if(ConnectedUser.Ids.ContainsKey(groupName)){
-                ConnectedUser.Ids[groupName].Add(GetUsername().ToString());  
+            if (ConnectedUser.Ids.ContainsKey(groupName))
+            {
+                //check to see if the user already exists in the hashset of groupname:[users]
+                if (!ConnectedUser.Ids[groupName].Contains(GetUsername().ToString()))
+                {
+                    ConnectedUser.Ids[groupName].Add(GetUsername().ToString());
+
+                }
+                // ConnectedUser.Ids[groupName].Add(GetUsername().ToString());  
             }
-            else{
+            else
+            {
                 List<string> userArray = new List<string>();
                 userArray.Add(GetUsername().ToString());
-                ConnectedUser.Ids.Add(groupName,new HashSet<string>(userArray));
+                ConnectedUser.Ids.Add(groupName, new HashSet<string>(userArray));
             }
             // await Clients.Group(groupName).SendAsync("Send", $"{username} >> is online");
-            foreach(var value in ConnectedUser.Ids[groupName]){
+            foreach (var value in ConnectedUser.Ids[groupName])
+            {
                 await Clients.Group(groupName).SendAsync("Send", $"{value} >> is online");
             }
         }
@@ -57,7 +80,7 @@ namespace API.SignalR
         {
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
             var username = GetUsername();
-            ConnectedUser.Ids[groupName].Remove(username);  
+            ConnectedUser.Ids[groupName].Remove(username);
             await Clients.Group(groupName).SendAsync("Send", $"{username} >> went offline");
         }
     }
