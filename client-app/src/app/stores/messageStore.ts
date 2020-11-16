@@ -42,11 +42,11 @@ export default class MessageStore {
       let threads: IThread[] = await agent.Messages.list();
       if (threads.length > 0) {
         runInAction("loading messages", () => {
+          while(this.messageThreadList.length !== 0){
+            this.messageThreadList.pop();
+          }
           threads.forEach((thread) => {
             this.messageRegistry.set(thread.id, thread);
-            while(this.messageThreadList.length > 0){
-              this.messageThreadList.pop();
-            }
             this.messageThreadList.push(thread);
           });
           this.loadingInitial = false;
