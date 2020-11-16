@@ -42,7 +42,7 @@ export default class MessageStore {
       let threads: IThread[] = await agent.Messages.list();
       if (threads.length > 0) {
         runInAction("loading messages", () => {
-          while(this.messageThreadList.length !== 0){
+          while (this.messageThreadList.length !== 0) {
             this.messageThreadList.pop();
           }
           threads.forEach((thread) => {
@@ -50,11 +50,9 @@ export default class MessageStore {
             this.messageThreadList.push(thread);
           });
           this.loadingInitial = false;
-          if(this.currentThread){
+          if (this.currentThread) {
             this.loadThreadDetails(this.currentThread.id);
           }
-          
-
         });
       }
       return threads;
@@ -118,7 +116,14 @@ export default class MessageStore {
       //add the comment to the comments array inside the activity object
       console.log(message);
       // message.threadId  = this.currentThread!.id;
-      runInAction(() => this.currentThread!.messages.push(message));
+      runInAction(() => {
+        this.currentThread!.messages.push(message);
+        this.messageThreadList.forEach((t) => {
+          if (t.id === this.currentThread!.id) {
+            t.messages.push(message);
+          }
+        });
+      });
     });
 
     this.hubConnection.on("Send", (message: string) => {
