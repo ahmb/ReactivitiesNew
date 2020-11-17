@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Application.Errors;
 using Application.Interfaces;
+using AutoMapper;
 using Domain;
 using FluentValidation;
 using MediatR;
@@ -14,7 +15,7 @@ namespace Application.Messages
 {
     public class CreateThread
     {
-        public class Command : IRequest
+        public class Command : IRequest<ThreadDto>
         {
             public Guid Id { get; set; }
 
@@ -40,18 +41,21 @@ namespace Application.Messages
             }
         }
 
-        public class Handler : IRequestHandler<Command>
+        public class Handler : IRequestHandler<Command, ThreadDto>
         {
             private readonly DataContext _context;
             private readonly IUserAccessor _userAccessor;
+            private readonly IMapper _mapper;
 
-            public Handler(DataContext context, IUserAccessor userAccessor)
+
+            public Handler(DataContext context, IUserAccessor userAccessor, IMapper mapper)
             {
                 _userAccessor = userAccessor;
                 _context = context;
+                _mapper = mapper;
             }
 
-            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<ThreadDto> Handle(Command request, CancellationToken cancellationToken)
             {
                 AppUser user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUsername());
 
@@ -64,6 +68,10 @@ namespace Application.Messages
 
                 if(sendToUser == null){
                     throw new RestException(HttpStatusCode.NotFound, new { user = "Could not locate recipient user" });
+                }
+
+                if(sendToUser == user){
+                    throw new RestException(HttpStatusCode.NotFound, new { user = "Cannot add yourself as the recepient" });
                 }
 
 
@@ -112,7 +120,8 @@ namespace Application.Messages
 
                 bool success = await _context.SaveChangesAsync() > 0;
 
-                if (success) return Unit.Value;
+                if (success) return _mapper.Map<Domain.Thread, ThreadDto>(thread);
+                // if (success) return Unit.Value;
 
                 throw new Exception("Problem saving changes.");
 

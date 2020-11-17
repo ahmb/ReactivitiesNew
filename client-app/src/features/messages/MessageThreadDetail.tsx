@@ -6,6 +6,9 @@ import {
   SegmentGroup,
   Form,
   Button,
+  Label,
+  Grid,
+  Header,
 } from "semantic-ui-react";
 import { RootStoreContext } from "../../app/stores/rootStore";
 import { formatDistance } from "date-fns";
@@ -22,6 +25,7 @@ import {
   composeValidators,
   matchesPattern,
 } from "revalidate";
+import { Fragment } from "react";
 
 let emptySpace = new RegExp("[^ ]");
 let carriageReturn = new RegExp("[^\\r]");
@@ -69,11 +73,12 @@ export const MessageThreadDetail: React.FC<IProps> = ({
     loadThreadDetails,
     addToHubConnection,
     addMessage,
+    addThread,
     removeFromHubConnection,
     previousThread,
   } = rootStore.messageStore;
   const { user } = rootStore.userStore;
-  const [connected,setConnected] = useState(false);
+  const [connected, setConnected] = useState(false);
 
   useEffect(() => {
     var objDiv = document.getElementById("commentGroup");
@@ -105,65 +110,98 @@ export const MessageThreadDetail: React.FC<IProps> = ({
     // console.log("ON DETAILED CHAT COMP MOUNT");
     // console.log(onlineUsers[activity?.id!]);
     return () => {
-      console.log('running use effect return now:')
+      console.log("running use effect return now:");
     };
-  }, [addToHubConnection, removeFromHubConnection, previousThread, currentThread]);
+  }, [
+    addToHubConnection,
+    removeFromHubConnection,
+    previousThread,
+    currentThread,
+  ]);
 
   if (loadingCurrentThread)
     return <LoadingComponent content="Loading messages.." />;
 
   return (
+    <Fragment>
+      <Header id='funkyHeader'> Compose Message </Header>
+
     <SegmentGroup raised>
-      <Segment>
-        To:{" "}
-        {currentThread?.participants
-          .filter((p) => p.appUserUserName !== user?.username)
-          .map((p) => (
-            <Link key={p.appUserUserName} to={`/profile/${p.appUserUserName}`}>
-              @{p.appUserUserName}
-            </Link>
-          ))}
-      </Segment>
-      <Segment>
-        <div
-          id="commentGroup"
-          style={{ height: displayHeight, overflow: "auto" }}
-        >
-          <Comment.Group>
-            {currentThread &&
-              currentThread?.messages.map((message) => {
-                return (
-                  <Comment key={message.id}>
-                    <Comment.Avatar
-                      src={"/assets/user.png"}
-                      className="commentAvatar"
-                    />
-                    <Comment.Content>
-                      <Comment.Author>{message.appUserUserName}</Comment.Author>
-                      <Comment.Metadata>
-                        {message.sentDateTime}
-                      </Comment.Metadata>
-                      <Comment.Text>{message.body}</Comment.Text>
-                    </Comment.Content>
-                  </Comment>
-                );
-              })}
-          </Comment.Group>
-        </div>
-        {!currentThread && <p>nothing in the current thread</p>}
-      </Segment>
+      {currentThread && (
+        <Segment>
+          To:{" "}
+          {currentThread?.participants
+            .filter((p) => p.appUserUserName !== user?.username)
+            .map((p) => (
+              <Link
+                key={p.appUserUserName}
+                to={`/profile/${p.appUserUserName}`}
+              >
+                @{p.appUserUserName}
+              </Link>
+            ))}
+        </Segment>
+      )}
+      {currentThread && (
+        <Segment>
+          <div
+            id="commentGroup"
+            style={{ height: displayHeight, overflow: "auto" }}
+          >
+            <Comment.Group>
+              {currentThread &&
+                currentThread?.messages.map((message) => {
+                  return (
+                    <Comment key={message.id}>
+                      <Comment.Avatar
+                        src={"/assets/user.png"}
+                        className="commentAvatar"
+                      />
+                      <Comment.Content>
+                        <Comment.Author>
+                          {message.appUserUserName}
+                        </Comment.Author>
+                        <Comment.Metadata>
+                          {message.sentDateTime}
+                        </Comment.Metadata>
+                        <Comment.Text>{message.body}</Comment.Text>
+                      </Comment.Content>
+                    </Comment>
+                  );
+                })}
+            </Comment.Group>
+          </div>
+        </Segment>
+      )}
+
       <Segment style={{ backgroundColor: "white", border: "none" }}>
         <FinalForm
-          onSubmit={addMessage}
+          onSubmit={currentThread ? addMessage : addThread}
           validate={validate}
           render={({ handleSubmit, submitting, form, invalid, pristine }) => (
-            <Form onSubmit={() => handleSubmit()!.then(() => form.reset())}>
+            <Form onSubmit={() =>  handleSubmit()!.then(() => form.reset())}>
+              {!currentThread && (
+                <Grid style={{marginBottom:'5px'}}>
+                  <Grid.Column width={1}>
+                    <Label basic size='large' color='red'>To:</Label>
+                  </Grid.Column>
+                  <Grid.Column width={15}>
+                    <Field
+                      name="To"
+                      component={TextInput}
+                      placeholder="Enter @username here..."
+                      disabled={!connected}
+                    />
+                  </Grid.Column>
+                </Grid>
+              )}
+
               <Field
                 name="body"
                 component={TextAreaInput}
                 rows={2}
                 placeholder="Please type your message here.."
-                disabled = {!connected}
+                disabled={!connected}
               />
               <Button
                 content="Send"
@@ -181,6 +219,7 @@ export const MessageThreadDetail: React.FC<IProps> = ({
         />
       </Segment>
     </SegmentGroup>
+    </Fragment>
     // {formatDistance(
     //     new Date(comment.createdAt),
     //     new Date()

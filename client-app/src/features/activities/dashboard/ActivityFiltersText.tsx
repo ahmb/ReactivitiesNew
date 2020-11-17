@@ -36,20 +36,20 @@ const ActivityFiltersText: React.FC = () => {
             onClick={() => setPredicate("isGoing", "true")}
             color={"blue"}
             name={"username"}
-            content={"Attending"}
+            content={"I'm Attending"}
           />
           <Menu.Item
             active={predicate.has("isHost")}
             onClick={() => setPredicate("isHost", "true")}
             color={"blue"}
             name={"host"}
-            content={"Hosting"}
+            content={"I'm Hosting"}
           />
           <Menu.Item
             color={"blue"}
             // name={"calendar"}
             // content={"Date"}
-            content="Date"
+            content="Activity Date"
             active={predicate.has("startDate")}
             onClick={() =>
               openModal(

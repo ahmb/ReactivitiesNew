@@ -45,6 +45,20 @@ namespace API.SignalR
             await Clients.Group(command.ThreadId.ToString()).SendAsync("RecieveMessage", message);
         }
 
+        public async Task SendThread(CreateThread.Command command)
+        {
+            try
+            {
+                var thread = await _mediator.Send(command);
+                await Clients.Group(command.Id.ToString()).SendAsync("RecieveThread", thread);
+            }
+            catch (Exception ex)
+            {
+                await Clients.Group(command.Id.ToString()).SendAsync("RecieveError", ex);
+
+            }
+        }
+
         private string GetUsername()
         {
             return Context.User?.Claims?.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier)?.Value;

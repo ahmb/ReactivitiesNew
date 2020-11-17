@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import React, { Fragment, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Button, Card, Header } from "semantic-ui-react";
+import { Button, Card, Header, Segment } from "semantic-ui-react";
 import { RootStoreContext } from "../../app/stores/rootStore";
 import UnreadActivityItemPlaceholder from "../activities/homepage/UnreadActivityItemPlaceholder";
 
@@ -14,21 +14,19 @@ const MessageThreadsList: React.FC = () => {
     messageThreadList,
     loadingInitial,
     loadThreadDetails,
+    clearCurrentThread,
   } = rootStore.messageStore;
 
   const { user } = rootStore.userStore;
 
   useEffect(() => {
     // if (messageThreadList.length < 1) {
-      loadThreads();
+    loadThreads();
     // }
-  }, [loadThreads, messageThreadList]);
+  }, [loadThreads, messageThreadList.keys]);
 
   return (
     <div>
-      <Header disabled size="tiny">
-        Conversations
-      </Header>
       <Button
         positive
         size="tiny"
@@ -37,11 +35,14 @@ const MessageThreadsList: React.FC = () => {
         circular
         icon="plus"
         style={{
-          marginBottom: "20px",
           width: "100%",
           backgroundColor: "#dc493a",
         }}
+        onClick={clearCurrentThread}
       />
+      <Header disabled size="tiny">
+        Conversation List
+      </Header>
 
       {loadingInitial && (
         <Fragment>
@@ -58,17 +59,17 @@ const MessageThreadsList: React.FC = () => {
               key={thread.id}
               style={
                 (thread.id !== currentThread?.id && {
-                  margin: 5,
+                  margin: 0,
                   backgroundColor: "aliceblue",
                   borderWidth: 1,
-                  borderRadius: 30,
+                  borderRadius: 0,
                   padding: 10,
                   width: "100%",
                 }) || {
-                  margin: 5,
+                  margin: 0,
                   backgroundColor: "white",
                   borderWidth: 1,
-                  borderRadius: 30,
+                  borderRadius: 0,
                   padding: 10,
                   width: "100%",
                 }

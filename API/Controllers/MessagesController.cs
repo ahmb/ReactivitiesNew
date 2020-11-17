@@ -32,7 +32,7 @@ namespace API.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult<Unit>> Create(CreateThread.Command command)
+        public async Task<ActionResult<ThreadDto>> Create(CreateThread.Command command)
         {
             return await Mediator.Send(command);
         }

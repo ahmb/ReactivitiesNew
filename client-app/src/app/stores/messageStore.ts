@@ -126,6 +126,26 @@ export default class MessageStore {
       });
     });
 
+    this.hubConnection.on("RecieveThread", (thread: IThread) => {
+      //add the comment to the comments array inside the activity object
+      console.log('thread recieved!!');
+
+      console.log(thread);
+      // message.threadId  = this.currentThread!.id;
+      runInAction(() => {
+        this.messageThreadList!.push(thread);
+      });
+    });
+
+    this.hubConnection.on("RecieveError", (error: any) => {
+      //add the comment to the comments array inside the activity object
+      console.log('error recieved!!');
+      toast.error('error recieved!!')
+
+      console.log(error);
+      toast.error('Ran into an issue, please refresh the page.')
+    });
+
     this.hubConnection.on("Send", (message: string) => {
       //TODO:uncomment if you want to get toasts
       toast.info(message);
@@ -170,17 +190,34 @@ export default class MessageStore {
     try {
       //this SendComment must match directly with the
       await this.hubConnection!.invoke("SendMessage", values);
-      // runInAction(() => {
-      //   this.currentThread?.messages.push({
-      //     id = values.messageId,
-      //     appUserUserName = this.rootStore.userStore.user?.username,
-      //     sentDateTime = values.sentDateTime,
-      //     body = values.body,
-      //     threadId = values.ThreadId
-      //   });
-      // });
     } catch (error) {
       console.log(error);
+      toast.warning("An error occured while sending the message. Please refresh the page");
     }
+  };
+
+  @action addThread = async (values: any) => {
+    console.log("logging values for addThread:");
+    console.log(values);
+    values.ThreadId = uuid().toString();
+    values.sentDateTime = new Date();
+    values.messageId = uuid().toString();
+    values.Id = values.ThreadId;
+    if (String(values.To).startsWith("@")) {
+      values.To = String(values.To).substring(1);
+    }
+    try {
+      //this SendComment must match directly with the
+      this.addToHubConnection(values.Id);
+      await this.hubConnection!.invoke("SendThread", values);
+    } catch (error) {
+      console.log(error);
+      toast.info("An error occured while creating a conversation. Please refresh the page");
+      toast.info(error);
+    }
+  };
+
+  @action clearCurrentThread = () => {
+    this.currentThread = null;
   };
 }
