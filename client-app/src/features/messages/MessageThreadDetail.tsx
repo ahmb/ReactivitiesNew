@@ -124,101 +124,110 @@ export const MessageThreadDetail: React.FC<IProps> = ({
 
   return (
     <Fragment>
-      <Header id='funkyHeader'> Compose Message </Header>
+      <SegmentGroup raised>
+        {currentThread && (
+          <Segment>
+            To:{" "}
+            {currentThread?.participants
+              .filter((p) => p.appUserUserName !== user?.username)
+              .map((p) => (
+                <Link
+                  key={p.appUserUserName}
+                  to={`/profile/${p.appUserUserName}`}
+                >
+                  @{p.appUserUserName}
+                </Link>
+              ))}
+          </Segment>
+        )}
+        {currentThread && (
+          <Segment>
+            <div
+              id="commentGroup"
+              style={{ height: displayHeight, overflow: "auto" }}
+            >
+              <Comment.Group>
+                {currentThread &&
+                  currentThread?.messages.map((message) => {
+                    return (
+                      <Comment key={message.id}>
+                        <Comment.Avatar
+                          src={"/assets/user.png"}
+                          className="commentAvatar"
+                        />
+                        <Comment.Content>
+                          <Comment.Author>
+                            {message.appUserUserName}
+                          </Comment.Author>
+                          <Comment.Metadata>
+                            {message.sentDateTime}
+                          </Comment.Metadata>
+                          <Comment.Text>{message.body}</Comment.Text>
+                        </Comment.Content>
+                      </Comment>
+                    );
+                  })}
+              </Comment.Group>
+            </div>
+          </Segment>
+        )}
 
-    <SegmentGroup raised>
-      {currentThread && (
-        <Segment>
-          To:{" "}
-          {currentThread?.participants
-            .filter((p) => p.appUserUserName !== user?.username)
-            .map((p) => (
-              <Link
-                key={p.appUserUserName}
-                to={`/profile/${p.appUserUserName}`}
-              >
-                @{p.appUserUserName}
-              </Link>
-            ))}
-        </Segment>
-      )}
-      {currentThread && (
-        <Segment>
-          <div
-            id="commentGroup"
-            style={{ height: displayHeight, overflow: "auto" }}
-          >
-            <Comment.Group>
-              {currentThread &&
-                currentThread?.messages.map((message) => {
-                  return (
-                    <Comment key={message.id}>
-                      <Comment.Avatar
-                        src={"/assets/user.png"}
-                        className="commentAvatar"
-                      />
-                      <Comment.Content>
-                        <Comment.Author>
-                          {message.appUserUserName}
-                        </Comment.Author>
-                        <Comment.Metadata>
-                          {message.sentDateTime}
-                        </Comment.Metadata>
-                        <Comment.Text>{message.body}</Comment.Text>
-                      </Comment.Content>
-                    </Comment>
-                  );
-                })}
-            </Comment.Group>
-          </div>
-        </Segment>
-      )}
-
-      <Segment style={{ backgroundColor: "white", border: "none" }}>
-        <FinalForm
-          onSubmit={currentThread ? addMessage : addThread}
-          validate={validate}
-          render={({ handleSubmit, submitting, form, invalid, pristine }) => (
-            <Form onSubmit={() =>  handleSubmit()!.then(() => form.reset())}>
-              {!currentThread && (
-                <Grid style={{marginBottom:'5px'}}>
-                  <Grid.Column width={1}>
-                    <Label basic size='large' color='red'>To:</Label>
-                  </Grid.Column>
-                  <Grid.Column width={15}>
-                    <Field
-                      name="To"
-                      component={TextInput}
-                      placeholder="Enter @username here..."
-                      disabled={!connected}
-                    />
-                  </Grid.Column>
-                </Grid>
-              )}
-
-              <Field
-                name="body"
-                component={TextAreaInput}
-                rows={2}
-                placeholder="Please type your message here.."
-                disabled={!connected}
-              />
-              <Button
-                content="Send"
-                labelPosition="left"
-                icon="comment alternate outline"
-                // primary
-                loading={submitting}
-                // color="green"
-                disabled={pristine || invalid}
-                style={{ backgroundColor: "#dc493a" }}
-                inverted
-              />
-            </Form>
+        <Segment style={{ backgroundColor: "aliceblue", border: "none" }}>
+          {!currentThread && (
+            <Header id="funkyHeader"> Compose Message </Header>
           )}
-        />
-      </Segment>
-    </SegmentGroup>
+          <FinalForm
+            onSubmit={currentThread ? addMessage : addThread}
+            validate={validate}
+            render={({ handleSubmit, submitting, form, invalid, pristine }) => (
+              <Form onSubmit={() => handleSubmit()!.then(() => form.reset())}>
+                {!currentThread && (
+                  <Grid style={{ marginBottom: "5px" }}>
+                    <Grid.Column width={1}>
+                      <Label
+                        size="large"
+                        style={{
+                          color: "#dc493a",
+                          backgroundColor: "aliceblue",
+                          borderRadius: "10px",
+                        }}
+                      >
+                        To:
+                      </Label>
+                    </Grid.Column>
+                    <Grid.Column width={15}>
+                      <Field
+                        name="To"
+                        component={TextInput}
+                        placeholder="Enter @username here..."
+                        disabled={!connected}
+                      />
+                    </Grid.Column>
+                  </Grid>
+                )}
+                <Field
+                  name="body"
+                  component={TextAreaInput}
+                  rows={2}
+                  placeholder="Please type your message here.."
+                  disabled={!connected}
+                />
+                <Button
+                  content="Send"
+                  labelPosition="left"
+                  icon="comment alternate outline"
+                  // primary
+                  loading={submitting}
+                  // color="green"
+                  disabled={pristine || invalid}
+                  style={{ backgroundColor: "#dc493a" }}
+                  inverted
+                />
+              </Form>
+            )}
+          />
+        </Segment>
+      </SegmentGroup>
     </Fragment>
     // {formatDistance(
     //     new Date(comment.createdAt),

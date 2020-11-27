@@ -9,6 +9,7 @@ import {
   Button,
   Grid,
   GridRow,
+  Header,
   Loader,
   Menu,
   Ref,
@@ -23,6 +24,7 @@ import ActivityListItemPlaceholder from "./ActivityListItemPlaceholder";
 import { NavLink } from "react-router-dom";
 import Mapi from "../../../app/common/map/Map";
 import ActivityFiltersText from "./ActivityFiltersText";
+import ExploreSlideshow from "./ExploreSlideshow";
 
 const ActivityDashboard: React.FC = () => {
   const rootStore = useContext(RootStoreContext);
@@ -64,13 +66,15 @@ const ActivityDashboard: React.FC = () => {
           size="massive"
           className="createActivityBtn"
         /> */}
-        <Grid.Column width={3}>
+        <Grid.Column width={4}>
           {/* <Mapi /> */}
 
           <ActivityFiltersText />
         </Grid.Column>
         <Grid.Column width={12}>
           {/* <ActivityFilters /> */}
+          <ExploreSlideshow />
+          <Header size='tiny' content='Things to do'/>
 
           {loadingInitial && page === 0 ? (
             <Fragment>
@@ -90,7 +94,6 @@ const ActivityDashboard: React.FC = () => {
           )}
           <Loader active={loadingNext} />
         </Grid.Column>
-
       </Grid>
     </Fragment>
   );

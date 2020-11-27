@@ -37,7 +37,7 @@ const NavBar: React.FC = () => {
 
           <Menu.Item name="Home" as={NavLink} exact to="/home" />
           <Menu.Item name="Explore" as={NavLink} to="/activities" />
-          <Menu.Item name="Mesages" as={NavLink} to="/messages" />
+          <Menu.Item name="Messages" as={NavLink} to="/messages" />
           {/* <Menu.Item>
             <Input
               icon="search"

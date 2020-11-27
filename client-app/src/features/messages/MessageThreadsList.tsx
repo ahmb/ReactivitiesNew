@@ -27,22 +27,30 @@ const MessageThreadsList: React.FC = () => {
 
   return (
     <div>
-      <Button
-        positive
+      <Header
         size="tiny"
-        content="New Message"
-        inverted
-        circular
-        icon="plus"
         style={{
-          width: "100%",
-          backgroundColor: "#dc493a",
+          marginBottom: "10px",
         }}
-        onClick={clearCurrentThread}
-      />
-      <Header disabled size="tiny">
+      >
         Conversation List
+        <Button
+          positive
+          size="tiny"
+          content="New Message"
+          inverted
+          circular
+          icon="plus"
+          style={{
+            backgroundColor: "#dc493a",
+            float: "right",
+            display: "inline",
+            marginRight: 0,
+          }}
+          onClick={clearCurrentThread}
+        />
       </Header>
+      <br />
 
       {loadingInitial && (
         <Fragment>

@@ -22,6 +22,7 @@ import ProfilePage from "../../features/profiles/ProfilePage";
 import PrivateRoute from "./PrivateRoute";
 import UnreadActivitiesList from "../../features/activities/homepage/UnreadActivitiesList";
 import MessagesDashboard from "../../features/messages/MessagesDashboard";
+import Homepage from "../../features/activities/homepage/Homepage";
 
 const App: React.FC<RouteComponentProps> = ({ location }) => {
   const rootStore = useContext(RootStoreContext);
@@ -75,7 +76,7 @@ const App: React.FC<RouteComponentProps> = ({ location }) => {
                   path="/messages"
                   component={MessagesDashboard}
                 />
-                <PrivateRoute path="/home" component={UnreadActivitiesList} />
+                <PrivateRoute path="/home" component={Homepage} />
                 <Route component={NotFound} />
               </Switch>
             </Container>

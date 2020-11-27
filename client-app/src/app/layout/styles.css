@@ -8,8 +8,6 @@ body {
   width: 100%;
 }
 
-
-
 .ui.inverted.button {
   box-shadow: 0 0 0 0 black inset !important;
 }
@@ -46,7 +44,7 @@ body {
 #logo2 {
   font-family: Pacifico;
   font-size: 25px;
-  color: #009EE6;
+  color: #009ee6;
 }
 
 .ui.menu .item > .input input {
@@ -216,13 +214,37 @@ body ::-webkit-scrollbar-track {
   min-height: 100%;
 }
 
+#categoryButton:active,
+#categoryButton:hover,
+#categoryButton:focus {
+  color: #dc493a !important;
+  border-width: 3px;
+  border-color: #dc493a;
+  border-style: solid;
+}
+
+#categoryButton.ui.active.button {
+  color: #dc493a !important;
+  border-width: 2px;
+  border-color: #dc493a;
+  border-style: solid;
+}
+
+#categoryButton {
+  width: 100%;
+  border-radius: 30px;
+  background-color: aliceblue;
+  text-align: left;
+}
+
 /*home page styles*/
 
 /* .ui.placeholder .paragraph:not(:first-child):before,.ui.placeholder .image.header:after{
   background-color: aliceblue;
 } */
-header{
-  font-family: BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif !important;
+header {
+  font-family: BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell,
+    "Open Sans", "Helvetica Neue", sans-serif !important;
 }
 
 .masthead {
@@ -266,7 +288,7 @@ header{
   border-radius: 100px;
 }
 
-#funkyHeader{
+#funkyHeader {
   font-family: Pacifico;
   color: #dc493a;
   text-align: center;

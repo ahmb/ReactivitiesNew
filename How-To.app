@@ -158,3 +158,26 @@ UPDATE DB:
 -- SQLite
 update UserActivities
 SET IsApproved = 0 , Read = 0
+
+
+
+
+Koustabs query
+-- SQLite
+select a.AppUserId, a.TheadId, x.msgid, x.SentDateTime, x.Body
+from
+ThreadParticipants a 
+Inner join 
+(
+select * 
+from (
+select b.ThreadId, b.Id as msgid, b.SentDateTime, b.Body,
+row_number() over (partition by b.ThreadId order by b.SentDateTime desc) as rankValue
+FROM 
+Msgs b 
+)
+where rankValue = 1
+) x
+ON 
+a.TheadId = x.ThreadId
+where a.AppUserId = 'd5adf925-e1ef-4da9-93c6-c0f1d659e673';

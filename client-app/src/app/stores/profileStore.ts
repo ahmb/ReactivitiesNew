@@ -30,6 +30,9 @@ export default class ProfileStore {
   @observable followings: IProfile[] = [];
   @observable activeTab: number = 0;
   @observable userActivities: IUserActivity[] = [];
+  @observable userHostingActivities: IUserActivity[] = [];
+  @observable userAttendingActivities: IUserActivity[] = [];
+
   @observable loadingActivities = false;
 
   @computed get isCurrentUser() {
@@ -42,20 +45,49 @@ export default class ProfileStore {
 
   @action loadUserActivities = async (username: string, predicate?: string) => {
     this.loadingActivities = true;
-    try{
-      const activities = await agent.Profiles.listActivities(username, predicate!);
-      runInAction(()=> {
+    try {
+      const activities = await agent.Profiles.listActivities(
+        username,
+        predicate!
+      );
+      runInAction(() => {
         this.userActivities = activities;
         this.loadingActivities = false;
-      })
-    }catch(error){
-      toast.error('Problem loading activities');
-      runInAction(()=> {
+      });
+    } catch (error) {
+      toast.error("Problem loading activities");
+      runInAction(() => {
         this.loadingActivities = false;
-      })
+      });
     }
+  };
 
-  }
+  @action loadUserActivitiesHomePage = async (
+    username: string,
+    predicate?: string
+  ) => {
+    this.loadingActivities = true;
+    try {
+      const futureActivities = await agent.Profiles.listActivities(
+        username,
+        "future"
+      );
+      const hostingActivities = await agent.Profiles.listActivities(
+        username,
+        "hosting"
+      );
+      runInAction(() => {
+        this.userAttendingActivities = futureActivities;
+        this.userHostingActivities = hostingActivities;
+        this.loadingActivities = false;
+      });
+    } catch (error) {
+      toast.error("Problem loading activities");
+      runInAction(() => {
+        this.loadingActivities = false;
+      });
+    }
+  };
 
   @action setActiveTab = (activeIndex: number) => {
     this.activeTab = activeIndex;

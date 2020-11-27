@@ -41,6 +41,7 @@
     "react-mapbox-gl-geocoder": "^1.1.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.3",
+    "react-slideshow-image": "^3.3.2",
     "react-sticky-nav": "^4.0.6",
     "react-toastify": "^6.0.8",
     "react-widgets": "^4.5.0",

@@ -1,16 +1,11 @@
 import { observer } from "mobx-react-lite";
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import {
-  Grid,
-  Header,
-  Image,
-  Button,
-  Card,
-} from "semantic-ui-react";
+import { Grid, Header, Image, Button, Card } from "semantic-ui-react";
 import { RootStoreContext } from "../../../app/stores/rootStore";
 import NoNotificationsGraphic from "../../graphics/NoNotificationsGraphic";
 import UnreadActivityItemPlaceholder from "./UnreadActivityItemPlaceholder";
+import UserActivities from "./UserActivities";
 
 const UnreadActivitiesList: React.FC = () => {
   const rootStore = useContext(RootStoreContext);
@@ -34,18 +29,24 @@ const UnreadActivitiesList: React.FC = () => {
     }
 
     // loadUnreadApprovals();
-  }, [loadUnreadApprovals,unreadActivitiesByActivity.length ]);
+  }, [loadUnreadApprovals, unreadActivitiesByActivity.length]);
 
   // if (loadingInitial)
   //   return <LoadingComponent content="Loading notifications..." />;
 
   return (
-    <Grid columns={15} centered>
-      <Grid.Column width={15}>
+    <Grid>
+      <Grid.Column >
         <Fragment>
-          <Header disabled size="tiny">
-            Notifications
-          </Header>
+          <Header
+            icon="tasks"
+            // id="funkyHeader"
+            size="tiny"
+            // floated="left"
+            content="Notifications"
+          />
+
+          <br />
           {loadingInitial && (
             <Fragment>
               <UnreadActivityItemPlaceholder />
@@ -54,9 +55,11 @@ const UnreadActivitiesList: React.FC = () => {
             </Fragment>
           )}
           {loadingFinished && unreadActivitiesArray.length === 0 && (
-            <Fragment>
-              <Header size="large">No new notifications! </Header>
-              <Header size="medium">You're all caught up</Header>
+            <div 
+            // style={{ display: "inline-block" }}
+            >
+              <Header size="medium">No new notifications! </Header>
+              <Header size="tiny">You're all caught up</Header>
               {/* //wdith is 10% more than height */}
               <NoNotificationsGraphic
                 width={300}
@@ -68,7 +71,7 @@ const UnreadActivitiesList: React.FC = () => {
                   textAlign: "center",
                 }}
               />
-            </Fragment>
+            </div>
           )}
 
           {unreadActivitiesByActivity.map(([group, unreadActivities]) => (

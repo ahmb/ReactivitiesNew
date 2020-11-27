@@ -9,6 +9,7 @@ using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistance;
+using Z.EntityFramework.Plus;
 
 namespace Application.Messages
 {
@@ -34,11 +35,28 @@ namespace Application.Messages
             //handler that returns a list all the activities in the database context
             public async Task<List<ThreadDto>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var queryable = _context.Threads
-                    .Where(t => t.ThreadParticipants.Any(tp => tp.AppUser.UserName == _userAccessor.GetCurrentUsername()))
-                    .AsQueryable();
+                var threadss = _context.Threads
+                    .Where(t => t.ThreadParticipants.Any(tp => tp.AppUser.UserName == _userAccessor.GetCurrentUsername()));
+                    // .IncludeFilter(t => t.Messages.Take(1) );
 
-                var threads = await queryable.ToListAsync();
+
+                // threadss.Load();
+                foreach (var thread in threadss)
+                {
+                    _context
+                    .Entry(thread)
+                    .Collection(t => t.Messages)
+                    .Query()
+                    .FirstOrDefault();
+                }
+
+
+                // var list = ctx.Orders.IncludeFilter(x => x.Items.Where(y => !y.IsSoftDeleted)
+                //                            .OrderBy(y => y.Date)
+                //                            .Take(10))
+
+                var threads = await threadss.ToListAsync();
+                // var threads = await queryable.ToListAsync();
                 // .Skip(request.Offset ?? 0)
                 // .Take(request.Limit ?? 3).ToListAsync();
 
