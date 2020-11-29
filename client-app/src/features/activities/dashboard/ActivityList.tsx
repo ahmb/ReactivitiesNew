@@ -16,12 +16,14 @@ const ActivityList: React.FC = () => {
     <Fragment>
       {activitiesByDate.map(([group, activities]) => (
         <Segment  key={group} style={{backgroundColor:"aliceblue"}}>
+          {/* "2020-11-29T01:00:00", */}
           <Label color="red" ribbon={true} size='large'>
             {format(new Date(parseInt(group.split('-')[0]),parseInt(group.split('-')[1])-1,(parseInt(group.split('-')[2]))), "eeee do MMMM")}
-            {' , in ' + formatDistance(
-                            new Date(group),
-                            new Date()
-                          )}
+            {' , ' + formatDistance(
+                            new Date(parseInt(group.split('-')[0]),parseInt(group.split('-')[1])-1,(parseInt(group.split('-')[2])),0,0,0,0),
+                            new Date(new Date().getFullYear(),new Date().getMonth(),new Date().getDate(),0,0,0,0),
+                            { addSuffix: true }
+                          ).replace('less than a minute ago','Today!')}
           </Label>
           <Item.Group divided>
             {activities.map((activity) => (

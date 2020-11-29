@@ -111,7 +111,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
   };
 
   return (
-    <Fragment>
+    <div style={{height:'100vh'}}>
       <Grid>
         <Grid.Column width="6">
           <Grid.Row
@@ -537,7 +537,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
           </Segment.Group>
         </Grid.Column>
       </Grid>
-    </Fragment>
+    </div>
   );
 };
 

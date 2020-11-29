@@ -39,7 +39,7 @@ const UserActivities = () => {
                 src={`/assets/categoryImages/${activity.category}.jpg`}
                 style={{ minHeight: 100, objectFit: "cover" }}
               />
-              <Card.Content>
+              <Card.Content style={{backgroundColor:'aliceblue'}}>
                 <Card.Header textAlign="center">{activity.title}</Card.Header>
                 <Card.Meta textAlign="center">
                   <div>{format(new Date(activity.date), "do LLL")}</div>
@@ -67,7 +67,7 @@ const UserActivities = () => {
                 src={`/assets/categoryImages/${activity.category}.jpg`}
                 style={{ minHeight: 100, objectFit: "cover" }}
               />
-              <Card.Content>
+              <Card.Content  style={{backgroundColor:'aliceblue'}}>
                 <Card.Header textAlign="center">{activity.title}</Card.Header>
                 <Card.Meta textAlign="center">
                   <div>{format(new Date(activity.date), "do LLL")}</div>

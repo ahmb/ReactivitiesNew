@@ -17,7 +17,8 @@ import {
   setActivityProps,
   createAttendee,
   covertDateUTCtoLocal,
-  filterInPlace
+  filterInPlace,
+  formatDate
 } from "../common/util/util";
 import {
   HubConnection,
@@ -197,7 +198,13 @@ export default class ActivityStore {
 
     return Object.entries(
       sortedActivities.reduce((activities, activity) => {
-        const date = activity.date.toISOString().split("T")[0];
+        console.log('this is an activity DTAE conversion')
+        console.log(activity.title)
+
+        console.log(activity.date)
+        //"2020-11-28T23:58:16.984Z" <- ISO string example
+        // const date = activity.date.toISOString().split("T")[0]; 
+        const date = formatDate(activity.date);
         activities[date] = activities[date]
           ? [...activities[date], activity]
           : [activity];

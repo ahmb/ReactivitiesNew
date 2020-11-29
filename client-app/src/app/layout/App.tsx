@@ -23,6 +23,7 @@ import PrivateRoute from "./PrivateRoute";
 import UnreadActivitiesList from "../../features/activities/homepage/UnreadActivitiesList";
 import MessagesDashboard from "../../features/messages/MessagesDashboard";
 import Homepage from "../../features/activities/homepage/Homepage";
+import BottomNav from "../../features/nav/BottomNav";
 
 const App: React.FC<RouteComponentProps> = ({ location }) => {
   const rootStore = useContext(RootStoreContext);
@@ -80,6 +81,7 @@ const App: React.FC<RouteComponentProps> = ({ location }) => {
                 <Route component={NotFound} />
               </Switch>
             </Container>
+            <BottomNav/>
           </Fragment>
         )}
       />

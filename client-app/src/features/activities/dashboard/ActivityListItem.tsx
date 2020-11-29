@@ -22,8 +22,8 @@ const ActivityListItem: React.FC<{ activity: IActivity }> = ({ activity }) => {
   const host = activity.attendees.filter((x) => x.isHost)[0];
 
   return (
-    <Segment.Group raised style={{ borderRadius: '30px' }}>
-      <Segment raised padded style={{ borderRadius: '30px' }}>
+    <Segment.Group  style={{ borderRadius: '30px' }}>
+      <Segment  padded className='activityListItemSegment' style={{ borderRadius: '30px' }}>
         <Grid>
           <Grid.Column width={10}>
             <Item.Group>

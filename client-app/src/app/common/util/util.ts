@@ -66,6 +66,21 @@ export function filterInPlace<T>(a: T[], condition: any, thisArg: any) {
   return a;
 }
 
+//output: 2014-05-11
+export function formatDate(date: Date) {
+  var d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+
+  if (month.length < 2) 
+      month = '0' + month;
+  if (day.length < 2) 
+      day = '0' + day;
+
+  return [year, month, day].join('-');
+}
+
 function getDistanceFromLatLonInKm(lat1:number,lon1:number,lat2:number,lon2:number) {
   var R = 6371; // Radius of the earth in km
   var dLat = deg2rad(lat2-lat1);  // deg2rad below
