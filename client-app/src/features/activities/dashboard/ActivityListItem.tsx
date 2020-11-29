@@ -22,8 +22,12 @@ const ActivityListItem: React.FC<{ activity: IActivity }> = ({ activity }) => {
   const host = activity.attendees.filter((x) => x.isHost)[0];
 
   return (
-    <Segment.Group  style={{ borderRadius: '30px' }}>
-      <Segment  padded className='activityListItemSegment' style={{ borderRadius: '30px' }}>
+    <Segment.Group style={{ borderRadius: "30px" }}>
+      <Segment
+        padded
+        className="activityListItemSegment"
+        style={{ borderRadius: "30px" }}
+      >
         <Grid>
           <Grid.Column width={10}>
             <Item.Group>
@@ -52,18 +56,34 @@ const ActivityListItem: React.FC<{ activity: IActivity }> = ({ activity }) => {
                         />
                       </Fragment>
                     )}
-                    {activity.isGoing && !activity.isHost && (
-                      <Fragment>
-                        <Label
-                          basic
-                          color="orange"
-                          content="ATTENDING"
-                          circular
-                          size="mini"
-                          style={{ marginLeft: 10 }}
-                        />
-                      </Fragment>
-                    )}
+                    {activity.isGoing &&
+                      !activity.isHost &&
+                      activity.isApproved && (
+                        <Fragment>
+                          <Label
+                            basic
+                            color="orange"
+                            content="ATTENDING"
+                            circular
+                            size="mini"
+                            style={{ marginLeft: 10 }}
+                          />
+                        </Fragment>
+                      )}
+                    {activity.isGoing &&
+                      !activity.isHost &&
+                      !activity.isApproved && (
+                        <Fragment>
+                          <Label
+                            basic
+                            color="orange"
+                            content="PENDING APPROVAL"
+                            circular
+                            size="mini"
+                            style={{ marginLeft: 10 }}
+                          />
+                        </Fragment>
+                      )}
                   </Item.Header>
 
                   <br />
@@ -149,7 +169,7 @@ const ActivityListItem: React.FC<{ activity: IActivity }> = ({ activity }) => {
                       {activity.description.length < 280 &&
                         activity.description}
                       <p>
-                      <br/>
+                        <br />
                         <Link to={`/activities/${activity.id}`}> Details </Link>
                       </p>
                     </span>
@@ -167,7 +187,7 @@ const ActivityListItem: React.FC<{ activity: IActivity }> = ({ activity }) => {
               </Item>
             </Item.Group>
           </Grid.Column>
-          <Grid.Column className='activityListItemImgDiv' width={6}>
+          <Grid.Column className="activityListItemImgDiv" width={6}>
             {category.filter(
               (e) =>
                 e.key.toLowerCase() ===
@@ -176,21 +196,19 @@ const ActivityListItem: React.FC<{ activity: IActivity }> = ({ activity }) => {
                   .replace(/\s/g, "")
                   .toLowerCase()
             ).length > 0 && (
-
-                <Image
-                  src={`/assets/categoryImages/${activity.category
-                    .replace("&", "")
-                    .replace(/\s/g, "")
-                    .toLowerCase()}.jpg`}
-                  // height="100px"
-                  // width="100%"
-                  className='activityListItemImg'
-                  fluid
-                  centered
-                  // style={activityImageStyle}
-                  style={{ borderRadius: 10 }}
-                />
-
+              <Image
+                src={`/assets/categoryImages/${activity.category
+                  .replace("&", "")
+                  .replace(/\s/g, "")
+                  .toLowerCase()}.jpg`}
+                // height="100px"
+                // width="100%"
+                className="activityListItemImg"
+                fluid
+                centered
+                // style={activityImageStyle}
+                style={{ borderRadius: 10 }}
+              />
             )}
           </Grid.Column>
         </Grid>

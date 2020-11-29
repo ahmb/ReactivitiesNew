@@ -3,18 +3,28 @@ using Application.Photos;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
 namespace Infrastructure.Photos
 {
     public class PhotoAccessor : Application.Interfaces.IPhotoAccessor
     {
+        public IConfiguration Configuration { get; }
+        private readonly CloudinarySettings _cloudinarySettings;
+
         private readonly Cloudinary _cloudinary;
 
         //pull strongly typed Cloudinary setting information out of the config
         public PhotoAccessor(IOptions<CloudinarySettings> config)
         {
-            var acc = new Account(
+            Console.WriteLine("config.Value.CloudName!!!");
+
+            _cloudinarySettings = config.Value;
+            Console.WriteLine(config.Value.CloudName);
+            Console.WriteLine(_cloudinarySettings.CloudName);
+
+            Account acc = new Account(
                 config.Value.CloudName,
                 config.Value.ApiKey,
                 config.Value.ApiSecret

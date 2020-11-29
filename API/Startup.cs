@@ -19,11 +19,14 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.UserSecrets;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Persistance;
 using NWebsec.AspNetCore.Middleware;
+using System;
+using System.Configuration;
 
 namespace API
 {
@@ -89,8 +92,8 @@ namespace API
                 {
                     cfg.RegisterValidatorsFromAssemblyContaining<Create>();
                 });
-    //             .AddNewtonsoftJson(options =>
-    // options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            //             .AddNewtonsoftJson(options =>
+            // options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             var builder = services.AddIdentityCore<AppUser>();
             var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
@@ -105,16 +108,27 @@ namespace API
             });
             services.AddTransient<IAuthorizationHandler, IsHostRequirementHandler>();
 
+ 
+            //pull out the user secrets and api key : saved via dotnet user-secrets set
+            services.Configure<CloudinarySettings>(Configuration.GetSection("Cloudinary"));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenKey"]));
+
+            Console.WriteLine("SETTINGS NAME!!!!!!");
+
+            Console.WriteLine(Configuration["Cloudinary:CloudName"]);
+            Console.WriteLine(Configuration["ConnectionStrings:DefaultConnection"]);
+            Console.WriteLine(Configuration["TokenKey"]);
+            Console.WriteLine(Configuration["Env:This"]);
+
+
             services.AddScoped<IJwtGenerator, JwtGenerator>();
             services.AddScoped<IUserAccessor, UserAccessor>();
             services.AddScoped<IPhotoAccessor, PhotoAccessor>();
             services.AddScoped<IProfileReader, ProfileReader>();
 
 
-            //pull out the user secrets and api key : saved via dotnet user-secrets set
-            services.Configure<CloudinarySettings>(Configuration.GetSection("Cloudinary"));
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenKey"]));
+
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
             {
