@@ -50,6 +50,7 @@ const App: React.FC<RouteComponentProps> = ({ location }) => {
         path={"/(.+)"}
         render={() => (
           <Fragment>
+            <div className='wrapper'>
             <NavBar />
 
             {/* {isHomePage && <Mapi />} */}
@@ -81,7 +82,11 @@ const App: React.FC<RouteComponentProps> = ({ location }) => {
                 <Route component={NotFound} />
               </Switch>
             </Container>
+            <div className='push'></div>
+            </div>
+            <div className='footer'>
             <BottomNav/>
+            </div>
           </Fragment>
         )}
       />

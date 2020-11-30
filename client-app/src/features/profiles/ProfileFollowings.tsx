@@ -9,8 +9,8 @@ const ProfileFollowings = () => {
 
   return (
     <Tab.Pane loading={loading}>
-      <Grid>
-        <Grid.Column width={16}>
+      <Grid className="profileTabContent">
+        {/* <Grid.Column width={16}>
           <Header
             floated="left"
             icon="user"
@@ -20,7 +20,7 @@ const ProfileFollowings = () => {
                 : `People ${profile!.displayName} is following`
             }
           />
-        </Grid.Column>
+        </Grid.Column> */}
         <Grid.Column width={16}>
           <Card.Group itemsPerRow={5}>
             {followings.length > 0 &&

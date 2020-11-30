@@ -16,12 +16,20 @@ const BottomNav: React.FC = () => {
   const { user, logout } = rootStore.userStore;
   // console.log(user);
   return (
-    <Menu secondary widths={1} pointing size="tiny" style={{backgroundColor:'aliceBlue', marginTop:'100px'}}>
+    <Menu
+      secondary
+      widths={1}
+      pointing
+      size="tiny"
+      style={{
+        backgroundColor: "aliceBlue",
+        marginTop: "20vh",
+        width: "100%",
+        bottom: 0,
+      }}
+    >
       <Container>
-
-          <Menu.Item name="About Us" as={NavLink} exact to="/home" />
-          
-
+        <Menu.Item name="About WannaGo" as={NavLink} exact to="/home" />
       </Container>
     </Menu>
   );

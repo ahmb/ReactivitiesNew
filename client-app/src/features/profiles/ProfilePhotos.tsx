@@ -27,13 +27,14 @@ const ProfilePhotos = () => {
 
   return (
     <Tab.Pane>
-      <Grid>
-        <Grid.Column width={16} style={{ paddingBottom: 0 }}>
-          <Header floated="left" icon="image" content="Photos" />
+      <Grid style={{ backgroundColor:'aliceblue'}}>
+        <Grid.Column width={16} style={{ paddingBottom: 0}}>
+          {/* <Header floated="left"  content="Gallery" /> */}
           {isCurrentUser && (
             <Button
               floated="right"
-              basic
+              circular
+              color={addPhotoMode ? "grey" : "green"}
               content={addPhotoMode ? "Cancel" : "Add Photo"}
               onClick={() => setAddPhotoMode(!addPhotoMode)}
             />
@@ -61,9 +62,8 @@ const ProfilePhotos = () => {
                           }}
                           disabled={photo.isMain}
                           loading={loading && target === photo.id}
-                          basic
                           positive
-                          content="Main"
+                          content="Set as Main"
                         />
                         <Button
                           name={photo.id}
@@ -73,7 +73,6 @@ const ProfilePhotos = () => {
                             setDeleteTarget(e.currentTarget.name);
                           }}
                           loading={loading && deleteTarget === photo.id}
-                          basic
                           negative
                           icon="trash"
                         />

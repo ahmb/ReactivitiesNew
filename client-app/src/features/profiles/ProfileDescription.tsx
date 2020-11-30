@@ -9,19 +9,19 @@ const ProfileDescription = () => {
   const [editMode, setEditMode] = useState(false);
   return (
     <Tab.Pane>
-      <Grid>
+      <Grid style={{backgroundColor:'aliceblue'}}>
         <Grid.Column width={16}>
-          <Header
-            floadted="left"
-            icon="user"
+          {/* <Header
+            floated="left"
             content={`About ${profile!.displayName}`}
-          />
+          /> */}
           {isCurrentUser && (
             <Button
               floated="right"
-              basic
               content={editMode ? "Cancel" : "Edit Profile"}
               onClick={() => setEditMode(!editMode)}
+              circular
+              color={editMode ? "grey" : "twitter"}
             />
           )}
         </Grid.Column>
@@ -29,7 +29,7 @@ const ProfileDescription = () => {
           {editMode ? (
             <ProfileEditForm updateProfile={updateProfile} profile={profile!} />
           ) : (
-            <span>{profile!.bio}</span>
+            <div style={{borderRadius:'30px',backgroundColor:'white', padding:10}} >{profile!.bio}</div>
           )}
         </Grid.Column>
       </Grid>

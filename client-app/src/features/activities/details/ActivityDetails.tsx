@@ -89,7 +89,7 @@ const ActivityDetails: React.FC<RouteComponentProps<DetailParams>> = ({
             <ActivityDetailedChat displayHeight="60vh" />
           )}
           {(!activity.isApproved && !activity.isHost) && (
-            <div style={{textAlign:'center'}}>
+            <div style={{textAlign:'center', marginBottom:'20vh'}}>
               <Header size='large' textAlign='center' style={{textAlign:'-webkit-center'}}  >
                 {/* <Icon name="lock" /> */}
                 <Image  src='https://img.icons8.com/ios/48/000000/lock--v1.png' style={{height:30,width:30}} />

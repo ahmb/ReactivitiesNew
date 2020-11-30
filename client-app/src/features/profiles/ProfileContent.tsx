@@ -29,7 +29,10 @@ interface IProps {
 const ProfileContent: React.FC<IProps> = ({ setActiveTab }) => {
   return (
     <Tab
-      menu={{ fluid: true, vertical: true }}
+    menu={{ secondary: true, pointing: true }} 
+      // menu={{ fluid: true, vertical: true }}
+      style={{marginBottom:0}}
+      className='profileTabs'
       menuPosition="right"
       panes={panes}
       onTabChange={(e, data) => setActiveTab(data.activeIndex)}

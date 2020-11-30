@@ -22,7 +22,7 @@ const MessagesDashboard: React.FC = () => {
     
   return (
     <Grid columns={16} >
-      <Grid.Column width={5} style={{height:'100vh', overflow:'auto'}}>
+      <Grid.Column width={5} style={{height:'80vh', overflow:'auto'}}>
         <MessageThreadsList />
       </Grid.Column>
       <Grid.Column width={11}>

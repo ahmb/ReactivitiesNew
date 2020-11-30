@@ -102,8 +102,8 @@ const UnreadActivitiesList: React.FC = () => {
                     <Card.Content key={a.activityId + a.requestorUserName}>
                       <Image
                         avatar
-                        floated="right"
-                        spaced="right"
+                        floated="left"
+                        spaced="left"
                         src={
                           a.requestorImage ||
                           "/assets/profpic.svg" ||

@@ -400,3 +400,36 @@ button.ui.icon.inverted.left.labeled.button {
 }
 
 /*end home page styles*/
+
+
+
+
+/* APP styles */
+
+.wrapper {
+  min-height: 100%;
+  margin-bottom: -34px;
+  /* Equal to height of footer */
+  /* But also accounting for potential margin-bottom of last child */
+}
+.footer
+{
+  height: 34px;
+}
+.push
+{
+  height: 34px;
+}
+/* APP style */
+
+
+
+/* Profile Page */
+.profileTabs > .ui.pointing.secondary.menu {
+  margin-bottom: 0;
+}
+
+.profileTabContent{
+  background-color:aliceblue ;
+}
+/* End Profile Page */

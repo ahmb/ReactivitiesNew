@@ -74,7 +74,7 @@ const ActivityDashboard: React.FC = () => {
         <Grid.Column width={12}>
           {/* <ActivityFilters /> */}
           <ExploreSlideshow />
-          <Header size='tiny' content='Things to do'/>
+          <Header size='tiny' style={{textAlign:'center'}} content='Things to do'/>
 
           {loadingInitial && page === 0 ? (
             <Fragment>

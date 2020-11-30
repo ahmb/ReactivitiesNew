@@ -2,7 +2,7 @@ import React from "react";
 import { combineValidators, isRequired } from "revalidate";
 import { IProfile } from "../../app/models/profile";
 import { Form as FinalForm, Field } from "react-final-form";
-import { Form, Button } from "semantic-ui-react";
+import { Form, Button, Label } from "semantic-ui-react";
 import TextInput from "../../app/common/form/TextInput";
 import TextAreaInput from "../../app/common/form/TextAreaInput";
 
@@ -23,12 +23,16 @@ const ProfileEditForm: React.FC<IProps> = ({ updateProfile, profile }) => {
       initialValues={profile!}
       render={({ handleSubmit, invalid, pristine, submitting }) => (
         <Form onSubmit={handleSubmit} error>
+            <Label  color='red'>Display Name</Label>
           <Field
             name="displayName"
             component={TextInput}
             placeholder="DisplayName"
             value={profile!.displayName}
-          />
+          >
+          </Field>
+          <br/>
+          <Label color='red'>About</Label>
           <Field
             name="bio"
             component={TextAreaInput}
@@ -41,6 +45,7 @@ const ProfileEditForm: React.FC<IProps> = ({ updateProfile, profile }) => {
             floated="right"
             disabled={invalid || pristine}
             positive
+            circular
             content="Update profile"
           />
         </Form>

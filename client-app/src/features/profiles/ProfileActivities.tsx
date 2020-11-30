@@ -45,11 +45,11 @@ const ProfileEvents = () => {
   };
 
   return (
-    <Tab.Pane loading={loadingActivities}>
-      <Grid>
-        <Grid.Column width={16}>
+    <Tab.Pane loading={loadingActivities} className="profileTabContent">
+      <Grid className="profileTabContent">
+        {/* <Grid.Column width={16}>
           <Header floated="left" icon="calendar" content={"Activities"} />
-        </Grid.Column>
+        </Grid.Column> */}
         <Grid.Column width={16}>
           <Tab
             panes={panes}
