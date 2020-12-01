@@ -11,6 +11,10 @@ namespace Application.Messages
         // public Guid TheadId { get; set; }
 
         public string AppUserUserName { get; set; }
+        public string DisplayPicUrl { get; set; }
+
+        public string DisplayName { get; set; }
+
 
 
     }

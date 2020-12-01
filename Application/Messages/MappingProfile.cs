@@ -11,10 +11,21 @@ namespace Application.Messages
             CreateMap<Msg, MsgDto>()
             .ForMember(
                 destinationMember => destinationMember.AppUserUserName, options => options.MapFrom(source => source.AppUser.UserName)
-            );
+            ).ForMember(
+                destinationMember => destinationMember.SenderDisplayPicUrl, options => options.MapFrom(source => source.AppUser.Photos.SingleOrDefault(p => p.IsMain == true).Url)
+            ).ForMember(
+                destinationMember => destinationMember.SenderDisplayName, options => options.MapFrom(source => source.AppUser.DisplayName)
+            )
+            ;
             CreateMap<MsgReadState, MsgReadStateDto>();
             CreateMap<Thread, ThreadDto>();
-            CreateMap<ThreadParticipant, ThreadParticipantDto>();
+            CreateMap<ThreadParticipant, ThreadParticipantDto>()
+              .ForMember(
+                destinationMember => destinationMember.DisplayPicUrl, options => options.MapFrom(source => source.AppUser.Photos.SingleOrDefault(p => p.IsMain == true).Url)
+            ).ForMember(
+                destinationMember => destinationMember.DisplayName, options => options.MapFrom(source => source.AppUser.DisplayName)
+            )
+            ;
 
 
             // CreateMap<UserActivity, AttendeeDto>()

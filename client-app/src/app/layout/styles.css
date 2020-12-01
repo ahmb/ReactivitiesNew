@@ -214,9 +214,8 @@ body ::-webkit-scrollbar-track {
   min-height: 100%;
 }
 
-.ui.padded.segment.activityListItemSegment:hover{
+.ui.padded.segment.activityListItemSegment:hover {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
 }
 
 #categoryButton:active,
@@ -228,6 +227,13 @@ body ::-webkit-scrollbar-track {
   border-style: solid;
 }
 
+/* #categoryButton:active,
+#categoryButton:hover,
+#categoryButton:focus {
+  background-color: #dc493a !important;
+  color:white;
+} */
+
 #categoryButton.ui.active.button {
   color: #dc493a !important;
   border-width: 2px;
@@ -235,11 +241,24 @@ body ::-webkit-scrollbar-track {
   border-style: solid;
 }
 
+.ui.red.label,
+.ui.red.labels .label {
+  background-color: #dc493a !important;
+}
+
 #categoryButton {
   width: 100%;
   border-radius: 30px;
   background-color: aliceblue;
+  border-width: 2px;
+  border-color: aliceblue;
+  border-style: solid;
   text-align: left;
+}
+
+.searchInput > .ui.icon.input {
+  width: 100%;
+  margin: 10px;
 }
 
 /*home page styles*/
@@ -401,9 +420,6 @@ button.ui.icon.inverted.left.labeled.button {
 
 /*end home page styles*/
 
-
-
-
 /* APP styles */
 
 .wrapper {
@@ -412,24 +428,34 @@ button.ui.icon.inverted.left.labeled.button {
   /* Equal to height of footer */
   /* But also accounting for potential margin-bottom of last child */
 }
-.footer
-{
+.footer {
   height: 34px;
 }
-.push
-{
+.push {
   height: 34px;
 }
 /* APP style */
-
-
 
 /* Profile Page */
 .profileTabs > .ui.pointing.secondary.menu {
   margin-bottom: 0;
 }
 
-.profileTabContent{
-  background-color:aliceblue ;
+.profileTabContent {
+  background-color: aliceblue;
 }
 /* End Profile Page */
+
+/* Messages Page */
+#messageMetaData {
+  margin-left: 0;
+}
+
+.ui.cards a.card:hover,
+.ui.link.card:hover,
+.ui.link.cards .card:hover,
+a.ui.card:hover {
+  z-index: 0;
+}
+
+/* End Messages Page */

@@ -13,6 +13,7 @@ import {
   Loader,
   Menu,
   Ref,
+  Search,
   Sticky,
 } from "semantic-ui-react";
 import ActivityList from "./ActivityList";
@@ -74,8 +75,13 @@ const ActivityDashboard: React.FC = () => {
         <Grid.Column width={12}>
           {/* <ActivityFilters /> */}
           <ExploreSlideshow />
-          <Header size='tiny' style={{textAlign:'center'}} content='Things to do'/>
 
+          {/* <Search className="searchInput" /> */}
+          <Header
+            size="tiny"
+            style={{ textAlign: "center" }}
+            content="Things to do"
+          />
           {loadingInitial && page === 0 ? (
             <Fragment>
               <ActivityListItemPlaceholder />

@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import React, { Fragment, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Button, Card, Header, Segment } from "semantic-ui-react";
+import { Button, Card, Header, Segment, Image } from "semantic-ui-react";
 import { RootStoreContext } from "../../app/stores/rootStore";
 import UnreadActivityItemPlaceholder from "../activities/homepage/UnreadActivityItemPlaceholder";
 
@@ -85,14 +85,36 @@ const MessageThreadsList: React.FC = () => {
               raised={thread.id === currentThread?.id}
               onClick={() => loadThreadDetails(thread.id)}
             >
+              {/* {thread.participants
+                .filter((p) => p.appUserUserName !== user?.username)
+                .map((p) => (
+                  // <Card.Header as={Link} to={`/profile/${p.appUserUserName}`}>
+                  <Image
+                    src={p.displayPicUrl || "/assets/user.png"}
+                    style={{ minHeight: 100, objectFit: "cover" }}
+                    size='tiny'
+                  />
+                ))} */}
+
               <Card.Content>
                 {thread.participants
                   .filter((p) => p.appUserUserName !== user?.username)
                   .map((p) => (
                     // <Card.Header as={Link} to={`/profile/${p.appUserUserName}`}>
-                    <Card.Header key={p.appUserUserName}>
-                      @{p.appUserUserName}
-                    </Card.Header>
+                    <Fragment>
+                      <Image
+                        src={p.displayPicUrl || "/assets/user.png"}
+                        // style={{ minHeight: 100, objectFit: "cover" }}
+                        size="mini"
+                        floated="right"
+                        circular
+                        id='messageThreadsListDisplayPic'
+                      />
+                      <Card.Header key={p.appUserUserName}>
+                        {p.displayName}
+                      </Card.Header>
+                      <Card.Meta>@{p.appUserUserName}</Card.Meta>
+                    </Fragment>
                   ))}
 
                 {/* {thread.messages.map((m) => {
@@ -105,7 +127,10 @@ const MessageThreadsList: React.FC = () => {
                 })} */}
 
                 <Card.Meta>
-                  {thread.messages[thread.messages.length - 1].sentDateTime}
+                  {new Date(
+                    thread.messages[thread.messages.length - 1].sentDateTime +
+                      "Z"
+                  ).toDateString()}
                 </Card.Meta>
                 <Card.Description>
                   {thread.messages[thread.messages.length - 1].body}

@@ -8,7 +8,12 @@ namespace Application.Messages
     {
         public Guid Id { get; set; }
 
+//sender
         public string AppUserUserName { get; set; }
+
+        public string SenderDisplayName { get; set; }
+
+        public string SenderDisplayPicUrl { get; set; }
 
         public DateTime SentDateTime { get; set; }
 

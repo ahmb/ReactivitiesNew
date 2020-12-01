@@ -135,7 +135,7 @@ export const MessageThreadDetail: React.FC<IProps> = ({
                   key={p.appUserUserName}
                   to={`/profile/${p.appUserUserName}`}
                 >
-                  @{p.appUserUserName}
+                  {p.displayName+' '} @{p.appUserUserName}
                 </Link>
               ))}
           </Segment>
@@ -152,15 +152,18 @@ export const MessageThreadDetail: React.FC<IProps> = ({
                     return (
                       <Comment key={message.id}>
                         <Comment.Avatar
-                          src={"/assets/user.png"}
+                          src={message.senderDisplayPicUrl || "/assets/user.png"}
                           className="commentAvatar"
                         />
                         <Comment.Content>
                           <Comment.Author>
-                            {message.appUserUserName}
+                            {message.senderDisplayName}
                           </Comment.Author>
-                          <Comment.Metadata>
-                            {message.sentDateTime}
+                          <Comment.Metadata id='messageMetaData'>
+                            <div id='messageMetaData'>
+                            {formatDistance(new Date(message.sentDateTime+'Z'), new Date())+ ' ago'}
+
+                            </div>
                           </Comment.Metadata>
                           <Comment.Text>{message.body}</Comment.Text>
                         </Comment.Content>

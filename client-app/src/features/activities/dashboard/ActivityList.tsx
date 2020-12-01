@@ -23,7 +23,7 @@ const ActivityList: React.FC = () => {
                             new Date(parseInt(group.split('-')[0]),parseInt(group.split('-')[1])-1,(parseInt(group.split('-')[2])),0,0,0,0),
                             new Date(new Date().getFullYear(),new Date().getMonth(),new Date().getDate(),0,0,0,0),
                             { addSuffix: true }
-                          ).replace('less than a minute ago','Today!').replace('1 day ago','Today!')}
+                          ).replace('less than a minute ago','today!').replace('1 day ago','yesterday')}
           </Label>
           <Item.Group divided>
             {activities.map((activity) => (
