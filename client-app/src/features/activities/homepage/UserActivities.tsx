@@ -42,8 +42,8 @@ const UserActivities = () => {
               <Card.Content style={{backgroundColor:'aliceblue'}}>
                 <Card.Header textAlign="center">{activity.title}</Card.Header>
                 <Card.Meta textAlign="center">
-                  <div>{format(new Date(activity.date), "do LLL")}</div>
-                  <div>{format(new Date(activity.date), "h:mm a")}</div>
+                  <div>{format(new Date(activity.date+'Z'), "do LLL")}</div>
+                  <div>{format(new Date(activity.date+'Z'), "h:mm a")}</div>
                 </Card.Meta>
               </Card.Content>
             </Card>
@@ -70,8 +70,8 @@ const UserActivities = () => {
               <Card.Content  style={{backgroundColor:'aliceblue'}}>
                 <Card.Header textAlign="center">{activity.title}</Card.Header>
                 <Card.Meta textAlign="center">
-                  <div>{format(new Date(activity.date), "do LLL")}</div>
-                  <div>{format(new Date(activity.date), "h:mm a")}</div>
+                  <div>{format(new Date(activity.date+'Z'), "do LLL")}</div>
+                  <div>{format(new Date(activity.date+'Z'), "h:mm a")}</div>
                 </Card.Meta>
               </Card.Content>
             </Card>

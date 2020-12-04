@@ -80,7 +80,7 @@ const ActivityDashboard: React.FC = () => {
           <Header
             size="tiny"
             style={{ textAlign: "center" }}
-            content="Things to do"
+            content="Online Activities"
           />
           {loadingInitial && page === 0 ? (
             <Fragment>

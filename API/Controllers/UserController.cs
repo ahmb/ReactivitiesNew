@@ -28,5 +28,18 @@ namespace API.Controllers
         {
             return await Mediator.Send(new CurrentUser.Query());
         }
+
+
+        [HttpPost("interests/add")]
+        public async Task<ActionResult<User>> AddInterest(Register.Command command)
+        {
+            return await Mediator.Send(command);
+        }
+
+        [HttpPost("interests/remove")]
+        public async Task<ActionResult<User>> RemoveInterest(Register.Command command)
+        {
+            return await Mediator.Send(command);
+        }
     }
 }

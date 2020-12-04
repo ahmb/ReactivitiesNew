@@ -7,21 +7,21 @@ import { IUserFormValues } from "../../app/models/user";
 import { FORM_ERROR } from "final-form";
 import { combineValidators, isRequired } from "revalidate";
 import ErrorMessage from "../../app/common/form/ErrorMessage";
-import {history} from '../..'
+import { history } from "../..";
 
 const validate = combineValidators({
   email: isRequired("email"),
   password: isRequired("password"),
 });
 
-interface IProps {
-
-}
+interface IProps {}
 
 const LoginForm: React.FC<IProps> = () => {
   const rootStore = useContext(RootStoreContext);
-  const { login , isLoggedIn} = rootStore.userStore;
-  {isLoggedIn && history.push('/activities')};
+  const { login, isLoggedIn } = rootStore.userStore;
+  {
+    isLoggedIn && history.push("/activities");
+  }
   return (
     <FinalForm
       onSubmit={(values: IUserFormValues) =>
@@ -35,15 +35,19 @@ const LoginForm: React.FC<IProps> = () => {
         invalid,
         pristine,
         dirtySinceLastSubmit,
-        values
+        values,
       }) => (
         <Form onSubmit={handleSubmit}>
-          <Header
-            as="h2"
-            content="Login to WannaGo"
-            color="teal"
-            textAlign="center"
-          />
+          <span style={{ display: "flex" }}>
+            <span id="logo" style={{ textAlign: "right" }}>
+              Wanna
+            </span>
+            <span id="logo2" style={{ textAlign: "right" }}>
+              Go
+            </span>
+          </span>
+          <Header as="h2" content="Login" textAlign='center' />
+
           <Field name="email" component={TextInput} placeholder="Email" />
           <Field
             name="password"
@@ -54,16 +58,22 @@ const LoginForm: React.FC<IProps> = () => {
           {/* {submitError && !dirtySinceLastSubmit && (
             <ErrorMessage error={submitError} text='Invalid username or password.'/>
           )} */}
-           {submitError && <div className="error">{submitError.statusText}{console.log(submitError)}</div>}
+          {submitError && (
+            <div className="error">
+              {submitError.statusText}
+              {console.log(submitError)}
+            </div>
+          )}
           <Button
-            color='teal'
+            positive
+            circular
             loading={submitting}
             disabled={(invalid && !dirtySinceLastSubmit) || pristine}
             content="Login"
             fluid
           />
-          <pre>{JSON.stringify(values, null, 2)}</pre>
-
+          {/* uncomment to see
+          <pre>{JSON.stringify(values, null, 2)}</pre> */}
         </Form>
       )}
     />

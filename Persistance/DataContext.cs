@@ -35,6 +35,9 @@ namespace Persistance
         public DbSet<Thread> Threads { get; set; }
         public DbSet<ThreadParticipant> ThreadParticipants { get; set; }
 
+        public DbSet<Interest> Interests { get; set; }
+
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -116,7 +119,7 @@ namespace Persistance
                     .HasForeignKey(m => m.SenderId)
                     .OnDelete(DeleteBehavior.Restrict);
 
-                //define the second side of the on to many relationship between Message and AppUser 
+                //define the second side of the on to many relationshif between Message and AppUser 
                 b.HasOne(m => m.Reciever)
                     .WithMany(u => u.MessagesRecieved)
                     .HasForeignKey(m => m.RecieverId)

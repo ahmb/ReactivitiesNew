@@ -26,7 +26,7 @@ import {
   LogLevel,
 } from "@microsoft/signalr";
 
-const LIMIT = 10;
+const LIMIT = 2;
 
 export default class ActivityStore {
   rootStore: RootStore;

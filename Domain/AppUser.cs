@@ -29,6 +29,9 @@ namespace Domain
         public virtual ICollection<Msg> Messages { get; set; }
         public virtual ICollection<MsgReadState> MsgReadStates { get; set; }
 
+        public virtual ICollection<Interest> Interests { get; set; }
+        
+
 
 
 

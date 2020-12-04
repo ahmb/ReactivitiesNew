@@ -245,6 +245,14 @@ body ::-webkit-scrollbar-track {
 .ui.red.labels .label {
   background-color: #dc493a !important;
 }
+.ui.red.basic.label {
+  background-color: aliceblue!important;
+  color:red;
+}
+
+.item>.content{
+  background-color:none;
+}
 
 #categoryButton {
   width: 100%;
@@ -459,3 +467,10 @@ a.ui.card:hover {
 }
 
 /* End Messages Page */
+
+/* Register Modal  */
+.ui.modal>.content{
+  background-color: aliceblue;
+}
+
+/*  End Register Modal  */

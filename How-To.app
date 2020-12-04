@@ -43,6 +43,7 @@ dotnet ef migrations add InitialCreate -p Persistance/ -s API/
 
  dotnet ef migrations add 'xxx' -p Persistance/ -s API/
 
+dotnet ef migrations add 'Added interests' -p Persistance/ -s API/
 
 
  #check if db is there, and if it isn then create it
