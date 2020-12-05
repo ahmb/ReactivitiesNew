@@ -246,12 +246,12 @@ body ::-webkit-scrollbar-track {
   background-color: #dc493a !important;
 }
 .ui.red.basic.label {
-  background-color: aliceblue!important;
-  color:red;
+  background-color: aliceblue !important;
+  color: red;
 }
 
-.item>.content{
-  background-color:none;
+.item > .content {
+  background-color: none;
 }
 
 #categoryButton {
@@ -469,7 +469,7 @@ a.ui.card:hover {
 /* End Messages Page */
 
 /* Register Modal  */
-.ui.modal>.content{
+.ui.modal > .content {
   background-color: aliceblue;
 }
 

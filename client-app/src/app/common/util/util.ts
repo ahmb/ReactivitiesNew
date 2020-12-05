@@ -27,6 +27,11 @@ export const stringCapitalize = (s:string) => {
 
 
 export const setActivityProps = (activity: IActivity, user: IUser) => {
+  if(user === null){
+    activity.date = new Date(activity.date);
+    console.log('null user!');
+    return activity
+  }
   if(!user.username)
     throw new Error(`${user}`);
   activity.date = new Date(activity.date);

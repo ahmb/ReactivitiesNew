@@ -71,7 +71,7 @@ const RegisterForm = () => {
               <span id="logo">Wanna</span>
               <span id="logo2">Go</span>
             </span>
-            <Header as="h2" content="Registration" textAlign="center" />
+            <Header as="h2" content="Create an account" textAlign="center" />
             <Field
               name="username"
               component={TextInput}

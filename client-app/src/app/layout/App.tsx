@@ -45,9 +45,10 @@ const App: React.FC<RouteComponentProps> = ({ location }) => {
     <Container fluid>
       <ModalContainer />
       <ToastContainer position="bottom-right" />
-      <Route exact path="/" component={HomePage} />
+      {/* <Route exact path="/" component={HomePage} /> */}
+      {/* <Route exact path="/" component={ActivityDashboard} /> */}
       <Route
-        path={"/(.+)"}
+        path={"/(.*)"}
         render={() => (
           <Fragment>
             <div className='wrapper'>
@@ -56,7 +57,9 @@ const App: React.FC<RouteComponentProps> = ({ location }) => {
             {/* {isHomePage && <Mapi />} */}
             <Container style={{ marginTop: "7em" }}>
               <Switch>
-                <PrivateRoute
+                <Route  path="/" component={ActivityDashboard} />
+
+                <Route
                   exact
                   path="/activities"
                   component={ActivityDashboard}
@@ -79,6 +82,7 @@ const App: React.FC<RouteComponentProps> = ({ location }) => {
                   component={MessagesDashboard}
                 />
                 <PrivateRoute path="/home" component={Homepage} />
+
                 <Route component={NotFound} />
               </Switch>
             </Container>

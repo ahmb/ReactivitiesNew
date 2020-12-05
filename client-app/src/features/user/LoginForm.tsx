@@ -46,7 +46,7 @@ const LoginForm: React.FC<IProps> = () => {
               Go
             </span>
           </span>
-          <Header as="h2" content="Login" textAlign='center' />
+          <Header as="h2" content="Login with your account" textAlign='center' />
 
           <Field name="email" component={TextInput} placeholder="Email" />
           <Field
