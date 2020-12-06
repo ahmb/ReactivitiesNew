@@ -54,8 +54,8 @@ const RegisterForm = () => {
     <div className="registerForm">
       <FinalForm
         onSubmit={(values: any) => {
-          // register(values).catch((error) => ({ [FORM_ERROR]: error }));
           console.log(values);
+          register(values).catch((error) => ({ [FORM_ERROR]: error }));
         }}
         validate={validate}
         render={({
@@ -65,6 +65,7 @@ const RegisterForm = () => {
           invalid,
           pristine,
           dirtySinceLastSubmit,
+          initialValues
         }) => (
           <Form onSubmit={handleSubmit} error>
             <span style={{ display: "flex" }}>
@@ -97,7 +98,7 @@ const RegisterForm = () => {
               <br />
               {category.map((cat) => (
                 <Fragment>
-                  <Label image style={{ margin: 3 }}>
+                  <Label image style={{ margin: 3 }} basic circular size='medium'>
                     <img src={`/assets/categoryImages/${cat.key}.png`} />
                     <Field
                       name="interests"

@@ -10,13 +10,23 @@ import {
 import { observer } from "mobx-react-lite";
 import { NavLink, Link } from "react-router-dom";
 import { RootStoreContext } from "../../app/stores/rootStore";
+import LoginForm from "../user/LoginForm";
+import RegisterForm from "../user/RegisterForm";
 
 const NavBar: React.FC = () => {
   const rootStore = useContext(RootStoreContext);
   const { user, logout } = rootStore.userStore;
+  const { openModal } = rootStore.modalStore;
+
   // console.log(user);
   return (
-    <Menu secondary fixed="top" pointing size="tiny" style={{backgroundColor:'aliceBlue'}}>
+    <Menu
+      secondary
+      fixed="top"
+      pointing
+      size="tiny"
+      style={{ backgroundColor: "aliceBlue" }}
+    >
       <Container>
         <Menu.Item header as={NavLink} exact to="/">
           {/* <img src="/assets/logo.png" alt="logo" style={{ marginRight: 10 }} /> */}
@@ -34,10 +44,29 @@ const NavBar: React.FC = () => {
             circular
           />
         </Menu.Item> */}
-
-          <Menu.Item name="Home" as={NavLink} exact to="/home" />
+          {user && <Menu.Item name="Home" as={NavLink} exact to="/home" />}
           <Menu.Item name="Explore" as={NavLink} to="/activities" />
-          <Menu.Item name="Messages" as={NavLink} to="/messages" />
+          {!user && (
+            <Fragment>
+              <Button
+                onClick={() => openModal(<LoginForm />)}
+                size="tiny"
+                color='twitter'
+                circular
+                style={{margin:5}}
+                content='Login'
+              />
+              <Button
+                onClick={() => openModal(<RegisterForm />)}
+                size="tiny"
+                positive
+                circular
+                content='Register'
+                style={{margin:5}}
+              />
+            </Fragment>
+          )}
+          {user && <Menu.Item name="Messages" as={NavLink} to="/messages" />}
           {/* <Menu.Item>
             <Input
               icon="search"

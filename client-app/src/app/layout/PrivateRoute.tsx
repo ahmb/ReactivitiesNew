@@ -12,10 +12,12 @@ interface IProps extends RouteProps {
 const PrivateRoute: React.FC<IProps> = ({component: Component, ...rest}) => {
     const rootStore = useContext(RootStoreContext);
     const {isLoggedIn} = rootStore.userStore;
+    const {openModal} = rootStore.modalStore;
+
     return (
         <Route
             {...rest}
-            render={(props)=>isLoggedIn ? <Component { ...props}/> : <Redirect to={'/activities'}/>}
+            render={(props)=>isLoggedIn ? <Component { ...props}/> :   <Redirect to={'/signup'}/>}
         />
     )
 }

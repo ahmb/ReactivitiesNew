@@ -97,6 +97,8 @@ export default class ProfileStore {
     this.loadingProfile = true;
     try {
       const profile = await agent.Profiles.get(username);
+      console.log('LOADED PROFILE')
+      console.log(profile)
       runInAction(() => {
         this.profile = profile;
         this.loadingProfile = false;
@@ -171,6 +173,12 @@ export default class ProfileStore {
 
   @action updateProfile = async (profile: Partial<IProfile>) => {
     try {
+      console.log('profile');
+      console.log(profile);
+      // this.profile?.interests = profile.interests?.filter(x => typeof x === 'string')
+
+      // console.log(profile.interests?.filter(x => x.name !== undefined));
+      // profile.interests  = profile.interests?.filter(x => x.name !== undefined);
       await agent.Profiles.updateProfile(profile);
       runInAction(() => {
         if (
@@ -182,6 +190,7 @@ export default class ProfileStore {
       });
     } catch (error) {
       toast.error("Problem updating profile");
+      console.log(error);
     }
   };
 

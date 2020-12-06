@@ -37,18 +37,18 @@ namespace Application.Messages
             {
                 var threadss = _context.Threads
                     .Where(t => t.ThreadParticipants.Any(tp => tp.AppUser.UserName == _userAccessor.GetCurrentUsername()));
-                    // .IncludeFilter(t => t.Messages.Take(1) );
+                // .IncludeFilter(t => t.Messages.Take(1) );
 
 
                 // threadss.Load();
-                foreach (var thread in threadss)
-                {
-                    _context
-                    .Entry(thread)
-                    .Collection(t => t.Messages)
-                    .Query()
-                    .FirstOrDefault();
-                }
+                // foreach (var thread in threadss)
+                // {
+                //     _context
+                //     .Entry(thread)
+                //     .Collection(t => t.Messages)
+                //     .Query()
+                //     .FirstOrDefault();
+                // }
 
 
                 // var list = ctx.Orders.IncludeFilter(x => x.Items.Where(y => !y.IsSoftDeleted)

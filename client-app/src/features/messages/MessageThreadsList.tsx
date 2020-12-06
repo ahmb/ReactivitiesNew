@@ -3,7 +3,9 @@ import React, { Fragment, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button, Card, Header, Segment, Image } from "semantic-ui-react";
 import { RootStoreContext } from "../../app/stores/rootStore";
+import ActivityListItemPlaceholder from "../activities/dashboard/ActivityListItemPlaceholder";
 import UnreadActivityItemPlaceholder from "../activities/homepage/UnreadActivityItemPlaceholder";
+import MessageThreadsListPlaceholder from "./MessageThreadsListPlaceholder";
 
 const MessageThreadsList: React.FC = () => {
   const rootStore = useContext(RootStoreContext);
@@ -54,9 +56,9 @@ const MessageThreadsList: React.FC = () => {
 
       {loadingInitial && (
         <Fragment>
-          <UnreadActivityItemPlaceholder />
-          <UnreadActivityItemPlaceholder />
-          <UnreadActivityItemPlaceholder />
+          <MessageThreadsListPlaceholder />
+          <MessageThreadsListPlaceholder />
+          <MessageThreadsListPlaceholder />
         </Fragment>
       )}
 
@@ -108,7 +110,7 @@ const MessageThreadsList: React.FC = () => {
                         size="mini"
                         floated="right"
                         circular
-                        id='messageThreadsListDisplayPic'
+                        id="messageThreadsListDisplayPic"
                       />
                       <Card.Header key={p.appUserUserName}>
                         {p.displayName}

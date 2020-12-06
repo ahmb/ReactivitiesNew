@@ -7,6 +7,13 @@ export interface IProfile {
   followersCount: number;
   followingCount: number;
   photos: IPhoto[];
+  // interests: IInterest[] ;
+  interests: string[];
+}
+
+export interface IInterest {
+  id: string;
+  name: string;
 }
 
 export interface IPhoto {

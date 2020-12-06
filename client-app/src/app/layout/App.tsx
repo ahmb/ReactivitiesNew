@@ -8,6 +8,7 @@ import {
   withRouter,
   RouteComponentProps,
   Switch,
+  Redirect,
 } from "react-router-dom";
 import HomePage from "../../features/home/HomePage";
 import ActivityForm from "../../features/activities/form/ActivityForm";
@@ -51,45 +52,50 @@ const App: React.FC<RouteComponentProps> = ({ location }) => {
         path={"/(.*)"}
         render={() => (
           <Fragment>
-            <div className='wrapper'>
-            <NavBar />
+            <div className="wrapper">
+              <NavBar />
 
-            {/* {isHomePage && <Mapi />} */}
-            <Container style={{ marginTop: "7em" }}>
-              <Switch>
-                <Route  path="/" component={ActivityDashboard} />
+              {/* {isHomePage && <Mapi />} */}
+              <Container style={{ marginTop: "7em" }}>
+                <Switch>
+                  <Route
+                    exact
+                    path="/"
+                    render={() => <Redirect to={"/activities"} />}
+                  />
 
-                <Route
-                  exact
-                  path="/activities"
-                  component={ActivityDashboard}
-                />
-                <PrivateRoute
-                  path="/activities/:id"
-                  component={ActivityDetails}
-                />
-                <PrivateRoute
-                  key={location.key}
-                  path={["/createActivity", "/manage/:id"]}
-                  component={ActivityForm}
-                />
-                <PrivateRoute
-                  path="/profile/:username"
-                  component={ProfilePage}
-                />
-                <PrivateRoute
-                  path="/messages"
-                  component={MessagesDashboard}
-                />
-                <PrivateRoute path="/home" component={Homepage} />
+                  <Route
+                    exact
+                    path="/activities"
+                    component={ActivityDashboard}
+                  />
+                  <PrivateRoute
+                    path="/activities/:id"
+                    component={ActivityDetails}
+                  />
+                  <PrivateRoute
+                    key={location.key}
+                    path={["/createActivity", "/manage/:id"]}
+                    component={ActivityForm}
+                  />
+                  <PrivateRoute
+                    path="/profile/:username"
+                    component={ProfilePage}
+                  />
+                  <PrivateRoute
+                    path="/messages"
+                    component={MessagesDashboard}
+                  />
+                  <PrivateRoute path="/home" component={Homepage} />
+                  <Route path="/signup" component={NotFound} />
 
-                <Route component={NotFound} />
-              </Switch>
-            </Container>
-            <div className='push'></div>
+                  <Route component={NotFound} />
+                </Switch>
+              </Container>
+              <div className="push"></div>
             </div>
-            <div className='footer'>
-            <BottomNav/>
+            <div className="footer">
+              <BottomNav />
             </div>
           </Fragment>
         )}

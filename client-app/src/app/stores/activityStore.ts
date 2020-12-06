@@ -356,6 +356,8 @@ export default class ActivityStore {
       });
       console.log(error.response);
       toast.error("Problem Submitting data");
+      let errorDetails = JSON.stringify(error.data.errors).replace('"','').replace('{','').replace('}','').replace('[','').replace(']','');
+      toast.error(errorDetails);
     }
   };
 
@@ -377,6 +379,8 @@ export default class ActivityStore {
         console.log(error);
         toast.error("Problem Submitting data");
       });
+      let errorDetails = JSON.stringify(error.data.errors).replace('"','').replace('{','').replace('}','').replace('[','').replace(']','');
+      toast.error(errorDetails);
     }
   };
 
@@ -420,6 +424,8 @@ export default class ActivityStore {
         this.loading = false;
       });
       toast.error("Problem signing upto activity.");
+      let errorDetails = JSON.stringify(error.data.errors).replace('"','').replace('{','').replace('}','').replace('[','').replace(']','');
+      toast.error(errorDetails);
     }
   };
 

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -27,6 +28,12 @@ namespace Application.Profiles
             }
             Domain.AppUser currentUser = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUsername());
 
+            var userInterests = new List<string>();
+
+            foreach(var interest in user.Interests.ToList()){
+                userInterests.Add(interest.Name);
+            }
+
             Profile profile = new Profile
             {
                 DisplayName = user.DisplayName,
@@ -35,7 +42,9 @@ namespace Application.Profiles
                 Photos = user.Photos,
                 Bio = user.Bio,
                 FollowersCount = user.Followers.Count(),
-                FollowingCount = user.Followings.Count()
+                FollowingCount = user.Followings.Count(),
+                Interests = userInterests,
+                
             };
 
             if (currentUser.Followings.Any(x => x.TargetId == user.Id))

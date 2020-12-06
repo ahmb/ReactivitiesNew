@@ -409,8 +409,8 @@ input {
 button,
 html [type="button"] {
   border-radius: 100px;
-  background: #3f3d56;
-  color: white;
+  /* background: #3f3d56; */
+  color: black;
 }
 button.ui.icon.inverted.left.labeled.button {
   border-radius: 100px;
@@ -459,6 +459,10 @@ button.ui.icon.inverted.left.labeled.button {
   margin-left: 0;
 }
 
+.ui.placeholder, .ui.placeholder .image.header:after, .ui.placeholder .line, .ui.placeholder .line:after, .ui.placeholder>:before {
+  background-color: white;
+}
+
 .ui.cards a.card:hover,
 .ui.link.card:hover,
 .ui.link.cards .card:hover,
@@ -472,5 +476,9 @@ a.ui.card:hover {
 .ui.modal > .content {
   background-color: aliceblue;
 }
+.ui.tiny.scrolling.modal.transition.visible.active, .modalPopup {
+  border-radius: 30px !important;
+}
+
 
 /*  End Register Modal  */

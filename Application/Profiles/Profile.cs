@@ -21,6 +21,8 @@ namespace Application.Profiles
 
         public int FollowingCount { get; set; }
 
+        public ICollection<string> Interests  { get; set; }
+
         public ICollection<Photo> Photos { get; set; }
     }
 }

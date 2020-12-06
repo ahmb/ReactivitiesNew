@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading;
@@ -17,6 +18,7 @@ namespace Application.User
 {
     public class Register
     {
+
         public class Command : IRequest<User>
         {
             //insert properties
@@ -24,6 +26,9 @@ namespace Application.User
             public string Username { get; set; }
             public string Email { get; set; }
             public string Password { get; set; }
+
+            public List<string> Interests { get; set; }
+
         }
         public class CommandValidator : AbstractValidator<Command>
         {
@@ -33,6 +38,7 @@ namespace Application.User
                 RuleFor(x => x.Username).NotEmpty();
                 RuleFor(x => x.Email).NotEmpty().EmailAddress();
                 RuleFor(x => x.Password).Password();
+                RuleFor(x => x.Interests).NotEmpty();
             }
         }
 
@@ -57,11 +63,26 @@ namespace Application.User
                 if (await _context.Users.AnyAsync(x => x.UserName == request.Username))
                     throw new RestException(HttpStatusCode.BadRequest, new { Username = "Username already exists." });
 
+                var UserInterests = new List<Interest>();
+
+                if (request.Interests.Count > 0)
+                {
+                    foreach (var interest in request.Interests)
+                    {
+                        UserInterests.Add(new Interest { Id = new Guid(), Name = interest });
+                    }
+
+                }
+
                 var user = new AppUser
                 {
                     DisplayName = request.DisplayName,
                     Email = request.Email,
-                    UserName = request.Username
+                    UserName = request.Username,
+                    Interests = UserInterests,
+                    // Interests = foreach (var interest in request.Interests) {
+                    //     interest = 'lol';
+                    // },
                 };
                 //add command handler logic
 

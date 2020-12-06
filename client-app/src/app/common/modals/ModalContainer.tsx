@@ -7,8 +7,8 @@ const ModalContainer = () => {
     const rootStore = useContext(RootStoreContext);
     const {modal: { open, body}, closeModal} = rootStore.modalStore;
     return (
-        <Modal open={open} onClose={closeModal} size='tiny'>
-        <Modal.Content>{body}</Modal.Content>
+        <Modal open={open} onClose={closeModal} size='tiny' className='modalPopup'>
+        <Modal.Content  style={{borderRadius:'30px'}}>{body}</Modal.Content>
         </Modal>
     );
 };
