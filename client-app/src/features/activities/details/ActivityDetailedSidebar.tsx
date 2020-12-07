@@ -77,7 +77,7 @@ const ActivityDetailedSidebar: React.FC<IProps> = ({ activity }) => {
                         Following
                       </Item.Extra>
                     )}
-                    { activity.isHost && 
+                    { activity.isHost && !attendee.isHost &&
                       attendee.isApproved && (
                         <Item.Extra>
                           <Button

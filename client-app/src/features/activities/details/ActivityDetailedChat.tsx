@@ -119,7 +119,7 @@ const ActivityDetailedChat: React.FC<IProps> = ({ displayHeight }) => {
           >
             <Comment.Group>
               {activity && activity.comments.length == 0 && (
-                <Header disabled as="a4">
+                <Header disabled as="h4">
                   Start the conversation
                 </Header>
               )}

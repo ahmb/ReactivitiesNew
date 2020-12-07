@@ -21,6 +21,9 @@ namespace Application.Activities
             public string Category { get; set; }
 
             public DateTime Date { get; set; }
+            public DateTime EndDate { get; set; }
+
+            public bool Private { get; set; }
 
             public string City { get; set; }
             public string Venue { get; set; }
@@ -40,8 +43,11 @@ namespace Application.Activities
                 RuleFor(x => x.Description).NotEmpty();
                 RuleFor(x => x.Category).NotEmpty();
                 RuleFor(x => x.Date).NotEmpty();
+                RuleFor(x => x.EndDate).NotEmpty();
+                // RuleFor(x => x.Private).NotEmpty();
+
                 //TODO:Perform a check to see if categroy is one of the categories allowed
-                
+
                 // RuleFor(x => x.Venue).NotEmpty();
                 // RuleFor(x => x.City).NotEmpty();
                 // RuleFor(x => x.Longitude).NotEmpty();
@@ -69,11 +75,14 @@ namespace Application.Activities
                     Description = request.Description,
                     Category = request.Category,
                     Date = request.Date,
+                    EndDate = request.EndDate,
+                    Private = request.Private,
                     City = request.City,
                     Venue = request.Venue,
                     Longitude = request.Longitude,
                     Latitude = request.Latitude,
                     Tags = request.Tags,
+
 
                 };
                 _context.Activities.Add(activity);

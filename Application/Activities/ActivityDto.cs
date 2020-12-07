@@ -15,6 +15,11 @@ namespace Application.Activities
         public string Category { get; set; }
 
         public DateTime Date { get; set; }
+        public DateTime EndDate { get; set; }
+
+        public string ImageUrl { get; set; }
+
+        public bool Private { get; set; }
 
         public string City { get; set; }
         public string Venue { get; set; }
@@ -23,6 +28,9 @@ namespace Application.Activities
         public double Longitude { get; set; }
 
         public string Tags { get; set; }
+
+
+
 
 
         //list of AppUsers attending an activity i.e. Attendees

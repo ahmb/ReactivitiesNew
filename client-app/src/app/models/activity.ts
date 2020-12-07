@@ -11,6 +11,9 @@ export interface IActivity {
   description: string;
   category: string;
   date: Date;
+  endDate: Date;
+  private: boolean;
+  imageUrl: string;
   city: string;
   venue: string;
   latitude: number;
@@ -48,6 +51,8 @@ export interface IUserActivitiesUnreadDto
 
 export interface IActivityFormValues extends Partial<IActivity> {
   time?: Date;
+  endTime?: Date;
+
 }
 
 export class ActivityFormValues implements IActivityFormValues {
@@ -57,6 +62,10 @@ export class ActivityFormValues implements IActivityFormValues {
   description: string = "";
   date?: Date = undefined;
   time?: Date = undefined;
+  endDate?: Date = undefined;
+  endTime?: Date = undefined;
+  private: boolean = false;
+  imageUrl?: string = "";
   city: string = "";
   venue: string = "";
   latitude: number = 0;
@@ -65,9 +74,10 @@ export class ActivityFormValues implements IActivityFormValues {
 
 
   constructor(init?: IActivityFormValues) {
-    if (init && init.date) {
+    if (init && init.date && init.endDate) {
       // init.date = covertDateUTCtoLocal(init.date)
       init.time = init.date;
+      init.endTime = init.endDate;
       Object.assign(this, init);
     }
   }

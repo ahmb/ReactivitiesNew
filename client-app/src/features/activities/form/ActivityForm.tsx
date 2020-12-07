@@ -1,5 +1,13 @@
 import React, { useState, useContext, useEffect, Fragment } from "react";
-import { Form, Segment, Button, Grid, Header } from "semantic-ui-react";
+import {
+  Form,
+  Segment,
+  Button,
+  Grid,
+  Header,
+  Label,
+  Icon,
+} from "semantic-ui-react";
 import { ActivityFormValues } from "../../../app/models/activity";
 import { v4 as uuid } from "uuid";
 import { observer } from "mobx-react-lite";
@@ -16,6 +24,7 @@ import {
   isRequired,
   hasLengthGreaterThan,
   composeValidators,
+  isRequiredIf,
 } from "revalidate";
 import { RootStoreContext } from "../../../app/stores/rootStore";
 import LocationInput from "../../../app/common/form/LocationInput";
@@ -39,6 +48,8 @@ const validate = combineValidators({
   // venue: isRequired("Venue"),
   date: isRequired("Date"),
   time: isRequired("Time"),
+  endDate: isRequired("EndDate"),
+  endTime: isRequired("EndTime"),
 });
 
 interface DetailParams {
@@ -79,22 +90,29 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
     if (match.params.id) {
       setLoading(true);
       loadActivity(match.params.id)
-        .then((activity) => setActivity(new ActivityFormValues(activity)))
+        .then((activity) => {
+          console.log(activity);
+          console.log("activity:");
+          setActivity(new ActivityFormValues(activity));
+          console.log("activity form values:");
+        })
+        .then(() => console.log(activity))
         .finally(() => setLoading(false));
     }
+    console.log("this is the activity form object uponsubmit");
+    console.log(activity);
   }, [loadActivity, match.params.id]);
 
   const handleFinalFormSubmit = (values: any) => {
-    // console.log("these are the values being submitted:" );
-    // console.log(values);
+    console.log("these are the values being submitted:");
+    console.log(values);
     // console.log('the time being submitted:');
     // console.log(values.time);
     const dateAndTime = combineDateAndTime(values.date, values.time);
-    console.log(dateAndTime);
+    const endDateAndTime = combineDateAndTime(values.endDate, values.endTime);
     const { date, time, ...activity } = values;
-    console.log(latitude);
-    console.log(longitude);
     activity.date = dateAndTime;
+    activity.endDate = endDateAndTime;
     activity.longitude = longitude;
     activity.latitude = latitude;
     console.log(activity);
@@ -111,7 +129,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
   };
 
   return (
-    <div style={{height:'100vh'}}>
+    <div style={{ height: "100vh" }}>
       <Grid>
         <Grid.Column width="6">
           <Grid.Row
@@ -422,7 +440,10 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
             <Header size="large" id="funkyHeader" content="Edit an Activity" />
           )}
           <Segment.Group raised style={{ borderRadius: "30px" }}>
-            <Segment clearing style={{ borderRadius: "30px", backgroundColor: 'aliceblue' }}>
+            <Segment
+              clearing
+              style={{ borderRadius: "30px", backgroundColor: "aliceblue" }}
+            >
               <FinalForm
                 validate={validate}
                 initialValues={activity}
@@ -460,7 +481,7 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
                     <Field
                       name="date"
                       // type="datetime-local"
-                      placeholder="Date"
+                      placeholder="Start Date"
                       component={DateInput}
                       value={activity.date}
                       date={true}
@@ -468,13 +489,43 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
                     <Field
                       name="time"
                       // type="datetime-local"
-                      placeholder="Time"
+                      placeholder="Start Time"
                       component={DateInput}
                       value={activity.time}
                       time={true}
                     />
+                    <Field
+                      name="endDate"
+                      // type="datetime-local"
+                      placeholder="End Date"
+                      component={DateInput}
+                      value={activity.endDate}
+                      date={true}
+                    />
+                    <Field
+                      name="endTime"
+                      // type="datetime-local"
+                      placeholder="End Time"
+                      component={DateInput}
+                      value={activity.endTime}
+                      time={true}
+                    />
+                    {/* user secret */}
+                    <Label style={{ margin: 3 }} basic circular size="medium">
+                      {/* <img src={`/assets/categoryImages/videogames.png`} /> */}
+                      <Icon name="user secret" />
+                      <Field
+                        name="private"
+                        component="input"
+                        type="checkbox"
+                        // value={`${cat.value}`}
+                        // value={activity.private}
+                      />{" "}
+                      Private Listing
+                    </Label>{" "}
+                    This will not appear in the public list on the Explore page
+                    <br />
                     {/* </Form.Group> */}
-
                     {/* <Field
                       name="city"
                       placeholder="City"
@@ -503,7 +554,6 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
                       disabled={loading || pristine || invalid}
                       circular
                     />
-
                     {activity.id && (
                       <Button
                         loading={submitting}

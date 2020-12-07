@@ -18,6 +18,12 @@ namespace Application.Activities
             public string Description { get; set; }
             public string Category { get; set; }
             public DateTime? Date { get; set; }
+
+            public DateTime? EndDate { get; set; }
+
+            public string ImageUrl { get; set; }
+
+            public bool Private { get; set; }
             public string City { get; set; }
             public string Venue { get; set; }
             public string Tags { get; set; }
@@ -35,6 +41,8 @@ namespace Application.Activities
                 RuleFor(x => x.Description).NotEmpty();
                 RuleFor(x => x.Category).NotEmpty();
                 RuleFor(x => x.Date).NotEmpty();
+                RuleFor(x => x.EndDate).NotEmpty();
+
                 // RuleFor(x => x.Venue).NotEmpty();
                 // RuleFor(x => x.City).NotEmpty();
                 // RuleFor(x=>x.Longitude).NotEmpty();
@@ -63,6 +71,9 @@ namespace Application.Activities
                 activity.Category = request.Category ?? activity.Category;
                 activity.Description = request.Description ?? activity.Description;
                 activity.Date = request.Date ?? activity.Date;
+                activity.EndDate = request.EndDate ?? activity.EndDate;
+                activity.Private = request.Private;
+                activity.ImageUrl = request.ImageUrl ?? activity.ImageUrl;
                 activity.City = request.City ?? activity.City;
                 activity.Venue = request.Venue ?? activity.Venue;
                 activity.Longitude = request.Longitude;

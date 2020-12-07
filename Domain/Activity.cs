@@ -14,12 +14,19 @@ namespace Domain
 
         public DateTime Date { get; set; }
 
+        public DateTime EndDate { get; set; }
+
+        public bool Private { get; set; }
+
+
         public string City { get; set; }
         public string Venue { get; set; }
 
         public Double Longitude { get; set; }
         public Double Latitude { get; set; }
         public string Tags { get; set; }
+        public string ImageUrl { get; set; }
+
 
 
 

@@ -14,9 +14,10 @@ const validate = combineValidators({
 interface IProps {
   updateProfile: (profile: IProfile) => void;
   profile: IProfile;
+  setEditMode: any;
 }
 
-const ProfileEditForm: React.FC<IProps> = ({ updateProfile, profile }) => {
+const ProfileEditForm: React.FC<IProps> = ({ updateProfile, profile, setEditMode }) => {
   return (
     <FinalForm
       // onSubmit={updateProfile}
@@ -25,6 +26,7 @@ const ProfileEditForm: React.FC<IProps> = ({ updateProfile, profile }) => {
         console.log(profile.interests?.filter(x => typeof x === 'string'));
         profile.interests = profile.interests?.filter(x => typeof x === 'string');
         updateProfile(profile);
+        setEditMode(false);
       }}
       validate={validate}
       initialValues={profile!}

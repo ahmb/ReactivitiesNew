@@ -205,6 +205,7 @@ export default class ActivityStore {
         //"2020-11-28T23:58:16.984Z" <- ISO string example
         // const date = activity.date.toISOString().split("T")[0]; 
         const date = formatDate(activity.date);
+
         activities[date] = activities[date]
           ? [...activities[date], activity]
           : [activity];
@@ -242,6 +243,7 @@ export default class ActivityStore {
       runInAction("loading activities", () => {
         activities.forEach((activity) => {
           activity.date = covertDateUTCtoLocal(new Date(activity.date));
+          activity.endDate = covertDateUTCtoLocal(new Date(activity.endDate));
           setActivityProps(activity, this.rootStore.userStore.user!);
           this.activityRegistry.set(activity.id, activity);
         });
@@ -307,10 +309,12 @@ export default class ActivityStore {
     // } else {
     this.loadingInitial = true;
     try {
+      let activity: IActivity;
       activity = await agent.Activities.details(id);
       runInAction("getting activity", () => {
         setActivityProps(activity, this.rootStore.userStore.user!);
         activity.date = covertDateUTCtoLocal(activity.date);
+        activity.endDate = covertDateUTCtoLocal(activity.endDate);
         this.activity = activity;
         this.activityRegistry.set(activity.id, activity);
         this.loadingInitial = false;

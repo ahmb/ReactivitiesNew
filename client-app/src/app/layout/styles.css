@@ -8,6 +8,10 @@ body {
   width: 100%;
 }
 
+a.header.item{
+  padding-left: 0px!important;
+}
+
 .ui.inverted.button {
   box-shadow: 0 0 0 0 black inset !important;
 }
