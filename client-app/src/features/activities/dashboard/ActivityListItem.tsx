@@ -33,11 +33,11 @@ const ActivityListItem: React.FC<{ activity: IActivity }> = ({ activity }) => {
             <Item.Group>
               <Item>
                 <Item.Content>
-                  <Link to={`/profile/${host.username}`}>
+                  <Link to={`/profile/${host?.username || "USERNAMEEE"}`}>
                     <Item.Image
                       size="mini"
                       circular
-                      src={host.image || "/assets/user.png"}
+                      src={host?.image || "/assets/user.png"}
                       style={{ marginBottom: 3 }}
                       floated="left"
                     />{" "}

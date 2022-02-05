@@ -9,7 +9,6 @@ using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistance;
-using Z.EntityFramework.Plus;
 
 namespace Application.Messages
 {

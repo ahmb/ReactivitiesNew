@@ -25,6 +25,7 @@ import UnreadActivitiesList from "../../features/activities/homepage/UnreadActiv
 import MessagesDashboard from "../../features/messages/MessagesDashboard";
 import Homepage from "../../features/activities/homepage/Homepage";
 import BottomNav from "../../features/nav/BottomNav";
+import VideoChat from "../../features/videochat/VideoChat";
 
 const App: React.FC<RouteComponentProps> = ({ location }) => {
   const rootStore = useContext(RootStoreContext);
@@ -85,6 +86,10 @@ const App: React.FC<RouteComponentProps> = ({ location }) => {
                   <PrivateRoute
                     path="/messages"
                     component={MessagesDashboard}
+                  />
+                  <PrivateRoute
+                    path="/video"
+                    component={VideoChat}
                   />
                   <PrivateRoute path="/home" component={Homepage} />
                   <Route path="/signup" component={NotFound} />

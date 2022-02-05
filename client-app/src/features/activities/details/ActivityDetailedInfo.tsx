@@ -19,11 +19,15 @@ const ActivityDetailedInfo: React.FC<{ activity: IActivity }> = ({
             <Image
               avatar
               circular
-              src={`/assets/categoryImages/${activity.category.replace("&", "").replace(/\s/g, "").toLowerCase()}.png`}
+              src={`/assets/categoryImages/${activity.category
+                .replace("&", "")
+                .replace(/\s/g, "")
+                .toLowerCase()}.png`}
               // style={{ width: "1.5em", height: "1.5em" }}
             />
           )}
-          {category.filter((e) => e.value === activity.category).length === 0 && (
+          {category.filter((e) => e.value === activity.category).length ===
+            0 && (
             <Image
               avatar
               circular
@@ -33,7 +37,9 @@ const ActivityDetailedInfo: React.FC<{ activity: IActivity }> = ({
           )}
         </Grid.Column>
         <Grid.Column width={15}>
-          <p><b>{stringCapitalize(activity.category)}</b></p>
+          <p>
+            <b>{stringCapitalize(activity.category)}</b>
+          </p>
         </Grid.Column>
       </Grid>
       <Grid>
@@ -50,9 +56,18 @@ const ActivityDetailedInfo: React.FC<{ activity: IActivity }> = ({
           <Icon name="calendar alternate outline" size="large" color="red" />
         </Grid.Column>
         <Grid.Column width={15}>
+        <b>Start &nbsp; &nbsp; &nbsp;</b>
+
           <span>
             {format(activity.date, "eeee do MMM")} at{" "}
             {format(activity.date, "h:mm a")}{" "}
+          </span>
+          <br/>
+        <b>End &nbsp; &nbsp; &nbsp; &nbsp;</b>
+
+          <span>
+            {format(activity.endDate, "eeee do MMM")} at{" "}
+            {format(activity.endDate, "h:mm a")}{" "}
           </span>
         </Grid.Column>
       </Grid>

@@ -46,9 +46,11 @@ namespace API
             services.AddDbContext<DataContext>(opt =>
             {
                 //for lazy loading
-                opt.UseLazyLoadingProxies();
+                // opt.UseLazyLoadingProxies();
                 opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
             });
+            services.AddSwaggerGen();  
+
             ConfigureServices(services);
         }
 
@@ -58,8 +60,8 @@ namespace API
             services.AddDbContext<DataContext>(opt =>
             {
                 //for lazy loading
-                opt.UseLazyLoadingProxies();
-                opt.UseMySql(Configuration.GetConnectionString("DefaultConnection"));
+                // opt.UseLazyLoadingProxies();
+                // opt.UseMySql(Configuration.GetConnectionString("DefaultConnection"));
             });
             ConfigureServices(services);
         }
@@ -113,7 +115,7 @@ namespace API
             services.Configure<CloudinarySettings>(Configuration.GetSection("Cloudinary"));
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenKey"]));
 
-            Console.WriteLine("SETTINGS NAME!!!!!!");
+            Console.WriteLine("Cloudinary Config");
 
             Console.WriteLine(Configuration["Cloudinary:CloudName"]);
             Console.WriteLine(Configuration["ConnectionStrings:DefaultConnection"]);
@@ -168,7 +170,16 @@ namespace API
             if (env.IsDevelopment())
             {
                 //    app.UseDeveloperExceptionPage();
-
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
+            }
+            else
+            {
+                app.Use(async (context, next) => 
+                                {
+                                    context.Response.Headers.Add("Strict-Transport-Security", "max-age=31536000");
+                                    await next.Invoke();
+                                });
             }
             app.UseXContentTypeOptions();
             app.UseReferrerPolicy((opt) => opt.NoReferrer());
@@ -185,12 +196,13 @@ namespace API
                 .ScriptSources(s => s.Self())
             );
 
+            app.UseRouting();
+
             //app.UseHttpsRedirection();
             //looks in the wwwroot folder for index.html file
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
-            app.UseRouting();
             app.UseCors("CorsPolicy");
 
             app.UseAuthentication();

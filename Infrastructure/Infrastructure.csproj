@@ -4,10 +4,11 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.7.1"/>
-    <PackageReference Include="CloudinaryDotNet" Version="1.8.0"/>
+    <PackageReference Include="CloudinaryDotNet" Version="1.15.2"/>
+    <PackageReference Include="SendGrid" Version="9.22"/>
   </ItemGroup>
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
   </PropertyGroup>
 </Project>
