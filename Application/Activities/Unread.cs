@@ -33,7 +33,7 @@ namespace Application.Activities
             //handler that returns a list all the activities in the database context
             public async Task<List<UserActivitiesUnreadDto>> Handle(Query request, CancellationToken cancellationToken)
             {
-                AppUser currentUser = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUsername());
+                AppUser currentUser = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
 
                 if(currentUser == null) {
                     throw new RestException(HttpStatusCode.NotFound, new { User = "Error detecting logged in user. Please sign back in." });

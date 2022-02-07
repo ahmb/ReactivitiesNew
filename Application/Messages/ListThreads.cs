@@ -35,7 +35,7 @@ namespace Application.Messages
             public async Task<List<ThreadDto>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var threadss = _context.Threads
-                    .Where(t => t.ThreadParticipants.Any(tp => tp.AppUser.UserName == _userAccessor.GetCurrentUsername()));
+                    .Where(t => t.ThreadParticipants.Any(tp => tp.AppUser.UserName == _userAccessor.GetUsername()));
                 // .IncludeFilter(t => t.Messages.Take(1) );
 
 

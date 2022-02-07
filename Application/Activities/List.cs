@@ -65,22 +65,22 @@ namespace Application.Activities
                 if (request.IsGoing && !request.IsHost)
                 {
                     queryable = queryable
-                        .Where(x => x.UserActivities.Any(a => a.AppUser.UserName == _userAccessor.GetCurrentUsername()));
+                        .Where(x => x.UserActivities.Any(a => a.AppUser.UserName == _userAccessor.GetUsername()));
                 }
 
                 if (request.IsHost && !request.IsGoing)
                 {
                     queryable = queryable
-                        .Where(x => x.UserActivities.Any(a => a.AppUser.UserName == _userAccessor.GetCurrentUsername() && a.IsHost));
+                        .Where(x => x.UserActivities.Any(a => a.AppUser.UserName == _userAccessor.GetUsername() && a.IsHost));
                 }
 
                 if(request.Category != null &&  request.Category.Length > 0) {
                     queryable = queryable.Where(x => x.Category.ToLower() == request.Category.ToLower());
                 }
 
-                var activities = await queryable
+                List<Activity> activities = await queryable
                     .Skip(request.Offset ?? 0)
-                    .Take(request.Limit ?? 3).ToListAsync();
+                    .Take(request.Limit ?? 3).ToListAsync(cancellationToken: cancellationToken);
 
                 return new ActivitiesEnvelope
                 {

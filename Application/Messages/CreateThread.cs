@@ -57,7 +57,7 @@ namespace Application.Messages
 
             public async Task<ThreadDto> Handle(Command request, CancellationToken cancellationToken)
             {
-                AppUser user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUsername());
+                AppUser user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
 
                if(user == null){
                     throw new RestException(HttpStatusCode.NotFound, new { user = "Could not senders Id in the system" });

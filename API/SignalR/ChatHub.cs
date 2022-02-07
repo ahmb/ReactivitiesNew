@@ -66,21 +66,23 @@ namespace API.SignalR
         public async Task AddToGroup(string groupName)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
-            var username = GetUsername();
+            var username = GetUsername().ToString();
             if (ConnectedUser.Ids.ContainsKey(groupName))
             {
                 //check to see if the user already exists in the hashset of groupname:[users]
-                if (!ConnectedUser.Ids[groupName].Contains(GetUsername().ToString()))
+                if (!ConnectedUser.Ids[groupName].Contains(username))
                 {
-                    ConnectedUser.Ids[groupName].Add(GetUsername().ToString());
+                    ConnectedUser.Ids[groupName].Add(username);
 
                 }
                 // ConnectedUser.Ids[groupName].Add(GetUsername().ToString());  
             }
             else
             {
-                List<string> userArray = new List<string>();
-                userArray.Add(GetUsername().ToString());
+                var userArray = new List<string>
+                {
+                    GetUsername().ToString()
+                };
                 ConnectedUser.Ids.Add(groupName, new HashSet<string>(userArray));
             }
             // await Clients.Group(groupName).SendAsync("Send", $"{username} >> is online");

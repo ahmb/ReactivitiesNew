@@ -31,9 +31,9 @@ namespace API
                     var context = services.GetRequiredService<DataContext>();
                     var userManager = services.GetRequiredService<UserManager<AppUser>>();
                     //apply a EF migration to bring the database upto the current version
-                    context.Database.Migrate();
-                    
-                    Seed.SeedData(context, userManager).Wait();
+                    //also creates the database if it does not exist 
+                    await context.Database.MigrateAsync();
+                    await Seed.SeedData(context, userManager);
                 }
                 catch (Exception ex)
                 {

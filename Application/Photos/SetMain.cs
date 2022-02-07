@@ -27,7 +27,7 @@ namespace Application.Photos {
 
             public async Task<Unit> Handle (Command request, CancellationToken cancellationToken) {
                 //add command handler logic
-                var user = await _context.Users.SingleOrDefaultAsync(x=>x.UserName == _userAccessor.GetCurrentUsername());
+                var user = await _context.Users.SingleOrDefaultAsync(x=>x.UserName == _userAccessor.GetUsername());
 
                 var photo = user.Photos.FirstOrDefault(x=> x.Id == request.Id);
 

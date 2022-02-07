@@ -26,7 +26,7 @@ namespace Application.Profiles
             {
                 throw new RestException(HttpStatusCode.NotFound, new { User = "Not found" });
             }
-            Domain.AppUser currentUser = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUsername());
+            Domain.AppUser currentUser = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
 
             var userInterests = new List<string>();
 

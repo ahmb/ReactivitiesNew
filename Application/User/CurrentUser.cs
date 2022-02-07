@@ -31,7 +31,7 @@ namespace Application.User
             //handler that returns a list all the activities in the database context
             public async Task<User> Handle(Query request, CancellationToken cancellationToken)
             {
-                var user = await _userManager.FindByNameAsync(_userAccessor.GetCurrentUsername());
+                var user = await _userManager.FindByNameAsync(_userAccessor.GetUsername());
                 if(user == null)
                    throw new RestException(HttpStatusCode.Unauthorized, new { User = "Please log on." });
                 

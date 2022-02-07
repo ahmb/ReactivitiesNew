@@ -33,7 +33,7 @@ namespace Application.Followers
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
                 //add command handler logic
-                var observer = await _context.Users.SingleOrDefaultAsync(appUsr => appUsr.UserName == _userAccessor.GetCurrentUsername());
+                var observer = await _context.Users.SingleOrDefaultAsync(appUsr => appUsr.UserName == _userAccessor.GetUsername());
 
                 var target = await _context.Users.SingleOrDefaultAsync(appUsr => appUsr.UserName == request.Username);
 

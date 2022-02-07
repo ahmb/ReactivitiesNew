@@ -24,15 +24,15 @@ namespace Infrastructure.Photos
             Console.WriteLine(config.Value.CloudName);
             Console.WriteLine(_cloudinarySettings.CloudName);
 
-            Account acc = new Account(
+            var acc = new Account(
                 config.Value.CloudName,
                 config.Value.ApiKey,
-                config.Value.ApiSecret
-            );
+                config.Value.ApiSecret);
 
             _cloudinary = new Cloudinary(acc);
         }
 
+        [Obsolete("Using obsolete secureuri property")]
         public PhotoUploadResult AddPhoto(IFormFile file)
         {
             var uploadResult = new ImageUploadResult();

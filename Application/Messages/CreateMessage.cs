@@ -65,7 +65,7 @@ namespace Application.Messages
                     throw new RestException(HttpStatusCode.NotFound, new { thread = "Not found" });
                 }
 
-                AppUser user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUsername());
+                AppUser user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
 
                 var participant = await _context.ThreadParticipants.SingleOrDefaultAsync(tp => tp.TheadId == request.ThreadId && tp.AppUserId == user.Id);
 

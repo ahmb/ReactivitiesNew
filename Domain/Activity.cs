@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace Domain
 {
     public class Activity
     {
-        [MaxLength(255)]
         public Guid Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
@@ -26,9 +24,6 @@ namespace Domain
         public Double Latitude { get; set; }
         public string Tags { get; set; }
         public string ImageUrl { get; set; }
-
-
-
 
         //the virtual keyword is used here so it can be used with Proxies for lazy loading
         public virtual ICollection<UserActivity> UserActivities { get; set; }

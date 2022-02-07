@@ -27,17 +27,20 @@ using Persistance;
 using NWebsec.AspNetCore.Middleware;
 using System;
 using System.Configuration;
+using Microsoft.OpenApi.Models;
+using API.Extensions;
 
 namespace API
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IConfiguration _config;
+
+        public Startup(IConfiguration config)
         {
-            Configuration = configuration;
+            _config = config;
         }
 
-        public IConfiguration Configuration { get; }
 
 
         public void ConfigureDevelopmentServices(IServiceCollection services)
@@ -47,9 +50,13 @@ namespace API
             {
                 //for lazy loading
                 // opt.UseLazyLoadingProxies();
-                opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+                opt.UseSqlite(_config.GetConnectionString("DefaultConnection"));
             });
-            services.AddSwaggerGen();  
+
+            services.AddSwaggerGen(c => 
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo {Title = "API", Version = "v1"});
+            });  
 
             ConfigureServices(services);
         }
@@ -65,25 +72,10 @@ namespace API
             });
             ConfigureServices(services);
         }
+        
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddCors(opt =>
-            {
-                opt.AddPolicy("CorsPolicy", policy =>
-                {
-                    //the allow credentials is used for SignalR
-                    policy.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithExposedHeaders("WWW-Authenticate").WithOrigins("http://localhost:3000");
-                });
-            });
-
-            services.AddMediatR(typeof(List.Handler).Assembly);
-
-            services.AddAutoMapper(typeof(List.Handler));
-
-            services.AddSignalR();
-
             //registers all the validators from the assembly that contains the create class
             services.AddControllers(opt =>
             {
@@ -97,68 +89,7 @@ namespace API
             //             .AddNewtonsoftJson(options =>
             // options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
-            var builder = services.AddIdentityCore<AppUser>();
-            var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
-            identityBuilder.AddEntityFrameworkStores<DataContext>();
-            identityBuilder.AddSignInManager<SignInManager<AppUser>>();
-            services.AddAuthorization(opt =>
-            {
-                opt.AddPolicy("IsActivityHost", policy =>
-                {
-                    policy.Requirements.Add(new IsHostRequirement());
-                });
-            });
-            services.AddTransient<IAuthorizationHandler, IsHostRequirementHandler>();
-
- 
-            //pull out the user secrets and api key : saved via dotnet user-secrets set
-            services.Configure<CloudinarySettings>(Configuration.GetSection("Cloudinary"));
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenKey"]));
-
-            Console.WriteLine("Cloudinary Config");
-
-            Console.WriteLine(Configuration["Cloudinary:CloudName"]);
-            Console.WriteLine(Configuration["ConnectionStrings:DefaultConnection"]);
-            Console.WriteLine(Configuration["TokenKey"]);
-            Console.WriteLine(Configuration["Env:This"]);
-
-
-            services.AddScoped<IJwtGenerator, JwtGenerator>();
-            services.AddScoped<IUserAccessor, UserAccessor>();
-            services.AddScoped<IPhotoAccessor, PhotoAccessor>();
-            services.AddScoped<IProfileReader, ProfileReader>();
-
-
-
-
-
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
-            {
-                opt.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = key,
-                    ValidateAudience = false,
-                    ValidateIssuer = false,
-                    ValidateLifetime = true,
-                };
-                //hook into the on message recieved for the singalR event
-                opt.Events = new JwtBearerEvents
-                {
-                    OnMessageReceived = msgRecvContext =>
-                    {
-                        //will pull the token out of the request
-                        Microsoft.Extensions.Primitives.StringValues accessToken = msgRecvContext.Request.Query["access_token"];
-                        //get a reference to the path of the request thats coming in
-                        Microsoft.AspNetCore.Http.PathString path = msgRecvContext.HttpContext.Request.Path;
-                        if (!string.IsNullOrEmpty(accessToken) && (path.StartsWithSegments("/chat")))
-                        {
-                            msgRecvContext.Token = accessToken;
-                        }
-                        return Task.CompletedTask;
-                    }
-                };
-            });
+            services.AddApplicationServices(_config);
 
         }
 
@@ -176,10 +107,10 @@ namespace API
             else
             {
                 app.Use(async (context, next) => 
-                                {
-                                    context.Response.Headers.Add("Strict-Transport-Security", "max-age=31536000");
-                                    await next.Invoke();
-                                });
+                    {
+                        context.Response.Headers.Add("Strict-Transport-Security", "max-age=31536000");
+                        await next.Invoke();
+                    });
             }
             app.UseXContentTypeOptions();
             app.UseReferrerPolicy((opt) => opt.NoReferrer());
@@ -196,6 +127,7 @@ namespace API
                 .ScriptSources(s => s.Self())
             );
 
+            //enables routing to end points
             app.UseRouting();
 
             //app.UseHttpsRedirection();
@@ -203,7 +135,10 @@ namespace API
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
-            app.UseCors("CorsPolicy");
+            if(env.IsDevelopment()){
+                //in order to accept requests from the react app when its running via npm
+                app.UseCors("CorsPolicy");
+            }
 
             app.UseAuthentication();
             app.UseAuthorization();
