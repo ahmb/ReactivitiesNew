@@ -5,16 +5,27 @@ import axios from 'axios';
 import ActivityDashboard from '../../features/activities/dashboard/ActivityDashboard';
 import {Container} from 'semantic-ui-react';
 import {v4 as uuid} from 'uuid';
+import agent from '../api/agent';
+import LoadingComponent from './LoadingComponent';
 
 export default function App() {
   const [activities, setActivities] = useState<IActivity[]>([]);
   const [selectedActivity, setSelectedActivity] = useState<IActivity | undefined>(undefined);
   const [editMode, setEditMode] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    axios.get<IActivitiesEnvelope>('http://localhost:5000/api/activities').then(response => {
-      setActivities(response.data.activities)});
-   },[])
+    agent.Activities.list().then(response => {
+      let  activities: IActivity[] = [];
+      response.activities.forEach(activity => {
+        activity.date = activity.date.toString().split('T')[0];
+        activities.push(activity);
+      });
+      setActivities(activities);
+      setLoading(false);
+    })
+  },[])
 
    function handleSelectedActivity(id: string){
      setSelectedActivity(activities.find(x=>x.id===id));
@@ -34,19 +45,37 @@ export default function App() {
    }
 
    function handleCreateOrEditActivity(activity:IActivity){
-     //remove the activity we are updting and insert a new activity for the updated activity
-     //using an array literal to create the new array , by filtering the old and appencding new element
-      activity.id ? setActivities([...activities.filter(x => x.id !== activity.id), activity]) : 
-                   setActivities([...activities, {...activity, id: uuid()}]);
+     setSubmitting(true);
+     if(activity.id){
+       agent.Activities.update(activity).then(()=>{
+          setActivities([...activities.filter(x => x.id !== activity.id), activity]);
+          setSelectedActivity(activity)
+          setEditMode(false);
+          setSubmitting(false);
+       })
+     } else {
+       activity.id = uuid();
+       agent.Activities.create(activity).then(()=> {
+         setActivities([...activities,activity]);
+         setSelectedActivity(activity)
+         setEditMode(false);
+         setSubmitting(false);
+       })
+     }
 
-      setEditMode(false);
-      setSelectedActivity(activity);
    }
 
+   
    function handleDeleteActivity(id: string){
-      setActivities([...activities.filter(x => x.id !== id)]);
+      setSubmitting(true);
+      agent.Activities.delete(id).then(()=>{
+        setActivities([...activities.filter(x => x.id !== id)]);
+        setSubmitting(false);
+        if(selectedActivity && id == selectedActivity.id) handleCancelActivity();
+      })
   }
 
+  if(loading) return <LoadingComponent content='Loading app'/>
 
   return (
       <Fragment>
@@ -62,6 +91,7 @@ export default function App() {
             closeForm={handleFormClose}
             createOrEdit={handleCreateOrEditActivity}
             deleteActivity={handleDeleteActivity}
+            submitting={submitting}
           />
         </Container>
       </Fragment>

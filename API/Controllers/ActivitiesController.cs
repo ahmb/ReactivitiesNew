@@ -32,13 +32,17 @@ namespace API.Controllers
         }
 
         [HttpPost]
+        //TODO: Remove allow anonymous
+        [AllowAnonymous]
         public async Task<IActionResult> CreateActivity(Activity activity)
         {
             return Ok(await Mediator.Send(new Create.Command{Activity = activity}));
         }
 
         [HttpPut("{id}")]
-        [Authorize(Policy = "IsActivityHost")]
+        // [Authorize(Policy = "IsActivityHost")]
+        //TODO: Remove allow anonymous
+        [AllowAnonymous]
         public async Task<IActionResult> Edit(Guid id, Activity activity)
         {
             activity.Id = id;
@@ -46,7 +50,9 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Policy = "IsActivityHost")]
+        // [Authorize(Policy = "IsActivityHost")]
+        //TODO: Remove allow anonymous
+        [AllowAnonymous]
         public async Task<IActionResult> Delete(Guid id)
         {
             return Ok(await Mediator.Send(new Delete.Command { Id = id }));
