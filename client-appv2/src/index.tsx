@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import 'semantic-ui-css/semantic.min.css'
-import './index.css';
-import App from './App';
+import 'semantic-ui-css/semantic.min.css'; 
+//TODO:^^ this file was updated in the node modules folder to remove to semi colons
+import './app/layout/styles.css';
+import App from './app/layout/App';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
