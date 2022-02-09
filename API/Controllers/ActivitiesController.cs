@@ -20,7 +20,7 @@ namespace API.Controllers
             int? limit, int? offset, bool isGoing, bool isHost, string category, DateTime? startDate
             )
         {
-            return await Mediator.Send(new List.Query(limit, 
+            return await Mediator.Send(new List.Query(limit,
                 offset, isGoing, isHost, startDate, category));
         }
 
@@ -36,7 +36,7 @@ namespace API.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> CreateActivity(Activity activity)
         {
-            return Ok(await Mediator.Send(new Create.Command{Activity = activity}));
+            return Ok(await Mediator.Send(new Create.Command { Activity = activity }));
         }
 
         [HttpPut("{id}")]

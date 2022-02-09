@@ -53,10 +53,10 @@ namespace API
                 opt.UseSqlite(_config.GetConnectionString("DefaultConnection"));
             });
 
-            services.AddSwaggerGen(c => 
+            services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo {Title = "API", Version = "v1"});
-            });  
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
+            });
 
             ConfigureServices(services);
         }
@@ -72,7 +72,7 @@ namespace API
             });
             ConfigureServices(services);
         }
-        
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -106,7 +106,7 @@ namespace API
             }
             else
             {
-                app.Use(async (context, next) => 
+                app.Use(async (context, next) =>
                     {
                         context.Response.Headers.Add("Strict-Transport-Security", "max-age=31536000");
                         await next.Invoke();
@@ -135,7 +135,8 @@ namespace API
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
-            if(env.IsDevelopment()){
+            if (env.IsDevelopment())
+            {
                 //in order to accept requests from the react app when its running via npm
                 app.UseCors("CorsPolicy");
             }
