@@ -11,8 +11,8 @@ export interface IActivity {
   description: string;
   category: string;
   //  #TODO: remove string type
-  date: string | Date;
-  endDate: string | Date;
+  date: string;
+  endDate: string;
   private: boolean;
   imageUrl: string;
   city: string;
@@ -22,9 +22,11 @@ export interface IActivity {
   isGoing: boolean;
   isHost: boolean;
   isApproved: boolean;
-  //  #TODO: remove string type
-  attendees: IAttendee[] | string;
-  comments: IComment[] | string;
+  // //  #TODO: remove string type
+  // attendees: IAttendee[] | string;
+  // comments: IComment[] | string;
+  attendees: string;
+  comments: string;
   tags: string;
 }
 
@@ -38,52 +40,47 @@ export interface IComment {
   image: string;
 }
 
-export interface IUserActivitiesUnreadDto 
-{
+export interface IUserActivitiesUnreadDto {
   requestorName: string;
   requestorUserName: string;
   requestDateTime: Date;
   activityId: string;
   activityName: string;
   activityDateTime: Date;
-  requestorImage:string
+  requestorImage: string;
 }
-
-
 
 export interface IActivityFormValues extends Partial<IActivity> {
   time?: Date;
   endTime?: Date;
-
 }
 
-export class ActivityFormValues implements IActivityFormValues {
-  id?: string | undefined;
-  title: string = "";
-  category: string = "";
-  description: string = "";
-  date?: Date = undefined;
-  time?: Date = undefined;
-  endDate?: Date = undefined;
-  endTime?: Date = undefined;
-  private: boolean = false;
-  imageUrl?: string = "";
-  city: string = "";
-  venue: string = "";
-  latitude: number = 0;
-  longitude: number = 0;
-  tags: string = "";
+// export class ActivityFormValues implements IActivityFormValues {
+//   id?: string | undefined;
+//   title: string = "";
+//   category: string = "";
+//   description: string = "";
+//   date?: Date = undefined;
+//   time?: Date = undefined;
+//   endDate?: Date = undefined;
+//   endTime?: Date = undefined;
+//   private: boolean = false;
+//   imageUrl?: string = "";
+//   city: string = "";
+//   venue: string = "";
+//   latitude: number = 0;
+//   longitude: number = 0;
+//   tags: string = "";
 
-
-  // constructor(init?: IActivityFormValues) {
-  //   if (init && init.date && init.endDate) {
-  //     // init.date = covertDateUTCtoLocal(init.date)
-  //     init.time = init.date;
-  //     init.endTime = init.endDate;
-  //     Object.assign(this, init);
-  //   }
-  // }
-}
+//   // constructor(init?: IActivityFormValues) {
+//   //   if (init && init.date && init.endDate) {
+//   //     // init.date = covertDateUTCtoLocal(init.date)
+//   //     init.time = init.date;
+//   //     init.endTime = init.endDate;
+//   //     Object.assign(this, init);
+//   //   }
+//   // }
+// }
 
 export interface IAttendee {
   username: string;
