@@ -1,11 +1,10 @@
 import React, { Fragment } from "react";
-import { Segment, Item, Header } from "semantic-ui-react";
+import { Header } from "semantic-ui-react";
 import { useStore } from "../../../app/Stores/store";
 import { observer } from "mobx-react-lite";
-import { Link } from "react-router-dom";
 import ActivityListItem from "./ActivityListItem";
 
-function ActivityList() {
+export default observer(function ActivityList() {
   const { activityStore } = useStore();
   const { groupedActivities } = activityStore;
 
@@ -16,7 +15,6 @@ function ActivityList() {
           <Header sub color='teal'>
             {group}
           </Header>
-
           {activities.map((activity) => (
             <ActivityListItem key={activity.id} activity={activity} />
           ))}
@@ -24,6 +22,4 @@ function ActivityList() {
       ))}
     </>
   );
-}
-
-export default observer(ActivityList);
+});
