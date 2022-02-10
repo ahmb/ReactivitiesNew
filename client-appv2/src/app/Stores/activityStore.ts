@@ -26,6 +26,18 @@ export default class ActivityStore {
     );
   }
 
+  get groupedActivities() {
+    return Object.entries(
+      this.activitiesByDate.reduce((activities, activity) => {
+        const date = activity.date;
+        activities[date] = activities[date]
+          ? [...activities[date], activity]
+          : [activity];
+        return activities;
+      }, {} as { [key: string]: IActivity[] })
+    );
+  }
+
   setLoadingInitial = (state: boolean) => {
     this.loadingInitial = state;
   };
@@ -75,7 +87,7 @@ export default class ActivityStore {
   };
 
   private setActivity = (activity: IActivity) => {
-    activity.date = activity.date.toString().split("T")[0];
+    activity.date = activity.date.split("T")[0];
     this.activityRegistry.set(activity.id, activity);
   };
 
