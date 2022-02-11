@@ -2,8 +2,10 @@ using System;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Application.Core;
 using Application.Errors;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace API.Middleware
@@ -12,14 +14,15 @@ namespace API.Middleware
     {
         private readonly RequestDelegate _next;
         private readonly ILogger<ErrorHandlingMiddleware> _logger;
+        private readonly IHostEnvironment _env;
 
-        public ErrorHandlingMiddleware(RequestDelegate next, ILogger<ErrorHandlingMiddleware> logger)
+        public ErrorHandlingMiddleware(RequestDelegate next, ILogger<ErrorHandlingMiddleware> logger,
+            IHostEnvironment env)
         {
+            _env = env;
             _next = next;
             _logger = logger;
         }
-
-
 
         public async Task Invoke(HttpContext context)
         {
@@ -34,31 +37,37 @@ namespace API.Middleware
             }
         }
 
-        private async Task HandleExceptionAsync(HttpContext context, Exception ex, ILogger<ErrorHandlingMiddleware> logger)
+        private async Task HandleExceptionAsync(HttpContext context,
+         Exception ex, ILogger<ErrorHandlingMiddleware> logger)
         {
-            object errors = null;
+            // object errors = null;
+            context.Response.ContentType = "application/json";
 
             switch (ex)
             {
+                //TODO: remove this legacy implementation
                 case RestException restEx:
-                    logger.LogError(ex, "REST ERROR");
-                    errors = restEx.Errors;
+                    logger.LogError(restEx, "REST ERROR");
+                    // errors = restEx.Errors;
                     context.Response.StatusCode = (int)restEx.Code;
                     break;
                 case Exception e:
-                    logger.LogError(ex, "SERVER ERROR");
-                    errors = string.IsNullOrWhiteSpace(e.Message) ? "Error" : e.Message;
+                    logger.LogError(e, e.Message);
+                    // errors = string.IsNullOrWhiteSpace(e.Message) ? "Error" : e.Message;
                     context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                     break;
             }
 
-            context.Response.ContentType = "application/json";
-            if (errors != null)
-            {
-                var result = JsonSerializer.Serialize(new {errors});
+            var response = _env.IsDevelopment()
+            ? new AppException(context.Response.StatusCode, ex.Message, ex.StackTrace?.ToString())
+            : new AppException(context.Response.StatusCode, ex.Message, "Server Error");
 
-                await context.Response.WriteAsync(result);
-            }
+            var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+
+            var json = JsonSerializer.Serialize(response, options);
+
+            await context.Response.WriteAsync(json);
+
         }
     }
 }

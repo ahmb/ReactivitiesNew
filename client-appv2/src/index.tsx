@@ -3,17 +3,21 @@ import ReactDOM from "react-dom";
 import "semantic-ui-css/semantic.min.css";
 import "react-calendar/dist/Calendar.css";
 //TODO:^^ this file was updated in the node modules folder to remove to semi colons
+import "react-toastify/dist/ReactToastify.min.css";
 import "./app/layout/styles.css";
 import App from "./app/layout/App";
 import reportWebVitals from "./reportWebVitals";
-import { store, StoreContext } from "./app/Stores/store";
-import { BrowserRouter } from "react-router-dom";
+import { store, StoreContext } from "./app/stores/store";
+import { createBrowserHistory } from "history";
+import { Router } from "react-router-dom";
+
+export const history = createBrowserHistory();
 
 ReactDOM.render(
   <StoreContext.Provider value={store}>
-    <BrowserRouter>
+    <Router history={history}>
       <App />
-    </BrowserRouter>
+    </Router>
   </StoreContext.Provider>,
   document.getElementById("root")
 );

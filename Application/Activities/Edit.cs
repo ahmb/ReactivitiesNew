@@ -8,33 +8,25 @@ using Persistance;
 using System.Net;
 using Domain;
 using AutoMapper;
+using Application.Core;
 
 namespace Application.Activities
 {
     public class Edit
     {
-        public class Command : IRequest
+        public class Command : IRequest<Result<Unit>>
         {
             public Activity Activity { get; set; }
         }
-        // public class CommandValidator : AbstractValidator<Command>
-        // {
-        //     public CommandValidator()
-        //     {
-        //         RuleFor(x => x.Title).NotEmpty();
-        //         RuleFor(x => x.Description).NotEmpty();
-        //         RuleFor(x => x.Category).NotEmpty();
-        //         RuleFor(x => x.Date).NotEmpty();
-        //         RuleFor(x => x.EndDate).NotEmpty();
 
-        //         // RuleFor(x => x.Venue).NotEmpty();
-        //         // RuleFor(x => x.City).NotEmpty();
-        //         // RuleFor(x=>x.Longitude).NotEmpty();
-        //         // RuleFor(x=>x.Latitude).NotEmpty();
-        //     }
-        // }
-
-        public class Handler : IRequestHandler<Command>
+        public class CommandValidator : AbstractValidator<Command>
+        {
+            public CommandValidator()
+            {
+                RuleFor(x => x.Activity).SetValidator(new ActivityValidator());
+            }
+        }
+        public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private readonly DataContext _context;
             private readonly IMapper _mapper;
@@ -45,25 +37,25 @@ namespace Application.Activities
                 _mapper = mapper;
             }
 
-            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
                 //add command handler logic
                 var activity = await _context.Activities
                     .FindAsync(
-                        new object[] { request.Activity.Id }, 
+                        new object[] { request.Activity.Id },
                         cancellationToken: cancellationToken
                         );
 
                 if (activity == null)
-                    throw new RestException(HttpStatusCode.NotFound, new { activity = "Not found" });
+                    return null;
 
                 _mapper.Map(request.Activity, activity);
 
                 var success = await _context.SaveChangesAsync(cancellationToken) > 0;
 
-                if (success) return Unit.Value;
+                if (!success) return Result<Unit>.Failure("An error occured while trying to save the edited activity.");
 
-                throw new Exception("Problem saving changes.");
+                return Result<Unit>.Success(Unit.Value);
 
             }
         }

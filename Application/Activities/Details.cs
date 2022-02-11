@@ -2,6 +2,7 @@ using System;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Core;
 using Application.Errors;
 using AutoMapper;
 using Domain;
@@ -13,12 +14,12 @@ namespace Application.Activities
 {
     public class Details
     {
-        public class Query : IRequest<ActivityDto>
+        public class Query : IRequest<Result<ActivityDto>>
         {
             public Guid Id { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query, ActivityDto>
+        public class Handler : IRequestHandler<Query, Result<ActivityDto>>
         {
             private readonly DataContext _context;
             private readonly IMapper _mapper;
@@ -29,21 +30,21 @@ namespace Application.Activities
                 _context = context;
             }
 
-            public async Task<ActivityDto> Handle(Query request,
+            public async Task<Result<ActivityDto>> Handle(Query request,
             CancellationToken cancellationToken)
             {
                 Activity activity = await _context
                     .Activities
                     .FindAsync(new object[] { request.Id }, cancellationToken: cancellationToken);
 
-                if (activity == null)
-                {
-                    throw new RestException(HttpStatusCode.NotFound, new { activity = "Not found" });
-                }
+                // if (activity == null)
+                // {
+                //     throw new RestException(HttpStatusCode.NotFound, new { activity = "Not found" });
+                // }
 
                 ActivityDto activityToReturn = _mapper.Map<Activity, ActivityDto>(activity);
 
-                return activityToReturn;
+                return Result<ActivityDto>.Success(activityToReturn);
             }
         }
 

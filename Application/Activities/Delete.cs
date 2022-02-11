@@ -6,19 +6,20 @@ using Application.Errors;
 using MediatR;
 using Persistance;
 using Domain;
+using Application.Core;
 
 namespace Application.Activities
 {
     public class Delete
     {
-        public class Command : IRequest
+        public class Command : IRequest<Result<Unit>>
         {
             //insert properties
             public Guid Id { get; set; }
 
         }
 
-        public class Handler : IRequestHandler<Command>
+        public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private readonly DataContext _context;
 
@@ -27,22 +28,21 @@ namespace Application.Activities
                 _context = context;
             }
 
-            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
                 //add command handler logic
 
                 Activity activity = await _context.Activities.FindAsync(new object[] { request.Id }, cancellationToken: cancellationToken);
 
-                if (activity == null)
-                    throw new RestException(HttpStatusCode.NotFound, new { activity = "Not found" });
+                if (activity == null) return null;
 
                 _context.Remove(activity);
 
                 bool success = await _context.SaveChangesAsync(cancellationToken) > 0;
 
-                if (success) return Unit.Value;
+                if (!success) return Result<Unit>.Failure("An error occured while deleting this activity.");
 
-                throw new Exception("Problem saving changes.");
+                return Result<Unit>.Success(Unit.Value);
 
             }
         }

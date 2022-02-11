@@ -20,15 +20,15 @@ namespace API.Controllers
             int? limit, int? offset, bool isGoing, bool isHost, string category, DateTime? startDate
             )
         {
-            return await Mediator.Send(new List.Query(limit,
-                offset, isGoing, isHost, startDate, category));
+            return HandleResult(await Mediator.Send(new List.Query(limit,
+                offset, isGoing, isHost, startDate, category)));
         }
 
         [HttpGet("{id}")]
         [AllowAnonymous]
-        public async Task<ActionResult<ActivityDto>> GetActivity(Guid id)
+        public async Task<IActionResult> GetActivity(Guid id)
         {
-            return await Mediator.Send(new Details.Query { Id = id });
+            return HandleResult(await Mediator.Send(new Details.Query { Id = id }));
         }
 
         [HttpPost]
@@ -36,7 +36,7 @@ namespace API.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> CreateActivity(Activity activity)
         {
-            return Ok(await Mediator.Send(new Create.Command { Activity = activity }));
+            return HandleResult(await Mediator.Send(new Create.Command { Activity = activity }));
         }
 
         [HttpPut("{id}")]
@@ -46,7 +46,7 @@ namespace API.Controllers
         public async Task<IActionResult> Edit(Guid id, Activity activity)
         {
             activity.Id = id;
-            return Ok(await Mediator.Send(new Edit.Command { Activity = activity }));
+            return HandleResult(await Mediator.Send(new Edit.Command { Activity = activity }));
         }
 
         [HttpDelete("{id}")]
@@ -55,7 +55,7 @@ namespace API.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Delete(Guid id)
         {
-            return Ok(await Mediator.Send(new Delete.Command { Id = id }));
+            return HandleResult(await Mediator.Send(new Delete.Command { Id = id }));
         }
 
         [HttpPost("{id}/attend")]

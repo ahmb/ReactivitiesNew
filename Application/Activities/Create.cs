@@ -2,9 +2,10 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Core;
 using Application.Interfaces;
 using Domain;
-
+using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistance;
@@ -13,33 +14,21 @@ namespace Application.Activities
 {
     public class Create
     {
-        public class Command : IRequest
+        public class Command : IRequest<Result<Unit>>
         {
             public Activity Activity { get; set; }
 
         }
 
-        // public class CommandValidator : AbstractValidator<Command>
-        // {
-        //     public CommandValidator()
-        //     {
-        //         // RuleFor(x => x.Title).NotEmpty();
-        //         // RuleFor(x => x.Description).NotEmpty();
-        //         // RuleFor(x => x.Category).NotEmpty();
-        //         // RuleFor(x => x.Date).NotEmpty();
-        //         // RuleFor(x => x.EndDate).NotEmpty();
-        //         // // RuleFor(x => x.Private).NotEmpty();
+        public class CommandValidator : AbstractValidator<Command>
+        {
+            public CommandValidator()
+            {
+                RuleFor(x => x.Activity).SetValidator(new ActivityValidator());
+            }
+        }
 
-        //         //TODO:Perform a check to see if categroy is one of the categories allowed
-
-        //         // RuleFor(x => x.Venue).NotEmpty();
-        //         // RuleFor(x => x.City).NotEmpty();
-        //         // RuleFor(x => x.Longitude).NotEmpty();
-        //         // RuleFor(x => x.Latitude).NotEmpty();
-        //     }
-        // }
-
-        public class Handler : IRequestHandler<Command>
+        public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private readonly DataContext _context;
             private readonly IUserAccessor _userAccessor;
@@ -50,7 +39,7 @@ namespace Application.Activities
                 _context = context;
             }
 
-            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
 
                 _context.Activities.Add(request.Activity);
@@ -72,11 +61,13 @@ namespace Application.Activities
 
                 // _context.UserActivities.Add(attendee);
 
-                bool success = await _context.SaveChangesAsync(cancellationToken) > 0;
+                bool result = await _context.SaveChangesAsync(cancellationToken) > 0;
 
-                if (success) return Unit.Value;
+                var res = new Result<Unit>();
 
-                throw new Exception("Problem saving changes.");
+                if (result) return Result<Unit>.Failure("An error occured while creating the Activity.");
+
+                return Result<Unit>.Success(Unit.Value);
 
             }
         }
