@@ -53,6 +53,9 @@ export default observer(function ActivityForm() {
     category: Yup.string().required(),
     date: Yup.string().required("The date is required").nullable(),
     endDate: Yup.string().required("The end date is required").nullable(),
+    // TODO: this breaks the form and caused it to render as dirty upon initial
+    // render of nullable valeus?
+    //.min(Yup.ref("date"), "The end date cant be before start"),
     venue: Yup.string().required(),
     city: Yup.string().required(),
   });
@@ -108,7 +111,7 @@ export default observer(function ActivityForm() {
               dateFormat='MMMM d, yyyy h:mm aa'
             />
             <MyDateInput
-              placeholderText='End Date'
+              placeholderText='EndDate'
               name='endDate'
               showTimeSelect
               timeCaption='time'

@@ -89,6 +89,7 @@ export default class ActivityStore {
 
   private setActivity = (activity: IActivity) => {
     activity.date = new Date(activity.date!);
+    activity.endDate = new Date(activity.endDate!);
     this.activityRegistry.set(activity.id, activity);
   };
 
