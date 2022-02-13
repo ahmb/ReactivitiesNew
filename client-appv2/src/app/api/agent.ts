@@ -25,7 +25,7 @@ axios.interceptors.response.use(
           toast.error(data);
         }
         // BAD GUID case
-        if (config.method == "get" && data.errors.hasOwnProperty("id")) {
+        if (config.method === "get" && data.errors.hasOwnProperty("id")) {
           history.push("/not-found");
         }
         // VALIDATION ERROR CASE

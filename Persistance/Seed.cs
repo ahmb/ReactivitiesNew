@@ -54,6 +54,7 @@ namespace Persistance
                     {
                         Title = "Past Activity 1",
                         Date = DateTime.Now.AddMonths(-2),
+                        EndDate = DateTime.Now.AddMonths(-1),
                         Description = "Activity 2 months ago",
                         Category = "Drinks",
                         City = "London",
@@ -74,6 +75,7 @@ namespace Persistance
                     {
                         Title = "Past Activity 2",
                         Date = DateTime.Now.AddMonths(-1),
+                        EndDate = DateTime.Now.AddDays(-15),
                         Description = "Activity 1 month ago",
                         Category = "Culture",
                         City = "Paris",
@@ -100,6 +102,7 @@ namespace Persistance
                     {
                         Title = "Future Activity 1",
                         Date = DateTime.Now.AddMonths(1),
+                        EndDate = DateTime.Now.AddMonths(1).AddDays(2),
                         Description = "Activity 1 month in future",
                         Category = "Music",
                         City = "London",
@@ -126,6 +129,7 @@ namespace Persistance
                     {
                         Title = "Future Activity 2",
                         Date = DateTime.Now.AddMonths(2),
+                        EndDate = DateTime.Now.AddMonths(2).AddDays(2),
                         Description = "Activity 2 months in future",
                         Category = "Food",
                         City = "London",
@@ -152,6 +156,7 @@ namespace Persistance
                     {
                         Title = "Future Activity 3",
                         Date = DateTime.Now.AddMonths(3),
+                        EndDate = DateTime.Now.AddMonths(3).AddDays(2),
                         Description = "Activity 3 months in future",
                         Category = "Drinks",
                         City = "London",
@@ -178,6 +183,7 @@ namespace Persistance
                     {
                         Title = "Future Activity 4",
                         Date = DateTime.Now.AddMonths(4),
+                        EndDate = DateTime.Now.AddMonths(4).AddDays(2),
                         Description = "Activity 4 months in future",
                         Category = "Culture",
                         City = "London",
@@ -198,6 +204,7 @@ namespace Persistance
                     {
                         Title = "Future Activity 5",
                         Date = DateTime.Now.AddMonths(5),
+                        EndDate = DateTime.Now.AddMonths(5).AddDays(2),
                         Description = "Activity 5 months in future",
                         Category = "Drinks",
                         City = "London",
@@ -224,6 +231,7 @@ namespace Persistance
                     {
                         Title = "Future Activity 6",
                         Date = DateTime.Now.AddMonths(6),
+                        EndDate = DateTime.Now.AddMonths(3).AddDays(2),
                         Description = "Activity 6 months in future",
                         Category = "Music",
                         City = "London",
@@ -250,6 +258,7 @@ namespace Persistance
                     {
                         Title = "Future Activity 7",
                         Date = DateTime.Now.AddMonths(7),
+                        EndDate = DateTime.Now.AddMonths(7).AddDays(2),
                         Description = "Activity 7 months in future",
                         Category = "Travel",
                         City = "Berlin",
@@ -276,6 +285,7 @@ namespace Persistance
                     {
                         Title = "Future Activity 8",
                         Date = DateTime.Now.AddMonths(8),
+                        EndDate = DateTime.Now.AddMonths(8).AddDays(2),
                         Description = "Activity 8 months in future",
                         Category = "Drinks",
                         City = "London",

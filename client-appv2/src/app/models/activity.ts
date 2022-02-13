@@ -11,8 +11,8 @@ export interface IActivity {
   description: string;
   category: string;
   //  #TODO: remove string type
-  date: string;
-  endDate: string;
+  date: Date | null;
+  endDate: Date | null;
   private: boolean;
   imageUrl: string;
   city: string;
