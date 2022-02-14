@@ -22,7 +22,7 @@ namespace API.Extensions
     {
         public static IServiceCollection AddApplicationServices
             (
-                this IServiceCollection services, 
+                this IServiceCollection services,
                 IConfiguration config
             )
         {
@@ -35,27 +35,29 @@ namespace API.Extensions
                               .WithExposedHeaders("WWW-Authenticate").WithOrigins("http://localhost:3000");
                       });
                   });
-                    
+
             services.AddMediatR(typeof(List.Handler).Assembly);
 
             services.AddAutoMapper(typeof(List.Handler));
 
             services.AddSignalR();
 
-            var builder = services.AddIdentityCore<AppUser>();
-            var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
-            identityBuilder.AddEntityFrameworkStores<DataContext>();
-            identityBuilder.AddSignInManager<SignInManager<AppUser>>();
-            services.AddAuthorization(opt =>
-            {
-                opt.AddPolicy("IsActivityHost", policy =>
-                {
-                    policy.Requirements.Add(new IsHostRequirement());
-                });
-            });
-            services.AddTransient<IAuthorizationHandler, IsHostRequirementHandler>();
+            // var builder = services.AddIdentityCore<AppUser>();
+            // var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
+            // identityBuilder.AddEntityFrameworkStores<DataContext>();
+            // identityBuilder.AddSignInManager<SignInManager<AppUser>>();
 
- 
+
+            // services.AddAuthorization(opt =>
+            // {
+            //     opt.AddPolicy("IsActivityHost", policy =>
+            //     {
+            //         policy.Requirements.Add(new IsHostRequirement());
+            //     });
+            // });
+            // services.AddTransient<IAuthorizationHandler, IsHostRequirementHandler>();
+
+
             //pull out the user secrets and api key : saved via dotnet user-secrets set
             services.Configure<CloudinarySettings>(config.GetSection("Cloudinary"));
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
@@ -74,36 +76,36 @@ namespace API.Extensions
             services.AddScoped<IProfileReader, ProfileReader>();
 
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
-            {
-                opt.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = key,
-                    ValidateAudience = false,
-                    ValidateIssuer = false,
-                    ValidateLifetime = true,
-                };
-                //hook into the on message recieved for the singalR event
-                opt.Events = new JwtBearerEvents
-                {
-                    OnMessageReceived = msgRecvContext =>
-                    {
-                        //will pull the token out of the request
-                        Microsoft.Extensions.Primitives.StringValues accessToken = msgRecvContext.Request.Query["access_token"];
-                        //get a reference to the path of the request thats coming in
-                        Microsoft.AspNetCore.Http.PathString path = msgRecvContext.HttpContext.Request.Path;
-                        if (!string.IsNullOrEmpty(accessToken) && (path.StartsWithSegments("/chat")))
-                        {
-                            msgRecvContext.Token = accessToken;
-                        }
-                        return Task.CompletedTask;
-                    }
-                };
-            });
+            // services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
+            // {
+            //     opt.TokenValidationParameters = new TokenValidationParameters
+            //     {
+            //         ValidateIssuerSigningKey = true,
+            //         IssuerSigningKey = key,
+            //         ValidateAudience = false,
+            //         ValidateIssuer = false,
+            //         ValidateLifetime = true,
+            //     };
+            //     //hook into the on message recieved for the singalR event
+            //     opt.Events = new JwtBearerEvents
+            //     {
+            //         OnMessageReceived = msgRecvContext =>
+            //         {
+            //             //will pull the token out of the request
+            //             Microsoft.Extensions.Primitives.StringValues accessToken = msgRecvContext.Request.Query["access_token"];
+            //             //get a reference to the path of the request thats coming in
+            //             Microsoft.AspNetCore.Http.PathString path = msgRecvContext.HttpContext.Request.Path;
+            //             if (!string.IsNullOrEmpty(accessToken) && (path.StartsWithSegments("/chat")))
+            //             {
+            //                 msgRecvContext.Token = accessToken;
+            //             }
+            //             return Task.CompletedTask;
+            //         }
+            //     };
+            // });
 
             return services;
-            
+
 
 
 

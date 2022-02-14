@@ -19,21 +19,18 @@ namespace Persistance
                 {
                     new AppUser
                     {
-                        Id = "a",
                         DisplayName = "Bob",
                         UserName = "bob",
                         Email = "bob@test.com"
                     },
                     new AppUser
                     {
-                        Id = "b",
                         DisplayName = "Jane",
                         UserName = "jane",
                         Email = "jane@test.com"
                     },
                     new AppUser
                     {
-                        Id = "c",
                         DisplayName = "Tom",
                         UserName = "tom",
                         Email = "tom@test.com"

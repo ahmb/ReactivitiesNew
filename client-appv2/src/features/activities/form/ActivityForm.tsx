@@ -51,10 +51,10 @@ export default observer(function ActivityForm() {
     title: Yup.string().required("The activity title is required"),
     description: Yup.string().required("The activity description is required"),
     category: Yup.string().required(),
-    date: Yup.string().required("The date is required").nullable(),
-    endDate: Yup.string().required("The end date is required").nullable(),
+    date: Yup.date().required("The date is required").nullable(),
+    endDate: Yup.date().required("The end date is required").nullable(),
     // TODO: this breaks the form and caused it to render as dirty upon initial
-    // render of nullable valeus?
+    // render of nullable valeus? - See: https://codeboosh.com/how-to-do-conditional-validation-with-formik-and-yup/
     //.min(Yup.ref("date"), "The end date cant be before start"),
     venue: Yup.string().required(),
     city: Yup.string().required(),

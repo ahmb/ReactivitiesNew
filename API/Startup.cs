@@ -90,6 +90,7 @@ namespace API
             // options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             services.AddApplicationServices(_config);
+            services.AddIdentityServices(_config);
 
         }
 

@@ -15,7 +15,6 @@ namespace API.Controllers
 
         //Get a list of activities
         [HttpGet]
-        [AllowAnonymous]
         public async Task<ActionResult<List.ActivitiesEnvelope>> GetActivities(
             int? limit, int? offset, bool isGoing, bool isHost, string category, DateTime? startDate
             )
@@ -25,15 +24,12 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
-        [AllowAnonymous]
         public async Task<IActionResult> GetActivity(Guid id)
         {
             return HandleResult(await Mediator.Send(new Details.Query { Id = id }));
         }
 
         [HttpPost]
-        //TODO: Remove allow anonymous
-        [AllowAnonymous]
         public async Task<IActionResult> CreateActivity(Activity activity)
         {
             return HandleResult(await Mediator.Send(new Create.Command { Activity = activity }));
@@ -41,8 +37,6 @@ namespace API.Controllers
 
         [HttpPut("{id}")]
         // [Authorize(Policy = "IsActivityHost")]
-        //TODO: Remove allow anonymous
-        [AllowAnonymous]
         public async Task<IActionResult> Edit(Guid id, Activity activity)
         {
             activity.Id = id;
@@ -51,8 +45,6 @@ namespace API.Controllers
 
         [HttpDelete("{id}")]
         // [Authorize(Policy = "IsActivityHost")]
-        //TODO: Remove allow anonymous
-        [AllowAnonymous]
         public async Task<IActionResult> Delete(Guid id)
         {
             return HandleResult(await Mediator.Send(new Delete.Command { Id = id }));
