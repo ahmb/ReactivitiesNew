@@ -46,11 +46,14 @@ namespace API.Controllers
         {
             if (await _userManager.Users.AnyAsync(x => x.Email == registerDto.Email))
             {
-                return BadRequest("Email already registered");
+                ModelState.AddModelError("email", "Email taken");
+                return ValidationProblem();
             }
+            //TODO: should this check also occur wih the normalized username incase the case is different?
             if (await _userManager.Users.AnyAsync(x => x.UserName == registerDto.Username))
             {
-                return BadRequest("Email already registered");
+                ModelState.AddModelError("username", "Username taken");
+                return ValidationProblem();
             }
             var user = new AppUser
             {
