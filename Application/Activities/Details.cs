@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Application.Core;
 using Application.Errors;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -33,18 +34,17 @@ namespace Application.Activities
             public async Task<Result<ActivityDto>> Handle(Query request,
             CancellationToken cancellationToken)
             {
-                Activity activity = await _context
+                var activity = await _context
                     .Activities
-                    .FindAsync(new object[] { request.Id }, cancellationToken: cancellationToken);
+                    .ProjectTo<ActivityDto>(_mapper.ConfigurationProvider)
+                    .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken: cancellationToken);
 
                 // if (activity == null)
                 // {
                 //     throw new RestException(HttpStatusCode.NotFound, new { activity = "Not found" });
                 // }
 
-                ActivityDto activityToReturn = _mapper.Map<Activity, ActivityDto>(activity);
-
-                return Result<ActivityDto>.Success(activityToReturn);
+                return Result<ActivityDto>.Success(activity);
             }
         }
 

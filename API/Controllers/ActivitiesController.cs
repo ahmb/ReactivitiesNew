@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [AllowAnonymous]
     public class ActivitiesController : BaseController
     {
 
@@ -36,31 +35,31 @@ namespace API.Controllers
             return HandleResult(await Mediator.Send(new Create.Command { Activity = activity }));
         }
 
+        [Authorize(Policy = "IsActivityHost")]
         [HttpPut("{id}")]
-        // [Authorize(Policy = "IsActivityHost")]
         public async Task<IActionResult> Edit(Guid id, Activity activity)
         {
             activity.Id = id;
             return HandleResult(await Mediator.Send(new Edit.Command { Activity = activity }));
         }
 
+        [Authorize(Policy = "IsActivityHost")]
         [HttpDelete("{id}")]
-        // [Authorize(Policy = "IsActivityHost")]
         public async Task<IActionResult> Delete(Guid id)
         {
             return HandleResult(await Mediator.Send(new Delete.Command { Id = id }));
         }
 
         [HttpPost("{id}/attend")]
-        public async Task<ActionResult<Unit>> Attend(Guid id)
+        public async Task<IActionResult> Attend(Guid id)
         {
-            return await Mediator.Send(new Attend.Command { Id = id });
+            return HandleResult(await Mediator.Send(new UpdateAttendance.Command { Id = id }));
         }
 
-        [HttpDelete("{id}/attend")]
+        [HttpDelete("{id}/unattend")]
         public async Task<ActionResult<Unit>> Unattend(Guid id)
         {
-            return await Mediator.Send(new Unattend.Command { Id = id });
+            return HandleResult(await Mediator.Send(new UpdateAttendance.Command { Id = id }));
         }
 
         [HttpPost("{id}/approve/{username}")]
@@ -76,7 +75,6 @@ namespace API.Controllers
         {
             return await Mediator.Send(new Reject.Command { Id = id, Username = username });
         }
-
 
 
         [HttpGet("unread")]

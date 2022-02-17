@@ -19,7 +19,7 @@ namespace Persistance
 
         public DbSet<Activity> Activities { get; set; }
 
-        public DbSet<UserActivity> UserActivities { get; set; }
+        public DbSet<ActivityAttendee> ActivityAttendees { get; set; }
 
         public DbSet<Photo> Photos { get; set; }
 
@@ -68,25 +68,26 @@ namespace Persistance
                 .OnDelete(DeleteBehavior.Restrict);
 
 
-            //build joint table UserActivity table between User and Activity tables
-            builder.Entity<UserActivity>(x => x.HasKey(ua => new { ua.AppUserId, ua.ActivityId }));
+            //build joint table ActivityAttendee table between User and Activity tables
+            //set composite PK
+            builder.Entity<ActivityAttendee>(x => x.HasKey(aa => new { aa.AppUserId, aa.ActivityId }));
 
             //model the first side of the one to many relationship after decomoposing the many-to-many relationship
-            builder.Entity<UserActivity>()
+            builder.Entity<ActivityAttendee>()
             //AppUser is the principal entity here , and its lazy loaded, and has a collection object navigation property
                 .HasOne(u => u.AppUser)
             //userActivities is the depdenent entity here, since the model has a single object navigation property
-                .WithMany(a => a.UserActivities)
+                .WithMany(a => a.Activities)
                 .HasForeignKey(u => u.AppUserId)
                 // specify the action which should take place on a dependent entity in a relationship when the principal is deleted.
                 .OnDelete(DeleteBehavior.Cascade);
 
             //model the second side of the one to many relationship after decomoposing the many-to-many relationship
-            builder.Entity<UserActivity>()
+            builder.Entity<ActivityAttendee>()
             //Activity is the principal entity here , and its lazy loaded, and has a collection object navigation property
                 .HasOne(a => a.Activity)
             //userActivities is the depdenent entity here, since the model has a single object navigation property
-                .WithMany(a => a.UserActivities)
+                .WithMany(a => a.Attendees)
                 .HasForeignKey(u => u.ActivityId)
                 // specify the action which should take place on a dependent entity in a relationship when the principal is deleted.
                 .OnDelete(DeleteBehavior.Cascade);

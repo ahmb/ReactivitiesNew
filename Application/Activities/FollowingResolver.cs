@@ -7,7 +7,7 @@ using Persistance;
 
 namespace Application.Activities
 {
-    public class FollowingResolver : IValueResolver<UserActivity, AttendeeDto, bool>
+    public class FollowingResolver : IValueResolver<ActivityAttendee, ActivityAttendeeDto, bool>
     {
         private readonly IUserAccessor _userAccessor;
         private readonly DataContext _context;
@@ -17,7 +17,7 @@ namespace Application.Activities
             _userAccessor = userAccessor;
         }
 
-        public bool Resolve(UserActivity source, AttendeeDto destination, bool destMember, ResolutionContext context)
+        public bool Resolve(ActivityAttendee source, ActivityAttendeeDto destination, bool destMember, ResolutionContext context)
         {
             AppUser currentUser = _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername()).Result;
             if (currentUser != null && currentUser.Followings.Any(x => x.TargetId == source.AppUserId))

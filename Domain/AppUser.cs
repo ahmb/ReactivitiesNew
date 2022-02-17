@@ -8,9 +8,9 @@ namespace Domain
         public string DisplayName { get; set; }
 
         public string Bio { get; set; }
-        
 
-        public virtual ICollection<UserActivity> UserActivities { get; set; }
+
+        public ICollection<ActivityAttendee> Activities { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
 
@@ -30,7 +30,7 @@ namespace Domain
         public virtual ICollection<MsgReadState> MsgReadStates { get; set; }
 
         public virtual ICollection<Interest> Interests { get; set; }
-        
+
 
 
 

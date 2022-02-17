@@ -50,7 +50,7 @@ namespace Application.Activities
                     throw new RestException(HttpStatusCode.NotFound, new { Activity = "Could not find activity" });
 
                 //check if username in the reqest is attending
-                UserActivity attendance = await _context.UserActivities.SingleOrDefaultAsync(ua => ua.ActivityId == request.Id && ua.AppUser.UserName == request.Username);
+                ActivityAttendee attendance = await _context.ActivityAttendees.SingleOrDefaultAsync(ua => ua.ActivityId == request.Id && ua.AppUser.UserName == request.Username);
 
                 if (attendance == null)
                     throw new RestException(HttpStatusCode.BadRequest, new { Attendance = "Provided user is not attending this activity." });

@@ -48,16 +48,6 @@ namespace API.Extensions
             // identityBuilder.AddSignInManager<SignInManager<AppUser>>();
 
 
-            // services.AddAuthorization(opt =>
-            // {
-            //     opt.AddPolicy("IsActivityHost", policy =>
-            //     {
-            //         policy.Requirements.Add(new IsHostRequirement());
-            //     });
-            // });
-            // services.AddTransient<IAuthorizationHandler, IsHostRequirementHandler>();
-
-
             //pull out the user secrets and api key : saved via dotnet user-secrets set
             services.Configure<CloudinarySettings>(config.GetSection("Cloudinary"));
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));

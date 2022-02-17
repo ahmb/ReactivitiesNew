@@ -10,6 +10,7 @@ using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistance;
+using AutoMapper.QueryableExtensions;
 
 namespace Application.Activities
 {
@@ -58,6 +59,11 @@ namespace Application.Activities
             //handler that returns a list all the activities in the database context
             public async Task<Result<ActivitiesEnvelope>> Handle(Query request, CancellationToken cancellationToken)
             {
+                //NEW
+                var activitiesss = await _context.Activities
+                    .ProjectTo<ActivityDto>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken);
+
+                //OLD
                 var queryable = _context.Activities
                 .Where(x => x.Date >= request.StartDate)
                 .OrderBy(x => x.Date)
@@ -66,13 +72,13 @@ namespace Application.Activities
                 if (request.IsGoing && !request.IsHost)
                 {
                     queryable = queryable
-                        .Where(x => x.UserActivities.Any(a => a.AppUser.UserName == _userAccessor.GetUsername()));
+                        .Where(x => x.Attendees.Any(a => a.AppUser.UserName == _userAccessor.GetUsername()));
                 }
 
                 if (request.IsHost && !request.IsGoing)
                 {
                     queryable = queryable
-                        .Where(x => x.UserActivities.Any(a => a.AppUser.UserName == _userAccessor.GetUsername() && a.IsHost));
+                        .Where(x => x.Attendees.Any(a => a.AppUser.UserName == _userAccessor.GetUsername() && a.IsHost));
                 }
 
                 if (request.Category != null && request.Category.Length > 0)
@@ -80,13 +86,19 @@ namespace Application.Activities
                     queryable = queryable.Where(x => x.Category.ToLower() == request.Category.ToLower());
                 }
 
-                List<Activity> activities = await queryable
+                var activities = await queryable
                     .Skip(request.Offset ?? 0)
-                    .Take(request.Limit ?? 3).ToListAsync(cancellationToken: cancellationToken);
+                    .Take(request.Limit ?? 3)
+                    //eager loading
+                    // .Include(y => y.Attendees)
+                    // .ThenInclude(u => u.AppUser)
+                    .ProjectTo<ActivityDto>(_mapper.ConfigurationProvider)
+                    .ToListAsync(cancellationToken: cancellationToken);
 
                 var ae = new ActivitiesEnvelope
                 {
-                    Activities = _mapper.Map<List<Activity>, List<ActivityDto>>(activities),
+                    // Activities = _mapper.Map<List<ActivityDto>>(activities),
+                    Activities = activitiesss,
                     ActivityCount = queryable.Count()
                 };
 

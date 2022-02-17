@@ -35,7 +35,7 @@ namespace Application.Profiles
                 if (user == null)
                     throw new RestException(HttpStatusCode.NotFound, new { User = "Not found" });
 
-                var queryable = user.UserActivities
+                var queryable = user.Activities
                     .OrderBy(a => a.Activity.Date)
                     .AsQueryable();
 

@@ -24,9 +24,9 @@ namespace Domain
         public Double Latitude { get; set; }
         public string Tags { get; set; }
         public string ImageUrl { get; set; }
+        public bool IsCancelled { get; set; }
 
-        //the virtual keyword is used here so it can be used with Proxies for lazy loading
-        public virtual ICollection<UserActivity> UserActivities { get; set; }
+        public ICollection<ActivityAttendee> Attendees { get; set; } = new List<ActivityAttendee>();
 
         public virtual ICollection<Comment> Comments { get; set; }
 

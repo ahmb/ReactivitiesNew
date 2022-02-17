@@ -41,31 +41,31 @@ namespace Application.Activities
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-
-                _context.Activities.Add(request.Activity);
-
                 AppUser user = await _context.Users
-                    .SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername()
+                    .FirstOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername()
                         , cancellationToken: cancellationToken);
 
 
-                //update the code to add a useractivity or attendee 
-                // var attendee = new UserActivity
-                // {
-                //     AppUser = user,
-                //     Activity = request.Activity,
-                //     IsHost = true,
-                //     DateJoined = DateTime.Now.ToUniversalTime(),
-                //     IsApproved = true
-                // };
+                // update the code to add a useractivity or attendee 
+                var attendee = new ActivityAttendee
+                {
+                    AppUser = user,
+                    Activity = request.Activity,
+                    IsHost = true,
+                    DateJoined = DateTime.Now.ToUniversalTime(),
+                    IsApproved = true
+                };
 
-                // _context.UserActivities.Add(attendee);
+//Add attendee to the Activity object in the reques
+                request.Activity.Attendees.Add(attendee);
+
+                _context.Activities.Add(request.Activity);
 
                 bool result = await _context.SaveChangesAsync(cancellationToken) > 0;
 
                 var res = new Result<Unit>();
 
-                if (result) return Result<Unit>.Failure("An error occured while creating the Activity.");
+                if (!result) return Result<Unit>.Failure("An error occured while creating the Activity.");
 
                 return Result<Unit>.Success(Unit.Value);
 

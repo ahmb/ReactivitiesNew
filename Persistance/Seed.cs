@@ -13,7 +13,7 @@ namespace Persistance
         public static async Task SeedData(DataContext context,
             UserManager<AppUser> userManager)
         {
-            if (!userManager.Users.Any())
+            if (!userManager.Users.Any() && !context.Activities.Any())
             {
                 var users = new List<AppUser>
                 {
@@ -41,30 +41,23 @@ namespace Persistance
                 {
                     await userManager.CreateAsync(user, "Pa$$w0rd");
                 }
-            }
 
-            if (!context.Activities.Any())
-            {
                 var activities = new List<Activity>
                 {
                     new Activity
                     {
                         Title = "Past Activity 1",
                         Date = DateTime.Now.AddMonths(-2),
-                        EndDate = DateTime.Now.AddMonths(-1),
                         Description = "Activity 2 months ago",
-                        Category = "Drinks",
+                        Category = "drinks",
                         City = "London",
                         Venue = "Pub",
-                        Latitude = 43.665991758d,
-                        Longitude = -79.411582548d,
-                        UserActivities = new List<UserActivity>
+                        Attendees = new List<ActivityAttendee>
                         {
-                            new UserActivity
+                            new ActivityAttendee
                             {
-                                AppUserId = "a",
-                                IsHost = true,
-                                DateJoined = DateTime.Now.AddMonths(-2)
+                                AppUser = users[0],
+                                IsHost = true
                             }
                         }
                     },
@@ -72,26 +65,21 @@ namespace Persistance
                     {
                         Title = "Past Activity 2",
                         Date = DateTime.Now.AddMonths(-1),
-                        EndDate = DateTime.Now.AddDays(-15),
                         Description = "Activity 1 month ago",
-                        Category = "Culture",
+                        Category = "culture",
                         City = "Paris",
                         Venue = "The Louvre",
-                        Latitude = 43.670706062d,
-                        Longitude = -79.385879814d,
-                        UserActivities = new List<UserActivity>
+                        Attendees = new List<ActivityAttendee>
                         {
-                            new UserActivity
+                            new ActivityAttendee
                             {
-                                AppUserId = "b",
-                                IsHost = true,
-                                DateJoined = DateTime.Now.AddMonths(-1)
+                                AppUser = users[0],
+                                IsHost = true
                             },
-                            new UserActivity
+                            new ActivityAttendee
                             {
-                                AppUserId = "a",
-                                IsHost = false,
-                                DateJoined = DateTime.Now.AddMonths(-1)
+                                AppUser = users[1],
+                                IsHost = false
                             },
                         }
                     },
@@ -99,26 +87,21 @@ namespace Persistance
                     {
                         Title = "Future Activity 1",
                         Date = DateTime.Now.AddMonths(1),
-                        EndDate = DateTime.Now.AddMonths(1).AddDays(2),
                         Description = "Activity 1 month in future",
-                        Category = "Music",
+                        Category = "music",
                         City = "London",
                         Venue = "Wembly Stadium",
-                        Latitude = 43.660665098d,
-                        Longitude = -79.435955802d,
-                        UserActivities = new List<UserActivity>
+                        Attendees = new List<ActivityAttendee>
                         {
-                            new UserActivity
+                            new ActivityAttendee
                             {
-                                AppUserId = "b",
-                                IsHost = true,
-                                DateJoined = DateTime.Now.AddMonths(1)
+                                AppUser = users[2],
+                                IsHost = true
                             },
-                            new UserActivity
+                            new ActivityAttendee
                             {
-                                AppUserId = "a",
-                                IsHost = false,
-                                DateJoined = DateTime.Now.AddMonths(1)
+                                AppUser = users[1],
+                                IsHost = false
                             },
                         }
                     },
@@ -126,26 +109,21 @@ namespace Persistance
                     {
                         Title = "Future Activity 2",
                         Date = DateTime.Now.AddMonths(2),
-                        EndDate = DateTime.Now.AddMonths(2).AddDays(2),
                         Description = "Activity 2 months in future",
-                        Category = "Food",
+                        Category = "food",
                         City = "London",
                         Venue = "Jamies Italian",
-                        Latitude = 43.667647755d,
-                        Longitude = -79.403758401d,
-                        UserActivities = new List<UserActivity>
+                        Attendees = new List<ActivityAttendee>
                         {
-                            new UserActivity
+                            new ActivityAttendee
                             {
-                                AppUserId = "c",
-                                IsHost = true,
-                                DateJoined = DateTime.Now.AddMonths(2)
+                                AppUser = users[0],
+                                IsHost = true
                             },
-                            new UserActivity
+                            new ActivityAttendee
                             {
-                                AppUserId = "a",
-                                IsHost = false,
-                                DateJoined = DateTime.Now.AddMonths(2)
+                                AppUser = users[2],
+                                IsHost = false
                             },
                         }
                     },
@@ -153,26 +131,21 @@ namespace Persistance
                     {
                         Title = "Future Activity 3",
                         Date = DateTime.Now.AddMonths(3),
-                        EndDate = DateTime.Now.AddMonths(3).AddDays(2),
                         Description = "Activity 3 months in future",
-                        Category = "Drinks",
+                        Category = "drinks",
                         City = "London",
                         Venue = "Pub",
-                        Latitude = 43.676861715d,
-                        Longitude = -79.358523845d,
-                        UserActivities = new List<UserActivity>
+                        Attendees = new List<ActivityAttendee>
                         {
-                            new UserActivity
+                            new ActivityAttendee
                             {
-                                AppUserId = "b",
-                                IsHost = true,
-                                DateJoined = DateTime.Now.AddMonths(3)
+                                AppUser = users[1],
+                                IsHost = true
                             },
-                            new UserActivity
+                            new ActivityAttendee
                             {
-                                AppUserId = "c",
-                                IsHost = false,
-                                DateJoined = DateTime.Now.AddMonths(3)
+                                AppUser = users[0],
+                                IsHost = false
                             },
                         }
                     },
@@ -180,20 +153,16 @@ namespace Persistance
                     {
                         Title = "Future Activity 4",
                         Date = DateTime.Now.AddMonths(4),
-                        EndDate = DateTime.Now.AddMonths(4).AddDays(2),
                         Description = "Activity 4 months in future",
-                        Category = "Culture",
+                        Category = "culture",
                         City = "London",
                         Venue = "British Museum",
-                        Latitude = 43.676861715d,
-                        Longitude = -79.358523845d,
-                        UserActivities = new List<UserActivity>
+                        Attendees = new List<ActivityAttendee>
                         {
-                            new UserActivity
+                            new ActivityAttendee
                             {
-                                AppUserId = "a",
-                                IsHost = true,
-                                DateJoined = DateTime.Now.AddMonths(4)
+                                AppUser = users[1],
+                                IsHost = true
                             }
                         }
                     },
@@ -201,26 +170,21 @@ namespace Persistance
                     {
                         Title = "Future Activity 5",
                         Date = DateTime.Now.AddMonths(5),
-                        EndDate = DateTime.Now.AddMonths(5).AddDays(2),
                         Description = "Activity 5 months in future",
-                        Category = "Drinks",
+                        Category = "drinks",
                         City = "London",
                         Venue = "Punch and Judy",
-                        Latitude = 43.68414917d,
-                        Longitude = -79.323527235d,
-                        UserActivities = new List<UserActivity>
+                        Attendees = new List<ActivityAttendee>
                         {
-                            new UserActivity
+                            new ActivityAttendee
                             {
-                                AppUserId = "c",
-                                IsHost = true,
-                                DateJoined = DateTime.Now.AddMonths(5)
+                                AppUser = users[0],
+                                IsHost = true
                             },
-                            new UserActivity
+                            new ActivityAttendee
                             {
-                                AppUserId = "b",
-                                IsHost = false,
-                                DateJoined = DateTime.Now.AddMonths(5)
+                                AppUser = users[1],
+                                IsHost = false
                             },
                         }
                     },
@@ -228,26 +192,21 @@ namespace Persistance
                     {
                         Title = "Future Activity 6",
                         Date = DateTime.Now.AddMonths(6),
-                        EndDate = DateTime.Now.AddMonths(3).AddDays(2),
                         Description = "Activity 6 months in future",
-                        Category = "Music",
+                        Category = "music",
                         City = "London",
                         Venue = "O2 Arena",
-                        Latitude = 43.694320822d,
-                        Longitude = -79.290318935d,
-                        UserActivities = new List<UserActivity>
+                        Attendees = new List<ActivityAttendee>
                         {
-                            new UserActivity
+                            new ActivityAttendee
                             {
-                                AppUserId = "a",
-                                IsHost = true,
-                                DateJoined = DateTime.Now.AddMonths(6)
+                                AppUser = users[2],
+                                IsHost = true
                             },
-                            new UserActivity
+                            new ActivityAttendee
                             {
-                                AppUserId = "b",
-                                IsHost = false,
-                                DateJoined = DateTime.Now.AddMonths(6)
+                                AppUser = users[1],
+                                IsHost = false
                             },
                         }
                     },
@@ -255,26 +214,21 @@ namespace Persistance
                     {
                         Title = "Future Activity 7",
                         Date = DateTime.Now.AddMonths(7),
-                        EndDate = DateTime.Now.AddMonths(7).AddDays(2),
                         Description = "Activity 7 months in future",
-                        Category = "Travel",
+                        Category = "travel",
                         City = "Berlin",
                         Venue = "All",
-                        Latitude = 43.732118151d,
-                        Longitude = -79.265698446d,
-                        UserActivities = new List<UserActivity>
+                        Attendees = new List<ActivityAttendee>
                         {
-                            new UserActivity
+                            new ActivityAttendee
                             {
-                                AppUserId = "a",
-                                IsHost = true,
-                                DateJoined = DateTime.Now.AddMonths(7)
+                                AppUser = users[0],
+                                IsHost = true
                             },
-                            new UserActivity
+                            new ActivityAttendee
                             {
-                                AppUserId = "c",
-                                IsHost = false,
-                                DateJoined = DateTime.Now.AddMonths(7)
+                                AppUser = users[2],
+                                IsHost = false
                             },
                         }
                     },
@@ -282,26 +236,21 @@ namespace Persistance
                     {
                         Title = "Future Activity 8",
                         Date = DateTime.Now.AddMonths(8),
-                        EndDate = DateTime.Now.AddMonths(8).AddDays(2),
                         Description = "Activity 8 months in future",
-                        Category = "Drinks",
+                        Category = "drinks",
                         City = "London",
                         Venue = "Pub",
-                        Latitude = 43.648804442d,
-                        Longitude = -79.511540512d,
-                        UserActivities = new List<UserActivity>
+                        Attendees = new List<ActivityAttendee>
                         {
-                            new UserActivity
+                            new ActivityAttendee
                             {
-                                AppUserId = "b",
-                                IsHost = true,
-                                DateJoined = DateTime.Now.AddMonths(8)
+                                AppUser = users[2],
+                                IsHost = true
                             },
-                            new UserActivity
+                            new ActivityAttendee
                             {
-                                AppUserId = "a",
-                                IsHost = false,
-                                DateJoined = DateTime.Now.AddMonths(8)
+                                AppUser = users[1],
+                                IsHost = false
                             },
                         }
                     }

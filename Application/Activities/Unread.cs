@@ -39,7 +39,7 @@ namespace Application.Activities
                     throw new RestException(HttpStatusCode.NotFound, new { User = "Error detecting logged in user. Please sign back in." });
 
                 }
-                var queryable = currentUser.UserActivities
+                var queryable = currentUser.Activities
                     .AsQueryable();
 
 
@@ -52,7 +52,7 @@ namespace Application.Activities
                 {
 
                     //userActivities to approve for activities hosted
-                    var userActivityAttenddees = _context.UserActivities
+                    var userActivityAttenddees = _context.ActivityAttendees
                     .OrderBy(ua => ua.Activity.Date).Where(ua => ua.ActivityId == activtiyHosted.ActivityId && !ua.IsHost && !ua.Read).ToList();
 
                     foreach (var userActivityAttendee in userActivityAttenddees)
