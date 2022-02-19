@@ -1,14 +1,25 @@
-export interface IProfile {
-  displayName: string;
+import { IUser as User } from "./user";
+
+export interface Profile {
   username: string;
-  bio: string;
-  image: string;
-  following:boolean;
-  followersCount: number;
-  followingCount: number;
-  photos: IPhoto[];
+  displayName: string;
+  bio?: string;
+  image?: string;
+  following?: boolean;
+  followersCount?: number;
+  followingCount?: number;
+  photos?: IPhoto[];
   // interests: IInterest[] ;
-  interests: string[];
+  interests?: string[];
+}
+
+//this class is just there to help us instantiate an IProfile obj using the constructor
+export class Profile implements Profile {
+  constructor(user: User) {
+    this.username = user.username;
+    this.displayName = user.username;
+    this.image = user.image;
+  }
 }
 
 export interface IInterest {
@@ -22,7 +33,7 @@ export interface IPhoto {
   isMain: boolean;
 }
 
-export interface IUserActivity {
+export interface UserActivity {
   id: string;
   title: string;
   category: string;

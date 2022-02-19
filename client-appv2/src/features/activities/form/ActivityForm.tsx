@@ -12,40 +12,18 @@ import MyTextArea from "../../../app/common/form/MyTextArea";
 import MySelectInput from "../../../app/common/form/MySelectInput";
 import { categoryOptions } from "../../../app/common/options/categoryOptions";
 import MyDateInput from "../../../app/common/form/MyDateInput";
-import { IActivity } from "../../../app/models/activity";
+import { ActivityFormValues } from "../../../app/models/activity";
 
 export default observer(function ActivityForm() {
   const history = useHistory();
   const { activityStore } = useStore();
-  const {
-    createActivity,
-    updateActivity,
-    loading,
-    loadActivity,
-    loadingInitial,
-  } = activityStore;
+  const { createActivity, updateActivity, loadActivity, loadingInitial } =
+    activityStore;
   const { id } = useParams<{ id: string }>();
 
-  const [activity, setActivity] = useState<IActivity>({
-    id: "",
-    title: "",
-    category: "",
-    description: "",
-    date: null,
-    endDate: null,
-    private: false,
-    city: "",
-    venue: "",
-    imageUrl: "",
-    latitude: 0,
-    longitude: 0,
-    isGoing: false,
-    isHost: false,
-    isApproved: false,
-    attendees: "",
-    comments: "",
-    tags: "",
-  });
+  const [activity, setActivity] = useState<ActivityFormValues>(
+    new ActivityFormValues()
+  );
 
   const validationSchema = Yup.object({
     title: Yup.string().required("The activity title is required"),
@@ -64,13 +42,13 @@ export default observer(function ActivityForm() {
     if (id)
       loadActivity(id).then((activity) => {
         if (activity) {
-          setActivity(activity);
+          setActivity(new ActivityFormValues(activity));
         }
       });
   }, [id, loadActivity]);
 
-  function handleFormSubmit(activity: IActivity) {
-    if (activity.id.length === 0) {
+  function handleFormSubmit(activity: ActivityFormValues) {
+    if (!activity.id) {
       let newActivity = {
         ...activity,
         id: uuid(),
@@ -122,7 +100,7 @@ export default observer(function ActivityForm() {
             <MyTextInput placeholder='City' name='city' />
             <MyTextInput placeholder='Venue' name='venue' />
             <Button
-              loading={loading}
+              loading={isSubmitting}
               floated='right'
               positive
               type='submit'
