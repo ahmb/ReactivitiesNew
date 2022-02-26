@@ -54,7 +54,7 @@ namespace Application.Messages
                 //                            .OrderBy(y => y.Date)
                 //                            .Take(10))
 
-                var threads = await threadss.ToListAsync();
+                var threads = await threadss.ToListAsync(cancellationToken: cancellationToken);
                 // var threads = await queryable.ToListAsync();
                 // .Skip(request.Offset ?? 0)
                 // .Take(request.Limit ?? 3).ToListAsync();

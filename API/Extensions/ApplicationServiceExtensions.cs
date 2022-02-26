@@ -50,14 +50,10 @@ namespace API.Extensions
 
             //pull out the user secrets and api key : saved via dotnet user-secrets set
             services.Configure<CloudinarySettings>(config.GetSection("Cloudinary"));
+
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
 
-            Console.WriteLine("Cloudinary Config");
-
-            Console.WriteLine(config["Cloudinary:CloudName"]);
-            Console.WriteLine(config["ConnectionStrings:DefaultConnection"]);
-            Console.WriteLine(config["TokenKey"]);
-            Console.WriteLine(config["Env:This"]);
+            Console.WriteLine("Current Execution Envrionment:" + config["Env:This"]);
 
 
             services.AddScoped<IJwtGenerator, JwtGenerator>();

@@ -38,16 +38,16 @@ namespace Application.Comments
             {
                 //add command handler logic
 
-                Activity activity = await _context.Activities.FindAsync(request.ActivityId);
+                Activity activity = await _context.Activities.FindAsync(new object[] { request.ActivityId }, cancellationToken: cancellationToken);
 
                 if (activity == null)
                 {
                     throw new RestException(HttpStatusCode.NotFound, new { Activity = "Not found" });
                 }
 
-                AppUser user = await _context.Users.SingleOrDefaultAsync(appUsr => appUsr.UserName == request.Username);
+                AppUser user = await _context.Users.SingleOrDefaultAsync(appUsr => appUsr.UserName == request.Username, cancellationToken: cancellationToken);
 
-                Comment comment = new Comment
+                Comment comment = new()
                 {
                     Author = user,
                     Activity = activity,
@@ -57,7 +57,7 @@ namespace Application.Comments
 
                 activity.Comments.Add(comment);
 
-                bool success = await _context.SaveChangesAsync() > 0;
+                bool success = await _context.SaveChangesAsync(cancellationToken) > 0;
 
                 //if successfully added the comment to the database then:
                 //return back the Comment DTO object which is generated from the comment object/paramter to Map

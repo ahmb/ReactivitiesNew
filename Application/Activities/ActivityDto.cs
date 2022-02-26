@@ -26,7 +26,7 @@ namespace Application.Activities
         public bool IsCancelled { get; set; }
         //list of AppUsers attending an activity i.e. Attendees
         // [JsonPropertyName("attendees")]
-        public ICollection<Profile> Attendees { get; set; }
+        public ICollection<AttendeeDto> Attendees { get; set; }
         //comments which are returned with the comments
         public ICollection<CommentDto> Comments { get; set; }
     }

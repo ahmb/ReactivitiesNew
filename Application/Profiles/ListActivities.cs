@@ -30,7 +30,7 @@ namespace Application.Profiles
             public async Task<List<UserActivityDto>> Handle(Query request,
                 CancellationToken cancellationToken)
             {
-                var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == request.Username);
+                var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == request.Username, cancellationToken: cancellationToken);
 
                 if (user == null)
                     throw new RestException(HttpStatusCode.NotFound, new { User = "Not found" });

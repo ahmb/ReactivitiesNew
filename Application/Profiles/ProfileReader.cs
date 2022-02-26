@@ -34,16 +34,16 @@ namespace Application.Profiles
                 userInterests.Add(interest.Name);
             }
 
-            Profile profile = new Profile
+            Profile profile = new()
             {
                 DisplayName = user.DisplayName,
                 Username = user.UserName,
                 Image = user.Photos.FirstOrDefault(x => x.IsMain)?.Url,
                 Photos = user.Photos,
                 Bio = user.Bio,
-                FollowersCount = user.Followers.Count(),
-                FollowingCount = user.Followings.Count(),
-                Interests = userInterests,
+                FollowersCount = user.Followers.Count,
+                FollowingCount = user.Followings.Count,
+                // Interests = userInterests,
                 
             };
 

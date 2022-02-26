@@ -58,16 +58,16 @@ namespace Application.Messages
             public async Task<MsgDto> Handle(Command request, CancellationToken cancellationToken)
             {
 
-                var thread = await _context.Threads.SingleOrDefaultAsync(t => t.Id == request.ThreadId);
+                var thread = await _context.Threads.SingleOrDefaultAsync(t => t.Id == request.ThreadId, cancellationToken: cancellationToken);
 
                 if (thread == null)
                 {
                     throw new RestException(HttpStatusCode.NotFound, new { thread = "Not found" });
                 }
 
-                AppUser user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
+                AppUser user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername(), cancellationToken: cancellationToken);
 
-                var participant = await _context.ThreadParticipants.SingleOrDefaultAsync(tp => tp.TheadId == request.ThreadId && tp.AppUserId == user.Id);
+                var participant = await _context.ThreadParticipants.SingleOrDefaultAsync(tp => tp.TheadId == request.ThreadId && tp.AppUserId == user.Id, cancellationToken: cancellationToken);
 
 
                 if (participant == null)
@@ -89,7 +89,7 @@ namespace Application.Messages
 
                 _context.Msgs.Add(message);
 
-                bool success = await _context.SaveChangesAsync() > 0;
+                bool success = await _context.SaveChangesAsync(cancellationToken) > 0;
 
                 if (success) return _mapper.Map<Msg, MsgDto>(message);
 

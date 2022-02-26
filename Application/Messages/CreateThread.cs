@@ -57,13 +57,13 @@ namespace Application.Messages
 
             public async Task<ThreadDto> Handle(Command request, CancellationToken cancellationToken)
             {
-                AppUser user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
+                AppUser user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername(), cancellationToken: cancellationToken);
 
                if(user == null){
                     throw new RestException(HttpStatusCode.NotFound, new { user = "Could not senders Id in the system" });
                 }
 
-                AppUser sendToUser = await _context.Users.SingleOrDefaultAsync(x => x.UserName == request.To);
+                AppUser sendToUser = await _context.Users.SingleOrDefaultAsync(x => x.UserName == request.To, cancellationToken: cancellationToken);
 
 
                 if(sendToUser == null){
@@ -118,7 +118,7 @@ namespace Application.Messages
 
                 _context.ThreadParticipants.Add(threadParticipantTo);
 
-                bool success = await _context.SaveChangesAsync() > 0;
+                bool success = await _context.SaveChangesAsync(cancellationToken) > 0;
 
                 if (success) return _mapper.Map<Domain.Thread, ThreadDto>(thread);
                 // if (success) return Unit.Value;

@@ -43,7 +43,7 @@ namespace Application.Followers
                 {
                     case "followers":
                         {
-                            userFollowings = await queryable.Where(x => x.Target.UserName == request.Username).ToListAsync();
+                            userFollowings = await queryable.Where(x => x.Target.UserName == request.Username).ToListAsync(cancellationToken: cancellationToken);
 
                             foreach (var follower in userFollowings)
                             {
@@ -53,7 +53,7 @@ namespace Application.Followers
                         }
                     case "following":
                         {
-                            userFollowings = await queryable.Where(x => x.Observer.UserName == request.Username).ToListAsync();
+                            userFollowings = await queryable.Where(x => x.Observer.UserName == request.Username).ToListAsync(cancellationToken: cancellationToken);
 
                             foreach (var follower in userFollowings)
                             {

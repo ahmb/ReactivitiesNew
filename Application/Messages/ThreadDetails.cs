@@ -29,7 +29,7 @@ namespace Application.Messages
 
             public async Task<ThreadDto> Handle(Query request, CancellationToken cancellationToken)
             {
-                var thread = await _context.Threads.FindAsync(request.Id);
+                var thread = await _context.Threads.FindAsync(new object[] { request.Id }, cancellationToken: cancellationToken);
 
 
                 if (thread == null)

@@ -1,6 +1,9 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Core;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistance;
@@ -9,25 +12,36 @@ namespace Application.Profiles
 {
     public class Details
     {
-        public class Query : IRequest<Profile> {
+        public class Query : IRequest<Result<Profile>>
+        {
 
             public string Username { get; set; }
-            
-         };
 
-        public class Handler : IRequestHandler<Query, Profile>
+        };
+
+        public class Handler : IRequestHandler<Query, Result<Profile>>
         {
-            private readonly IProfileReader _profileReader;
+            private readonly IMapper _mapper;
+            private readonly DataContext _context;
 
-            public Handler(IProfileReader profileReader)
+            public Handler(IMapper mapper, DataContext context)
             {
-                _profileReader = profileReader;
+                _mapper = mapper;
+                _context = context;
             }
 
-            //handler that returns a list all the activities in the database context
-            public async Task<Profile> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<Profile>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return await _profileReader.ReadProfile(request.Username);
+                var user = await _context
+                        .Users
+                        .ProjectTo<Profile>(_mapper.ConfigurationProvider) //projecting user to profile object
+                        .SingleOrDefaultAsync(x => x.Username == request.Username,
+                            cancellationToken: cancellationToken);
+
+                if (user == null) return null;
+
+                return Result<Profile>.Success(user);
+                // return await _profileReader.ReadProfile(request.Username);
             }
         }
     }

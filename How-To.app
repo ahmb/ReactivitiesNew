@@ -182,3 +182,13 @@ where rankValue = 1
 ON 
 a.TheadId = x.ThreadId
 where a.AppUserId = 'd5adf925-e1ef-4da9-93c6-c0f1d659e673';
+
+
+
+GIT
+
+git push -u upstream --all
+list all remotes
+$git remote -v
+
+git push origin

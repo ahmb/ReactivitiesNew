@@ -33,14 +33,14 @@ namespace Application.Followers
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
                 //add command handler logic
-                var observer = await _context.Users.SingleOrDefaultAsync(appUsr => appUsr.UserName == _userAccessor.GetUsername());
+                var observer = await _context.Users.SingleOrDefaultAsync(appUsr => appUsr.UserName == _userAccessor.GetUsername(), cancellationToken: cancellationToken);
 
-                var target = await _context.Users.SingleOrDefaultAsync(appUsr => appUsr.UserName == request.Username);
+                var target = await _context.Users.SingleOrDefaultAsync(appUsr => appUsr.UserName == request.Username, cancellationToken: cancellationToken);
 
                 if (target == null)
                     throw new RestException(HttpStatusCode.NotFound, new { User = "Not found" });
 
-                var following = await _context.Followings.SingleOrDefaultAsync(usrFlwing => usrFlwing.ObserverId == observer.Id && usrFlwing.TargetId == target.Id);
+                var following = await _context.Followings.SingleOrDefaultAsync(usrFlwing => usrFlwing.ObserverId == observer.Id && usrFlwing.TargetId == target.Id, cancellationToken: cancellationToken);
 
                 if (following == null)
                     throw new RestException(HttpStatusCode.BadRequest, new { User = "You are not following this user" });
@@ -49,7 +49,7 @@ namespace Application.Followers
                 {
                     _context.Followings.Remove(following);
                 }
-                var success = await _context.SaveChangesAsync() > 0;
+                var success = await _context.SaveChangesAsync(cancellationToken) > 0;
 
                 if (success) return Unit.Value;
 

@@ -38,7 +38,7 @@ namespace Application.Profiles {
 
             public async Task<Unit> Handle (Command request, CancellationToken cancellationToken) {
                 //add command handler logic
-                var user = await _context.Users.SingleOrDefaultAsync(x=>x.UserName == _userAccessor.GetUsername());
+                var user = await _context.Users.SingleOrDefaultAsync(x =>x.UserName == _userAccessor.GetUsername(), cancellationToken: cancellationToken);
                 user.DisplayName = request.DisplayName ?? user.DisplayName;
                 user.Bio = request.Bio ?? user.Bio;
 
@@ -58,7 +58,7 @@ namespace Application.Profiles {
                 user.Interests = UserInterests;
 
 
-                var success = await _context.SaveChangesAsync () > 0;
+                var success = await _context.SaveChangesAsync(cancellationToken) > 0;
 
                 if (success) return Unit.Value;
 

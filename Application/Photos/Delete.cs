@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Core;
 using Application.Errors;
 using Application.Interfaces;
 using MediatR;
@@ -13,13 +14,13 @@ namespace Application.Photos
 {
     public class Delete
     {
-        public class Command : IRequest
+        public class Command : IRequest<Result<Unit>>
         {
             //insert properties
             public string Id { get; set; }
         }
 
-        public class Handler : IRequestHandler<Command>
+        public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private readonly DataContext _context;
             private readonly IUserAccessor _userAccessor;
@@ -32,33 +33,33 @@ namespace Application.Photos
                 _context = context;
             }
 
-            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
                 //add command handler logic
 
-                var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
+                var user = await _context.Users.Include(p => p.Photos)
+                            .FirstOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername(), cancellationToken: cancellationToken);
+
+                if (user == null) return null;
 
                 var photo = user.Photos.FirstOrDefault(x => x.Id == request.Id);
 
-                if (photo == null)
-                    throw new RestException(HttpStatusCode.NotFound, new { Photo = "Not found" });
+                if (photo == null) return null;
 
                 if (photo.IsMain)
-                    throw new RestException(HttpStatusCode.BadRequest, new { Photo = "You cannot delete your main photo" });
+                    return Result<Unit>.Failure("You cannot delete your main photo");
 
-                var result = _photoAccessor.DeletePhoto(photo.Id);
+                var result = await _photoAccessor.DeletePhoto(photo.Id);
 
-                if(result == null)
-                    throw new Exception("Problem deleting the photo");
+                if (result == null) return Result<Unit>.Failure("Problem deleting the photo");
 
                 user.Photos.Remove(photo);
 
-                var success = await _context.SaveChangesAsync() > 0;
+                var success = await _context.SaveChangesAsync(cancellationToken) > 0;
 
-                if (success) return Unit.Value;
+                if (success) return Result<Unit>.Success(Unit.Value);
 
-                throw new Exception("Problem saving changes.");
-
+                return Result<Unit>.Failure("Problem deleting photo");
             }
         }
     }

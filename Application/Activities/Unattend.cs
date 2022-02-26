@@ -33,14 +33,14 @@ namespace Application.Activities
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                Activity activity = await _context.Activities.FindAsync(request.Id);
+                Activity activity = await _context.Activities.FindAsync(new object[] { request.Id }, cancellationToken: cancellationToken);
 
                 if (activity == null)
                     throw new RestException(HttpStatusCode.NotFound, new { Activity = "Could not find activity" });
 
-                AppUser user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
+                AppUser user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername(), cancellationToken: cancellationToken);
 
-                ActivityAttendee attendance = await _context.ActivityAttendees.SingleOrDefaultAsync(x => x.ActivityId == activity.Id && x.AppUserId == user.Id);
+                ActivityAttendee attendance = await _context.ActivityAttendees.SingleOrDefaultAsync(x => x.ActivityId == activity.Id && x.AppUserId == user.Id, cancellationToken: cancellationToken);
 
                 if(attendance == null)
                     return Unit.Value;
@@ -50,7 +50,7 @@ namespace Application.Activities
 
                 _context.ActivityAttendees.Remove(attendance);
 
-                var success = await _context.SaveChangesAsync() > 0;
+                var success = await _context.SaveChangesAsync(cancellationToken) > 0;
 
                 if (success) return Unit.Value;
 
