@@ -15,6 +15,7 @@ import LoginForm from "../../features/users/LoginForm";
 import { useStore } from "../stores/store";
 import LoadingComponent from "./LoadingComponent";
 import ModalContainer from "../common/modals/ModalContainer";
+import ProfilePage from "../../features/profiles/ProfilePage";
 
 function App() {
   const location = useLocation();
@@ -43,30 +44,18 @@ function App() {
             <NavBar />
             <Container style={{ marginTop: "7em" }}>
               <Switch>
-                <Route
-                  key={location.key}
-                  exact
-                  path='/activities'
-                  component={ActivityDashboard}
-                />
-                <Route
-                  key={location.key}
-                  path='/activities/:id'
-                  component={ActivityDetails}
-                />
+                <Route exact path='/activities' component={ActivityDashboard} />
+                <Route path='/activities/:id' component={ActivityDetails} />
                 <Route
                   key={location.key}
                   path={["/createActivity", "/manage/:id"]}
                   component={ActivityForm}
                 />
-                <Route
-                  key={location.key}
-                  path='/errors'
-                  component={TestError}
-                />
+                <Route path='/profiles/:username' component={ProfilePage} />
+                <Route path='/errors' component={TestError} />
                 <Route path='/server-error' component={ServerError} />
                 <Route path='/login' component={LoginForm} />
-                <Route key={location.key} component={NotFound} />
+                <Route component={NotFound} />
               </Switch>
             </Container>
           </>
