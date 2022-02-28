@@ -14,8 +14,7 @@ namespace Application.Profiles
 
         public string Bio { get; set; }
 
-        [JsonPropertyName("following")]
-        public bool IsFollowed { get; set; }
+        public bool Following { get; set; }
 
         public int FollowersCount { get; set; }
 

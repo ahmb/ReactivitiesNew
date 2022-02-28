@@ -17,9 +17,9 @@ namespace Domain
 
         public ICollection<Photo> Photos { get; set; }
 
-        public virtual ICollection<UserFollowing> Followings { get; set; }
+        public ICollection<UserFollowing> Followings { get; set; }
 
-        public virtual ICollection<UserFollowing> Followers { get; set; }
+        public ICollection<UserFollowing> Followers { get; set; }
 
         public virtual ICollection<Notification> Notifications { get; set; }
         public virtual ICollection<Message> MessagesSent { get; set; }

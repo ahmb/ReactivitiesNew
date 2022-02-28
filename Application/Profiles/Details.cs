@@ -1,7 +1,7 @@
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Core;
+using Application.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
@@ -23,9 +23,11 @@ namespace Application.Profiles
         {
             private readonly IMapper _mapper;
             private readonly DataContext _context;
+            private readonly IUserAccessor _userAccessor;
 
-            public Handler(IMapper mapper, DataContext context)
+            public Handler(IMapper mapper, DataContext context, IUserAccessor userAccessor)
             {
+                _userAccessor = userAccessor;
                 _mapper = mapper;
                 _context = context;
             }
@@ -34,7 +36,8 @@ namespace Application.Profiles
             {
                 var user = await _context
                         .Users
-                        .ProjectTo<Profile>(_mapper.ConfigurationProvider) //projecting user to profile object
+                        .ProjectTo<Profile>(_mapper.ConfigurationProvider,  //projecting user to profile object
+                            new { currentUsername = _userAccessor.GetUsername() })
                         .SingleOrDefaultAsync(x => x.Username == request.Username,
                             cancellationToken: cancellationToken);
 

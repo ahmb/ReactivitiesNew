@@ -25,7 +25,7 @@ namespace Persistance
 
         public DbSet<Comment> Comments { get; set; }
 
-        public DbSet<UserFollowing> Followings { get; set; }
+        public DbSet<UserFollowing> UserFollowings { get; set; }
 
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Message> Messages { get; set; }
@@ -87,19 +87,20 @@ namespace Persistance
 
             builder.Entity<UserFollowing>(b =>
             {
+                //composite PK
                 b.HasKey(uF => new { uF.ObserverId, uF.TargetId });
 
                 //define the first side of the on to many relationship between UserFollowing and AppUser 
                 b.HasOne(o => o.Observer)
                     .WithMany(f => f.Followings)
                     .HasForeignKey(o => o.ObserverId)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.Cascade);
 
                 //define the second side of the on to many relationship between UserFollowing and AppUser 
                 b.HasOne(o => o.Target)
                     .WithMany(f => f.Followers)
                     .HasForeignKey(o => o.TargetId)
-                    .OnDelete(DeleteBehavior.Restrict);
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             builder.Entity<Message>(b =>

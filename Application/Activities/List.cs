@@ -61,45 +61,47 @@ namespace Application.Activities
             {
                 //NEW
                 var activitiesss = await _context.Activities
-                    .ProjectTo<ActivityDto>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken);
+                    .ProjectTo<ActivityDto>(_mapper.ConfigurationProvider,
+                         new { currentUsername = _userAccessor.GetUsername() })
+                    .ToListAsync(cancellationToken);
 
-                //OLD
-                var queryable = _context.Activities
-                .Where(x => x.Date >= request.StartDate)
-                .OrderBy(x => x.Date)
-                .AsQueryable();
+                // //OLD
+                // var queryable = _context.Activities
+                // .Where(x => x.Date >= request.StartDate)
+                // .OrderBy(x => x.Date)
+                // .AsQueryable();
 
-                if (request.IsGoing && !request.IsHost)
-                {
-                    queryable = queryable
-                        .Where(x => x.Attendees.Any(a => a.AppUser.UserName == _userAccessor.GetUsername()));
-                }
+                // if (request.IsGoing && !request.IsHost)
+                // {
+                //     queryable = queryable
+                //         .Where(x => x.Attendees.Any(a => a.AppUser.UserName == _userAccessor.GetUsername()));
+                // }
 
-                if (request.IsHost && !request.IsGoing)
-                {
-                    queryable = queryable
-                        .Where(x => x.Attendees.Any(a => a.AppUser.UserName == _userAccessor.GetUsername() && a.IsHost));
-                }
+                // if (request.IsHost && !request.IsGoing)
+                // {
+                //     queryable = queryable
+                //         .Where(x => x.Attendees.Any(a => a.AppUser.UserName == _userAccessor.GetUsername() && a.IsHost));
+                // }
 
-                if (request.Category != null && request.Category.Length > 0)
-                {
-                    queryable = queryable.Where(x => x.Category.ToLower() == request.Category.ToLower());
-                }
+                // if (request.Category != null && request.Category.Length > 0)
+                // {
+                //     queryable = queryable.Where(x => x.Category.ToLower() == request.Category.ToLower());
+                // }
 
-                var activities = await queryable
-                    .Skip(request.Offset ?? 0)
-                    .Take(request.Limit ?? 3)
-                    //eager loading
-                    // .Include(y => y.Attendees)
-                    // .ThenInclude(u => u.AppUser)
-                    .ProjectTo<ActivityDto>(_mapper.ConfigurationProvider)
-                    .ToListAsync(cancellationToken: cancellationToken);
+                // var activities = await queryable
+                //     .Skip(request.Offset ?? 0)
+                //     .Take(request.Limit ?? 3)
+                //     //eager loading
+                //     // .Include(y => y.Attendees)
+                //     // .ThenInclude(u => u.AppUser)
+                //     .ProjectTo<ActivityDto>(_mapper.ConfigurationProvider)
+                //     .ToListAsync(cancellationToken: cancellationToken);
 
                 var ae = new ActivitiesEnvelope
                 {
                     // Activities = _mapper.Map<List<ActivityDto>>(activities),
                     Activities = activitiesss,
-                    ActivityCount = queryable.Count()
+                    ActivityCount = activitiesss.Count
                 };
 
                 return Result<ActivitiesEnvelope>.Success(ae);
