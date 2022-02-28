@@ -31,8 +31,11 @@ namespace API.Extensions
                   {
                       opt.AddPolicy("CorsPolicy", policy =>
                       {
-                          policy.AllowAnyHeader().AllowAnyMethod().AllowCredentials()
-                              .WithExposedHeaders("WWW-Authenticate").WithOrigins("http://localhost:3000");
+                          policy.AllowAnyHeader()
+                                .AllowAnyMethod()
+                                .AllowCredentials()//this will allow signalr to connect when sending the creds
+                                .WithExposedHeaders("WWW-Authenticate")
+                                .WithOrigins("http://localhost:3000");
                       });
                   });
 
@@ -40,7 +43,6 @@ namespace API.Extensions
 
             services.AddAutoMapper(typeof(List.Handler));
 
-            services.AddSignalR();
 
             // var builder = services.AddIdentityCore<AppUser>();
             // var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
@@ -50,6 +52,8 @@ namespace API.Extensions
 
             //pull out the user secrets and api key : saved via dotnet user-secrets set
             services.Configure<CloudinarySettings>(config.GetSection("Cloudinary"));
+
+            services.AddSignalR();
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
 

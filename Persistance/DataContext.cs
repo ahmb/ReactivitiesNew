@@ -51,15 +51,7 @@ namespace Persistance
             builder.Entity<Comment>()
                 .HasOne(comment => comment.Activity)
                 .WithMany(acivity => acivity.Comments)
-                .HasForeignKey(comment => comment.ActivityId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            builder.Entity<Comment>()
-                .HasOne(comment => comment.Author)
-                .WithMany(appUser => appUser.Comments)
-                .HasForeignKey(comment => comment.AppUserId)
-                .OnDelete(DeleteBehavior.Cascade);
-
 
             builder.Entity<Notification>()
                 .HasOne(notification => notification.Reciever)
@@ -163,7 +155,7 @@ namespace Persistance
 
             builder.Entity<MsgReadState>(b =>
             {
-                b.HasKey(m => new { m.MessageId, m.AppUserId});
+                b.HasKey(m => new { m.MessageId, m.AppUserId });
 
                 //define the first side of the on to many relationship between Message and AppUser 
                 b.HasOne(m => m.Message)
