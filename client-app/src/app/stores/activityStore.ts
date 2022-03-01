@@ -519,4 +519,5 @@ export default class ActivityStore {
       toast.error("Problem approving attendance.");
     }
   };
+
 }

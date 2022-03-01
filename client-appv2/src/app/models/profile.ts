@@ -5,9 +5,9 @@ export interface Profile {
   displayName: string;
   bio?: string;
   image?: string;
-  following?: boolean;
-  followersCount?: number;
-  followingCount?: number;
+  following: boolean;
+  followersCount: number;
+  followingCount: number;
   photos?: IPhoto[];
   // interests: IInterest[] ;
   interests?: string[];
