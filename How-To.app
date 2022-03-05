@@ -221,6 +221,7 @@ ClientSide - React Steps:
 ServerSide - dotnet Steps
 1. add config to serve static content from api project, so it can serve from local directory
 2. create a fallbackcontroller
+3.dotnet publish -c Release -o publish --self-contained false Reactivities.sln
 
 Database 
 1. run postgresql container
@@ -247,3 +248,12 @@ HEROKU:
 2.heroku git:remote -a reactivitiesherokutesting //adds anoter remote to git,check with git remove -v
 3.set build pack: heroku buildpacks:set https://github.com/jincod/dotnetcore-buildpack
 4. set config variables
+5. push to heroku by running step 4 below, run 1-4 if you run into issue: src refspec master does not match any
+ $ touch readme 
+
+ $ git add .
+
+ $ git commit -m "init"
+
+ $ git push heroku master
+ 6. build pack stepsfor .net: https://elements.heroku.com/buildpacks/jincod/dotnetcore-buildpack

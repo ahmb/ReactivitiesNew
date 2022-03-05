@@ -52,9 +52,6 @@ if (app.Environment.IsDevelopment())
     // app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
-
-    //in order to accept requests from the react app when its running via npm
-    app.UseCors("CorsPolicy");
 }
 else
 {
@@ -71,6 +68,9 @@ app.UseStaticFiles();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+//in order to accept requests from the react app when its running via npm
+app.UseCors("CorsPolicy");
 
 app.MapControllers();
 app.MapHub<ChatHub>("/chat");
