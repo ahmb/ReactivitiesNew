@@ -257,3 +257,32 @@ HEROKU:
 
  $ git push heroku master
  6. build pack stepsfor .net: https://elements.heroku.com/buildpacks/jincod/dotnetcore-buildpack
+NOTE: how to reset reset heroku git: heroku repo:reset --app reactivitiesherokutesting
+
+------------------
+Issue
+You want to clear the build cache for your app.
+
+Resolution
+Clear The Build Cache
+You can clear the build cache for an app by using the Heroku Builds plugin:
+
+First install the plugin:
+
+heroku plugins:install heroku-builds
+Then use the following command to clear the cache:
+
+heroku builds:cache:purge -a example-app
+The cache will be rebuilt on the next deploy. If you do not have any new code to deploy, you can push an empty commit.
+
+$ git commit --allow-empty -m "Purge cache"
+$ git push heroku master
+Where appname is replaced by the name of the app you want to clear the cache for.
+
+------------------
+
+Test publishing:
+dotnet publish -c Release -o publish --self-contained false Reactivities.sln
+
+HOW TO PUSH DIFFERENT LOCAL BRANCH TO HEROKU MASTER :
+git push heroku net6react17:master
