@@ -20,6 +20,9 @@ namespace API
 
             var host = CreateHostBuilder(args).Build();
 
+            //to resolve the following error:
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
@@ -40,6 +43,7 @@ namespace API
                     logger.LogError(ex, "An error occured during migrations.");
                 }
             }
+
             await host.RunAsync();
         }
 
