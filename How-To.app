@@ -241,3 +241,9 @@ npm install // get a list of all packages
 npm outdated // get a list of packages and what theyll be updated to
 npm update// update the respective packages to the latest minor versions
 npx npm-check-updates -u //update to the latest version <-- RISKY , need to run npm install afterwards
+
+HEROKU:
+1.heroku login
+2.heroku git:remote -a reactivitiesherokutesting //adds anoter remote to git,check with git remove -v
+3.set build pack: heroku buildpacks:set https://github.com/jincod/dotnetcore-buildpack
+4. set config variables
