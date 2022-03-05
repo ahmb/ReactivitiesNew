@@ -1,7 +1,5 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Profiles;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers

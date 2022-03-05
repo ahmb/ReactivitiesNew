@@ -1,8 +1,6 @@
 using System.Threading.Tasks;
-using Domain;
 using Application.Photos;
 using Microsoft.AspNetCore.Mvc;
-using MediatR;
 
 namespace API.Controllers
 {
