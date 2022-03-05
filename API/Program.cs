@@ -16,8 +16,6 @@ namespace API
     {
         public static async Task Main(string[] args)
         {
-            // var host = BuildWebHost(args);
-
             var host = CreateHostBuilder(args).Build();
 
             //to resolve the following error:
@@ -47,12 +45,6 @@ namespace API
             await host.RunAsync();
         }
 
-
-        // public static IWebHost BuildWebHost(string[] args) =>
-        // WebHost.CreateDefaultBuilder(args)
-        //     .UseKestrel(x=>x.AddServerHeader = false)
-        //     .UseStartup<Startup>()
-        //     .Build();
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
