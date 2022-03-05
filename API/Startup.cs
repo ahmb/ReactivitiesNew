@@ -25,17 +25,8 @@ namespace API
             _config = config;
         }
 
-
-
         public void ConfigureDevelopmentServices(IServiceCollection services)
         {
-            //add the DbContext as a service so that class libs can use it
-            // services.AddDbContext<DataContext>(opt =>
-            // {
-            //     //for lazy loading
-            //     // opt.UseLazyLoadingProxies();
-            //     opt.UseSqlite(_config.GetConnectionString("DefaultConnection"));
-            // });
 
             services.AddSwaggerGen(c =>
             {
@@ -47,11 +38,6 @@ namespace API
 
         public void ConfigureProductionServices(IServiceCollection services)
         {
-            //add the DbContext as a service so that class libs can use it
-            // services.AddDbContext<DataContext>(opt =>
-            // {
-            //     opt.UseNpgsql
-            // });
             ConfigureServices(services);
         }
 
@@ -68,8 +54,6 @@ namespace API
                 {
                     cfg.RegisterValidatorsFromAssemblyContaining<Create>();
                 });
-            //             .AddNewtonsoftJson(options =>
-            // options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             services.AddApplicationServices(_config);
             services.AddIdentityServices(_config);
@@ -114,7 +98,6 @@ namespace API
             //enables routing to end points
             app.UseRouting();
 
-            //app.UseHttpsRedirection();
             //looks in the API projects wwwroot folder for index.html file when you connect to httpserver
             app.UseDefaultFiles();
             app.UseStaticFiles();
