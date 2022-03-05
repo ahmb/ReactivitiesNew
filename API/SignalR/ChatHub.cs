@@ -6,7 +6,6 @@ using Application.Comments;
 using MediatR;
 using Microsoft.AspNetCore.SignalR;
 using System;
-using Application.Messages;
 using Microsoft.Extensions.Logging;
 
 namespace API.SignalR
@@ -40,28 +39,28 @@ namespace API.SignalR
             await Clients.Caller.SendAsync("LoadComments", result.Value);
         }
 
-        public async Task SendMessage(CreateMessage.Command command)
-        {
-            //handle the comment create command, this will create the proper entry in the DBAdd
-            var message = await _mediator.Send(command);
+        // public async Task SendMessage(CreateMessage.Command command)
+        // {
+        //     //handle the comment create command, this will create the proper entry in the DBAdd
+        //     var message = await _mediator.Send(command);
 
-            //send the comment to all the clients
-            await Clients.Group(command.ThreadId.ToString()).SendAsync("RecieveMessage", message);
-        }
+        //     //send the comment to all the clients
+        //     await Clients.Group(command.ThreadId.ToString()).SendAsync("RecieveMessage", message);
+        // }
 
-        public async Task SendThread(CreateThread.Command command)
-        {
-            try
-            {
-                var thread = await _mediator.Send(command);
-                await Clients.Group(command.Id.ToString()).SendAsync("RecieveThread", thread);
-            }
-            catch (Exception ex)
-            {
-                await Clients.Group(command.Id.ToString()).SendAsync("RecieveError", ex);
+        // public async Task SendThread(CreateThread.Command command)
+        // {
+        //     try
+        //     {
+        //         var thread = await _mediator.Send(command);
+        //         await Clients.Group(command.Id.ToString()).SendAsync("RecieveThread", thread);
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         await Clients.Group(command.Id.ToString()).SendAsync("RecieveError", ex);
 
-            }
-        }
+        //     }
+        // }
 
         private string GetUsername()
         {

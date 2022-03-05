@@ -20,21 +20,7 @@ namespace Domain
         public ICollection<UserFollowing> Followings { get; set; }
 
         public ICollection<UserFollowing> Followers { get; set; }
-
-        public virtual ICollection<Notification> Notifications { get; set; }
-        public virtual ICollection<Message> MessagesSent { get; set; }
-        public virtual ICollection<Message> MessagesRecieved { get; set; }
-
-        public virtual ICollection<ThreadParticipant> ThreadPartipants { get; set; }
-        public virtual ICollection<Msg> Messages { get; set; }
-        public virtual ICollection<MsgReadState> MsgReadStates { get; set; }
-
         public virtual ICollection<Interest> Interests { get; set; }
-
-
-
-
-
 
     }
 }

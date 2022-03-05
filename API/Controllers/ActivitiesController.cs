@@ -12,7 +12,6 @@ namespace API.Controllers
     public class ActivitiesController : BaseController
     {
 
-        //Get a list of activities
         [HttpGet]
         public async Task<IActionResult> GetActivities([FromQuery] ActivityParams param)
         {
@@ -23,7 +22,6 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetActivity(Guid id)
         {
-            var a = "adding a comment for new push";
             return HandleResult(await Mediator.Send(new Details.Query { Id = id }));
         }
 
