@@ -14,10 +14,12 @@ export default observer(function ProfilePage() {
 
   useEffect(() => {
     loadProfile(username);
-    return () => setActiveTab(0);
+    return () => {
+      setActiveTab(0);
+    };
   }, [loadProfile, username, setActiveTab]);
 
-  if (loadingProfile) return <LoadingComponent content='Loading profile....' />;
+  if (loadingProfile) return <LoadingComponent content='Loading profile...' />;
 
   return (
     <Grid>

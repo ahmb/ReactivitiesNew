@@ -10,7 +10,6 @@ export interface Profile {
   followingCount: number;
   photos?: IPhoto[];
   // interests: IInterest[] ;
-  interests?: string[];
 }
 
 //this class is just there to help us instantiate an IProfile obj using the constructor

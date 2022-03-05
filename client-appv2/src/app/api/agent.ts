@@ -1,14 +1,12 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
-import {
-  ActivitiesEnvelope,
-  Activity,
-  ActivityFormValues,
-} from "../models/activity";
+import { Activity, ActivityFormValues } from "../models/activity";
 import { history } from "../../index";
 import { store } from "../stores/store";
 import { IUser, IUserFormValues } from "../models/user";
-import { IPhoto, Profile } from "../models/profile";
+import { IPhoto, Profile, UserActivity } from "../models/profile";
+import { PaginatedResult } from "../models/pagination";
+import Axios from "axios";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -24,9 +22,20 @@ axios.interceptors.request.use((config) => {
   return config;
 });
 
+//TODO: why cant axios locate the pagination response header?
+//https://github.com/axios/axios/issues/746
+//According to 'Access-Control-Expose-Headers' to process the POST response headers
 axios.interceptors.response.use(
   async (response) => {
     await sleep(1000);
+    const pagination = response.headers["pagination"];
+    if (pagination) {
+      response.data = new PaginatedResult(
+        response.data,
+        JSON.parse(pagination)
+      );
+      return response as AxiosResponse<PaginatedResult<any>>;
+    }
     return response;
   },
   (error: AxiosError) => {
@@ -80,7 +89,10 @@ const requests = {
 };
 
 const Activities = {
-  list: () => requests.get<ActivitiesEnvelope>("/activities"),
+  list: (params: URLSearchParams) =>
+    Axios.get<PaginatedResult<Activity[]>>("/activities", { params }).then(
+      responseBody
+    ),
   details: (id: string) => requests.get<Activity>(`/activities/${id}`),
   create: (activity: ActivityFormValues) =>
     requests.post<void>("/activities", activity),
@@ -115,6 +127,10 @@ const Profiles = {
     requests.post(`/follow/${username}`, {}),
   listFollowings: (username: string, predicate: string) =>
     requests.get<Profile[]>(`/follow/${username}?predicate=${predicate}`),
+  listActivities: (username: string, predicate: string) =>
+    requests.get<UserActivity[]>(
+      `/profiles/${username}/activities?predicate=${predicate}`
+    ),
 };
 
 const agent = {

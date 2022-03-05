@@ -99,6 +99,21 @@ flush privileges;
 #
  dotnet user-secrets list
 
+DOCKER
+-------
+These two commands, to be run from project folder where Dockerfile is located:
+https://www.softwaredeveloper.blog/multi-project-dotnet-core-solution-in-docker-image#docker-run-command
+
+single project solution:
+docker build -t aspnetapp .
+
+multiproject solution:
+docker build -f PROJECT_DIRECTORY/Dockerfile -t IMAGE_NAME .
+
+docker run -d -p 8080:80 --name myapp aspnetapp
+
+
+
 
  #how to
  ssh 68.183.19.105

@@ -15,16 +15,20 @@ namespace API.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<Unit>> Edit(Edit.Command command)
+        public async Task<IActionResult> Edit(Edit.Command command)
         {
-            return await Mediator.Send(command);
+            return HandleResult(await Mediator
+                .Send(new Edit.Command
+                { DisplayName = command.DisplayName, Bio = command.Bio }));
         }
 
         [HttpGet("{username}/activities")]
-        public async Task<ActionResult<List<UserActivityDto>>> GetUserActivities(string username,
+        public async Task<IActionResult> GetUserActivities(string username,
         string predicate)
         {
-            return await Mediator.Send(new ListActivities.Query { Username = username, Predicate = predicate });
+            return HandleResult(await Mediator
+                .Send(new ListActivities.Query
+                { Username = username, Predicate = predicate }));
         }
     }
 }

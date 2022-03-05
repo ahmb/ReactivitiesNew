@@ -2,11 +2,6 @@
 
 import { Profile } from "./profile";
 
-export interface ActivitiesEnvelope {
-  activities: Activity[];
-  activityCount: number;
-}
-
 export interface Activity {
   id: string;
   title: string;

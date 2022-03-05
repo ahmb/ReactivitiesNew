@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Activities;
+using Application.Core;
 using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -15,12 +16,9 @@ namespace API.Controllers
 
         //Get a list of activities
         [HttpGet]
-        public async Task<ActionResult<List.ActivitiesEnvelope>> GetActivities(
-            int? limit, int? offset, bool isGoing, bool isHost, string category, DateTime? startDate
-            )
+        public async Task<IActionResult> GetActivities([FromQuery] ActivityParams param)
         {
-            return HandleResult(await Mediator.Send(new List.Query(limit,
-                offset, isGoing, isHost, startDate, category)));
+            return HandlePagedResult(await Mediator.Send(new List.Query { Params = param }));
         }
 
         [HttpGet("{id}")]

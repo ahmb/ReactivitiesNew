@@ -34,7 +34,7 @@ namespace API.Extensions
                           policy.AllowAnyHeader()
                                 .AllowAnyMethod()
                                 .AllowCredentials()//this will allow signalr to connect when sending the creds
-                                .WithExposedHeaders("WWW-Authenticate")
+                                .WithExposedHeaders(new string[] { "WWW-Authenticate", "Pagination" })
                                 .WithOrigins("http://localhost:3000");
                       });
                   });

@@ -1,12 +1,10 @@
 import { observer } from "mobx-react-lite";
 import React from "react";
 import {
-  Button,
   Divider,
   Grid,
   Header,
   Item,
-  Reveal,
   Segment,
   Statistic,
 } from "semantic-ui-react";
@@ -35,10 +33,10 @@ export default observer(function ProfileHeader({ profile }: Props) {
             </Item>
           </Item.Group>
         </Grid.Column>
-        <Grid.Column widescreen={4}>
+        <Grid.Column width={4}>
           <Statistic.Group widths={2}>
-            <Statistic label='Following' value={profile.followingCount} />
             <Statistic label='Followers' value={profile.followersCount} />
+            <Statistic label='Following' value={profile.followingCount} />
           </Statistic.Group>
           <Divider />
           <FollowButton profile={profile} />
