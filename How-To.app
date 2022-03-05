@@ -236,7 +236,8 @@ docker run --name devPostgreSQL -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=secr
 5. remove all previous migration files and perform new migration:
 dotnet ef migrations add PGInitial -p Persistance -s API
 
-
-      "date": "2022-04-05T07:33:54.543003-04:00",
-
-      "2022-03-05T12:11:45.143488-05:00",
+how to update client packaegs
+npm install // get a list of all packages
+npm outdated // get a list of packages and what theyll be updated to
+npm update// update the respective packages to the latest minor versions
+npx npm-check-updates -u //update to the latest version <-- RISKY , need to run npm install afterwards
