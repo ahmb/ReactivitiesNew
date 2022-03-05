@@ -6,6 +6,7 @@ appsettings.json
 #*.db
 wwwroot
 publish
+.docker
 
 # dependencies
 /node_modules

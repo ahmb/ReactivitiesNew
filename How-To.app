@@ -207,3 +207,31 @@ list all remotes
 $git remote -v
 
 git push origin
+
+
+==============================
+PRODUCTION BUILD & RELEASE PROCESS:::: 
+
+ClientSide - React Steps:
+1.npm run build // to build the app
+2."postbuild" : "mv build ../API/wwwroot",//postbuild script in package.json
+3.npm run build //rerun the command to create a new ver and move the folder into our api folder 
+
+
+ServerSide - dotnet Steps
+1. add config to serve static content from api project, so it can serve from local directory
+2. create a fallbackcontroller
+
+Database 
+1. run postgresql container
+docker run --name devPostgreSQL -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=secret -p 5432:5432 -d postgres:latest
+
+2. dotnet install correct package
+                
+3. update with correct dbcontext services : opt.UseNpgsql(config.GetConnectionString("DefaultConnection"));
+
+4. update appsettings.json with connection string: 
+    "DefaultConnection": "Server=localhost; Database=reactivities; Uid=appuser; Pwd=Pa$$w0rd"
+
+5. remove all previous migration files and perform new migration:
+dotnet ef migrations add PGInitial -p Persistance -s API

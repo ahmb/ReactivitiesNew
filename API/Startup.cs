@@ -30,12 +30,12 @@ namespace API
         public void ConfigureDevelopmentServices(IServiceCollection services)
         {
             //add the DbContext as a service so that class libs can use it
-            services.AddDbContext<DataContext>(opt =>
-            {
-                //for lazy loading
-                // opt.UseLazyLoadingProxies();
-                opt.UseSqlite(_config.GetConnectionString("DefaultConnection"));
-            });
+            // services.AddDbContext<DataContext>(opt =>
+            // {
+            //     //for lazy loading
+            //     // opt.UseLazyLoadingProxies();
+            //     opt.UseSqlite(_config.GetConnectionString("DefaultConnection"));
+            // });
 
             services.AddSwaggerGen(c =>
             {
@@ -48,12 +48,10 @@ namespace API
         public void ConfigureProductionServices(IServiceCollection services)
         {
             //add the DbContext as a service so that class libs can use it
-            services.AddDbContext<DataContext>(opt =>
-            {
-                //for lazy loading
-                // opt.UseLazyLoadingProxies();
-                // opt.UseMySql(Configuration.GetConnectionString("DefaultConnection"));
-            });
+            // services.AddDbContext<DataContext>(opt =>
+            // {
+            //     opt.UseNpgsql
+            // });
             ConfigureServices(services);
         }
 
@@ -116,7 +114,7 @@ namespace API
             app.UseRouting();
 
             //app.UseHttpsRedirection();
-            //looks in the wwwroot folder for index.html file
+            //looks in the API projects wwwroot folder for index.html file when you connect to httpserver
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
@@ -133,8 +131,10 @@ namespace API
             {
                 endpoints.MapControllers();
                 endpoints.MapHub<ChatHub>("/chat");
-                //fallback 
+                //fallback controller incase donet is not 
+                //aware of what  react-routers doing
                 endpoints.MapFallbackToController("Index", "Fallback");
+
             });
         }
     }

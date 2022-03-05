@@ -11,6 +11,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -43,6 +44,10 @@ namespace API.Extensions
 
             services.AddAutoMapper(typeof(List.Handler));
 
+            services.AddDbContext<DataContext>(opt =>
+            {
+                opt.UseNpgsql(config.GetConnectionString("DefaultConnection"));
+            });
 
             // var builder = services.AddIdentityCore<AppUser>();
             // var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
@@ -65,33 +70,6 @@ namespace API.Extensions
             services.AddScoped<IPhotoAccessor, PhotoAccessor>();
 
 
-            // services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
-            // {
-            //     opt.TokenValidationParameters = new TokenValidationParameters
-            //     {
-            //         ValidateIssuerSigningKey = true,
-            //         IssuerSigningKey = key,
-            //         ValidateAudience = false,
-            //         ValidateIssuer = false,
-            //         ValidateLifetime = true,
-            //     };
-            //     //hook into the on message recieved for the singalR event
-            //     opt.Events = new JwtBearerEvents
-            //     {
-            //         OnMessageReceived = msgRecvContext =>
-            //         {
-            //             //will pull the token out of the request
-            //             Microsoft.Extensions.Primitives.StringValues accessToken = msgRecvContext.Request.Query["access_token"];
-            //             //get a reference to the path of the request thats coming in
-            //             Microsoft.AspNetCore.Http.PathString path = msgRecvContext.HttpContext.Request.Path;
-            //             if (!string.IsNullOrEmpty(accessToken) && (path.StartsWithSegments("/chat")))
-            //             {
-            //                 msgRecvContext.Token = accessToken;
-            //             }
-            //             return Task.CompletedTask;
-            //         }
-            //     };
-            // });
 
             return services;
 
