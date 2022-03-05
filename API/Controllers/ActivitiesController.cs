@@ -19,9 +19,11 @@ namespace API.Controllers
             return HandlePagedResult(await Mediator.Send(new List.Query { Params = param }));
         }
 
+        //adding a comment for rebuild
         [HttpGet("{id}")]
         public async Task<IActionResult> GetActivity(Guid id)
         {
+            var a = "adding a comment for new push";
             return HandleResult(await Mediator.Send(new Details.Query { Id = id }));
         }
 
