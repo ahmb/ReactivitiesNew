@@ -110,6 +110,8 @@ const Account = {
     requests.post<IUser>("/account/login", user),
   register: (user: IUserFormValues) =>
     requests.post<IUser>("/account/register", user),
+  fbLogin: (accessToken: string) => requests
+    .post<IUser>(`/account/fbLogin?accessToken=${accessToken}`, {}),
 };
 
 const Profiles = {

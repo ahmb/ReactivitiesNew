@@ -1,5 +1,6 @@
 # Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP .NET Core service.
 #https://josiahmortenson.dev/blog/2020-06-08-aspnetcore-docker-https
+#https://dev.to/alrobilliard/deploying-net-core-to-heroku-1lfe
 version: '3.4'
 
 
