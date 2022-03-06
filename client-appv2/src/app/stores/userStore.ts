@@ -6,6 +6,8 @@ import { store } from "./store";
 
 export default class UserStore {
   user: IUser | null = null;
+  fbAccessToken: string | null = null;
+  fbLoading = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -64,14 +66,46 @@ export default class UserStore {
     if (this.user) this.user.displayName = name;
   };
 
+  getFacebookLoginStatus = async () => {
+    try {
+      while (!window.FB) continue;
+      window.FB.getLoginStatus((response) => {
+        //when not connected the status is "unknown"
+        if (response.status === "connected") {
+          this.fbAccessToken = response.authResponse.accessToken;
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   facebookLogin = () => {
-    window.FB.login(
-      (response) => {
-        agent.Account.fbLogin(response.authResponse.accessToken).then((user) =>
-          console.log(user)
-        );
-      },
-      { scope: "public_profile,email" }
-    );
+    this.fbLoading = true;
+    const apiLogin = (accessToken: string) => {
+      agent.Account.fbLogin(accessToken)
+        .then((user) => {
+          store.commonStore.setToken(user.token);
+          runInAction(() => {
+            this.user = user;
+            this.fbLoading = false;
+          });
+          history.push("/activities");
+        })
+        .catch((error) => {
+          console.log(error);
+          runInAction(() => (this.fbLoading = false));
+        });
+    };
+    if (this.fbAccessToken) {
+      apiLogin(this.fbAccessToken);
+    } else {
+      window.FB.login(
+        (response) => {
+          apiLogin(response.authResponse.accessToken);
+        },
+        { scope: "public_profile,email" }
+      );
+    }
   };
 }

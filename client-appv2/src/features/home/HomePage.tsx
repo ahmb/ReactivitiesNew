@@ -54,6 +54,7 @@ export default observer(function HomePage() {
             </Divider>
             <Button
               onClick={userStore.facebookLogin}
+              loading={userStore.fbLoading}
               size='huge'
               inverted
               color='facebook'
