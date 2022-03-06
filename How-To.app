@@ -237,6 +237,12 @@ docker run --name devPostgreSQL -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=secr
 5. remove all previous migration files and perform new migration:
 dotnet ef migrations add PGInitial -p Persistance -s API
 
+
+----------- 
+How to build a docker image from a file:
+docker build -t TAGNAME .
+
+
 how to update client packaegs
 npm install // get a list of all packages
 npm outdated // get a list of packages and what theyll be updated to
@@ -286,3 +292,5 @@ dotnet publish -c Release -o publish --self-contained false Reactivities.sln
  
 HOW TO PUSH DIFFERENT LOCAL BRANCH TO HEROKU MASTER :
 git push heroku net6react17:master
+
+

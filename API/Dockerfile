@@ -1,11 +1,12 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:2.2 AS build-env
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
 WORKDIR /app
+EXPOSE 5000
 
 COPY . ./
-RUN dotnet publish PROJECT_NAME -c Release -o out
+RUN dotnet publish API -c Release -o out
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:2.2
+FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
-COPY --from=build-env /app/PROJECT_NAME/out .
+COPY --from=build-env /app/API/out .
 
-ENTRYPOINT ["dotnet", "PROJECT_NAME.dll"]
+ENTRYPOINT ["dotnet", "API.dll"]
