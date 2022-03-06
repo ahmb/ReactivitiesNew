@@ -283,6 +283,6 @@ Where appname is replaced by the name of the app you want to clear the cache for
 
 Test publishing:
 dotnet publish -c Release -o publish --self-contained false Reactivities.sln
-
+ 
 HOW TO PUSH DIFFERENT LOCAL BRANCH TO HEROKU MASTER :
 git push heroku net6react17:master
