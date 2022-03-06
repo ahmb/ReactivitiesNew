@@ -35,7 +35,7 @@ function App() {
 
   return (
     <>
-      <ToastContainer position='bottom-right' hideProgressBar />
+      <ToastContainer position='top-center' hideProgressBar />
       <ModalContainer />
       <Route exact path='/' component={HomePage} />
       <Route
@@ -53,7 +53,7 @@ function App() {
                   component={ActivityForm}
                 />
                 <Route path='/profiles/:username' component={ProfilePage} />
-                <PrivateRoute path='/errors' component={TestError} />
+                <Route path='/errors' component={TestError} />
                 <Route path='/server-error' component={ServerError} />
                 <Route path='/login' component={LoginForm} />
                 <Route component={NotFound} />
