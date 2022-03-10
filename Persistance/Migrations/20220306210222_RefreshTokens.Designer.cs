@@ -12,8 +12,8 @@ using Persistance;
 namespace Persistance.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220305070751_PGInitial")]
-    partial class PGInitial
+    [Migration("20220306210222_RefreshTokens")]
+    partial class RefreshTokens
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -219,76 +219,34 @@ namespace Persistance.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("Interests");
+                    b.ToTable("Interest");
                 });
 
             modelBuilder.Entity("Domain.Message", b =>
                 {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Body")
+                        .HasColumnType("text");
+
                     b.Property<string>("RecieverId")
                         .HasColumnType("text");
 
                     b.Property<string>("SenderId")
                         .HasColumnType("text");
 
-                    b.Property<string>("Body")
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
-
                     b.Property<DateTime>("SentAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.HasKey("RecieverId", "SenderId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("RecieverId");
 
                     b.HasIndex("SenderId");
 
                     b.ToTable("Messages");
-                });
-
-            modelBuilder.Entity("Domain.Msg", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("AppUserId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Body")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("SentDateTime")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<Guid>("ThreadId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AppUserId");
-
-                    b.HasIndex("ThreadId");
-
-                    b.ToTable("Msgs");
-                });
-
-            modelBuilder.Entity("Domain.MsgReadState", b =>
-                {
-                    b.Property<Guid>("MessageId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("AppUserId")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("ReadDateTime")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("MessageId", "AppUserId");
-
-                    b.HasIndex("AppUserId");
-
-                    b.ToTable("MsgReadStates");
                 });
 
             modelBuilder.Entity("Domain.Notification", b =>
@@ -347,30 +305,31 @@ namespace Persistance.Migrations
                     b.ToTable("Photos");
                 });
 
-            modelBuilder.Entity("Domain.Thread", b =>
+            modelBuilder.Entity("Domain.RefreshToken", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("integer");
 
-                    b.HasKey("Id");
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.ToTable("Threads");
-                });
-
-            modelBuilder.Entity("Domain.ThreadParticipant", b =>
-                {
                     b.Property<string>("AppUserId")
                         .HasColumnType("text");
 
-                    b.Property<Guid>("TheadId")
-                        .HasColumnType("uuid");
+                    b.Property<DateTime>("Expires")
+                        .HasColumnType("timestamp with time zone");
 
-                    b.HasKey("AppUserId", "TheadId");
+                    b.Property<DateTime?>("Revoked")
+                        .HasColumnType("timestamp with time zone");
 
-                    b.HasIndex("TheadId");
+                    b.Property<string>("Token")
+                        .HasColumnType("text");
 
-                    b.ToTable("ThreadParticipants");
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("RefreshToken");
                 });
 
             modelBuilder.Entity("Domain.UserFollowing", b =>
@@ -386,39 +345,6 @@ namespace Persistance.Migrations
                     b.HasIndex("TargetId");
 
                     b.ToTable("UserFollowings");
-                });
-
-            modelBuilder.Entity("Domain.Value", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Values");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Value 101"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Value 102"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Value 103"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -598,57 +524,16 @@ namespace Persistance.Migrations
             modelBuilder.Entity("Domain.Message", b =>
                 {
                     b.HasOne("Domain.AppUser", "Reciever")
-                        .WithMany("MessagesRecieved")
-                        .HasForeignKey("RecieverId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("RecieverId");
 
                     b.HasOne("Domain.AppUser", "Sender")
-                        .WithMany("MessagesSent")
-                        .HasForeignKey("SenderId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("SenderId");
 
                     b.Navigation("Reciever");
 
                     b.Navigation("Sender");
-                });
-
-            modelBuilder.Entity("Domain.Msg", b =>
-                {
-                    b.HasOne("Domain.AppUser", "AppUser")
-                        .WithMany("Messages")
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Domain.Thread", "Thread")
-                        .WithMany("Messages")
-                        .HasForeignKey("ThreadId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("AppUser");
-
-                    b.Navigation("Thread");
-                });
-
-            modelBuilder.Entity("Domain.MsgReadState", b =>
-                {
-                    b.HasOne("Domain.AppUser", "AppUser")
-                        .WithMany("MsgReadStates")
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Msg", "Message")
-                        .WithMany("MsgReadStates")
-                        .HasForeignKey("MessageId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("AppUser");
-
-                    b.Navigation("Message");
                 });
 
             modelBuilder.Entity("Domain.Notification", b =>
@@ -660,9 +545,8 @@ namespace Persistance.Migrations
                         .IsRequired();
 
                     b.HasOne("Domain.AppUser", "Reciever")
-                        .WithMany("Notifications")
-                        .HasForeignKey("RecieverId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .WithMany()
+                        .HasForeignKey("RecieverId");
 
                     b.HasOne("Domain.AppUser", "Sender")
                         .WithMany()
@@ -682,23 +566,13 @@ namespace Persistance.Migrations
                         .HasForeignKey("AppUserId");
                 });
 
-            modelBuilder.Entity("Domain.ThreadParticipant", b =>
+            modelBuilder.Entity("Domain.RefreshToken", b =>
                 {
                     b.HasOne("Domain.AppUser", "AppUser")
-                        .WithMany("ThreadPartipants")
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Thread", "Thread")
-                        .WithMany("ThreadParticipants")
-                        .HasForeignKey("TheadId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .WithMany("RefreshTokens")
+                        .HasForeignKey("AppUserId");
 
                     b.Navigation("AppUser");
-
-                    b.Navigation("Thread");
                 });
 
             modelBuilder.Entity("Domain.UserFollowing", b =>
@@ -790,31 +664,9 @@ namespace Persistance.Migrations
 
                     b.Navigation("Interests");
 
-                    b.Navigation("Messages");
-
-                    b.Navigation("MessagesRecieved");
-
-                    b.Navigation("MessagesSent");
-
-                    b.Navigation("MsgReadStates");
-
-                    b.Navigation("Notifications");
-
                     b.Navigation("Photos");
 
-                    b.Navigation("ThreadPartipants");
-                });
-
-            modelBuilder.Entity("Domain.Msg", b =>
-                {
-                    b.Navigation("MsgReadStates");
-                });
-
-            modelBuilder.Entity("Domain.Thread", b =>
-                {
-                    b.Navigation("Messages");
-
-                    b.Navigation("ThreadParticipants");
+                    b.Navigation("RefreshTokens");
                 });
 #pragma warning restore 612, 618
         }

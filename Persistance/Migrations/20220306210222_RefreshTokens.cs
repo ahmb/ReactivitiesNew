@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Persistance.Migrations
 {
-    public partial class PGInitial : Migration
+    public partial class RefreshTokens : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -73,30 +73,6 @@ namespace Persistance.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Threads",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Threads", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Values",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Values", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -262,7 +238,7 @@ namespace Persistance.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Interests",
+                name: "Interest",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -271,9 +247,9 @@ namespace Persistance.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Interests", x => x.Id);
+                    table.PrimaryKey("PK_Interest", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Interests_AspNetUsers_AppUserId",
+                        name: "FK_Interest_AspNetUsers_AppUserId",
                         column: x => x.AppUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
@@ -283,27 +259,25 @@ namespace Persistance.Migrations
                 name: "Messages",
                 columns: table => new
                 {
-                    SenderId = table.Column<string>(type: "text", nullable: false),
-                    RecieverId = table.Column<string>(type: "text", nullable: false),
-                    SentAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    SenderId = table.Column<string>(type: "text", nullable: true),
+                    RecieverId = table.Column<string>(type: "text", nullable: true),
+                    SentAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Body = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Messages", x => new { x.RecieverId, x.SenderId });
+                    table.PrimaryKey("PK_Messages", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Messages_AspNetUsers_RecieverId",
                         column: x => x.RecieverId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Messages_AspNetUsers_SenderId",
                         column: x => x.SenderId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -331,8 +305,7 @@ namespace Persistance.Migrations
                         name: "FK_Notifications_AspNetUsers_RecieverId",
                         column: x => x.RecieverId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Notifications_AspNetUsers_SenderId",
                         column: x => x.SenderId,
@@ -360,6 +333,27 @@ namespace Persistance.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "RefreshToken",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    AppUserId = table.Column<string>(type: "text", nullable: true),
+                    Token = table.Column<string>(type: "text", nullable: true),
+                    Expires = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Revoked = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RefreshToken", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RefreshToken_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserFollowings",
                 columns: table => new
                 {
@@ -381,92 +375,6 @@ namespace Persistance.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Msgs",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    ThreadId = table.Column<Guid>(type: "uuid", nullable: false),
-                    AppUserId = table.Column<string>(type: "text", nullable: true),
-                    SentDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Body = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Msgs", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Msgs_AspNetUsers_AppUserId",
-                        column: x => x.AppUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Msgs_Threads_ThreadId",
-                        column: x => x.ThreadId,
-                        principalTable: "Threads",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ThreadParticipants",
-                columns: table => new
-                {
-                    AppUserId = table.Column<string>(type: "text", nullable: false),
-                    TheadId = table.Column<Guid>(type: "uuid", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ThreadParticipants", x => new { x.AppUserId, x.TheadId });
-                    table.ForeignKey(
-                        name: "FK_ThreadParticipants_AspNetUsers_AppUserId",
-                        column: x => x.AppUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_ThreadParticipants_Threads_TheadId",
-                        column: x => x.TheadId,
-                        principalTable: "Threads",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MsgReadStates",
-                columns: table => new
-                {
-                    MessageId = table.Column<Guid>(type: "uuid", nullable: false),
-                    AppUserId = table.Column<string>(type: "text", nullable: false),
-                    ReadDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MsgReadStates", x => new { x.MessageId, x.AppUserId });
-                    table.ForeignKey(
-                        name: "FK_MsgReadStates_AspNetUsers_AppUserId",
-                        column: x => x.AppUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_MsgReadStates_Msgs_MessageId",
-                        column: x => x.MessageId,
-                        principalTable: "Msgs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.InsertData(
-                table: "Values",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
-                {
-                    { 1, "Value 101" },
-                    { 2, "Value 102" },
-                    { 3, "Value 103" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -522,29 +430,19 @@ namespace Persistance.Migrations
                 column: "AuthorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Interests_AppUserId",
-                table: "Interests",
+                name: "IX_Interest_AppUserId",
+                table: "Interest",
                 column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Messages_RecieverId",
+                table: "Messages",
+                column: "RecieverId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Messages_SenderId",
                 table: "Messages",
                 column: "SenderId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MsgReadStates_AppUserId",
-                table: "MsgReadStates",
-                column: "AppUserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Msgs_AppUserId",
-                table: "Msgs",
-                column: "AppUserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Msgs_ThreadId",
-                table: "Msgs",
-                column: "ThreadId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Notifications_ActivityId",
@@ -567,9 +465,9 @@ namespace Persistance.Migrations
                 column: "AppUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ThreadParticipants_TheadId",
-                table: "ThreadParticipants",
-                column: "TheadId");
+                name: "IX_RefreshToken_AppUserId",
+                table: "RefreshToken",
+                column: "AppUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserFollowings_TargetId",
@@ -601,13 +499,10 @@ namespace Persistance.Migrations
                 name: "Comments");
 
             migrationBuilder.DropTable(
-                name: "Interests");
+                name: "Interest");
 
             migrationBuilder.DropTable(
                 name: "Messages");
-
-            migrationBuilder.DropTable(
-                name: "MsgReadStates");
 
             migrationBuilder.DropTable(
                 name: "Notifications");
@@ -616,28 +511,19 @@ namespace Persistance.Migrations
                 name: "Photos");
 
             migrationBuilder.DropTable(
-                name: "ThreadParticipants");
+                name: "RefreshToken");
 
             migrationBuilder.DropTable(
                 name: "UserFollowings");
 
             migrationBuilder.DropTable(
-                name: "Values");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
-                name: "Msgs");
 
             migrationBuilder.DropTable(
                 name: "Activities");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Threads");
         }
     }
 }
