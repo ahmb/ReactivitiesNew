@@ -5,6 +5,7 @@ using Application.Activities;
 using Application.Interfaces;
 using Application.Profiles;
 using Domain;
+using Infrastructure.Email;
 using Infrastructure.Photos;
 using Infrastructure.Security;
 using MediatR;
@@ -56,6 +57,7 @@ namespace API.Extensions
             services.AddScoped<IJwtGenerator, JwtGenerator>();
             services.AddScoped<IUserAccessor, UserAccessor>();
             services.AddScoped<IPhotoAccessor, PhotoAccessor>();
+            services.AddScoped<EmailSender>();
 
             return services;
         }
