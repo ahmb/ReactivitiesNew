@@ -86,7 +86,8 @@ app.UseCsp(opt => opt
         "sha256-/epqQuRElKW1Z83z1Sg8Bs2MKi99Nrq41Z3fnS2Nrgk=",
         "sha256-2aahydUs+he2AO0g7YZuG67RGvfE9VXGbycVgIwMnBI=",
         "sha256-+oGcdj5BhO6SoiIGYIkPOMYi7d2h2Pp/bkJLBfYL+kk=",
-        "https://www.facebook.com"
+        "https://www.facebook.com",
+        "sha256-yChqzBduCCi4o4xdbXRXh4U/t1rP4UUUMJt+rB+ylUI="
 
     ))
     .FontSources(s => s.Self().CustomSources(
@@ -107,7 +108,9 @@ app.UseCsp(opt => opt
             "sha256-HIgflxNtM43xg36bBIUoPTUuo+CXZ319LsTVRtsZ/VU=",
             "https://www.facebook.com",
             "https://connect.facebook.net",
-            "sha256-3x3EykMfFJtFd84iFKuZG0MoGAo5XdRfl3rq3r//ydA="
+            "sha256-3x3EykMfFJtFd84iFKuZG0MoGAo5XdRfl3rq3r//ydA=",
+            "sha256-HIgflxNtM43xg36bBIUoPTUuo+CXZ319LsTVRtsZ/VU=",
+            "sha256-XiQ00gnMGrQ6iKIbJuHeNRUolqelnAL72Slo3+LCb6s="
         ))
 );
 
