@@ -1,7 +1,5 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Profiles;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -9,22 +7,26 @@ namespace API.Controllers
     public class ProfilesController : BaseController
     {
         [HttpGet("{username}")]
-        public async Task<ActionResult<Profile>> Get(string username)
+        public async Task<IActionResult> Get(string username)
         {
-            return await Mediator.Send(new Details.Query { Username = username });
+            return HandleResult(await Mediator.Send(new Details.Query { Username = username }));
         }
 
         [HttpPut]
-        public async Task<ActionResult<Unit>> Edit(Edit.Command command)
+        public async Task<IActionResult> Edit(Edit.Command command)
         {
-            return await Mediator.Send(command);
+            return HandleResult(await Mediator
+                .Send(new Edit.Command
+                { DisplayName = command.DisplayName, Bio = command.Bio }));
         }
 
         [HttpGet("{username}/activities")]
-        public async Task<ActionResult<List<UserActivityDto>>> GetUserActivities(string username,
+        public async Task<IActionResult> GetUserActivities(string username,
         string predicate)
         {
-            return await Mediator.Send(new ListActivities.Query { Username = username, Predicate = predicate });
+            return HandleResult(await Mediator
+                .Send(new ListActivities.Query
+                { Username = username, Predicate = predicate }));
         }
     }
 }

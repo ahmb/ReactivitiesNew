@@ -4,7 +4,8 @@ namespace API.SignalR
 {
     public static class ConnectedUser
     {
-        public static Dictionary<string,HashSet<string>> Ids = new Dictionary<string,HashSet<string>>();
+        private static Dictionary<string, HashSet<string>> ids = new();
 
+        public static Dictionary<string, HashSet<string>> Ids { get => ids; set => ids = value; }
     }
 }

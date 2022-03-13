@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Core;
 using Application.Interfaces;
 using Domain;
 using MediatR;
@@ -13,13 +14,13 @@ namespace Application.Photos
 {
     public class Add
     {
-        public class Command : IRequest<Photo>
+        public class Command : IRequest<Result<Photo>>
         {
             //insert properties
             public IFormFile File { get; set; }
         }
 
-        public class Handler : IRequestHandler<Command, Photo>
+        public class Handler : IRequestHandler<Command, Result<Photo>>
         {
             private readonly DataContext _context;
             private readonly IUserAccessor _userAccessor;
@@ -32,13 +33,16 @@ namespace Application.Photos
                 _context = context;
             }
 
-            public async Task<Photo> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<Photo>> Handle(Command request, CancellationToken cancellationToken)
             {
-                //add command handler logic
+                var user = await _context.Users
+                        .Include(p => p.Photos)
+                        .SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername()
+                            , cancellationToken: cancellationToken);
 
-                var photoUploadResult = _photoAccessor.AddPhoto(request.File);
+                if (user == null) return null;
 
-                var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
+                var photoUploadResult = await _photoAccessor.AddPhoto(request.File);
 
                 var photo = new Photo
                 {
@@ -47,15 +51,17 @@ namespace Application.Photos
                 };
 
                 if (!user.Photos.Any(x => x.IsMain))
+                {
                     photo.IsMain = true;
+                }
 
                 user.Photos.Add(photo);
 
-                var success = await _context.SaveChangesAsync() > 0;
+                var success = await _context.SaveChangesAsync(cancellationToken) > 0;
 
-                if (success) return photo;
+                if (success) return Result<Photo>.Success(photo);
 
-                throw new Exception("Problem saving changes.");
+                return Result<Photo>.Failure("Problem adding photo");
 
             }
         }

@@ -1,13 +1,12 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
-import {
-  ActivitiesEnvelope,
-  Activity,
-  ActivityFormValues,
-} from "../models/activity";
+import { Activity, ActivityFormValues } from "../models/activity";
 import { history } from "../../index";
 import { store } from "../stores/store";
 import { IUser, IUserFormValues } from "../models/user";
+import { IPhoto, Profile, UserActivity } from "../models/profile";
+import { PaginatedResult } from "../models/pagination";
+import Axios from "axios";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -15,7 +14,7 @@ const sleep = (delay: number) => {
   });
 };
 
-axios.defaults.baseURL = "http://localhost:5000/api";
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 axios.interceptors.request.use((config) => {
   const token = store.commonStore.token;
@@ -23,13 +22,26 @@ axios.interceptors.request.use((config) => {
   return config;
 });
 
+//TODO: why cant axios locate the pagination response header?
+//https://github.com/axios/axios/issues/746
+//According to 'Access-Control-Expose-Headers' to process the POST response headers
 axios.interceptors.response.use(
   async (response) => {
-    await sleep(1000);
+    if (process.env.NODE_ENV === "development") {
+      await sleep(1000);
+    }
+    const pagination = response.headers["pagination"];
+    if (pagination) {
+      response.data = new PaginatedResult(
+        response.data,
+        JSON.parse(pagination)
+      );
+      return response as AxiosResponse<PaginatedResult<any>>;
+    }
     return response;
   },
   (error: AxiosError) => {
-    const { data, status, config } = error.response!;
+    const { data, status, config, headers } = error.response!;
     switch (status) {
       case 400:
         if (typeof data === "string") {
@@ -51,8 +63,15 @@ axios.interceptors.response.use(
         }
         break;
       case 401:
-        toast.error("unauthorised");
-
+        if (
+          status === 401 &&
+          headers["www-authenticate"]?.startsWith(
+            'Bearer error="invalid_token"'
+          )
+        ) {
+          store.userStore.logout();
+          toast.error("unauthorised");
+        }
         break;
       case 404:
         history.push("/not-found");
@@ -79,7 +98,10 @@ const requests = {
 };
 
 const Activities = {
-  list: () => requests.get<ActivitiesEnvelope>("/activities"),
+  list: (params: URLSearchParams) =>
+    Axios.get<PaginatedResult<Activity[]>>("/activities", { params }).then(
+      responseBody
+    ),
   details: (id: string) => requests.get<Activity>(`/activities/${id}`),
   create: (activity: ActivityFormValues) =>
     requests.post<void>("/activities", activity),
@@ -89,18 +111,51 @@ const Activities = {
   attend: (id: string) => requests.post<void>(`/activities/${id}/attend`, {}),
 };
 
-
 const Account = {
   current: () => requests.get<IUser>("/account"),
   login: (user: IUserFormValues) =>
     requests.post<IUser>("/account/login", user),
   register: (user: IUserFormValues) =>
     requests.post<IUser>("/account/register", user),
+  fbLogin: (accessToken: string) =>
+    requests.post<IUser>(`/account/fbLogin?accessToken=${accessToken}`, {}),
+  refreshToken: () => requests.post<IUser>("/account/refreshToken", {}),
+  verifyEmail: (token: string, email: string) =>
+    requests.post<void>(
+      `/account/verifyEmail?token=${token}&email=${email}`,
+      {}
+    ),
+  resentEmailConfirm: (email: string) =>
+    requests.get(`/account/resendEmailConfirmationLink?email=${email}`),
+};
+
+const Profiles = {
+  get: (username: string) => requests.get<Profile>(`/profiles/${username}`),
+  uploadPhoto: (file: Blob) => {
+    let formData = new FormData();
+    formData.append("File", file);
+    return axios.post<IPhoto>("photos", formData, {
+      headers: { "Content-type": "multipart/form-data" },
+    });
+  },
+  setMainPhoto: (id: string) => requests.post(`/photos/${id}/setMain`, {}),
+  deletePhoto: (id: string) => requests.del(`/photos/${id}`),
+  updateProfile: (profile: Partial<Profile>) =>
+    requests.put(`/profiles`, profile),
+  updateFollowing: (username: string) =>
+    requests.post(`/follow/${username}`, {}),
+  listFollowings: (username: string, predicate: string) =>
+    requests.get<Profile[]>(`/follow/${username}?predicate=${predicate}`),
+  listActivities: (username: string, predicate: string) =>
+    requests.get<UserActivity[]>(
+      `/profiles/${username}/activities?predicate=${predicate}`
+    ),
 };
 
 const agent = {
   Activities,
   Account,
+  Profiles,
 };
 
 export default agent;

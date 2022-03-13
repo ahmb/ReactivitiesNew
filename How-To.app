@@ -99,6 +99,21 @@ flush privileges;
 #
  dotnet user-secrets list
 
+DOCKER
+-------
+These two commands, to be run from project folder where Dockerfile is located:
+https://www.softwaredeveloper.blog/multi-project-dotnet-core-solution-in-docker-image#docker-run-command
+
+single project solution:
+docker build -t aspnetapp .
+
+multiproject solution:
+docker build -f PROJECT_DIRECTORY/Dockerfile -t IMAGE_NAME .
+
+docker run -d -p 8080:80 --name myapp aspnetapp
+
+
+
 
  #how to
  ssh 68.183.19.105
@@ -182,3 +197,100 @@ where rankValue = 1
 ON 
 a.TheadId = x.ThreadId
 where a.AppUserId = 'd5adf925-e1ef-4da9-93c6-c0f1d659e673';
+
+
+
+GIT
+
+git push -u upstream --all
+list all remotes
+$git remote -v
+
+git push origin
+
+
+==============================
+PRODUCTION BUILD & RELEASE PROCESS:::: 
+
+ClientSide - React Steps:
+1.npm run build // to build the app
+2."postbuild" : "mv build ../API/wwwroot",//postbuild script in package.json
+3.npm run build //rerun the command to create a new ver and move the folder into our api folder 
+
+
+ServerSide - dotnet Steps
+1. add config to serve static content from api project, so it can serve from local directory
+2. create a fallbackcontroller
+3.dotnet publish -c Release -o publish --self-contained false Reactivities.sln
+
+Database 
+1. run postgresql container
+docker run --name devPostgreSQL -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=secret -p 5432:5432 -d postgres:latest
+
+2. dotnet install correct package
+                
+3. update with correct dbcontext services : opt.UseNpgsql(config.GetConnectionString("DefaultConnection"));
+
+4. update appsettings.json with connection string: 
+    "DefaultConnection": "Server=localhost; Database=reactivities; Uid=appuser; Pwd=Pa$$w0rd"
+
+5. remove all previous migration files and perform new migration:
+dotnet ef migrations add PGInitial -p Persistance -s API
+
+
+----------- 
+How to build a docker image from a file:
+docker build -t TAGNAME .
+
+
+how to update client packaegs
+npm install // get a list of all packages
+npm outdated // get a list of packages and what theyll be updated to
+npm update// update the respective packages to the latest minor versions
+npx npm-check-updates -u //update to the latest version <-- RISKY , need to run npm install afterwards
+
+HEROKU:
+1.heroku login
+2.heroku git:remote -a reactivitiesherokutesting //adds anoter remote to git,check with git remove -v
+3.set build pack: heroku buildpacks:set https://github.com/jincod/dotnetcore-buildpack
+4. set config variables
+5. push to heroku by running step 4 below, run 1-4 if you run into issue: src refspec master does not match any
+ $ touch readme 
+
+ $ git add .
+
+ $ git commit -m "init"
+
+ $ git push heroku master
+ 6. build pack stepsfor .net: https://elements.heroku.com/buildpacks/jincod/dotnetcore-buildpack
+NOTE: how to reset reset heroku git: heroku repo:reset --app reactivitiesherokutesting
+
+------------------
+Issue
+You want to clear the build cache for your app.
+
+Resolution
+Clear The Build Cache
+You can clear the build cache for an app by using the Heroku Builds plugin:
+
+First install the plugin:
+
+heroku plugins:install heroku-builds
+Then use the following command to clear the cache:
+
+heroku builds:cache:purge -a example-app
+The cache will be rebuilt on the next deploy. If you do not have any new code to deploy, you can push an empty commit.
+
+$ git commit --allow-empty -m "Purge cache"
+$ git push heroku master
+Where appname is replaced by the name of the app you want to clear the cache for.
+
+------------------
+
+Test publishing:
+dotnet publish -c Release -o publish --self-contained false Reactivities.sln
+ 
+HOW TO PUSH DIFFERENT LOCAL BRANCH TO HEROKU MASTER :
+git push heroku net6react17:master
+
+

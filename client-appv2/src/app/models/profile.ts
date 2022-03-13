@@ -5,12 +5,11 @@ export interface Profile {
   displayName: string;
   bio?: string;
   image?: string;
-  following?: boolean;
-  followersCount?: number;
-  followingCount?: number;
+  following: boolean;
+  followersCount: number;
+  followingCount: number;
   photos?: IPhoto[];
   // interests: IInterest[] ;
-  interests?: string[];
 }
 
 //this class is just there to help us instantiate an IProfile obj using the constructor

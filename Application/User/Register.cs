@@ -57,10 +57,10 @@ namespace Application.User
 
             public async Task<User> Handle(Command request, CancellationToken cancellationToken)
             {
-                if (await _context.Users.AnyAsync(x => x.Email == request.Email))
+                if (await _context.Users.AnyAsync(x => x.Email == request.Email, cancellationToken: cancellationToken))
                     throw new RestException(HttpStatusCode.BadRequest, new { Email = "Email already exists." });
 
-                if (await _context.Users.AnyAsync(x => x.UserName == request.Username))
+                if (await _context.Users.AnyAsync(x => x.UserName == request.Username, cancellationToken: cancellationToken))
                     throw new RestException(HttpStatusCode.BadRequest, new { Username = "Username already exists." });
 
                 var UserInterests = new List<Interest>();

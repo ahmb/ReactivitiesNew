@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using Application.Activities;
 using Domain;
@@ -13,16 +12,13 @@ namespace API.Controllers
     public class ActivitiesController : BaseController
     {
 
-        //Get a list of activities
         [HttpGet]
-        public async Task<ActionResult<List.ActivitiesEnvelope>> GetActivities(
-            int? limit, int? offset, bool isGoing, bool isHost, string category, DateTime? startDate
-            )
+        public async Task<IActionResult> GetActivities([FromQuery] ActivityParams param)
         {
-            return HandleResult(await Mediator.Send(new List.Query(limit,
-                offset, isGoing, isHost, startDate, category)));
+            return HandlePagedResult(await Mediator.Send(new List.Query { Params = param }));
         }
 
+        //adding a comment for rebuild
         [HttpGet("{id}")]
         public async Task<IActionResult> GetActivity(Guid id)
         {

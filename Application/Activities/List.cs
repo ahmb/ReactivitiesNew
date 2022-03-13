@@ -16,34 +16,13 @@ namespace Application.Activities
 {
     public class List
     {
-        public class ActivitiesEnvelope
+        public class Query : IRequest<Result<PagedList<ActivityDto>>>
         {
-            public List<ActivityDto> Activities { get; set; }
-            public int ActivityCount { get; set; }
-        }
+            public ActivityParams Params { get; set; }
 
-        public class Query : IRequest<Result<ActivitiesEnvelope>>
-        {
-            public Query(int? limit, int? offset, bool isGoing, bool isHost, DateTime? startDate, string category)
-            {
-
-                Limit = limit;
-                Offset = offset;
-                IsGoing = isGoing;
-                IsHost = isHost;
-                StartDate = startDate ?? DateTime.Now; //TODO:should this be updated to UTC? what about ither instances of DateTime.Now?
-                Category = category;
-            }
-            public int? Limit { get; set; }
-            public int? Offset { get; set; }
-            public bool IsGoing { get; }
-            public bool IsHost { get; }
-            public DateTime? StartDate { get; }
-
-            public string Category { get; }
         };
 
-        public class Handler : IRequestHandler<Query, Result<ActivitiesEnvelope>>
+        public class Handler : IRequestHandler<Query, Result<PagedList<ActivityDto>>>
         {
             private readonly DataContext _context;
             private readonly IMapper _mapper;
@@ -57,52 +36,33 @@ namespace Application.Activities
             }
 
             //handler that returns a list all the activities in the database context
-            public async Task<Result<ActivitiesEnvelope>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<PagedList<ActivityDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                //NEW
-                var activitiesss = await _context.Activities
-                    .ProjectTo<ActivityDto>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken);
+                var query = _context.Activities
+                    .Where(d => d.Date >= request.Params.StartDate)
+                    .OrderBy(d => d.Date)
+                    .ProjectTo<ActivityDto>(_mapper.ConfigurationProvider,
+                         new { currentUsername = _userAccessor.GetUsername() })
+                    .AsQueryable();
 
-                //OLD
-                var queryable = _context.Activities
-                .Where(x => x.Date >= request.StartDate)
-                .OrderBy(x => x.Date)
-                .AsQueryable();
-
-                if (request.IsGoing && !request.IsHost)
+                if (request.Params.IsGoing && !request.Params.IsHost)
                 {
-                    queryable = queryable
-                        .Where(x => x.Attendees.Any(a => a.AppUser.UserName == _userAccessor.GetUsername()));
+                    query = query.Where(x => x.Attendees.Any(a => a.Username == _userAccessor.GetUsername()));
                 }
 
-                if (request.IsHost && !request.IsGoing)
+                if (request.Params.IsHost && !request.Params.IsGoing)
                 {
-                    queryable = queryable
-                        .Where(x => x.Attendees.Any(a => a.AppUser.UserName == _userAccessor.GetUsername() && a.IsHost));
+                    query = query.Where(x => x.HostUsername == _userAccessor.GetUsername());
+
                 }
 
-                if (request.Category != null && request.Category.Length > 0)
-                {
-                    queryable = queryable.Where(x => x.Category.ToLower() == request.Category.ToLower());
-                }
 
-                var activities = await queryable
-                    .Skip(request.Offset ?? 0)
-                    .Take(request.Limit ?? 3)
-                    //eager loading
-                    // .Include(y => y.Attendees)
-                    // .ThenInclude(u => u.AppUser)
-                    .ProjectTo<ActivityDto>(_mapper.ConfigurationProvider)
-                    .ToListAsync(cancellationToken: cancellationToken);
-
-                var ae = new ActivitiesEnvelope
-                {
-                    // Activities = _mapper.Map<List<ActivityDto>>(activities),
-                    Activities = activitiesss,
-                    ActivityCount = queryable.Count()
-                };
-
-                return Result<ActivitiesEnvelope>.Success(ae);
+                return Result<PagedList<ActivityDto>>.Success(
+                    await PagedList<ActivityDto>
+                        .CreateAsync(query,
+                             request.Params.PageNumber,
+                             request.Params.PageSize)
+                );
             }
         }
     }

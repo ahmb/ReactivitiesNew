@@ -1,0 +1,46 @@
+{
+    "sqltools.connections": [
+        {
+            "database": "${workspaceFolder:Reactivities}/API/reactivities.db",
+            "driver": "SQLite",
+            "name": "localdbActivities",
+            "previewLimit": 50
+        },
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "localhost",
+            "database": "${workspaceFolder:Reactivities}/API/reactivities.db"
+        }
+    ],
+    "sqltools.useNodeRuntime": true,
+    "editor.formatOnSave": true,
+    "deploy.reloaded": {
+        "packages": [
+            {
+                "name": "Version 1.0.0",
+                "description": "Package version 1.0.0",
+
+                "files": [
+                    "publish/**"
+                ]
+            }
+        ],
+
+        "targets": [
+            {
+                "type": "sftp",
+                "name": "Linux",
+                "description": "SFTP folder",
+
+                "host": "68.183.19.105", "port": 22,
+                "user": "root", "password": "SecureDO1Password",
+
+                "dir": "/var/reactivities",
+                "mappings": {
+                    "api/publish/**": "/"
+                }
+            }
+        ]
+    }
+}

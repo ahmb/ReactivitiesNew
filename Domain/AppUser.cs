@@ -15,26 +15,13 @@ namespace Domain
         public virtual ICollection<Comment> Comments { get; set; }
 
 
-        public virtual ICollection<Photo> Photos { get; set; }
+        public ICollection<Photo> Photos { get; set; }
 
-        public virtual ICollection<UserFollowing> Followings { get; set; }
+        public ICollection<UserFollowing> Followings { get; set; }
 
-        public virtual ICollection<UserFollowing> Followers { get; set; }
-
-        public virtual ICollection<Notification> Notifications { get; set; }
-        public virtual ICollection<Message> MessagesSent { get; set; }
-        public virtual ICollection<Message> MessagesRecieved { get; set; }
-
-        public virtual ICollection<ThreadParticipant> ThreadPartipants { get; set; }
-        public virtual ICollection<Msg> Messages { get; set; }
-        public virtual ICollection<MsgReadState> MsgReadStates { get; set; }
-
-        public virtual ICollection<Interest> Interests { get; set; }
-
-
-
-
-
+        public ICollection<UserFollowing> Followers { get; set; }
+        public ICollection<Interest> Interests { get; set; }
+        public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
 
     }
 }

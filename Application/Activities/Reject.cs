@@ -44,13 +44,13 @@ namespace Application.Activities
             {
                 //add command handler logic
 
-                Activity activity = await _context.Activities.FindAsync(request.Id);
+                Activity activity = await _context.Activities.FindAsync(new object[] { request.Id }, cancellationToken: cancellationToken);
 
                 if (activity == null)
                     throw new RestException(HttpStatusCode.NotFound, new { Activity = "Could not find activity" });
 
                 //check if username in the reqest is attending
-                ActivityAttendee attendance = await _context.ActivityAttendees.SingleOrDefaultAsync(ua => ua.ActivityId == request.Id && ua.AppUser.UserName == request.Username);
+                ActivityAttendee attendance = await _context.ActivityAttendees.SingleOrDefaultAsync(ua => ua.ActivityId == request.Id && ua.AppUser.UserName == request.Username, cancellationToken: cancellationToken);
 
                 if (attendance == null)
                     throw new RestException(HttpStatusCode.BadRequest, new { Attendance = "Provided user is not attending this activity." });
@@ -73,7 +73,7 @@ namespace Application.Activities
 
                 if (changed)
                 {
-                    var success = await _context.SaveChangesAsync() > 0;
+                    var success = await _context.SaveChangesAsync(cancellationToken) > 0;
 
                     if (success) return Unit.Value;
                 }

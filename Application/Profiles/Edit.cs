@@ -1,69 +1,55 @@
-using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Core;
 using Application.Interfaces;
-using Domain;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistance;
 
-namespace Application.Profiles {
-    public class Edit {
-        public class Command : IRequest {
-            //insert properties
+namespace Application.Profiles
+{
+    public class Edit
+    {
+        public class Command : IRequest<Result<Unit>>
+        {
             public string DisplayName { get; set; }
             public string Bio { get; set; }
-
-            public List<string> Interests { get; set; }
         }
 
-        public class CommandValidator: AbstractValidator<Command>{
-            public CommandValidator(){
-                RuleFor(x=>x.DisplayName).NotEmpty().MinimumLength(3);
-                RuleFor(x => x.Interests).NotEmpty();
-
+        public class CommandValidator : AbstractValidator<Command>
+        {
+            public CommandValidator()
+            {
+                RuleFor(x => x.DisplayName).NotEmpty();
             }
         }
 
-        public class Handler : IRequestHandler<Command> {
+        public class Handler : IRequestHandler<Command, Result<Unit>>
+        {
             private readonly DataContext _context;
             private readonly IUserAccessor _userAccessor;
-
-            public Handler (DataContext context, IUserAccessor userAccessor) {
+            public Handler(DataContext context, IUserAccessor userAccessor)
+            {
                 _userAccessor = userAccessor;
                 _context = context;
             }
 
-            public async Task<Unit> Handle (Command request, CancellationToken cancellationToken) {
-                //add command handler logic
-                var user = await _context.Users.SingleOrDefaultAsync(x=>x.UserName == _userAccessor.GetUsername());
-                user.DisplayName = request.DisplayName ?? user.DisplayName;
-                user.Bio = request.Bio ?? user.Bio;
-
-                user.Interests.Clear();
-
-                var UserInterests = new List<Interest>();
+            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
+            {
+                var user = await _context.Users.FirstOrDefaultAsync(x => 
+                    x.UserName == _userAccessor.GetUsername(), cancellationToken: cancellationToken);
                 
-                if (request.Interests.Count > 0)
-                {
-                    foreach (var interest in request.Interests)
-                    {
-                        UserInterests.Add(new Interest { Id = new Guid(), Name = interest });
-                    }
+                user.Bio = request.Bio ?? user.Bio;
+                user.DisplayName = request.DisplayName ?? user.DisplayName;
 
-                }
+                _context.Entry(user).State = EntityState.Modified;
 
-                user.Interests = UserInterests;
+                var success = await _context.SaveChangesAsync(cancellationToken) > 0;
 
+                if (success) return Result<Unit>.Success(Unit.Value);
 
-                var success = await _context.SaveChangesAsync () > 0;
-
-                if (success) return Unit.Value;
-
-                throw new Exception ("Problem saving changes.");
-
+                return Result<Unit>.Failure("Problem updating profile");
             }
         }
     }

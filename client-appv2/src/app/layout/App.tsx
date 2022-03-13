@@ -15,6 +15,10 @@ import LoginForm from "../../features/users/LoginForm";
 import { useStore } from "../stores/store";
 import LoadingComponent from "./LoadingComponent";
 import ModalContainer from "../common/modals/ModalContainer";
+import ProfilePage from "../../features/profiles/ProfilePage";
+import PrivateRoute from "./PrivateRoute";
+import RegisterSuccess from "../../features/users/RegisterSuccess";
+import ConfirmEmail from "../../features/users/ConfirmEmail";
 
 function App() {
   const location = useLocation();
@@ -24,7 +28,7 @@ function App() {
     if (commonStore.token) {
       userStore.getUser().finally(() => commonStore.setAppLoaded());
     } else {
-      commonStore.setAppLoaded();
+      userStore.getFacebookLoginStatus().then(() => commonStore.setAppLoaded());
     }
   }, [commonStore, userStore]);
 
@@ -33,7 +37,7 @@ function App() {
 
   return (
     <>
-      <ToastContainer position='bottom-right' hideProgressBar />
+      <ToastContainer position='top-center' hideProgressBar />
       <ModalContainer />
       <Route exact path='/' component={HomePage} />
       <Route
@@ -43,30 +47,26 @@ function App() {
             <NavBar />
             <Container style={{ marginTop: "7em" }}>
               <Switch>
-                <Route
-                  key={location.key}
-                  exact
-                  path='/activities'
-                  component={ActivityDashboard}
-                />
-                <Route
-                  key={location.key}
-                  path='/activities/:id'
-                  component={ActivityDetails}
-                />
-                <Route
+                <Route exact path='/activities' component={ActivityDashboard} />
+                <Route path='/activities/:id' component={ActivityDetails} />
+                <PrivateRoute
                   key={location.key}
                   path={["/createActivity", "/manage/:id"]}
                   component={ActivityForm}
                 />
-                <Route
-                  key={location.key}
-                  path='/errors'
-                  component={TestError}
-                />
+                <Route path='/profiles/:username' component={ProfilePage} />
+                <Route path='/errors' component={TestError} />
                 <Route path='/server-error' component={ServerError} />
+                <Route
+                  path='/account/registerSuccess'
+                  component={RegisterSuccess}
+                />
+                <Route
+                  path='/account/verifyEmail'
+                  component={ConfirmEmail}
+                />
                 <Route path='/login' component={LoginForm} />
-                <Route key={location.key} component={NotFound} />
+                <Route component={NotFound} />
               </Switch>
             </Container>
           </>

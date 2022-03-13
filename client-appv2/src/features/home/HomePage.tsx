@@ -1,7 +1,14 @@
 import { observer } from "mobx-react-lite";
 import React from "react";
 import { Link } from "react-router-dom";
-import { Button, Container, Header, Segment, Image } from "semantic-ui-react";
+import {
+  Button,
+  Container,
+  Header,
+  Segment,
+  Image,
+  Divider,
+} from "semantic-ui-react";
 import { useStore } from "../../app/stores/store";
 import LoginForm from "../users/LoginForm";
 import RegisterForm from "../users/RegisterForm";
@@ -41,6 +48,18 @@ export default observer(function HomePage() {
               inverted>
               Register!
             </Button>
+            <Divider horizontal inverted>
+              {" "}
+              Or
+            </Divider>
+            <Button
+              onClick={userStore.facebookLogin}
+              loading={userStore.fbLoading}
+              size='huge'
+              inverted
+              color='facebook'
+              content='Login with Facebook'
+            />
           </>
         )}
       </Container>
