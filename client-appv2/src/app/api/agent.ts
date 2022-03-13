@@ -70,7 +70,7 @@ axios.interceptors.response.use(
           )
         ) {
           store.userStore.logout();
-          toast.error("unauthorised");
+          toast.error("Session expired - please login again");
         }
         break;
       case 404:
