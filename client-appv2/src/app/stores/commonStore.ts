@@ -5,6 +5,7 @@ export default class CommonStore {
   error: ServerError | null = null;
   token: string | null = window.localStorage.getItem("jwt");
   appLoaded = false;
+  isSidebarOpen = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -23,6 +24,14 @@ export default class CommonStore {
 
   setServerError = (error: ServerError) => {
     this.error = error;
+  };
+
+  setSidebarOpen = (active: boolean) => {
+    this.isSidebarOpen = active;
+  };
+
+  toggleSidebar = () => {
+    this.isSidebarOpen = !this.isSidebarOpen;
   };
 
   setToken = (token: string | null) => {

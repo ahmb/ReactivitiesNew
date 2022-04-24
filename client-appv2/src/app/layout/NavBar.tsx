@@ -1,39 +1,69 @@
 import React from "react";
-import { Menu, Button, Container, Image, Dropdown } from "semantic-ui-react";
+import {
+  Menu,
+  Button,
+  Container,
+  Image,
+  Dropdown,
+  Checkbox,
+  Grid,
+  Header,
+  Icon,
+  Segment,
+  Sidebar,
+} from "semantic-ui-react";
 import { Link, NavLink } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../stores/store";
 
-export default observer(function NavBar() {
+interface IProps {
+  className?: string;
+}
+
+const NavBar: React.FC<IProps> = ({ className }) => {
   const {
     userStore: { user, logout, isLoggedIn },
+    commonStore: { toggleSidebar, isSidebarOpen },
   } = useStore();
+
   return (
     <Container>
       <Menu
         secondary
         fixed='top'
-        pointing
         size='large'
-        style={{ backgroundColor: "aliceBlue" }}>
+        style={{ backgroundColor: "white" }}>
         <Container>
-          <Menu.Item as={NavLink} to='/' exact header>
-            <img src='/assets/logo.png' alt='logo' />
-            Reactivities
+          <Menu.Item
+            // as={Button}
+            // to="javascript:void(0)"
+            // as={NavLink}
+            // to='/activities'
+            header
+            onClick={(e, d) => toggleSidebar()}>
+            {!isSidebarOpen && <Icon name='bars' />}
+            {isSidebarOpen && <Icon name='close' />}
+          </Menu.Item>
+          <Menu.Item
+            as={NavLink}
+            to='/activities'
+            style={{ backgroundColor: "white" }}
+            header>
+            W
           </Menu.Item>
           {isLoggedIn && (
             <>
-              <Menu.Item as={NavLink} to='/activities' name='Activities' />
-              <Menu.Item as={NavLink} to='/errors' name='Errors' />
-              <Menu.Item>
-                <Button
-                  as={NavLink}
-                  to='/createActivity'
-                  positive
-                  content='Create Activity'
-                />
-              </Menu.Item>
+              {/* <Menu.Item as={NavLink} to='/activities' name='Activities' />
+              <Menu.Item as={NavLink} to='/errors' name='Errors' /> */}
               <Menu.Item position='right'>
+                <Menu.Item>
+                  <Button
+                    as={NavLink}
+                    to='/createActivity'
+                    positive
+                    content='Create Activity'
+                  />
+                </Menu.Item>
                 <Image
                   src={user?.image || "/assets/user.png"}
                   avatar
@@ -61,4 +91,6 @@ export default observer(function NavBar() {
       </Menu>
     </Container>
   );
-});
+};
+
+export default observer(NavBar);
