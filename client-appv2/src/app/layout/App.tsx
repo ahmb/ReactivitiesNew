@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import NavBar from "./NavBar";
 import ActivityDashboard from "../../features/activities/dashboard/ActivityDashboard";
-import { Container, Icon, Menu, Sidebar } from "semantic-ui-react";
+import { Button, Container, Icon, Menu, Sidebar } from "semantic-ui-react";
 import { observer } from "mobx-react-lite";
 import HomePage from "../../features/home/HomePage";
 import { Route, Switch, useLocation } from "react-router-dom";
@@ -85,7 +85,6 @@ function App() {
         path={"/(.+)"}
         render={() => (
           <>
-            <Fragment></Fragment>
             <NavBar />
 
             <Sidebar.Pushable>
@@ -105,14 +104,21 @@ function App() {
                         width: "100%",
                         position: "absolute",
                         top: scrollPosition,
-                        paddingTop: "60px",
                         maxHeight: window.innerHeight,
+                        // paddingTop: "60px",
                       }
-                    : { ...unlockScrollStyle, width: "100%" }
+                    : {
+                        ...unlockScrollStyle,
+                        width: "100%",
+                        // paddingTop: "60px",
+                      }
                 }>
-                <Menu.Item as='a'>
-                  <Icon name='home' />
-                  Home
+                <Menu.Item as={Button}>
+                  <Button
+                    onClick={(_) => commonStore.toggleSidebar()}
+                    floated='left'>
+                    <Icon name='angle left' />
+                  </Button>
                 </Menu.Item>
                 <Menu.Item as='a'>
                   <Icon name='gamepad' />
@@ -122,6 +128,26 @@ function App() {
                   <Icon name='camera' />
                   Channels
                 </Menu.Item>
+                <Menu.Item as='a'>
+                  <Icon name='camera' />
+                  Channels
+                </Menu.Item>{" "}
+                <Menu.Item as='a'>
+                  <Icon name='camera' />
+                  Channels
+                </Menu.Item>{" "}
+                <Menu.Item as='a'>
+                  <Icon name='camera' />
+                  Channels
+                </Menu.Item>{" "}
+                <Menu.Item as='a'>
+                  <Icon name='camera' />
+                  Channels
+                </Menu.Item>{" "}
+                <Menu.Item as='a'>
+                  <Icon name='camera' />
+                  Channels
+                </Menu.Item>{" "}
               </Sidebar>
 
               <Sidebar.Pusher dimmed={commonStore.isSidebarOpen}>

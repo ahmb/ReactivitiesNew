@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Menu,
   Button,
@@ -26,13 +26,19 @@ const NavBar: React.FC<IProps> = ({ className }) => {
     commonStore: { toggleSidebar, isSidebarOpen },
   } = useStore();
 
+  // useEffect(() => {}, [isSidebarOpen]);
+
   return (
     <Container>
       <Menu
         secondary
         fixed='top'
         size='large'
-        style={{ backgroundColor: "white" }}>
+        style={
+          isSidebarOpen
+            ? { backgroundColor: "white", width: "100%", zIndex: "-1" }
+            : { backgroundColor: "white", width: "100%" }
+        }>
         <Container>
           <Menu.Item
             // as={Button}
@@ -40,14 +46,19 @@ const NavBar: React.FC<IProps> = ({ className }) => {
             // as={NavLink}
             // to='/activities'
             header
-            onClick={(e, d) => toggleSidebar()}>
-            {!isSidebarOpen && <Icon name='bars' />}
-            {isSidebarOpen && <Icon name='close' />}
+            onClick={(e, d) => toggleSidebar()}
+            style={{ paddingRight: "0px" }}>
+            {!isSidebarOpen && <Icon name='bars' size='large' />}
+            {isSidebarOpen && <Icon name='angle left' size='large' />}
           </Menu.Item>
           <Menu.Item
+            id='logo'
             as={NavLink}
             to='/activities'
-            style={{ backgroundColor: "white" }}
+            style={{
+              backgroundColor: "white",
+              paddingLeft: "0px",
+            }}
             header>
             W
           </Menu.Item>
@@ -56,20 +67,33 @@ const NavBar: React.FC<IProps> = ({ className }) => {
               {/* <Menu.Item as={NavLink} to='/activities' name='Activities' />
               <Menu.Item as={NavLink} to='/errors' name='Errors' /> */}
               <Menu.Item position='right'>
-                <Menu.Item>
+                <Menu.Item position='right'>
                   <Button
                     as={NavLink}
                     to='/createActivity'
-                    positive
-                    content='Create Activity'
+                    icon='search'
+                    circular
+                    size='mini'
+                  />
+                </Menu.Item>
+                <Menu.Item position='right'>
+                  <Button
+                    as={NavLink}
+                    to='/createActivity'
+                    color='red'
+                    icon='plus'
+                    size='mini'
+                    circular
                   />
                 </Menu.Item>
                 <Image
                   src={user?.image || "/assets/user.png"}
+                  size='mini'
                   avatar
                   spaced='right'
+                  style={{ height: 45, width: 45 }}
                 />
-                <Dropdown pointing='top left' text={user?.displayName}>
+                <Dropdown pointing='top left'>
                   <Dropdown.Menu>
                     <Dropdown.Item
                       as={Link}

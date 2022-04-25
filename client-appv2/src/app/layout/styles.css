@@ -1,6 +1,35 @@
+/* Semantic UI Overrides  */
+
+/* sidebar */
+.ui.vertical.menu .item:before{
+  background: white;
+}
+            
+.ui.menu .item:before {
+background: white;
+}
+
+/* WannaGo Styles */
+@import url("https://fonts.googleapis.com/css?family=Pacifico");
+@import url("https://fonts.googleapis.com/css?family=OpenSans");
+
+
+#logo {
+  font-family: Pacifico;
+  font-size: 26px;
+  color: #dc493a;
+}
+
+#logoAlt {
+  font-family: Pacifico;
+  font-size: 26px;
+  color: #009ee6;
+}
+
 body {
   background-color: #eaeaea !important;
 }
+
 
 .ui.inverted.top.fixed.menu {
   background-image: linear-gradient(

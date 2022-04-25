@@ -22,6 +22,7 @@
     "history": "^4.10.1",
     "mobx": "^6.3.13",
     "mobx-react-lite": "^3.2.3",
+    "pure-react-carousel": "^1.28.1",
     "react": "^17.0.2",
     "react-calendar": "^3.7.0",
     "react-cropper": "2.1.8",
