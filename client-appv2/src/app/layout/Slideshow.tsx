@@ -53,7 +53,7 @@ export default function Slideshow() {
           bottom: "150px",
           left: "0px",
         }}>
-        <Button circular icon='angle left' size='large' />
+        <Icon circular name='angle left' size='large' />
       </ButtonBack>
       <ButtonNext
         style={{
@@ -63,7 +63,7 @@ export default function Slideshow() {
           bottom: "150px",
           right: "0px",
         }}>
-        <Button circular icon='angle right' size='large' />
+        <Icon circular name='angle right' size='large' />
       </ButtonNext>
     </CarouselProvider>
   );

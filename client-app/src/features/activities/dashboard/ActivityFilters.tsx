@@ -38,25 +38,26 @@ const ActivityFilters: React.FC = () => {
         <Sticky context={contextRef}  > */}
       <div
         ref={ref}
-        className={isSticky ? "sticky stickyWrapper" : "stickyWrapper"}
-      >
+        className={isSticky ? "sticky stickyWrapper" : "stickyWrapper"}>
         <Menu
-          className="filtersHeader"
-          horizontal="true"
+          className='filtersHeader'
           size={"large"}
           style={{ width: "100%" }}
           borderless
-          id="filterBar"
-          compact={true}
-        >
-          <Header icon={"filter"} attached color={"blue"} className={'filterMenuIcon'} />
+          id='filterBar'
+          compact={true}>
+          <Header
+            icon={"filter"}
+            attached
+            color={"blue"}
+            className={"filterMenuIcon"}
+          />
           <Menu.Item
             active={predicate.size === 0}
             onClick={() => setPredicate("all", "true")}
             color={"blue"}
             name={"all"}
             content={"All"}
-            
           />
           <Menu.Item
             active={predicate.has("isGoing")}
@@ -76,7 +77,7 @@ const ActivityFilters: React.FC = () => {
             color={"blue"}
             // name={"calendar"}
             // content={"Date"}
-            icon="calendar"
+            icon='calendar'
             active={predicate.has("startDate")}
             onClick={() =>
               openModal(
@@ -87,21 +88,20 @@ const ActivityFilters: React.FC = () => {
               )
             }
           />
-          
-            <Menu.Menu position="right">
-              <Button
-                as={NavLink}
-                to="/createActivity"
-                positive
-                // content="Create Activity"
-                icon="plus"
-                size="large"
-                style={{ margin: "0" }}
-                content='Post Activity'
-                id='stickyButton'
-              />
-            </Menu.Menu>
-          
+
+          <Menu.Menu position='right'>
+            <Button
+              as={NavLink}
+              to='/createActivity'
+              positive
+              // content="Create Activity"
+              icon='plus'
+              size='large'
+              style={{ margin: "0" }}
+              content='Post Activity'
+              id='stickyButton'
+            />
+          </Menu.Menu>
         </Menu>
       </div>
     </Fragment>

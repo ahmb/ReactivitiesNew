@@ -1,9 +1,14 @@
 import { observer } from "mobx-react-lite";
 import React, { useState } from "react";
 import Calendar from "react-calendar";
-import { Button, Grid, Header, Icon, Menu, Segment } from "semantic-ui-react";
+import { Button, Grid, Header, Menu } from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
 import { useTransition, animated, config } from "react-spring";
+import { categoryOptions } from "../../../app/common/options/categoryOptions";
+import {
+  HorizontalScrollContainer,
+  HorizontalScrollItem,
+} from "react-simple-horizontal-scroller";
 
 export default observer(function ActivityFilters() {
   const {
@@ -18,35 +23,6 @@ export default observer(function ActivityFilters() {
     delay: 200,
     config: config.molasses,
   });
-
-  //   0:
-  // fig: 1
-  // op:
-  // output: Array(2)
-  // 0: 0
-  // 1: 1
-  // length: 2
-  // [[Prototype]]: Array(0)
-  // range: Array(2)
-  // 0: 0.75
-  // 1: 1
-  // length: 2
-  // [[Prototype]]: Array(0)
-  // [[Prototype]]: Object
-  // trans:
-  // extrapolate: "clamp"
-  // output: Array(2)
-  // 0: -40
-  // 1: 0
-  // length: 2
-  // [[Prototype]]: Array(0)
-  // range: Array(2)
-  // 0: 0.75
-  // 1: 1
-  // length: 2
-  // [[Prototype]]: Array(0)
-  // [[Prototype]]: Object
-  // [[Prototype]]: Object
 
   function ToggleIsCalendarVisible() {
     isCalendarVisible
@@ -69,6 +45,7 @@ export default observer(function ActivityFilters() {
             style={{ position: "absolute", right: "10px" }}
             size='large'
             onClick={(_) => ToggleIsCalendarVisible()}
+            active={isCalendarVisible}
           />
         </Grid.Row>
         <br />
@@ -87,50 +64,58 @@ export default observer(function ActivityFilters() {
             )
         )}
       </Grid.Row>
-      {/* <div style={{ display: "flex" }}>
-        {transitions(({ opacity }, item) => (
-          <animated.div
-            style={{
-              opacity: opacity.to(item.op),
-              transform: opacity
-                .to(item.trans)
-                .to((y) => `translate3d(0,${y}px,0)`),
-            }}>
 
-          </animated.div>
-        ))}
-      </div> */}
       <Grid.Row className='aliceBlueBg' stretched style={{ paddingTop: "0px" }}>
-        <Menu
-          horizontal={true}
-          size='large'
-          style={{ width: "100%", marginTop: 25 }}>
-          <Header icon='filter' attached className='' />
-          <Menu.Item
-            content='All'
-            active={predicate.has("all")}
-            onClick={() => setPredicate("all", "true")}
-          />
-          <Menu.Item
-            content='Attending'
-            active={predicate.has("isGoing")}
-            onClick={() => setPredicate("isGoing", "true")}
-          />
-          <Menu.Item
-            content='Hosting'
-            active={predicate.has("isHost")}
-            onClick={() => setPredicate("isHost", "true")}
-          />
-          <Menu.Item
-            content='&#x1F4BE; Coding'
-            active={predicate.has("isHost")}
-            onClick={() => setPredicate("isHost", "true")}
-          />
-          <Menu.Item
-            content='&#x1F5BC; Art&Design'
-            active={predicate.has("isHost")}
-            onClick={() => setPredicate("isHost", "true")}
-          />
+        <Menu size='large' style={{ width: "100%", marginTop: 25 }}>
+          {/* <Header icon='filter' attached style={{ color: "#009ee6" }}/> */}
+          <HorizontalScrollContainer>
+            <Menu.Item
+              active={predicate.has("all")}
+              onClick={() => setPredicate("all", "true")}>
+              <Header
+                size='large'
+                style={{ paddingTop: "10px" }}
+                content='💡'
+              />
+              <p style={{ paddingTop: "5px", paddingLeft: "5px" }}>All</p>
+            </Menu.Item>
+
+            <Menu.Item
+              active={predicate.has("isGoing")}
+              onClick={() => setPredicate("isGoing", "true")}>
+              <Header
+                size='large'
+                style={{ paddingTop: "10px" }}
+                content='😁'
+              />
+              <p style={{ paddingTop: "5px", paddingLeft: "5px" }}>Mine</p>
+            </Menu.Item>
+            {/* <Menu.Item
+              content='Hosting'
+              active={predicate.has("isHost")}
+              onClick={() => setPredicate("isHost", "true")}
+              style={{ paddingTop: "20px" }}
+            /> */}
+
+            {categoryOptions.map(({ id, text, icon }) => (
+              <HorizontalScrollItem id={id} key={id}>
+                <Menu.Item
+                  key={id}
+                  active={predicate.has("isGoing")}
+                  // style={{ display: "inline" }}
+                  onClick={() => setPredicate("isGoing", "true")}>
+                  <Header size='large' style={{ paddingTop: "10px" }}>
+                    {icon + " "}
+                  </Header>
+                  <span
+                    className='categoryText'
+                    style={{ paddingTop: "5px", paddingLeft: "5px" }}>
+                    {text}
+                  </span>
+                </Menu.Item>
+              </HorizontalScrollItem>
+            ))}
+          </HorizontalScrollContainer>
         </Menu>
       </Grid.Row>
     </>

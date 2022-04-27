@@ -24,9 +24,14 @@ background: white;
   color: #dc493a;
 }
 
+
 #logoAlt {
   font-family: Pacifico;
   font-size: 26px;
+  color: #009ee6;
+}
+
+.altFontColor{
   color: #009ee6;
 }
 
@@ -43,6 +48,8 @@ body {
     rgb(32, 167, 172) 89%
   ) !important;
 }
+
+/* ACTIVITIES PAGE */
 .react-calendar__tile--now {
   background-color: #009ee6;
 }
@@ -59,6 +66,33 @@ body {
 .react-datepicker-wrapper {
   width: 100%;
 }
+
+/* Horizontal scroller on Activities page */
+/* chrome and chromium based */
+/* hide scrollbar */
+.react-horizontal-scrolling-menu--scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+.react-horizontal-scrolling-menu--scroll-container {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Horizontal */
+.react-horizontal-scrolling-menu--wrapper {
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.react-horizontal-scrolling-menu--scroll-container {
+  order: 1;
+  flex-basis: 100%;
+  flex-shrink: 0;
+}
+
+
+
 
 /*home page styles*/
 

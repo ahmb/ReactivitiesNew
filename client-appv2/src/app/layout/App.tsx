@@ -55,12 +55,12 @@ function App() {
     setTargetElement(document.querySelector("#targetElementId"));
     if (commonStore.isSidebarOpen && targetElement !== null) {
       setScrollPosition(window.pageYOffset);
-      console.log(scrollPosition);
+      // console.log(scrollPosition);
       // window.scrollTo(0, 0);
       disableBodyScroll(targetElement, options);
     }
     if (!commonStore.isSidebarOpen && targetElement !== null) {
-      console.log(scrollPosition);
+      // console.log(scrollPosition);
       // window.scrollTo(0, scrollPosition);
       // enableBodyScroll(targetElement);
       clearAllBodyScrollLocks();
@@ -113,10 +113,11 @@ function App() {
                         // paddingTop: "60px",
                       }
                 }>
-                <Menu.Item as={Button}>
+                <Menu.Item style={{ padding: 50 }}>
                   <Button
                     onClick={(_) => commonStore.toggleSidebar()}
-                    floated='left'>
+                    floated='left'
+                    circular>
                     <Icon name='angle left' />
                   </Button>
                 </Menu.Item>
