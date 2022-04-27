@@ -33,9 +33,7 @@ export default observer(function ActivityDashboard() {
       <Grid.Row centered>
         <Slideshow />
       </Grid.Row>
-      <Grid.Row>
-        <ActivityFilters />
-      </Grid.Row>
+      <ActivityFilters />
 
       <Grid.Row>
         <Grid.Column>
