@@ -53,7 +53,7 @@ export default function ActivityListItem({ activity }: Props) {
             <Label circular>Attending </Label>
           )}
         </Container>
-        <Item.Group style={{ borderRadius: "inherit" }}>
+        <Item.Group style={{ borderRadius: "inherit", paddingTop: "0px" }}>
           <Item style={{ paddingBottom: "0px" }}>
             <Item.Content>
               <Item.Header
@@ -117,6 +117,7 @@ export default function ActivityListItem({ activity }: Props) {
                       verticalAlign='middle'>
                       <Header
                         size='tiny'
+                        color='grey'
                         style={{
                           marginTop: "auto",
                           padding: "0px",
@@ -137,6 +138,7 @@ export default function ActivityListItem({ activity }: Props) {
                       </Header>
                       <Header
                         size='tiny'
+                        color='grey'
                         style={{
                           padding: "0px",
                           margin: "0px",
@@ -154,7 +156,8 @@ export default function ActivityListItem({ activity }: Props) {
                           marginTop: "auto",
                           paddingLeft: "0px",
                           marginBottom: "0px",
-                        }}>
+                        }}
+                        color='grey'>
                         <i>to</i>
                       </Header>
                       <Header
@@ -175,6 +178,7 @@ export default function ActivityListItem({ activity }: Props) {
                       </Header>
                       <Header
                         size='tiny'
+                        color='grey'
                         style={{
                           padding: "0px",
                           margin: "0px",

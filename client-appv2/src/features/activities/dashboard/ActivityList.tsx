@@ -17,7 +17,11 @@ export default observer(function ActivityList() {
           <Segment
             basic
             className='zigZagBorder'
-            style={{ backgroundColor: "aliceblue", paddingBottom: "40px" }}>
+            style={{
+              backgroundColor: "aliceblue",
+              paddingBottom: "60px",
+              marginBottom: "33px",
+            }}>
             <Label color='blue' ribbon={true} size='large'>
               {/* {format(
                 new Date(

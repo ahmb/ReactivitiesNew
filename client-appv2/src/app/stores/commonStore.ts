@@ -6,6 +6,7 @@ export default class CommonStore {
   token: string | null = window.localStorage.getItem("jwt");
   appLoaded = false;
   isSidebarOpen = false;
+  isFilterNavSticky = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -39,4 +40,8 @@ export default class CommonStore {
   };
 
   setAppLoaded = () => (this.appLoaded = true);
+
+  setIsFilterNavSticky = (value: boolean) => {
+    this.isFilterNavSticky = value;
+  };
 }

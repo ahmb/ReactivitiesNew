@@ -15,6 +15,13 @@ import {
 import { Link, NavLink } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../stores/store";
+import { categoryOptions } from "../common/options/categoryOptions";
+import {
+  HorizontalScrollContainer,
+  HorizontalScrollItem,
+} from "react-simple-horizontal-scroller";
+import { useStickyChecker } from "../common/util/useStickyChecker";
+import { useLocation } from "react-router-dom";
 
 interface IProps {
   className?: string;
@@ -23,8 +30,18 @@ interface IProps {
 const NavBar: React.FC<IProps> = ({ className }) => {
   const {
     userStore: { user, logout, isLoggedIn },
-    commonStore: { toggleSidebar, isSidebarOpen },
+    commonStore: {
+      toggleSidebar,
+      isSidebarOpen,
+      isFilterNavSticky,
+      setIsFilterNavSticky,
+    },
+    activityStore: { predicate, setPredicate },
   } = useStore();
+
+  const location = useLocation();
+
+  useStickyChecker(".filterNavMain", setIsFilterNavSticky);
 
   // useEffect(() => {}, [isSidebarOpen]);
 
@@ -122,6 +139,84 @@ const NavBar: React.FC<IProps> = ({ className }) => {
           )}
         </Container>
       </Menu>
+
+      {/* FILTER NAV */}
+      {isFilterNavSticky && location.pathname.endsWith("activities") && (
+        <Menu
+          secondary
+          fixed='top'
+          size='mini'
+          style={
+            isSidebarOpen
+              ? {
+                  backgroundColor: "white",
+                  width: "100%",
+                  zIndex: "0",
+                  marginLeft: "0px",
+                  marginRight: "0px",
+                  marginTop: "71px",
+                }
+              : {
+                  backgroundColor: "white",
+                  width: "100%",
+                  borderBottom: "1px solid #f4f4f4",
+                  marginLeft: "0px",
+                  marginRight: "0px",
+                  marginTop: "71px",
+                }
+          }>
+          <Container>
+            <HorizontalScrollContainer>
+              <Menu.Item
+                active={predicate.has("all")}
+                onClick={() => setPredicate("all", "true")}>
+                <Header
+                  size='huge'
+                  style={{ paddingTop: "10px" }}
+                  content='💡'
+                />
+                <p style={{ paddingTop: "5px", paddingLeft: "5px" }}>All</p>
+              </Menu.Item>
+
+              <Menu.Item
+                active={predicate.has("isGoing")}
+                onClick={() => setPredicate("isGoing", "true")}>
+                <Header
+                  size='huge'
+                  style={{ paddingTop: "10px" }}
+                  content='😁'
+                />
+                <p style={{ paddingTop: "5px", paddingLeft: "5px" }}>Mine</p>
+              </Menu.Item>
+              {/* <Menu.Item
+              content='Hosting'
+              active={predicate.has("isHost")}
+              onClick={() => setPredicate("isHost", "true")}
+              style={{ paddingTop: "20px" }}
+            /> */}
+
+              {categoryOptions.map(({ id, text, icon }) => (
+                <HorizontalScrollItem id={id} key={id}>
+                  <Menu.Item
+                    key={id}
+                    active={predicate.has("isGoing")}
+                    // style={{ display: "inline" }}
+                    onClick={() => setPredicate("isGoing", "true")}>
+                    <Header size='huge' style={{ paddingTop: "10px" }}>
+                      {icon + " "}
+                    </Header>
+                    <span
+                      className='categoryText'
+                      style={{ paddingTop: "5px", paddingLeft: "5px" }}>
+                      {text}
+                    </span>
+                  </Menu.Item>
+                </HorizontalScrollItem>
+              ))}
+            </HorizontalScrollContainer>
+          </Container>
+        </Menu>
+      )}
     </Container>
   );
 };

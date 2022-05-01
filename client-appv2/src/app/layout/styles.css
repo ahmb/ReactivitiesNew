@@ -79,6 +79,12 @@ body {
   scrollbar-width: none; /* Firefox */
 }
 
+.filterNav {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+}
+
 /* Horizontal */
 .react-horizontal-scrolling-menu--wrapper {
   flex-wrap: wrap;

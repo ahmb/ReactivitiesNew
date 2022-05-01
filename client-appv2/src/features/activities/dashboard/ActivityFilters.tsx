@@ -9,10 +9,13 @@ import {
   HorizontalScrollContainer,
   HorizontalScrollItem,
 } from "react-simple-horizontal-scroller";
+import { useStickyChecker } from "../../../app/common/util/useStickyChecker";
+import { useLocation } from "react-router-dom";
 
 export default observer(function ActivityFilters() {
   const {
     activityStore: { predicate, setPredicate },
+    commonStore: { setIsFilterNavSticky, isFilterNavSticky },
   } = useStore();
 
   const [isCalendarVisible, setIsCalendarVisible] = useState(false);
@@ -29,6 +32,9 @@ export default observer(function ActivityFilters() {
       ? setIsCalendarVisible(false)
       : setIsCalendarVisible(true);
   }
+
+
+  const location = useLocation();
 
   return (
     <>
@@ -79,7 +85,19 @@ export default observer(function ActivityFilters() {
           />
         </Container>
 
-        <Menu size='large' style={{ width: "100%", marginTop: 25 }}>
+        <Menu
+          size='large'
+          style={
+            !isFilterNavSticky && location.pathname.endsWith("activities")
+              ? { width: "100%", marginTop: 25 }
+              : {
+                  width: "100%",
+                  margin: "px",
+                  visibility: "hidden",
+                  padding: "0px",
+                }
+          }
+          className='filterNavMain'>
           {/* <Header icon='filter' attached style={{ color: "#009ee6" }}/> */}
           <HorizontalScrollContainer>
             <Menu.Item

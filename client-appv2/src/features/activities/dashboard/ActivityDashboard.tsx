@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Loader } from "semantic-ui-react";
+import { Grid, Header, Loader } from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
 import ActivityList from "./ActivityList";
 import { observer } from "mobx-react-lite";
@@ -61,6 +61,14 @@ export default observer(function ActivityDashboard() {
       <Grid.Row>
         <Grid.Column width={16}>
           <Loader active={loadingNext} />
+        </Grid.Column>
+      </Grid.Row>
+      <Grid.Row centered style={{ paddingBottom: "100px" }}>
+        <Grid.Column width={16}>
+          <Header id='logo' style={{ color: "grey", textAlign: "center" }}>
+            Feeling bored?
+            <br /> Start an activity!
+          </Header>
         </Grid.Column>
       </Grid.Row>
     </Grid>
