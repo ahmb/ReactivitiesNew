@@ -36,8 +36,12 @@ const NavBar: React.FC<IProps> = ({ className }) => {
         size='large'
         style={
           isSidebarOpen
-            ? { backgroundColor: "white", width: "100%", zIndex: "-1" }
-            : { backgroundColor: "white", width: "100%" }
+            ? { backgroundColor: "white", width: "100%", zIndex: "0" }
+            : {
+                backgroundColor: "white",
+                width: "100%",
+                borderBottom: "1px solid #f4f4f4",
+              }
         }>
         <Container>
           <Menu.Item
@@ -84,14 +88,19 @@ const NavBar: React.FC<IProps> = ({ className }) => {
                     icon='plus'
                     size='mini'
                     circular
+                    // style={{
+                    //   boxShadow: "#a51c1d 1px 3px 0px 0px",
+                    // }}
                   />
                 </Menu.Item>
                 <Image
                   src={user?.image || "/assets/user.png"}
-                  size='mini'
-                  avatar
+                  // avatar
+                  circular
                   spaced='right'
                   style={{ height: 45, width: 45 }}
+                  as={NavLink}
+                  to={`/profiles/${user?.username}`}
                 />
                 <Dropdown pointing='top left'>
                   <Dropdown.Menu>

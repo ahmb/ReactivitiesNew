@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import React, { useState } from "react";
 import Calendar from "react-calendar";
-import { Button, Grid, Header, Menu } from "semantic-ui-react";
+import { Button, Grid, Header, Menu, Container } from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
 import { useTransition, animated, config } from "react-spring";
 import { categoryOptions } from "../../../app/common/options/categoryOptions";
@@ -34,19 +34,21 @@ export default observer(function ActivityFilters() {
     <>
       <div>
         <Grid.Row stretched>
-          <Header
-            size='huge'
-            content='Activities'
-            style={{ float: "left", paddingLeft: "10px", paddingTop: "5px" }}
-          />
-          <Button
-            icon='calendar'
-            circular
-            style={{ position: "absolute", right: "10px" }}
-            size='large'
-            onClick={(_) => ToggleIsCalendarVisible()}
-            active={isCalendarVisible}
-          />
+          <Container>
+            <Header
+              size='huge'
+              content='Activities'
+              style={{ float: "left", paddingLeft: "10px", paddingTop: "5px" }}
+            />
+            <Button
+              icon='calendar'
+              circular
+              style={{ position: "absolute", right: "30px" }}
+              size='big'
+              onClick={(_) => ToggleIsCalendarVisible()}
+              active={isCalendarVisible}
+            />
+          </Container>
         </Grid.Row>
         <br />
       </div>
@@ -65,29 +67,32 @@ export default observer(function ActivityFilters() {
         )}
       </Grid.Row>
 
-      <Grid.Row className='aliceBlueBg' stretched style={{ paddingTop: "0px" }}>
+      <Grid.Row
+        className='aliceBlueBg'
+        stretched
+        style={{ paddingTop: "0px", paddingBottom: "30px" }}>
+        <Container>
+          <Header
+            size='medium'
+            content='Categories'
+            style={{ float: "left", paddingLeft: "10px", paddingTop: "5px" }}
+          />
+        </Container>
+
         <Menu size='large' style={{ width: "100%", marginTop: 25 }}>
           {/* <Header icon='filter' attached style={{ color: "#009ee6" }}/> */}
           <HorizontalScrollContainer>
             <Menu.Item
               active={predicate.has("all")}
               onClick={() => setPredicate("all", "true")}>
-              <Header
-                size='large'
-                style={{ paddingTop: "10px" }}
-                content='💡'
-              />
+              <Header size='huge' style={{ paddingTop: "10px" }} content='💡' />
               <p style={{ paddingTop: "5px", paddingLeft: "5px" }}>All</p>
             </Menu.Item>
 
             <Menu.Item
               active={predicate.has("isGoing")}
               onClick={() => setPredicate("isGoing", "true")}>
-              <Header
-                size='large'
-                style={{ paddingTop: "10px" }}
-                content='😁'
-              />
+              <Header size='huge' style={{ paddingTop: "10px" }} content='😁' />
               <p style={{ paddingTop: "5px", paddingLeft: "5px" }}>Mine</p>
             </Menu.Item>
             {/* <Menu.Item
@@ -104,7 +109,7 @@ export default observer(function ActivityFilters() {
                   active={predicate.has("isGoing")}
                   // style={{ display: "inline" }}
                   onClick={() => setPredicate("isGoing", "true")}>
-                  <Header size='large' style={{ paddingTop: "10px" }}>
+                  <Header size='huge' style={{ paddingTop: "10px" }}>
                     {icon + " "}
                   </Header>
                   <span

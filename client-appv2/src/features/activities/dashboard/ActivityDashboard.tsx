@@ -35,8 +35,8 @@ export default observer(function ActivityDashboard() {
       </Grid.Row>
       <ActivityFilters />
 
-      <Grid.Row>
-        <Grid.Column>
+      <Grid.Row style={{ paddingTop: "0px" }}>
+        <Grid.Column style={{ padding: "0px" }}>
           {activityStore.loadingInitial && !loadingNext ? (
             <>
               <ActivityListItemPlaceholder />
@@ -58,9 +58,11 @@ export default observer(function ActivityDashboard() {
         </Grid.Column>
       </Grid.Row>
 
-      <Grid.Column width={16}>
-        <Loader active={loadingNext} />
-      </Grid.Column>
+      <Grid.Row>
+        <Grid.Column width={16}>
+          <Loader active={loadingNext} />
+        </Grid.Column>
+      </Grid.Row>
     </Grid>
   );
 });

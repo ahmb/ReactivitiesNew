@@ -1,9 +1,9 @@
 import React, { Fragment } from "react";
-import { Header } from "semantic-ui-react";
+import { Header, Label, Segment } from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import ActivityListItem from "./ActivityListItem";
-import { format } from "date-fns";
+import { format, formatDistance } from "date-fns";
 
 export default observer(function ActivityList() {
   const { activityStore } = useStore();
@@ -13,12 +13,52 @@ export default observer(function ActivityList() {
     <>
       {groupedActivities.map(([group, activities]) => (
         <Fragment key={group}>
-          <Header sub color='teal'>
-            {format(new Date(group), "eeee do MMMM")}
-          </Header>
-          {activities.map((activity) => (
-            <ActivityListItem key={activity.id} activity={activity} />
-          ))}
+          {/* <div className='zigZagBorder'> */}
+          <Segment
+            basic
+            className='zigZagBorder'
+            style={{ backgroundColor: "aliceblue", paddingBottom: "40px" }}>
+            <Label color='blue' ribbon={true} size='large'>
+              {/* {format(
+                new Date(
+                  parseInt(group.split("-")[0]),
+                  parseInt(group.split("-")[1]) - 1,
+                  parseInt(group.split("-")[2])
+                ),
+                "eeee do MMMM"
+              )}
+              {" , " +
+                formatDistance(
+                  new Date(
+                    parseInt(group.split("-")[0]),
+                    parseInt(group.split("-")[1]) - 1,
+                    parseInt(group.split("-")[2]),
+                    0,
+                    0,
+                    0,
+                    0
+                  ),
+                  new Date(
+                    new Date().getFullYear(),
+                    new Date().getMonth(),
+                    new Date().getDate(),
+                    0,
+                    0,
+                    0,
+                    0
+                  ),
+                  { addSuffix: true }
+                )
+                  .replace("less than a minute ago", "today!")
+                  .replace("1 day ago", "yesterday")} */}
+              {format(new Date(group), "eeee do MMMM")}
+            </Label>
+
+            {activities.map((activity) => (
+              <ActivityListItem key={activity.id} activity={activity} />
+            ))}
+          </Segment>
+          {/* </div> */}
         </Fragment>
       ))}
     </>
