@@ -1,7 +1,14 @@
 import React, { Fragment, useEffect, useState } from "react";
 import NavBar from "./NavBar";
 import ActivityDashboard from "../../features/activities/dashboard/ActivityDashboard";
-import { Button, Container, Icon, Menu, Sidebar } from "semantic-ui-react";
+import {
+  Button,
+  Container,
+  Header,
+  Icon,
+  Menu,
+  Sidebar,
+} from "semantic-ui-react";
 import { observer } from "mobx-react-lite";
 import HomePage from "../../features/home/HomePage";
 import { Route, Switch, useLocation } from "react-router-dom";
@@ -123,34 +130,33 @@ function App() {
                     <Icon name='angle left' />
                   </Button>
                 </Menu.Item>
-                <Menu.Item as='a'>
-                  <Icon name='gamepad' />
-                  Games
+                <Menu.Item>
+                  {/* <span style={{ display: "flex", textAlign: "center" }}> */}
+                  <span id='logo' style={{ textAlign: "center" }}>
+                    Wanna
+                  </span>
+                  <span id='logoAlt' style={{ textAlign: "center" }}>
+                    Go
+                  </span>
+                  {/* </span> */}
                 </Menu.Item>
                 <Menu.Item as='a'>
-                  <Icon name='camera' />
-                  Channels
+                  <Header size='huge' style={{ display: "inline" }}>
+                    🏠{" "}
+                  </Header>
+                  Home
                 </Menu.Item>
                 <Menu.Item as='a'>
-                  <Icon name='camera' />
-                  Channels
-                </Menu.Item>{" "}
-                <Menu.Item as='a'>
-                  <Icon name='camera' />
-                  Channels
-                </Menu.Item>{" "}
-                <Menu.Item as='a'>
-                  <Icon name='camera' />
-                  Channels
-                </Menu.Item>{" "}
-                <Menu.Item as='a'>
-                  <Icon name='camera' />
-                  Channels
-                </Menu.Item>{" "}
-                <Menu.Item as='a'>
-                  <Icon name='camera' />
-                  Channels
-                </Menu.Item>{" "}
+                  <Header size='huge' style={{ display: "inline" }}>
+                    💡{" "}
+                  </Header>
+                  Activities
+                </Menu.Item>
+                <Menu.Item> </Menu.Item> <Menu.Item as='a'>FAQ</Menu.Item>{" "}
+                <Menu.Item as='a'>About</Menu.Item>{" "}
+                <Menu.Item as='a'>Contact</Menu.Item>{" "}
+                <Menu.Item as='a'>Code of Conduct</Menu.Item>{" "}
+                <Menu.Item as='a'>Terms of Service</Menu.Item>{" "}
               </Sidebar>
 
               <Sidebar.Pusher dimmed={commonStore.isSidebarOpen}>
