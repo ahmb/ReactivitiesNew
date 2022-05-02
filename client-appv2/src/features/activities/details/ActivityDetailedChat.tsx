@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { Segment, Header, Comment, Loader } from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
 import * as Yup from "yup";
+import SimpleWebRTC from "../../../app/webrtc/SimpleWebRtc";
 
 interface Props {
   activityId: string;
@@ -96,6 +97,9 @@ export default observer(function ActivityDetailedChat({ activityId }: Props) {
           ))}
         </Comment.Group>
       </Segment>
+      {/* <Segment>
+        <SimpleWebRTC />
+      </Segment> */}
     </>
   );
 });

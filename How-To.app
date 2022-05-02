@@ -294,3 +294,9 @@ HOW TO PUSH DIFFERENT LOCAL BRANCH TO HEROKU MASTER :
 git push heroku net6react17:master
 
 
+----------
+Client App Webrtc - SimpleWebRTC
+
+1. to make npm start run, because its only compatible with node 16 not 17:
+
+ export NODE_OPTIONS=--openssl-legacy-provider 

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@andyet/simplewebrtc": "^1.30.5",
     "@microsoft/signalr": "^6.0.2",
     "@react-spring/core": "^9.4.4",
     "@testing-library/jest-dom": "^5.16.2",
@@ -31,6 +32,7 @@
     "react-dom": "^17.0.2",
     "react-dropzone": "^12.0.4",
     "react-infinite-scroller": "^1.2.5",
+    "react-redux": "^8.0.1",
     "react-router-dom": "^5.3.0",
     "react-scripts": "5.0.0",
     "react-simple-horizontal-scroller": "^1.0.10",
