@@ -69,6 +69,12 @@ interface Props {
 }
 
 class App extends Component<Props> {
+  constructor(props: Props) {
+    super(props);
+    console.log('this.props.userData in App.tsx is');
+    console.log(this.props.userData);
+  }
+
   public render() {
     const {
       roomName,

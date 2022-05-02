@@ -59,6 +59,7 @@ const Controls = styled.div`
   select {
     border: ${({ theme }) => css`1px solid ${colorToString(theme.border)}`};
     color: ${({ theme }) => colorToString(theme.foreground)};
+    border-radius: 10px;
     height: 40px;
     padding: 10px;
     margin-top: 5px;
@@ -108,6 +109,7 @@ const AcceptButtonContainer = styled.div({
 
 const AcceptButton = styled(TalkyButton)`
   margin-top: 20px;
+  border-radius: 30px;
   background-color: ${({ theme }) => colorToString(theme.buttonPrimaryBackground)};
   font-size: 22px;
   color: ${({ theme }) => colorToString(theme.buttonPrimaryText)};
@@ -400,7 +402,7 @@ class Haircheck extends React.Component<HaircheckProps, HaircheckState> {
                           >
                             {!this.state.showAccept || requestingCapture
                               ? 'Getting Ready...'
-                              : 'Join Call'}
+                              : 'Join Chatroom'}
                           </AcceptButton>
                         </AcceptButtonContainer>
                       </>

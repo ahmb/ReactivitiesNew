@@ -35,12 +35,14 @@ const DisplayNameInput: React.SFC<Props> = ({ displayName, setDisplayName }) => 
     <input
       placeholder="Your name (click to edit)"
       value={typedName}
-      onChange={e => setTypedName(e.target.value)}
-      onKeyPress={({ key }) => {
-        if (key === 'Enter') {
-          persisDisplayName(typedName);
-        }
-      }}
+      // onChange={e => setTypedName(e.target.value)}
+      // onKeyPress={({ key }) => {
+      //   if (key === 'Enter') {
+      //     persisDisplayName(typedName);
+      //   }
+      // }}
+      onChange={e => {}}
+      onKeyPress={({ key }) => {}}
       onBlur={() => {
         persisDisplayName(typedName);
       }}

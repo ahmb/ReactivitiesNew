@@ -81,7 +81,7 @@ const NavBar: React.FC<IProps> = ({ className }) => {
               paddingLeft: "0px",
             }}
             header>
-            W
+            Wanna<span id='logoAlt'>Go</span>
           </Menu.Item>
           {isLoggedIn && (
             <>

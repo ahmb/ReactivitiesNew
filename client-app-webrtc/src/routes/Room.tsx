@@ -84,6 +84,8 @@ class Index extends Component<Props, State> {
       chatOpen: false,
       hiddenPeers: []
     };
+    console.log("this.props.userData in Room.tsx is");
+    console.log(this.props.userData);
   }
 
   public render() {
@@ -120,6 +122,7 @@ class Index extends Component<Props, State> {
                         passwordRequired={room.passwordRequired}
                         roomId={room.id!}
                         currentPassword={room.password}
+                        userData={this.props.userData}
                       />
                       <Connecting>
                         <LoadingState>

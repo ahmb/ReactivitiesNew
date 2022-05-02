@@ -1,5 +1,6 @@
 import { LocalMediaList, Media, MediaControls, UserControls, Video } from '@andyet/simplewebrtc';
-import React from 'react';
+import { setDisplayName } from '@andyet/simplewebrtc/actions';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import DisplayNameInput from './DisplayNameInput';
 import LocalMediaControls from './LocalMediaControls';
@@ -59,6 +60,7 @@ interface Props {
   toggleActiveSpeakerView: () => void;
   pttMode: boolean;
   togglePttMode: (e: React.SyntheticEvent<Element>) => void;
+  userData?: string;
 }
 
 interface LocalScreenProps {
@@ -108,60 +110,74 @@ const SidebarUserControls: React.SFC<Props> = ({
   activeSpeakerView,
   toggleActiveSpeakerView,
   pttMode,
-  togglePttMode
-}) => (
-  <UserControls
-    render={({
-      hasAudio,
-      isMuted,
-      mute,
-      unmute,
-      isPaused,
-      isSpeaking,
-      isSpeakingWhileMuted,
-      pauseVideo,
-      resumeVideo,
-      user,
-      setDisplayName
-    }) => (
-      <div>
-        <LocalVideo>
-          <DisplayNameInput displayName={user.displayName} setDisplayName={setDisplayName} />
-          <LocalMediaList
-            shared={true}
-            render={({ media }) => {
-              const videos = media.filter(m => m.kind === 'video');
-              if (videos.length > 0) {
-                return (
-                  <>
-                    {videos.map(m =>
-                      m.screenCapture ? (
-                        <LocalScreen key={m.id} screenshareMedia={m} />
-                      ) : (
-                        <Video key={m.id} media={m} />
-                      )
-                    )}
-                  </>
-                );
-              }
+  togglePttMode,
+  userData
+}) => {
+  useEffect(() => {
+    console.log('userData in sidebaruser controls is');
 
-              return <EmptyVideo />;
-            }}
+    console.log(userData);
+
+    if (userData !== undefined) {
+      window.localStorage.setItem('displayName', userData);
+      console.log('setDisplayName triggered');
+    }
+  }, []);
+
+  return (
+    <UserControls
+      render={({
+        hasAudio,
+        isMuted,
+        mute,
+        unmute,
+        isPaused,
+        isSpeaking,
+        isSpeakingWhileMuted,
+        pauseVideo,
+        resumeVideo,
+        user,
+        userData,
+        setDisplayName
+      }) => (
+        <div>
+          <LocalVideo>
+            <DisplayNameInput displayName={user.displayName} setDisplayName={setDisplayName} />
+            <LocalMediaList
+              shared={true}
+              render={({ media }) => {
+                const videos = media.filter(m => m.kind === 'video');
+                if (videos.length > 0) {
+                  return (
+                    <>
+                      {videos.map(m =>
+                        m.screenCapture ? (
+                          <LocalScreen key={m.id} screenshareMedia={m} />
+                        ) : (
+                          <Video key={m.id} media={m} />
+                        )
+                      )}
+                    </>
+                  );
+                }
+
+                return <EmptyVideo />;
+              }}
+            />
+          </LocalVideo>
+          <LocalMediaControls
+            hasAudio={hasAudio}
+            isMuted={isMuted}
+            unmute={unmute}
+            mute={mute}
+            isPaused={isPaused}
+            resumeVideo={() => resumeVideo({ screenCapture: false })}
+            pauseVideo={() => pauseVideo({ screenCapture: false })}
+            isSpeaking={isSpeaking}
+            isSpeakingWhileMuted={isSpeakingWhileMuted}
           />
-        </LocalVideo>
-        <LocalMediaControls
-          hasAudio={hasAudio}
-          isMuted={isMuted}
-          unmute={unmute}
-          mute={mute}
-          isPaused={isPaused}
-          resumeVideo={() => resumeVideo({ screenCapture: false })}
-          pauseVideo={() => pauseVideo({ screenCapture: false })}
-          isSpeaking={isSpeaking}
-          isSpeakingWhileMuted={isSpeakingWhileMuted}
-        />
-        <RoomModeToggles>
-          {/*
+          <RoomModeToggles>
+            {/*
               Disabled until SDK changes fixed to handle case where no one is speaking.
 
               <div>
@@ -176,17 +192,18 @@ const SidebarUserControls: React.SFC<Props> = ({
                 </ToggleContainer>
               </div>
             */}
-          <div>
+            {/* <div>
             <ToggleContainer>
               <input type="checkbox" checked={pttMode} onChange={togglePttMode} />
               Walkie Talkie Mode
               <Tooltip text="Use spacebar to toggle your microphone on/off" />
             </ToggleContainer>
-          </div>
-        </RoomModeToggles>
-      </div>
-    )}
-  />
-);
+          </div> */}
+          </RoomModeToggles>
+        </div>
+      )}
+    />
+  );
+};
 
 export default SidebarUserControls;

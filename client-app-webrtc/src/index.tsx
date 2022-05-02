@@ -12,8 +12,8 @@ import randomRoomName from './utils/randomRoomName';
 const configUrl = getConfigFromMetaTag('config-url');
 const CONFIG_URL = configUrl ? configUrl : '';
 
-const userData = getConfigFromMetaTag('user-data');
-const USER_DATA = userData ? userData : '';
+// const userData = getConfigFromMetaTag('user-data');
+// const USER_DATA = userData ? userData : '';
 
 const compose = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || ReduxCompose;
 const store = createStore(
@@ -37,7 +37,7 @@ window.addEventListener('resize', setVH);
 // Force the page to reload after 3 hours
 if (!localStorage.disablePageRefresh) {
   setTimeout(() => {
-    window.location.reload(true);
+    window.location.reload();
   }, 1000 * 60 * 60 * 3);
 } else {
   console.log('Forced page refresh disabled');
@@ -51,12 +51,14 @@ interface RunConfig {
   haircheckHeaderPlaceholder?: PlaceholderGenerator;
   emptyRosterPlaceholder?: PlaceholderGenerator;
   homepagePlaceholder?: PlaceholderGenerator;
+  userData: string;
 }
 
 const run = ({
   roomName,
   initialPassword,
   root,
+  userData,
   gridPlaceholder,
   haircheckHeaderPlaceholder,
   emptyRosterPlaceholder,
@@ -65,29 +67,7 @@ const run = ({
   if (CONFIG_URL.endsWith('YOUR_API_KEY')) {
     ReactDOM.render(
       <div className="container" style={{ textAlign: 'left' }}>
-        <h1>Configuration Setup Needed:</h1>
-        <p>
-          Edit <code>public/index.html</code> to add your API key to the configuration URL.
-        </p>
-        <p>
-          Visit <a href="https://simplewebrtc.com">simplewebrtc.com</a> to sign up and get an API
-          key.
-        </p>
-        <h2>How to set your API key:</h2>
-        <p>
-          See the meta tag section marked <code>IMPORTANT SETUP</code> in{' '}
-          <code>public/index.html</code>:
-        </p>
-        <pre style={{ textAlign: 'left' }}>
-          {'<!-- IMPORTANT SETUP -->'}
-          <br />
-          {'<!-- Change the YOUR_API_KEY section of the config URL to match your API key -->'}
-          <br />
-          {`<meta
-  name="simplewebrtc-config-url"
-  content="https://api.simplewebrtc.com/config/guest/YOUR_API_KEY"
-/>`}
-        </pre>
+        <h1>Configuration Setup Needed: API KEY</h1>
       </div>,
       root
     );
@@ -98,7 +78,7 @@ const run = ({
       <App
         roomName={roomName}
         configUrl={CONFIG_URL}
-        userData={USER_DATA}
+        userData={userData}
         initialPassword={initialPassword}
         gridPlaceholder={gridPlaceholder ? gridPlaceholder : null}
         haircheckHeaderPlaceholder={haircheckHeaderPlaceholder ? haircheckHeaderPlaceholder : null}

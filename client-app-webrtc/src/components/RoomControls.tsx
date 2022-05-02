@@ -10,6 +10,7 @@ import { colorToString } from '../utils/colorify';
 import getConfigFromMetaTag from '../utils/metaConfig';
 import InviteButton from './InviteButton';
 import PasswordEntry from './PasswordEntry';
+// import "../index.css";
 
 const LockButton = styled(TalkyButton)({
   gridArea: 'lock'
@@ -92,8 +93,8 @@ const RoomControls: React.SFC<Props> = ({
 
   return (
     <Container>
-      <InviteButton />
-      <LockButton
+      {/* <InviteButton /> */}
+      {/* <LockButton
         onClick={
           passwordRequired
             ? () => {
@@ -116,11 +117,13 @@ const RoomControls: React.SFC<Props> = ({
             <span>Lock</span>
           </>
         )}
-      </LockButton>
-      <LockedLabel>
+      </LockButton> */}
+
+      <img src={`/assets/WannaGoLogo.png`} />
+      {/* <LockedLabel>
         {currentPassword && <span>Room Locked: {currentPassword}</span>}
         {!currentPassword && <span>Anyone may join</span>}
-      </LockedLabel>
+      </LockedLabel> */}
       <a style={{ gridArea: 'leave' }} href={parsedLeaveUrl ? parsedLeaveUrl.toString() : '/'}>
         <LeaveButton>
           <CallEndIcon fill="#505658" />

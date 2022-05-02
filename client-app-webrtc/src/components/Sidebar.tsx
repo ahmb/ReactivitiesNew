@@ -32,6 +32,7 @@ interface Props {
   passwordRequired?: boolean;
   roomId: string;
   currentPassword?: string;
+  userData?:string;
 }
 
 interface State {
@@ -57,7 +58,8 @@ export default class Sidebar extends Component<Props, State> {
       togglePttMode,
       setPassword,
       roomId,
-      currentPassword
+      currentPassword,
+      userData
     } = this.props;
 
     return (
@@ -76,6 +78,7 @@ export default class Sidebar extends Component<Props, State> {
           toggleActiveSpeakerView={toggleActiveSpeakerView}
           pttMode={pttMode}
           togglePttMode={togglePttMode}
+          userData={userData}
         />
         <Roster roomAddress={roomAddress} />
         <SidebarLinks roomId={roomId} />

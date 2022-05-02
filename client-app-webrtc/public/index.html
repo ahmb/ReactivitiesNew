@@ -2,16 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
     <!-- IMPORTANT SETUP -->
-    <!-- Change the YOUR_API_KEY section of the config URL to match your API key --> 
+    <!-- Change the YOUR_API_KEY section of the config URL to match your API key -->
     <meta
       name="simplewebrtc-config-url"
-      content="https://api.simplewebrtc.com/config/guest/YOUR_API_KEY"
+      content="https://api.simplewebrtc.com/config/guest/28620eb083643e8e8897d4b7"
     />
 
     <!--
@@ -32,9 +29,8 @@
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         min-height: 100%;
-        font-family: -apple-system,
-          BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
-          'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+          'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
         font-size: 16px;
         line-height: 1.5;
         color: #4d5659;
@@ -42,8 +38,7 @@
       }
 
       code {
-        font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-          monospace;
+        font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
       }
 
       [hidden] {
@@ -136,7 +131,7 @@
         margin: 0;
         padding: 0;
       }
-    
+
       .create-room-form {
         text-align: center;
       }
@@ -144,7 +139,7 @@
       .create-room-form-input-wrapper {
         border: 1px #00b0e9 solid;
         padding: 10px;
-        border-radius: 3px;
+        border-radius: 10px;
       }
 
       .create-room-form-input-wrapper:focus {
@@ -159,16 +154,19 @@
         border: none;
         background: none;
         color: #00b0e9;
+        border-radius: 10px;
       }
 
       .create-room-form-input:focus {
         outline: none;
+        border-radius: 10px;
       }
 
       .create-room-form-button {
         margin-left: 5px;
         padding: 8px 10px !important;
         display: inline-block;
+        border-radius: 20px;
       }
 
       @media (max-width: 420px) {
@@ -201,12 +199,20 @@
       You need to enable JavaScript to run this app.
     </noscript>
     <div id="root"></div>
+
     <template id="haircheck-header">
-      <h2 style="text-align: center">Ready to join a video chat?</h2>
+      <img
+        id="logo"
+        src="/assets/WannaGoLogo.png"
+        style="display:block;margin:0 auto;max-width:150px;"
+      />
+      <h3 style="text-align: center">
+        Please grant audio and/or video permissions before joining the chatroom
+      </h3>
     </template>
     <template id="empty-peer-grid">
       <h2 style="text-align: center; color: rgba(68, 68, 68, 0.25)">
-        There isn't anyone here (yet!)
+        Successfully connected. Waiting for others to join.
       </h2>
     </template>
     <template id="empty-roster">
@@ -214,31 +220,50 @@
     </template>
     <template id="homepage">
       <div class="container">
+        <img
+          id="logo"
+          src="/assets/WannaGoLogo.png"
+          style="display:block;margin:0 auto;max-width:150px;"
+        />
         <form class="create-room-form" method="GET" action="/">
           <span class="create-room-form-input-wrapper"
             ><span class="domain">localhost/</span
             ><input
               type="text"
-              name="room"
+              id="roomInput"
+              name="name"
               placeholder="choose a room name"
               class="create-room-form-input"/></span
           ><button
             class="create-room-form-button button button-default button-undefined"
+            id="roomInputButton"
             type="submit"
           >
             Start a chat
           </button>
         </form>
+        <br />
+        <i
+          >Note: If you navigated to this page directly then please use the following URL to open
+          the chatroom from the relevant activity page:</i
+        >
       </div>
     </template>
     <script type="text/javascript">
       const params = new URLSearchParams(window.location.search);
+      console.log('chatroom name :');
+      console.log(params.get('name'));
+      console.log('chatroom password :');
+      console.log(params.get('password'));
+      console.log('chatroom user :');
+      console.log(params.get('user'));
       SimpleWebRTC.run({
-        roomName: params.get('room'),
+        roomName: params.get('name'),
         root: document.getElementById('root'),
+        userData: params.get('user') ?? undefined,
+        initialPassword: params.get('password') ?? undefined,
         gridPlaceholder: () => SimpleWebRTC.loadTemplate('empty-peer-grid'),
-        haircheckHeaderPlaceholder: () =>
-          SimpleWebRTC.loadTemplate('haircheck-header'),
+        haircheckHeaderPlaceholder: () => SimpleWebRTC.loadTemplate('haircheck-header'),
         emptyRosterPlaceholder: () => SimpleWebRTC.loadTemplate('empty-roster'),
         homepagePlaceholder: () => SimpleWebRTC.loadTemplate('homepage')
       });

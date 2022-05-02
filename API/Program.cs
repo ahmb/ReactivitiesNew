@@ -1,5 +1,9 @@
 using Application.Activities;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
+using Microsoft.AspNetCore.Http;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -103,15 +107,16 @@ app.UseCsp(opt => opt
         "https://platform-lookaside.fbsbx.com",
         "data:"
         ))
-    .ScriptSources(s => s.Self()
-        .CustomSources(
-            "sha256-HIgflxNtM43xg36bBIUoPTUuo+CXZ319LsTVRtsZ/VU=",
-            "https://www.facebook.com",
-            "https://connect.facebook.net",
-            "sha256-3x3EykMfFJtFd84iFKuZG0MoGAo5XdRfl3rq3r//ydA=",
-            "sha256-HIgflxNtM43xg36bBIUoPTUuo+CXZ319LsTVRtsZ/VU=",
-            "sha256-XiQ00gnMGrQ6iKIbJuHeNRUolqelnAL72Slo3+LCb6s="
-        ))
+//TODO: UNCOMMENT BELOW 
+// .ScriptSources(s => s.Self()
+//     .CustomSources(
+//         "sha256-HIgflxNtM43xg36bBIUoPTUuo+CXZ319LsTVRtsZ/VU=",
+//         "https://www.facebook.com",
+//         "https://connect.facebook.net",
+//         "sha256-3x3EykMfFJtFd84iFKuZG0MoGAo5XdRfl3rq3r//ydA=",
+//         "sha256-HIgflxNtM43xg36bBIUoPTUuo+CXZ319LsTVRtsZ/VU=",
+//         "sha256-XiQ00gnMGrQ6iKIbJuHeNRUolqelnAL72Slo3+LCb6s="
+//     ))
 );
 
 if (app.Environment.IsDevelopment())
@@ -131,7 +136,24 @@ else
 
 //looks in the API projects wwwroot folder for index.html file when you connect to httpserver
 app.UseDefaultFiles();
+
+
 app.UseStaticFiles();
+
+app.UseDefaultFiles(new DefaultFilesOptions()
+{
+    FileProvider = new PhysicalFileProvider(
+                        Path.Combine(Directory.GetCurrentDirectory(), @"wwwrootchat")),
+    RequestPath = new PathString("/chatroom")
+});
+
+
+app.UseStaticFiles(new StaticFileOptions()
+{
+    FileProvider = new PhysicalFileProvider(
+                        Path.Combine(Directory.GetCurrentDirectory(), @"wwwrootchat")),
+    RequestPath = new PathString("/chatroom")
+});
 
 app.UseAuthentication();
 app.UseAuthorization();

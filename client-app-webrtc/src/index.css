@@ -11,6 +11,7 @@ body {
   line-height: 1.5;
   color: #4d5659;
   text-rendering: optimizeSpeed;
+  background-color: aliceblue;
 }
 
 code {
@@ -106,4 +107,29 @@ html {
 * {
   margin: 0;
   padding: 0;
+}
+
+img.center {
+  display: block;
+  margin: 0 auto;
+  max-width: 150px;
+}
+
+
+#logo {
+  display: block;
+  margin: 0 auto;
+  max-width: 150px;
+}
+
+select {
+    border-radius: 10px;
+}
+
+#roomInput{
+  border-radius: 10px;
+}
+
+#roomInputButton{
+  border-radius: 20px;
 }

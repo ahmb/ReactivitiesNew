@@ -2,6 +2,7 @@ import { format } from "date-fns";
 import { observer } from "mobx-react-lite";
 import React from "react";
 import { Segment, Grid, Icon } from "semantic-ui-react";
+import { onClickUrl } from "../../../app/common/util/helpers";
 import { Activity } from "../../../app/models/activity";
 
 interface Props {
@@ -39,6 +40,18 @@ export default observer(function ActivityDetailedInfo({ activity }: Props) {
           <Grid.Column width={11}>
             <span>
               {activity.venue}, {activity.city}
+            </span>
+            <br />
+            <span>
+              Open Chatroom:
+              {/* http://localhost:8080/?name=a&user=ahmad&pass=123 */}
+              <a
+                onClick={onClickUrl(
+                  "http://localhost:8080/?name=a&user=ahmad&pass=123"
+                  // "http://localhost:5000/chatroom/index.html"
+                )}>
+                Open
+              </a>
             </span>
           </Grid.Column>
         </Grid>
