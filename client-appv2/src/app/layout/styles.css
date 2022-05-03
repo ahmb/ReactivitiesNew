@@ -61,6 +61,7 @@ body {
   width: 100%; 
   border: none;
   box-shadow: 0 1px 2px 0 rgba(34, 36, 38, 0.15);
+  border-radius: 20px;
 }
 
 .react-datepicker-wrapper {
@@ -96,6 +97,8 @@ body {
   flex-basis: 100%;
   flex-shrink: 0;
 }
+
+
 
 /* ActivitiesList */
 

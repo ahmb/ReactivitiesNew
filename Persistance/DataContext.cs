@@ -18,6 +18,10 @@ namespace Persistance
         public DbSet<UserFollowing> UserFollowings { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<Categories> Categories { get; set; }
+        public DbSet<ActivityCategories> ActivityCategories { get; set; }
+        public DbSet<Tag> Tags { get; set; }
+        public DbSet<ActivityTag> ActivityTags { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -55,6 +59,31 @@ namespace Persistance
                     .OnDelete(DeleteBehavior.Cascade);
 
             });
+
+            builder.Entity<ActivityCategories>(x => x.HasKey(ac => new { ac.CategoriesId, ac.ActivityId }));
+
+            builder.Entity<ActivityCategories>()
+                .HasOne(u => u.Categories)
+                .WithMany(a => a.Activities)
+                .HasForeignKey(ac => ac.CategoriesId);
+
+            builder.Entity<ActivityCategories>()
+                .HasOne(u => u.Activity)
+                .WithMany(a => a.Categories)
+                .HasForeignKey(ac => ac.ActivityId);
+
+
+            builder.Entity<ActivityTag>(x => x.HasKey(at => new { at.TagId, at.ActivityId }));
+
+            builder.Entity<ActivityTag>()
+                .HasOne(u => u.Tag)
+                .WithMany(a => a.Activities)
+                .HasForeignKey(at => at.TagId);
+
+            builder.Entity<ActivityTag>()
+                .HasOne(u => u.Activity)
+                .WithMany(a => a.Tag)
+                .HasForeignKey(at => at.ActivityId);
         }
     }
 }

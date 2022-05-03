@@ -33,7 +33,6 @@ export default observer(function ActivityFilters() {
       : setIsCalendarVisible(true);
   }
 
-
   const location = useLocation();
 
   return (
@@ -59,7 +58,12 @@ export default observer(function ActivityFilters() {
         <br />
       </div>
 
-      <Grid.Row className='aliceBlueBg' styles={{ paddingBottom: "0px" }}>
+      <Grid.Row
+        className='aliceBlueBg'
+        style={{
+          padding: "30px 10px 20px 10px",
+          borderRadius: "20px 20px 0px 0px",
+        }}>
         {transitions(
           (styles, isCalendarVisible) =>
             isCalendarVisible && (

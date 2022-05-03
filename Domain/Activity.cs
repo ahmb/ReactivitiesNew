@@ -22,11 +22,12 @@ namespace Domain
 
         public Double Longitude { get; set; }
         public Double Latitude { get; set; }
-        public string Tags { get; set; }
         public string ImageUrl { get; set; }
         public bool IsCancelled { get; set; }
 
         public ICollection<ActivityAttendee> Attendees { get; set; } = new List<ActivityAttendee>();
+        public ICollection<ActivityCategories> Categories { get; set; } = new List<ActivityCategories>();
+        public ICollection<ActivityTag> Tag { get; set; } = new List<ActivityTag>();
 
         public ICollection<Comment> Comments { get; set; } = new List<Comment>();
 
