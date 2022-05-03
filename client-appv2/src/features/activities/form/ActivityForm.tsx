@@ -13,6 +13,7 @@ import MySelectInput from "../../../app/common/form/MySelectInput";
 import { categoryOptions } from "../../../app/common/options/categoryOptions";
 import MyDateInput from "../../../app/common/form/MyDateInput";
 import { ActivityFormValues } from "../../../app/models/activity";
+import MyMultiSelectInput from "../../../app/common/form/MyMultiSelectInput";
 
 export default observer(function ActivityForm() {
   const history = useHistory();
@@ -29,6 +30,15 @@ export default observer(function ActivityForm() {
     title: Yup.string().required("The activity title is required"),
     description: Yup.string().required("The activity description is required"),
     category: Yup.string().required(),
+    categories: Yup.array()
+      .of(
+        Yup.object().shape({
+          value: Yup.string().max(255).required().label("value"),
+        })
+      )
+      .min(1, "minimum 1,")
+      .max(3, "maximum 3,")
+      .required("categories are required"),
     date: Yup.date().required("The date is required").nullable(),
     endDate: Yup.date().required("The end date is required").nullable(),
     // TODO: this breaks the form and caused it to render as dirty upon initial
@@ -47,20 +57,21 @@ export default observer(function ActivityForm() {
       });
   }, [id, loadActivity]);
 
-  function handleFormSubmit(activity: ActivityFormValues) {
-    if (!activity.id) {
-      let newActivity = {
-        ...activity,
-        id: uuid(),
-      };
-      createActivity(newActivity).then(() =>
-        history.push(`/activities/${newActivity.id}`)
-      );
-    } else {
-      updateActivity(activity).then(() =>
-        history.push(`/activities/${activity.id}`)
-      );
-    }
+  function handleFormSubmit(activity: ActivityFormValues | any) {
+    console.log(activity);
+    // if (!activity.id) {
+    //   let newActivity = {
+    //     ...activity,
+    //     id: uuid(),
+    //   };
+    //   createActivity(newActivity).then(() =>
+    //     history.push(`/activities/${newActivity.id}`)
+    //   );
+    // } else {
+    //   updateActivity(activity).then(() =>
+    //     history.push(`/activities/${activity.id}`)
+    //   );
+    // }
   }
 
   if (loadingInitial) <LoadingComponent content='Loading Activity' />;
@@ -80,6 +91,11 @@ export default observer(function ActivityForm() {
               options={categoryOptions}
               placeholder='Category'
               name='category'
+            />
+            <MyMultiSelectInput
+              options={categoryOptions}
+              placeholder='Categories'
+              name='categories'
             />
             <MyDateInput
               placeholderText='Date'
