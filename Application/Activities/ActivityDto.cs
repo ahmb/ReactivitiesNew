@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Application.Categories;
 using Application.Comments;
 using Application.Profiles;
+using Application.Tags;
 using Domain;
 
 namespace Application.Activities
@@ -29,5 +31,8 @@ namespace Application.Activities
         public ICollection<AttendeeDto> Attendees { get; set; }
         //comments which are returned with the comments
         public ICollection<CommentDto> Comments { get; set; }
+
+        public ICollection<CategoriesDto> Categories { get; set; }
+        public ICollection<TagDto> Tag { get; set; }
     }
 }

@@ -3,7 +3,9 @@ using Application.Activities;
 using Application.Comments;
 using AutoMapper;
 using Application.Profiles;
+using Application.Categories;
 using Domain;
+using Application.Tags;
 
 namespace Application.Core
 {
@@ -14,6 +16,7 @@ namespace Application.Core
             string currentUsername = null;
 
             CreateMap<Activity, Activity>();
+
 
             CreateMap<Activity, ActivityDto>()
                 .ForMember(d => d.HostUsername, o => o.MapFrom(s => s.Attendees
@@ -42,7 +45,14 @@ namespace Application.Core
             CreateMap<Comment, CommentDto>()
                 .ForMember(dto => dto.Username, opt => opt.MapFrom(comment => comment.Author.UserName))
                 .ForMember(dto => dto.DisplayName, opt => opt.MapFrom(comment => comment.Author.DisplayName))
-                .ForMember(dto => dto.Image, opt => opt.MapFrom(comment => comment.Author.Photos.FirstOrDefault(photo => photo.IsMain).Url));
+                .ForMember(dto => dto.Image, opt => opt.MapFrom(
+                                                            comment => comment.Author
+                                                                .Photos
+                                                                .FirstOrDefault(
+                                                                    photo => photo.IsMain
+                                                                    )
+                                                                .Url
+                                                            ));
 
             CreateMap<ActivityAttendee, UserActivityDto>()
                 .ForMember(d => d.Id, o => o.MapFrom(s => s.Activity.Id))
@@ -52,6 +62,17 @@ namespace Application.Core
                 .ForMember(d => d.HostUsername, o => o.MapFrom(s =>
                     s.Activity.Attendees.FirstOrDefault(x => x.IsHost).AppUser.UserName))
                 ;
+
+
+
+
+            CreateMap<ActivityCategories, CategoriesDto>()
+            .ForMember(d => d.Name, o => o.MapFrom(s => s.Categories.Name))
+            .ForMember(d => d.Description, o => o.MapFrom(s => s.Categories.Description));
+
+
+            CreateMap<ActivityTag, TagDto>()
+            .ForMember(d => d.Name, o => o.MapFrom(s => s.Tag.Name));
 
             //custom value resolver 
             // .ForMember(d => d.Following, o => o.MapFrom<FollowingResolver>());
