@@ -132,6 +132,12 @@ namespace Persistance
                         },
                         City = "London",
                         Venue = "Pub",
+                        AttendeeCountMax = 3,
+                        ChatPassword = Guid.NewGuid(),
+                        LastUpdated = DateTime.UtcNow,
+                        InPerson = false,
+                        Published = true,
+                        Private = false,
                         Attendees = new List<ActivityAttendee>
                         {
                             new ActivityAttendee
@@ -163,6 +169,12 @@ namespace Persistance
                         },
                         City = "Paris",
                         Venue = "The Louvre",
+                        AttendeeCountMax = 2,
+                        ChatPassword = Guid.NewGuid(),
+                        LastUpdated = DateTime.UtcNow,
+                        InPerson = false,
+                        Published = true,
+                        Private = false,
                         Attendees = new List<ActivityAttendee>
                         {
                             new ActivityAttendee
@@ -197,6 +209,12 @@ namespace Persistance
                         },
                         City = "London",
                         Venue = "Wembly Stadium",
+                        AttendeeCountMax = 2,
+                        ChatPassword = Guid.NewGuid(),
+                        LastUpdated = DateTime.UtcNow,
+                        InPerson = false,
+                        Published = true,
+                        Private = false,
                         Attendees = new List<ActivityAttendee>
                         {
                             new ActivityAttendee
@@ -233,6 +251,12 @@ namespace Persistance
                         },
                         City = "London",
                         Venue = "Jamies Italian",
+                        AttendeeCountMax = 2,
+                        ChatPassword = Guid.NewGuid(),
+                        LastUpdated = DateTime.UtcNow,
+                        InPerson = false,
+                        Published = true,
+                        Private = false,
                         Attendees = new List<ActivityAttendee>
                         {
                             new ActivityAttendee
@@ -266,6 +290,12 @@ namespace Persistance
                         },
                         City = "London",
                         Venue = "Pub",
+                        AttendeeCountMax = 3,
+                        ChatPassword = Guid.NewGuid(),
+                        LastUpdated = DateTime.UtcNow,
+                        InPerson = false,
+                        Published = true,
+                        Private = false,
                         Attendees = new List<ActivityAttendee>
                         {
                             new ActivityAttendee
@@ -302,6 +332,12 @@ namespace Persistance
                         },
                         City = "London",
                         Venue = "British Museum",
+                        AttendeeCountMax = 3,
+                        ChatPassword = Guid.NewGuid(),
+                        LastUpdated = DateTime.UtcNow,
+                        InPerson = false,
+                        Published = true,
+                        Private = false,
                         Attendees = new List<ActivityAttendee>
                         {
                             new ActivityAttendee
@@ -330,6 +366,12 @@ namespace Persistance
                         },
                         City = "London",
                         Venue = "Punch and Judy",
+                        AttendeeCountMax = 2,
+                        ChatPassword = Guid.NewGuid(),
+                        LastUpdated = DateTime.UtcNow,
+                        InPerson = false,
+                        Published = true,
+                        Private = false,
                         Attendees = new List<ActivityAttendee>
                         {
                             new ActivityAttendee
@@ -363,6 +405,12 @@ namespace Persistance
                         },
                         City = "London",
                         Venue = "O2 Arena",
+                        AttendeeCountMax = 3,
+                        ChatPassword = Guid.NewGuid(),
+                        LastUpdated = DateTime.UtcNow,
+                        InPerson = false,
+                        Published = true,
+                        Private = false,
                         Attendees = new List<ActivityAttendee>
                         {
                             new ActivityAttendee
@@ -390,6 +438,12 @@ namespace Persistance
                         },
                         City = "Berlin",
                         Venue = "All",
+                        AttendeeCountMax = 4,
+                        ChatPassword = Guid.NewGuid(),
+                        LastUpdated = DateTime.UtcNow,
+                        InPerson = false,
+                        Published = true,
+                        Private = false,
                         Attendees = new List<ActivityAttendee>
                         {
                             new ActivityAttendee
@@ -423,6 +477,12 @@ namespace Persistance
                         },
                         City = "London",
                         Venue = "Pub",
+                        AttendeeCountMax = 4,
+                        ChatPassword = Guid.NewGuid(),
+                        LastUpdated = DateTime.UtcNow,
+                        InPerson = false,
+                        Published = true,
+                        Private = false,
                         Attendees = new List<ActivityAttendee>
                         {
                             new ActivityAttendee
