@@ -56,7 +56,7 @@ namespace Application.Activities
                     IsApproved = true
                 };
 
-//Add attendee to the Activity object in the reques
+                //Add attendee to the Activity object in the reques
                 request.Activity.Attendees.Add(attendee);
 
                 _context.Activities.Add(request.Activity);

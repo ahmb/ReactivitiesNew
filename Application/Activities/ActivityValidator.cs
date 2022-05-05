@@ -9,9 +9,12 @@ namespace Application.Activities
         {
             RuleFor(x => x.Title).NotEmpty();
             RuleFor(x => x.Description).NotEmpty();
-            RuleFor(x => x.Category).NotEmpty();
+            RuleFor(x => x.Categories.Count).GreaterThan(0).LessThan(4).NotEmpty();
             RuleFor(x => x.Date).NotEmpty();
-            RuleFor(x => x.EndDate).NotEmpty();
+            RuleFor(x => x.InPerson).NotEmpty();
+            RuleFor(x => x.Private).NotEmpty();
+            RuleFor(x => x.AttendeeCountMax).NotEmpty().GreaterThan(1).LessThan(7);
+            // RuleFor(x => x.EndDate).NotEmpty();
             // RuleFor(x => x.Private).NotEmpty();
 
             //TODO:Perform a check to see if categroy is one of the categories allowed

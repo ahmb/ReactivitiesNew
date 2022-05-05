@@ -23,7 +23,8 @@ namespace Application.Activities
         public string Tags { get; set; }
         public string HostUsername { get; set; }
         public bool IsCancelled { get; set; }
-
+        public bool InPerson { get; set; }
+        public bool Private { get; set; }
         public int AttendeeCount { get; set; }
         public int AttendeeCountMax { get; set; }
 
