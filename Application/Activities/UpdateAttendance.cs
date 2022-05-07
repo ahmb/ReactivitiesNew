@@ -57,7 +57,8 @@ namespace Application.Activities
                     {
                         AppUser = user,
                         Activity = activity,
-                        IsHost = false
+                        IsHost = false,
+                        IsApproved = false
                     };
 
                     activity.Attendees.Add(attendance);

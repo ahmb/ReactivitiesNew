@@ -38,9 +38,16 @@ namespace Application.Activities
             //handler that returns a list all the activities in the database context
             public async Task<Result<PagedList<ActivityDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
+
                 var query = _context.Activities
-                    .Where(d => d.Date >= request.Params.StartDate)
-                    .OrderBy(d => d.Date)
+                    .Where(a => a.Date >= request.Params.StartDate)
+                    .Where(a => !a.Private)
+                    // .Where(a => a.Published) 
+                    .Where(a => !a.IsSpam)
+                    .Where(a => !a.IsCancelled)
+                    .Where(a => !a.Archived)
+                    .Where(a => a.Attendees.Count < a.AttendeeCountMax)
+                    .OrderBy(a => a.Date)
                     .ProjectTo<ActivityDto>(_mapper.ConfigurationProvider,
                          new { currentUsername = _userAccessor.GetUsername() })
                     .AsQueryable();
@@ -55,7 +62,6 @@ namespace Application.Activities
                     query = query.Where(x => x.HostUsername == _userAccessor.GetUsername());
 
                 }
-
 
                 return Result<PagedList<ActivityDto>>.Success(
                     await PagedList<ActivityDto>

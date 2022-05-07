@@ -35,33 +35,34 @@ namespace Application.Activities
             {
                 AppUser currentUser = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername(), cancellationToken: cancellationToken);
 
-                if(currentUser == null) {
-                    throw new RestException(HttpStatusCode.NotFound, new { User = "Error detecting logged in user. Please sign back in." });
+                if (currentUser == null) return null;
 
-                }
                 var queryable = currentUser.Activities
                     .AsQueryable();
 
-
                 //get activities where hes the host
-                var activitiesHosted = queryable.Where(ua => ua.IsHost && ua.Activity.Date > DateTime.Now).ToList();
+                var activitiesHosted = queryable.Where(aa => aa.IsHost && aa.Activity.Date > DateTime.Now);
 
                 var userActivityList = new List<UserActivitiesUnreadDto>();
 
                 foreach (var activtiyHosted in activitiesHosted)
                 {
 
-                    //userActivities to approve for activities hosted
+                    //activity attendees to approve for activities hosted
                     var userActivityAttenddees = _context.ActivityAttendees
-                    .OrderBy(ua => ua.Activity.Date).Where(ua => ua.ActivityId == activtiyHosted.ActivityId && !ua.IsHost && !ua.Read).ToList();
+                                                    .OrderBy(aa => aa.Activity.Date)
+                                                    .Where(aa => aa.ActivityId == activtiyHosted.ActivityId &&
+                                                         !aa.IsHost && !aa.Read).ToList();
 
                     foreach (var userActivityAttendee in userActivityAttenddees)
                     {
                         string requestorImage;
-                        if(userActivityAttendee.AppUser.Photos.FirstOrDefault(photo => photo.IsMain) == null) {
+                        if (userActivityAttendee.AppUser.Photos.FirstOrDefault(photo => photo.IsMain) == null)
+                        {
                             requestorImage = String.Empty;
-                        } 
-                        else{
+                        }
+                        else
+                        {
                             requestorImage = userActivityAttendee.AppUser.Photos.FirstOrDefault(photo => photo.IsMain).Url;
                         }
                         userActivityList.Add(new UserActivitiesUnreadDto

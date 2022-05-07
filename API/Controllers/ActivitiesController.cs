@@ -61,14 +61,14 @@ namespace API.Controllers
         [Authorize(Policy = "IsActivityHost")]
         public async Task<ActionResult<Unit>> Approve(Guid id, string username)
         {
-            return await Mediator.Send(new Approve.Command { Id = id, Username = username });
+            return HandleResult(await Mediator.Send(new Approve.Command { Id = id, Username = username }));
         }
 
         [HttpDelete("{id}/reject/{username}")]
         [Authorize(Policy = "IsActivityHost")]
         public async Task<ActionResult<Unit>> Reject(Guid id, string username)
         {
-            return await Mediator.Send(new Reject.Command { Id = id, Username = username });
+            return HandleResult(await Mediator.Send(new Reject.Command { Id = id, Username = username }));
         }
 
 

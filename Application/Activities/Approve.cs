@@ -2,6 +2,7 @@ using System;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Core;
 using Application.Errors;
 using Application.Interfaces;
 using Domain;
@@ -14,7 +15,7 @@ namespace Application.Activities
 {
     public class Approve
     {
-        public class Command : IRequest
+        public class Command : IRequest<Result<Unit>>
         {
             //insert properties
             public Guid Id { get; set; }
@@ -30,7 +31,7 @@ namespace Application.Activities
             }
         }
 
-        public class Handler : IRequestHandler<Command>
+        public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private readonly DataContext _context;
 
@@ -40,35 +41,34 @@ namespace Application.Activities
                 _context = context;
             }
 
-            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
                 //add command handler logic
 
                 Activity activity = await _context.Activities.FindAsync(new object[] { request.Id }, cancellationToken: cancellationToken);
 
-                if (activity == null)
-                    throw new RestException(HttpStatusCode.NotFound, new { Activity = "Could not find activity" });
+                //FIXME: updare rgis to the new method such as updateattendance
+                if (activity == null) return null;
+                // throw new RestException(HttpStatusCode.NotFound, new { Activity = "Could not find activity" });
 
                 //check if username in the reqest is attending
                 ActivityAttendee attendance = await _context.ActivityAttendees.SingleOrDefaultAsync(ua => ua.ActivityId == request.Id && ua.AppUser.UserName == request.Username, cancellationToken: cancellationToken);
 
-                if (attendance == null)
-                    throw new RestException(HttpStatusCode.BadRequest, new { Attendance = "Provided user is not attending this activity." });
+                if (attendance == null) return null;
+                // throw new RestException(HttpStatusCode.BadRequest, new { Attendance = "Provided user is not attending this activity." });
 
                 //approve the attendance
                 if (attendance.Read == false || attendance.IsApproved == false)
                 {
-
                     attendance.IsApproved = true;
                     attendance.Read = true;
 
                     var success = await _context.SaveChangesAsync(cancellationToken) > 0;
-                    if (success) return Unit.Value;
+                    if (success) return Result<Unit>.Success(Unit.Value);
 
                 }
 
-                //FIXME:should this throw an exception if no DB changes are made?
-                return Unit.Value;
+                return Result<Unit>.Success(Unit.Value);
 
                 throw new Exception("Problem saving changes.");
 

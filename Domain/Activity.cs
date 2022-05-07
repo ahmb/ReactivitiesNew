@@ -28,14 +28,14 @@ namespace Domain
         public int AttendeeCount { get; set; }
 
         public int AttendeeCountMax { get; set; }
-        public bool Archived { get; set; } //for soft delete
-        public bool Published { get; set; } //for approvals
-        public bool IsSpam { get; set; } //for spam
-        public bool IsCancelled { get; set; }
+        public bool Archived { get; set; } = false;//for soft delete 
+        public bool Published { get; set; } = true;//for approvals
+        public bool IsSpam { get; set; } = false;//for spam
+        public bool IsCancelled { get; set; } = false;
 
-        public bool InPerson { get; set; }
-        public Guid ChatPassword { get; set; }
-        public DateTime LastUpdated { get; set; }
+        public bool InPerson { get; set; } = false;
+        public Guid ChatPassword { get; set; } = Guid.NewGuid();
+        public DateTime LastUpdated { get; set; } = DateTime.UtcNow;
 
         public ICollection<ActivityAttendee> Attendees { get; set; } = new List<ActivityAttendee>();
 
