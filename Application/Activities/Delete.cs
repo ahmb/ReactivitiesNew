@@ -37,10 +37,11 @@ namespace Application.Activities
                 if (activity == null) return null;
 
                 activity.Archived = true;
+                activity.IsCancelled = true;
 
                 bool success = await _context.SaveChangesAsync(cancellationToken) > 0;
 
-                if (!success) return Result<Unit>.Failure("An error occured while deleting/archiving this activity.");
+                if (!success) return Result<Unit>.Failure("An error occured while deleting this activity.");
 
                 return Result<Unit>.Success(Unit.Value);
 

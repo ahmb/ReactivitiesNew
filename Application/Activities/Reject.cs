@@ -53,7 +53,7 @@ namespace Application.Activities
                 //check if username in the reqest is attending
                 ActivityAttendee attendance = await _context.ActivityAttendees
                     .SingleOrDefaultAsync(
-                        aa => 
+                        aa =>
                         aa.ActivityId == request.Id && aa.AppUser.UserName == request.Username,
                         cancellationToken: cancellationToken);
 
@@ -73,6 +73,7 @@ namespace Application.Activities
                 if (attendance.IsApproved == true)
                 {
                     attendance.IsApproved = false;
+                    attendance.ApprovalStatus = ApprovalStatus.Rejected;
                     changed = true;
                 }
 

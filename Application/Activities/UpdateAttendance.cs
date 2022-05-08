@@ -58,7 +58,8 @@ namespace Application.Activities
                         AppUser = user,
                         Activity = activity,
                         IsHost = false,
-                        IsApproved = false
+                        IsApproved = false,
+                        ApprovalStatus = ApprovalStatus.Pending
                     };
 
                     activity.Attendees.Add(attendance);

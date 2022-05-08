@@ -48,24 +48,25 @@ namespace Application.Activities
                     .Where(a => !a.Archived)
                     .Where(a => a.Attendees.Count < a.AttendeeCountMax)
                     .OrderBy(a => a.Date)
-                    .ProjectTo<ActivityDto>(_mapper.ConfigurationProvider,
-                         new { currentUsername = _userAccessor.GetUsername() })
+                    // .ProjectTo<ActivityDto>(_mapper.ConfigurationProvider,
+                    //      new { currentUsername = _userAccessor.GetUsername() })
                     .AsQueryable();
 
                 if (request.Params.IsGoing && !request.Params.IsHost)
                 {
-                    query = query.Where(x => x.Attendees.Any(a => a.Username == _userAccessor.GetUsername()));
+                    query = query.Where(x => x.Attendees.Any(aa => aa.AppUser.UserName == _userAccessor.GetUsername()));
                 }
 
                 if (request.Params.IsHost && !request.Params.IsGoing)
                 {
-                    query = query.Where(x => x.HostUsername == _userAccessor.GetUsername());
+                    query = query.Where(a => a.Attendees.FirstOrDefault(aa => aa.IsHost).AppUser.UserName == _userAccessor.GetUsername());
 
                 }
 
                 return Result<PagedList<ActivityDto>>.Success(
                     await PagedList<ActivityDto>
-                        .CreateAsync(query,
+                        .CreateAsync(query.ProjectTo<ActivityDto>(_mapper.ConfigurationProvider,
+                         new { currentUsername = _userAccessor.GetUsername() }),
                              request.Params.PageNumber,
                              request.Params.PageSize)
                 );

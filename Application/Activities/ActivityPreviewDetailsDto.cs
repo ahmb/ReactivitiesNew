@@ -9,7 +9,29 @@ using Domain;
 
 namespace Application.Activities
 {
-    public class ActivityDto : IActivityDto
+    public interface IActivityDto
+    {
+        Guid Id { get; set; }
+        string Title { get; set; }
+        string Description { get; set; }
+        string Category { get; set; }
+        DateTime Date { get; set; }
+        DateTime EndDate { get; set; }
+        string ImageUrl { get; set; }
+        string City { get; set; }
+        string Venue { get; set; }
+        string Tags { get; set; }
+        string HostUsername { get; set; }
+        bool IsCancelled { get; set; }
+        bool InPerson { get; set; }
+        bool Private { get; set; }
+        int AttendeeCount { get; set; }
+        int AttendeeCountMax { get; set; }
+        ICollection<CategoriesDto> Categories { get; set; }
+        ICollection<TagDto> Tag { get; set; }
+    }
+
+    public class ActivityPreviewDetailsDto : IActivityDto
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
@@ -31,7 +53,6 @@ namespace Application.Activities
         //list of AppUsers attending an activity i.e. Attendees
         // [JsonPropertyName("attendees")]
         //comments which are returned with the comments
-        // public ICollection<CommentDto> Comments { get; set; }
         public ICollection<CategoriesDto> Categories { get; set; }
         public ICollection<TagDto> Tag { get; set; }
     }

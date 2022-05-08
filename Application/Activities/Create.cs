@@ -53,7 +53,8 @@ namespace Application.Activities
                     Activity = request.Activity,
                     IsHost = true,
                     DateJoined = DateTime.Now.ToUniversalTime(),
-                    IsApproved = true
+                    IsApproved = true,
+                    ApprovalStatus = ApprovalStatus.Accepted
                 };
 
                 //Add attendee to the Activity object in the reques

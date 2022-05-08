@@ -1,3 +1,5 @@
+using Domain;
+
 namespace Application.Activities
 {
     public class AttendeeDto
@@ -21,6 +23,8 @@ namespace Application.Activities
         public int Rating { get; set; }
 
         public bool Read { get; set; }
+
+        public ApprovalStatus ApprovalStatus { get; set; }
 
 
     }

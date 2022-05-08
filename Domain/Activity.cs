@@ -25,7 +25,6 @@ namespace Domain
         public Double Longitude { get; set; }
         public Double Latitude { get; set; }
         public string ImageUrl { get; set; }
-        public int AttendeeCount { get; set; }
 
         public int AttendeeCountMax { get; set; }
         public bool Archived { get; set; } = false;//for soft delete 

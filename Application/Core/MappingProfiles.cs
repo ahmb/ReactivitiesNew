@@ -19,10 +19,26 @@ namespace Application.Core
 
             CreateMap<Activity, ActivityDto>()
                 .ForMember(d => d.HostUsername, o => o.MapFrom(s => s.Attendees
-                .FirstOrDefault(x => x.IsHost).AppUser.UserName));
+                            .FirstOrDefault(x => x.IsHost).AppUser.UserName))
+                .ForMember(ad => ad.AttendeeCount, o => o.MapFrom(a => a.Attendees.Count));
 
-            CreateMap<ActivityDto, Activity>()
-                .ForMember(d => d.Attendees, o => o.MapFrom(s => s.Attendees));
+            CreateMap<Activity, ActivityDetailsDto>()
+                .ForMember(d => d.HostUsername,
+                            o => o.MapFrom(a => a.Attendees
+                                    .FirstOrDefault(aa => aa.IsHost).AppUser.UserName))
+                .ForMember(ad => ad.AttendeeCount, o => o.MapFrom(a => a.Attendees.Count))
+                .ForMember(ad => ad.Categories, o => o.MapFrom(a => a.Categories))
+                .ForMember(ad => ad.Tag, o => o.MapFrom(a => a.Tag));
+
+
+            CreateMap<Activity, ActivityPreviewDetailsDto>()
+                .ForMember(ad => ad.HostUsername,
+                            o => o.MapFrom(a => a.Attendees
+                                    .FirstOrDefault(aa => aa.IsHost).AppUser.UserName))
+                .ForMember(ad => ad.AttendeeCount, o => o.MapFrom(a => a.Attendees.Count))
+                .ForMember(ad => ad.Categories, o => o.MapFrom(a => a.Categories))
+                .ForMember(ad => ad.Tag, o => o.MapFrom(a => a.Tag));
+
 
             // CreateMap<AttendeeDto, ActivityAttendee>()
             //     .ForMember(d => d.)
@@ -75,7 +91,7 @@ namespace Application.Core
             .ForMember(d => d.Name, o => o.MapFrom(s => s.Categories.Name))
             .ForMember(d => d.Description, o => o.MapFrom(s => s.Categories.Description));
 
-     
+
             CreateMap<ActivityTag, TagDto>()
             .ForMember(d => d.Name, o => o.MapFrom(s => s.Tag.Name));
 

@@ -9,7 +9,7 @@ using Domain;
 
 namespace Application.Activities
 {
-    public class ActivityDto : IActivityDto
+    public class ActivityDetailsDto : IActivityDto
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
@@ -27,11 +27,13 @@ namespace Application.Activities
         public bool Private { get; set; }
         public int AttendeeCount { get; set; }
         public int AttendeeCountMax { get; set; }
+        public Guid ChatPassword { get; set; }
 
         //list of AppUsers attending an activity i.e. Attendees
         // [JsonPropertyName("attendees")]
+        public ICollection<AttendeeDto> Attendees { get; set; }
         //comments which are returned with the comments
-        // public ICollection<CommentDto> Comments { get; set; }
+        public ICollection<CommentDto> Comments { get; set; }
         public ICollection<CategoriesDto> Categories { get; set; }
         public ICollection<TagDto> Tag { get; set; }
     }

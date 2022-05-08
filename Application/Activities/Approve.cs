@@ -62,6 +62,7 @@ namespace Application.Activities
                 {
                     attendance.IsApproved = true;
                     attendance.Read = true;
+                    attendance.ApprovalStatus = ApprovalStatus.Accepted;
 
                     var success = await _context.SaveChangesAsync(cancellationToken) > 0;
                     if (success) return Result<Unit>.Success(Unit.Value);
