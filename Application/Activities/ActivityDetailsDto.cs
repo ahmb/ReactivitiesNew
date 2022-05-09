@@ -29,6 +29,8 @@ namespace Application.Activities
         public int AttendeeCountMax { get; set; }
         public Guid ChatPassword { get; set; }
 
+        public string Assets { get; set; }
+
         //list of AppUsers attending an activity i.e. Attendees
         // [JsonPropertyName("attendees")]
         public ICollection<AttendeeDto> Attendees { get; set; }

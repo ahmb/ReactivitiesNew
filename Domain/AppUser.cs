@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 
@@ -8,6 +9,8 @@ namespace Domain
         public string DisplayName { get; set; }
 
         public string Bio { get; set; }
+        public double Rating { get; set; } = 0;
+        public DateTime DateJoined { get; set; } = DateTime.UtcNow;
 
 
         public ICollection<ActivityAttendee> Activities { get; set; }

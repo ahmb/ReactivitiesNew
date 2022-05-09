@@ -22,22 +22,33 @@ namespace Application.Core
                             .FirstOrDefault(x => x.IsHost).AppUser.UserName))
                 .ForMember(ad => ad.AttendeeCount, o => o.MapFrom(a => a.Attendees.Count));
 
+
+            CreateMap<Activity, ActivityPendingDto>()
+                .ForMember(d => d.HostUsername,
+                            o => o.MapFrom(a => a.Attendees
+                                    .FirstOrDefault(aa => aa.IsHost).AppUser.UserName))
+                .ForMember(ad => ad.AttendeeCount, o => o.MapFrom(a => a.Attendees.Count))
+                .ForMember(ad => ad.Attendees, o => o.MapFrom(a => a.Attendees.
+                                                    Where(at => at.ApprovalStatus == ApprovalStatus.Pending)));
+
             CreateMap<Activity, ActivityDetailsDto>()
                 .ForMember(d => d.HostUsername,
                             o => o.MapFrom(a => a.Attendees
                                     .FirstOrDefault(aa => aa.IsHost).AppUser.UserName))
                 .ForMember(ad => ad.AttendeeCount, o => o.MapFrom(a => a.Attendees.Count))
-                .ForMember(ad => ad.Categories, o => o.MapFrom(a => a.Categories))
-                .ForMember(ad => ad.Tag, o => o.MapFrom(a => a.Tag));
+                .ForMember(ad => ad.Attendees, o => o.MapFrom(a => a.Attendees.
+                                                    Where(at => at.ApprovalStatus == ApprovalStatus.Accepted)));
+            // .ForMember(ad => ad.Categories, o => o.MapFrom(a => a.Categories))
+            // .ForMember(ad => ad.Tag, o => o.MapFrom(a => a.Tag));
 
 
             CreateMap<Activity, ActivityPreviewDetailsDto>()
                 .ForMember(ad => ad.HostUsername,
                             o => o.MapFrom(a => a.Attendees
                                     .FirstOrDefault(aa => aa.IsHost).AppUser.UserName))
-                .ForMember(ad => ad.AttendeeCount, o => o.MapFrom(a => a.Attendees.Count))
-                .ForMember(ad => ad.Categories, o => o.MapFrom(a => a.Categories))
-                .ForMember(ad => ad.Tag, o => o.MapFrom(a => a.Tag));
+                .ForMember(ad => ad.AttendeeCount, o => o.MapFrom(a => a.Attendees.Count));
+            // .ForMember(ad => ad.Categories, o => o.MapFrom(a => a.Categories))
+            // .ForMember(ad => ad.Tag, o => o.MapFrom(a => a.Tag));
 
 
             // CreateMap<AttendeeDto, ActivityAttendee>()

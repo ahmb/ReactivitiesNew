@@ -74,9 +74,9 @@ namespace API.Controllers
 
         [HttpGet("unread")]
         [Authorize]
-        public async Task<ActionResult<List<UserActivitiesUnreadDto>>> Unread()
+        public async Task<IActionResult> Unread()
         {
-            return await Mediator.Send(new Unread.Query());
+            return HandleResult(await Mediator.Send(new Unread.Query()));
         }
 
 

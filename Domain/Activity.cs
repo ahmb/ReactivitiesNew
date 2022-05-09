@@ -25,6 +25,7 @@ namespace Domain
         public Double Longitude { get; set; }
         public Double Latitude { get; set; }
         public string ImageUrl { get; set; }
+        public string Assets { get; set; }
 
         public int AttendeeCountMax { get; set; }
         public bool Archived { get; set; } = false;//for soft delete 
@@ -35,6 +36,11 @@ namespace Domain
         public bool InPerson { get; set; } = false;
         public Guid ChatPassword { get; set; } = Guid.NewGuid();
         public DateTime LastUpdated { get; set; } = DateTime.UtcNow;
+
+        // public AppUser Host
+        // {
+        //     get; set;
+        // }
 
         public ICollection<ActivityAttendee> Attendees { get; set; } = new List<ActivityAttendee>();
 

@@ -143,7 +143,8 @@ namespace Persistance
                             new ActivityAttendee
                             {
                                 AppUser = users[0],
-                                IsHost = true
+                                IsHost = true,
+                                ApprovalStatus = ApprovalStatus.Accepted
                             }
                         },
                         Tag = new List<ActivityTag>{
@@ -258,7 +259,7 @@ namespace Persistance
                         },
                         City = "London",
                         Venue = "Jamies Italian",
-                        AttendeeCountMax = 2,
+                        AttendeeCountMax = 4,
                         ChatPassword = Guid.NewGuid(),
                         LastUpdated = DateTime.UtcNow,
                         InPerson = false,
@@ -277,6 +278,12 @@ namespace Persistance
                                 AppUser = users[2],
                                 IsHost = false,
                                 ApprovalStatus = ApprovalStatus.Accepted
+                            },
+                            new ActivityAttendee
+                            {
+                                AppUser = users[1],
+                                IsHost = false,
+                                ApprovalStatus = ApprovalStatus.Pending
                             },
                         },
                         Tag = new List<ActivityTag>{
@@ -299,7 +306,7 @@ namespace Persistance
                         },
                         City = "London",
                         Venue = "Pub",
-                        AttendeeCountMax = 3,
+                        AttendeeCountMax = 5,
                         ChatPassword = Guid.NewGuid(),
                         LastUpdated = DateTime.UtcNow,
                         InPerson = false,
@@ -320,6 +327,12 @@ namespace Persistance
                                 IsHost = false,
                                 ApprovalStatus = ApprovalStatus.Accepted
 
+                            },
+                            new ActivityAttendee
+                            {
+                                AppUser = users[2],
+                                IsHost = false,
+                                ApprovalStatus = ApprovalStatus.Pending
                             },
                         },
                         Tag = new List<ActivityTag>{
@@ -394,14 +407,12 @@ namespace Persistance
                                 AppUser = users[0],
                                 IsHost = true,
                                 ApprovalStatus = ApprovalStatus.Accepted
-
                             },
                             new ActivityAttendee
                             {
                                 AppUser = users[1],
                                 IsHost = false,
-                                ApprovalStatus = ApprovalStatus.Accepted
-
+                                ApprovalStatus = ApprovalStatus.Pending
                             },
                         },
                         Tag = new List<ActivityTag>{
