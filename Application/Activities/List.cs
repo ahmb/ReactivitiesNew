@@ -48,6 +48,9 @@ namespace Application.Activities
                     .Where(a => !a.Archived)
                     .Where(a => a.Attendees.Count < a.AttendeeCountMax)
                     .OrderBy(a => a.Date)
+                    .Include(a => a.Tag).ThenInclude(at => at.Tag)
+                    .Include(a => a.Categories).ThenInclude(ac => ac.Categories)
+                    .Include(a => a.Attendees).ThenInclude(u => u.AppUser)
                     // .ProjectTo<ActivityDto>(_mapper.ConfigurationProvider,
                     //      new { currentUsername = _userAccessor.GetUsername() })
                     .AsQueryable();

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using NpgsqlTypes;
 
 namespace Domain
 {
@@ -12,6 +13,7 @@ namespace Domain
 
         public string Description { get; set; }
         public string Category { get; set; }
+        public string Tags { get; set; }
 
 
         public DateTime Date { get; set; }
@@ -36,6 +38,8 @@ namespace Domain
         public bool InPerson { get; set; } = false;
         public Guid ChatPassword { get; set; } = Guid.NewGuid();
         public DateTime LastUpdated { get; set; } = DateTime.UtcNow;
+        // public NpgsqlTsVector SearchVector { get; set; }
+
 
         // public AppUser Host
         // {

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Domain;
 using Microsoft.AspNetCore.Identity;
 using Persistance;
-
+using Persistance.Utils;
 namespace Persistance
 {
     public class Seed
@@ -124,12 +124,17 @@ namespace Persistance
                         Title = "Past Activity 1",
                         Date = DateTime.Now.AddMonths(-2),
                         Description = "Activity 2 months ago <- just videogames",
-                        Category = "videogames",
                         Categories = new List<ActivityCategories>{
                             new ActivityCategories{
                                 Categories  = categoriesList[2]//context.Categories.FirstOrDefault(c =>c.Name =="videogames")
                             }
                         },
+                        // Category = "videogames",
+                        Category = Persistance.Utils.Utilities.FlattenCategories(new List<ActivityCategories>{
+                            new ActivityCategories{
+                                Categories  = categoriesList[2]//context.Categories.FirstOrDefault(c =>c.Name =="videogames")
+                            }
+                        }),
                         City = "London",
                         Venue = "Pub",
                         AttendeeCountMax = 3,
@@ -152,14 +157,22 @@ namespace Persistance
                                 Tag = new Tag{
                                     Name ="sonicthehdedgehog"
                             }
+                        }},
+                        Tags = Utilities.FlattenTags(
+                            new List<ActivityTag>{
+                            new ActivityTag{
+                                Tag = new Tag{
+                                    Name ="sonicthehdedgehog"
+                            }
                         }}
+                        )
                     },
                     new Activity
                     {
                         Title = "Past Activity 2",
                         Date = DateTime.Now.AddMonths(-1),
                         Description = "Activity 1 month ago <- watch + videogames",
-                        Category = "watch",
+                        // Category = "watch",
                         Categories = new List<ActivityCategories>{
                             new ActivityCategories{
                                 Categories  = categoriesList[2]//context.Categories.FirstOrDefault(c =>c.Name =="videogames")
@@ -168,6 +181,16 @@ namespace Persistance
                                 Categories  = categoriesList[3]//context.Categories.FirstOrDefault(c =>c.Name =="watch")
                             }
                         },
+                        Category = Persistance.Utils.Utilities.FlattenCategories(
+                                new List<ActivityCategories>{
+                                    new ActivityCategories{
+                                        Categories  = categoriesList[2]//context.Categories.FirstOrDefault(c =>c.Name =="videogames")
+                                    },
+                                    new ActivityCategories{
+                                        Categories  = categoriesList[3]//context.Categories.FirstOrDefault(c =>c.Name =="watch")
+                                    }
+                        }
+                        ),
                         City = "Paris",
                         Venue = "The Louvre",
                         AttendeeCountMax = 2,
@@ -197,20 +220,34 @@ namespace Persistance
                                 Tag = new Tag{
                                     Name ="youtube"
                             }
+                        }},
+                        Tags = Utilities.FlattenTags(
+                            new List<ActivityTag>{
+                            new ActivityTag{
+                                Tag = new Tag{
+                                    Name ="youtube"
+                            }
                         }}
-
+                        )
                     },
                     new Activity
                     {
                         Title = "Future Activity 1",
                         Date = DateTime.Now.AddMonths(1),
                         Description = "Activity 1 month in future <-- business",
-                        Category = "business",
+                        // Category = "business",
                         Categories = new List<ActivityCategories>{
                             new ActivityCategories{
                                 Categories  = categoriesList[4]//context.Categories.FirstOrDefault(c =>c.Name =="business")//categoriesList[4]
                             }
                         },
+                        Category = Persistance.Utils.Utilities.FlattenCategories(
+                                new List<ActivityCategories>{
+                                new ActivityCategories{
+                                    Categories  = categoriesList[4]//context.Categories.FirstOrDefault(c =>c.Name =="business")//categoriesList[4]
+                                }
+                            }
+                        ),
                         City = "London",
                         Venue = "Wembly Stadium",
                         AttendeeCountMax = 2,
@@ -241,14 +278,22 @@ namespace Persistance
                                 Tag = new Tag{
                                     Name ="startupideas"
                             }
+                        }},
+                        Tags = Utilities.FlattenTags(
+                            new List<ActivityTag>{
+                            new ActivityTag{
+                                Tag = new Tag{
+                                    Name ="startupideas"
+                            }
                         }}
+                        )
                     },
                     new Activity
                     {
                         Title = "Future Activity 2",
                         Date = DateTime.Now.AddMonths(2),
                         Description = "Activity 2 months in future <-- study + misc",
-                        Category = "study",
+                        // Category = "study",
                         Categories = new List<ActivityCategories>{
                             new ActivityCategories{
                                 Categories  = categoriesList[5]//context.Categories.FirstOrDefault(c =>c.Name =="study")//categoriesList[5]
@@ -257,6 +302,16 @@ namespace Persistance
                                 Categories  = categoriesList[6]//context.Categories.FirstOrDefault(c =>c.Name =="misc")//categoriesList[6]
                             }
                         },
+                        Category = Persistance.Utils.Utilities.FlattenCategories(
+                            new List<ActivityCategories>{
+                            new ActivityCategories{
+                                Categories  = categoriesList[5]//context.Categories.FirstOrDefault(c =>c.Name =="study")//categoriesList[5]
+                            },
+                            new ActivityCategories{
+                                Categories  = categoriesList[6]//context.Categories.FirstOrDefault(c =>c.Name =="misc")//categoriesList[6]
+                            }
+                        }
+                        ),
                         City = "London",
                         Venue = "Jamies Italian",
                         AttendeeCountMax = 4,
@@ -291,7 +346,15 @@ namespace Persistance
                                 Tag = new Tag{
                                     Name ="Homework"
                             }
+                        }},
+                        Tags = Utilities.FlattenTags(
+                            new List<ActivityTag>{
+                            new ActivityTag{
+                                Tag = new Tag{
+                                    Name ="Homework"
+                            }
                         }}
+                        )
                     },
                     new Activity
                     {
@@ -340,14 +403,22 @@ namespace Persistance
                                 Tag = new Tag{
                                     Name ="C#"
                             }
+                        }},
+                        Tags = Utilities.FlattenTags(
+                            new List<ActivityTag>{
+                            new ActivityTag{
+                                Tag = new Tag{
+                                    Name ="C#"
+                            }
                         }}
+                        )
                     },
                     new Activity
                     {
                         Title = "Future Activity 4",
                         Date = DateTime.Now.AddMonths(4),
                         Description = "Activity 4 months in future<---artdesign + misc",
-                        Category = "artdesign",
+                        // Category = "artdesign",
                         Categories = new List<ActivityCategories>{
                             new ActivityCategories{
                                 Categories  = categoriesList[1]//context.Categories.FirstOrDefault(c =>c.Name =="msc")//categoriesList[1]
@@ -356,6 +427,16 @@ namespace Persistance
                                 Categories  = categoriesList[6]//context.Categories.FirstOrDefault(c =>c.Name =="artdesign")//categoriesList[6]
                             }
                         },
+                        Category = Persistance.Utils.Utilities.FlattenCategories(
+                            new List<ActivityCategories>{
+                            new ActivityCategories{
+                                Categories  = categoriesList[1]//context.Categories.FirstOrDefault(c =>c.Name =="msc")//categoriesList[1]
+                            },
+                            new ActivityCategories{
+                                Categories  = categoriesList[6]//context.Categories.FirstOrDefault(c =>c.Name =="artdesign")//categoriesList[6]
+                            }
+                        }
+                        ),
                         City = "London",
                         Venue = "British Museum",
                         AttendeeCountMax = 3,
@@ -379,7 +460,15 @@ namespace Persistance
                                 Tag = new Tag{
                                     Name ="figma"
                             }
+                        }},
+                        Tags = Utilities.FlattenTags(
+                            new List<ActivityTag>{
+                            new ActivityTag{
+                                Tag = new Tag{
+                                    Name ="figma"
+                            }
                         }}
+                        )
                     },
                     new Activity
                     {
@@ -420,14 +509,28 @@ namespace Persistance
                                 Tag = new Tag{
                                     Name ="illustrator"
                             }
+                        }},
+                        Tags = Utilities.FlattenTags(
+                            new List<ActivityTag>{
+                            new ActivityTag{
+                                Tag = new Tag{
+                                    Name ="illustrator"
+                            }
                         }}
+                        )
                     },
                     new Activity
                     {
                         Title = "Future Activity 6",
                         Date = DateTime.Now.AddMonths(6),
                         Description = "Activity 6 months in future <--coding",
-                        Category = "coding",
+                        Category = Utilities.FlattenCategories(
+                            new List<ActivityCategories>{
+                            new ActivityCategories{
+                                Categories  = categoriesList[0]//context.Categories.FirstOrDefault(c =>c.Name =="coding")//categoriesList[0]
+                            }
+                        }
+                        ),
                         Categories = new List<ActivityCategories>{
                             new ActivityCategories{
                                 Categories  = categoriesList[0]//context.Categories.FirstOrDefault(c =>c.Name =="coding")//categoriesList[0]
@@ -500,19 +603,33 @@ namespace Persistance
                                 Tag = new Tag{
                                     Name ="cooking"
                             }
+                        }},
+                        Tags = Utilities.FlattenTags(
+                             new List<ActivityTag>{
+                            new ActivityTag{
+                                Tag = new Tag{
+                                    Name ="cooking"
+                            }
                         }}
+                        )
                     },
                     new Activity
                     {
                         Title = "Future Activity 8",
                         Date = DateTime.Now.AddMonths(8),
                         Description = "Activity 8 months in future",
-                        Category = "study",
                         Categories = new List<ActivityCategories>{
                             new ActivityCategories{
                                 Categories  = categoriesList[5]//context.Categories.FirstOrDefault(c =>c.Name =="study")//categoriesList[5]
                             }
                         },
+                        Category = Utilities.FlattenCategories(
+                            new List<ActivityCategories>{
+                                new ActivityCategories{
+                                    Categories  = categoriesList[5]//context.Categories.FirstOrDefault(c =>c.Name =="study")//categoriesList[5]
+                                }
+                        }
+                        ),
                         City = "London",
                         Venue = "Pub",
                         AttendeeCountMax = 4,
@@ -543,7 +660,15 @@ namespace Persistance
                                 Tag = new Tag{
                                     Name ="grade9science"
                             }
+                        }},
+                        Tags = Utilities.FlattenTags(
+                            new List<ActivityTag>{
+                            new ActivityTag{
+                                Tag = new Tag{
+                                    Name ="grade9science"
+                            }
                         }}
+                        )
                     }
                 };
                 await context.Activities.AddRangeAsync(activities);

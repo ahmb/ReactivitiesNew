@@ -1,4 +1,5 @@
-﻿using Domain;
+﻿using System.Linq;
+using Domain;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,6 +27,15 @@ namespace Persistance
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<Activity>()
+                // .HasGeneratedTsVectorColumn(
+                //     a => a.SearchVector,
+                //     "english",
+                //     a => new { a.Title, a.Description })
+                .HasIndex(a => new { a.Title, a.Description, a.Tags, a.Category })
+                .HasMethod("GIN")
+                .IsTsVectorExpressionIndex("english");
 
             builder.Entity<ActivityAttendee>(x => x.HasKey(aa => new { aa.AppUserId, aa.ActivityId }));
 
@@ -84,6 +94,8 @@ namespace Persistance
                 .HasOne(u => u.Activity)
                 .WithMany(a => a.Tag)
                 .HasForeignKey(at => at.ActivityId);
+
+
         }
     }
 }
