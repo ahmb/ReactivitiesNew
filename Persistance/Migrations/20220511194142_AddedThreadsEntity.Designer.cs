@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Persistance;
@@ -11,9 +12,10 @@ using Persistance;
 namespace Persistance.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220511194142_AddedThreadsEntity")]
+    partial class AddedThreadsEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,9 +78,6 @@ namespace Persistance.Migrations
                     b.Property<double>("Longitude")
                         .HasColumnType("double precision");
 
-                    b.Property<string>("PictureId")
-                        .HasColumnType("text");
-
                     b.Property<bool>("Private")
                         .HasColumnType("boolean");
 
@@ -95,8 +94,6 @@ namespace Persistance.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PictureId");
 
                     b.HasIndex("Title", "Description", "Tags", "Category")
                         .HasAnnotation("Npgsql:TsVectorConfig", "english");
@@ -611,15 +608,6 @@ namespace Persistance.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("Domain.Activity", b =>
-                {
-                    b.HasOne("Domain.Photo", "Picture")
-                        .WithMany()
-                        .HasForeignKey("PictureId");
-
-                    b.Navigation("Picture");
                 });
 
             modelBuilder.Entity("Domain.ActivityAttendee", b =>

@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace API.SignalR
 {
+    [Authorize(Policy = "IsApprovedAttendee")]
     public class ChatHub : Hub
     {
         private readonly IMediator _mediator;

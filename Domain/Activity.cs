@@ -52,6 +52,9 @@ namespace Domain
         public ICollection<ActivityTag> Tag { get; set; } = new List<ActivityTag>();
         public ICollection<Comment> Comments { get; set; } = new List<Comment>();
 
+        public Photo Picture { get; set; }
+
+
 
     }
 }

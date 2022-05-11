@@ -62,8 +62,13 @@ namespace API.Extensions
                 {
                     policy.Requirements.Add(new IsHostRequirement());
                 });
+                opt.AddPolicy("IsApprovedAttendee", policy =>
+                {
+                    policy.Requirements.Add(new IsApprovedAttendeeRequirement());
+                });
             });
             services.AddTransient<IAuthorizationHandler, IsHostRequirementHandler>();
+            services.AddTransient<IAuthorizationHandler, IsApprovedAttendeeRequirementHandler>();
             services.AddScoped<TokenService>();
 
             return services;

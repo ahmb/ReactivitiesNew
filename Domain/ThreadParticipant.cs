@@ -4,10 +4,9 @@ namespace Domain
 {
     public class ThreadParticipant
     {
-        public virtual AppUser AppUser { get; set; }
+        public Thread Thread { get; set; }
+        public Guid ThreadId { get; set; }
+        public AppUser User { get; set; }
         public string AppUserId { get; set; }
-        public virtual Thread Thread { get; set; }
-        public Guid TheadId { get; set; }
-
     }
 }

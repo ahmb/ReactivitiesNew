@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Persistance;
@@ -11,9 +12,10 @@ using Persistance;
 namespace Persistance.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220511041823_AddedMessagesEntity")]
+    partial class AddedMessagesEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,9 +78,6 @@ namespace Persistance.Migrations
                     b.Property<double>("Longitude")
                         .HasColumnType("double precision");
 
-                    b.Property<string>("PictureId")
-                        .HasColumnType("text");
-
                     b.Property<bool>("Private")
                         .HasColumnType("boolean");
 
@@ -95,8 +94,6 @@ namespace Persistance.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PictureId");
 
                     b.HasIndex("Title", "Description", "Tags", "Category")
                         .HasAnnotation("Npgsql:TsVectorConfig", "english");
@@ -312,30 +309,27 @@ namespace Persistance.Migrations
 
             modelBuilder.Entity("Domain.Message", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                    b.Property<string>("SenderId")
+                        .HasColumnType("text");
 
-                    b.Property<string>("AuthorId")
+                    b.Property<string>("RecieverId")
                         .HasColumnType("text");
 
                     b.Property<string>("Body")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
 
                     b.Property<int>("MessageStatus")
                         .HasColumnType("integer");
 
-                    b.Property<Guid>("ThreadId")
-                        .HasColumnType("uuid");
+                    b.Property<DateTime>("SentAt")
+                        .HasColumnType("timestamp with time zone");
 
-                    b.HasKey("Id");
+                    b.HasKey("SenderId", "RecieverId");
 
-                    b.HasIndex("AuthorId");
-
-                    b.HasIndex("ThreadId");
+                    b.HasIndex("RecieverId");
 
                     b.ToTable("Messages");
                 });
@@ -438,32 +432,6 @@ namespace Persistance.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tags");
-                });
-
-            modelBuilder.Entity("Domain.Thread", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Threads");
-                });
-
-            modelBuilder.Entity("Domain.ThreadParticipant", b =>
-                {
-                    b.Property<string>("AppUserId")
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("ThreadId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("AppUserId", "ThreadId");
-
-                    b.HasIndex("ThreadId");
-
-                    b.ToTable("ThreadParticipants");
                 });
 
             modelBuilder.Entity("Domain.UserFollowing", b =>
@@ -613,15 +581,6 @@ namespace Persistance.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Activity", b =>
-                {
-                    b.HasOne("Domain.Photo", "Picture")
-                        .WithMany()
-                        .HasForeignKey("PictureId");
-
-                    b.Navigation("Picture");
-                });
-
             modelBuilder.Entity("Domain.ActivityAttendee", b =>
                 {
                     b.HasOne("Domain.Activity", "Activity")
@@ -704,19 +663,21 @@ namespace Persistance.Migrations
 
             modelBuilder.Entity("Domain.Message", b =>
                 {
-                    b.HasOne("Domain.AppUser", "Author")
-                        .WithMany("Messages")
-                        .HasForeignKey("AuthorId");
-
-                    b.HasOne("Domain.Thread", "Thread")
-                        .WithMany("Messages")
-                        .HasForeignKey("ThreadId")
+                    b.HasOne("Domain.AppUser", "Reciever")
+                        .WithMany("MessagesRecieved")
+                        .HasForeignKey("RecieverId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Author");
+                    b.HasOne("Domain.AppUser", "Sender")
+                        .WithMany("MessagesSent")
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Thread");
+                    b.Navigation("Reciever");
+
+                    b.Navigation("Sender");
                 });
 
             modelBuilder.Entity("Domain.Notification", b =>
@@ -756,25 +717,6 @@ namespace Persistance.Migrations
                         .HasForeignKey("AppUserId");
 
                     b.Navigation("AppUser");
-                });
-
-            modelBuilder.Entity("Domain.ThreadParticipant", b =>
-                {
-                    b.HasOne("Domain.AppUser", "User")
-                        .WithMany("Threads")
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Thread", "Thread")
-                        .WithMany("Participants")
-                        .HasForeignKey("ThreadId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Thread");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.UserFollowing", b =>
@@ -870,13 +812,13 @@ namespace Persistance.Migrations
 
                     b.Navigation("Interests");
 
-                    b.Navigation("Messages");
+                    b.Navigation("MessagesRecieved");
+
+                    b.Navigation("MessagesSent");
 
                     b.Navigation("Photos");
 
                     b.Navigation("RefreshTokens");
-
-                    b.Navigation("Threads");
                 });
 
             modelBuilder.Entity("Domain.Categories", b =>
@@ -887,13 +829,6 @@ namespace Persistance.Migrations
             modelBuilder.Entity("Domain.Tag", b =>
                 {
                     b.Navigation("Activities");
-                });
-
-            modelBuilder.Entity("Domain.Thread", b =>
-                {
-                    b.Navigation("Messages");
-
-                    b.Navigation("Participants");
                 });
 #pragma warning restore 612, 618
         }

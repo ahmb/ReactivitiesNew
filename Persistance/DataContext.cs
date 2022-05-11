@@ -23,6 +23,9 @@ namespace Persistance
         public DbSet<ActivityCategories> ActivityCategories { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<ActivityTag> ActivityTags { get; set; }
+        public DbSet<Thread> Threads { get; set; }
+
+        public DbSet<ThreadParticipant> ThreadParticipants { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -36,6 +39,35 @@ namespace Persistance
                 .HasIndex(a => new { a.Title, a.Description, a.Tags, a.Category })
                 .HasMethod("GIN")
                 .IsTsVectorExpressionIndex("english");
+
+            builder.Entity<ThreadParticipant>(tp => tp.HasKey(tp => new { tp.AppUserId, tp.ThreadId }));
+
+            builder.Entity<ThreadParticipant>()
+                .HasOne(tp => tp.Thread)
+                .WithMany(t => t.Participants)
+                .HasForeignKey(tp => tp.ThreadId);
+
+            builder.Entity<ThreadParticipant>()
+                .HasOne(tp => tp.User)
+                .WithMany(u => u.Threads)
+                .HasForeignKey(tp => tp.AppUserId);
+
+            // builder.Entity<Message>(m => m.HasKey(m => new { m.SenderId, m.RecieverId }));
+
+            // builder.Entity<Message>()
+            //     .HasOne(m => m.Thread)
+            //     .WithMany(t => t.Messages)
+            //     .HasForeignKey(m => m.ThreadId);
+
+            // builder.Entity<Message>()
+            //     .HasOne(m => m.Author)
+            //     .WithMany(u => u.Messages)
+            //     .HasForeignKey(m => m.AuthorId);
+
+            // builder.Entity<Message>()
+            //     .HasOne(m => m.Reciever)
+            //     .WithMany(u => u.MessagesRecieved)
+            //     .HasForeignKey(m => m.RecieverId);
 
             builder.Entity<ActivityAttendee>(x => x.HasKey(aa => new { aa.AppUserId, aa.ActivityId }));
 

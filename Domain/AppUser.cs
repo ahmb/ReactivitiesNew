@@ -25,6 +25,8 @@ namespace Domain
         public ICollection<UserFollowing> Followers { get; set; }
         public ICollection<Interest> Interests { get; set; }
         public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
+        public ICollection<ThreadParticipant> Threads { get; set; }
+        public ICollection<Message> Messages { get; set; }
 
     }
 }

@@ -7,8 +7,10 @@ namespace Domain
     {
         public Guid Id { get; set; }
 
-        public virtual ICollection<ThreadParticipant> ThreadParticipants { get; set; }
-        public virtual ICollection<Msg> Messages { get; set; }
+        public ICollection<Message> Messages { get; set; }
+        public ICollection<ThreadParticipant> Participants { get; set; }
+
+
 
     }
 }
