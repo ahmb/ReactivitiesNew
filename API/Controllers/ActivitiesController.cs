@@ -81,7 +81,13 @@ namespace API.Controllers
             return HandleResult(await Mediator.Send(new Unread.Query()));
         }
 
-
+        [HttpGet("picture/{activityId}")]
+        [Authorize(Policy = "IsActivityHost")]
+        public async Task<IActionResult> AddPicture([FromForm] AddPicture.Command command, Guid activityId)
+        {
+            command.ActivityId = activityId;
+            return HandleResult(await Mediator.Send(command));
+        }
 
 
     }
