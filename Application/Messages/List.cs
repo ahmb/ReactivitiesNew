@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Core;
-using Application.Interfaces;
 using AutoMapper;
-using Domain;
+using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistance;
@@ -14,42 +14,30 @@ namespace Application.Messages
 {
     public class List
     {
-        public class Query : IRequest<Result<List<Message>>>
+        public class Query : IRequest<Result<List<MessageDto>>>
         {
-
+            public Guid ThreadId { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query, Result<List<Message>>>
+        public class Handler : IRequestHandler<Query, Result<List<MessageDto>>>
         {
             private readonly DataContext _context;
             private readonly IMapper _mapper;
-            private readonly IUserAccessor _userAccessor;
-            public Handler(DataContext context, IMapper mapper, IUserAccessor userAccessor)
+            public Handler(DataContext context, IMapper mapper)
             {
-                _context = context;
-                _userAccessor = userAccessor;
                 _mapper = mapper;
-
+                _context = context;
             }
 
-
-            public async Task<Result<List<Message>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<MessageDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                // var comments = await _context.Comments
-                //     .Where(x => x.Activity.Id == request.ActivityId)
-                //     .OrderByDescending(x => x.CreatedAt)
-                //     .ProjectTo<CommentDto>(_mapper.ConfigurationProvider)
-                //     .ToListAsync(cancellationToken: cancellationToken);
+                var messages = await _context.Messages
+                    .Where(m => m.ThreadId == request.ThreadId)
+                    .OrderByDescending(x => x.CreatedAt)
+                    .ProjectTo<MessageDto>(_mapper.ConfigurationProvider)
+                    .ToListAsync(cancellationToken: cancellationToken);
 
-                // return Result<List<Message>>.Success(comments);
-
-
-                var user = await _context.Users.FirstOrDefaultAsync(x =>
-                    x.UserName == _userAccessor.GetUsername(), cancellationToken: cancellationToken);
-
-                // var messages = await user.MessagesRecieved
-
-                throw new NotImplementedException();
+                return Result<List<MessageDto>>.Success(messages);
 
             }
         }

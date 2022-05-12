@@ -1,33 +1,28 @@
+using Application.Messages;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
     public class MessagesController : BaseController
     {
-        //         [HttpGet]
-        // [AllowAnonymous]
-        // public async Task<IActionResult> GetActivities([FromQuery] ActivityParams param)
-        // {
-        //     return HandlePagedResult(await Mediator.Send(new List.Query { Params = param }));
-        // }
 
         [HttpGet("inbox")]
         [Authorize]
         public async Task<IActionResult> GetInbox()
         {
-            throw new NotImplementedException();
+            return HandleResult(await Mediator.Send(new ListThreads.Query()));
         }
 
-        [HttpGet("messages/{username}")]
+        [HttpGet("messages/{threadId}")]
         [Authorize]
-        public async Task<IActionResult> GetMessages(string username)
+        public async Task<IActionResult> GetMessages(Guid username)
         {
             throw new NotImplementedException();
         }
 
-        [HttpPost("messages/{username}")]
+        [HttpPost("messages/{threadId}")]
         [Authorize]
-        public async Task<IActionResult> SendMessage(string username)
+        public async Task<IActionResult> SendMessage(Guid threadId)
         {
             throw new NotImplementedException();
         }

@@ -5,6 +5,7 @@ using Application.Activities;
 using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -83,10 +84,9 @@ namespace API.Controllers
 
         [HttpGet("picture/{activityId}")]
         [Authorize(Policy = "IsActivityHost")]
-        public async Task<IActionResult> AddPicture([FromForm] AddPicture.Command command, Guid activityId)
+        public async Task<IActionResult> AddPicture([FromForm] IFormFile file, [FromRoute] Guid activityId)
         {
-            command.ActivityId = activityId;
-            return HandleResult(await Mediator.Send(command));
+            return HandleResult(await Mediator.Send(new AddPicture.Command { File = file, ActivityId = activityId }));
         }
 
 
