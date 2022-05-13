@@ -4,6 +4,7 @@ namespace Domain
 {
     public class Message
     {
+        //this id is int because its easier to sort that way?
         public Guid Id { get; set; }
         public string AuthorId { get; set; }
         public virtual AppUser Author { get; set; }

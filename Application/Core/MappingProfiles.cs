@@ -6,6 +6,7 @@ using Application.Profiles;
 using Application.Categories;
 using Domain;
 using Application.Tags;
+using Application.Messages;
 
 namespace Application.Core
 {
@@ -96,8 +97,6 @@ namespace Application.Core
                 ;
 
 
-
-
             CreateMap<ActivityCategories, CategoriesDto>()
             .ForMember(d => d.Name, o => o.MapFrom(s => s.Categories.Name))
             .ForMember(d => d.Description, o => o.MapFrom(s => s.Categories.Description));
@@ -106,8 +105,45 @@ namespace Application.Core
             CreateMap<ActivityTag, TagDto>()
             .ForMember(d => d.Name, o => o.MapFrom(s => s.Tag.Name));
 
+
+            CreateMap<ThreadParticipant, ThreadParticipantDto>()
+            .ForMember(d => d.Id, o => o.MapFrom(tp => tp.AppUserId))
+            .ForMember(d => d.DisplayName, o => o.MapFrom(tp => tp.User.DisplayName))
+            .ForMember(d => d.Username, o => o.MapFrom(tp => tp.User.UserName))
+            .ForMember(d => d.Image, o => o.MapFrom(tp => tp.User.Photos
+                                                                .FirstOrDefault(
+                                                                    photo => photo.IsMain
+                                                                    )
+                                                                .Url));
+
+            CreateMap<Thread, ThreadDto>()
+            .ForMember(d => d.Id, o => o.MapFrom(t => t.Id))
+            .ForMember(d => d.Contacts, o => o.MapFrom(t =>
+                                            // // .ForMember(d => d.Contacts, o => o.MapFrom((src, dest, destMember, context) =>
+                                            t.Participants.Where(tp => tp.User.UserName != currentUsername)))
+            .ForMember(d => d.LatestMessage, o => o.MapFrom(t => t.Messages
+                                                    .OrderByDescending(m => m.CreatedAt)
+                                                    .Last()
+                                                    ));
+
+
+            CreateMap<Message, MessageDto>()
+            .ForMember(d => d.Id, o => o.MapFrom(m => m.Id))
+            .ForMember(d => d.Body, o => o.MapFrom(m => m.Body))
+            .ForMember(d => d.CreatedAt, o => o.MapFrom(m => m.CreatedAt))
+            .ForMember(d => d.Username, o => o.MapFrom(m => m.Author.UserName))
+            .ForMember(d => d.DisplayName, o => o.MapFrom(m => m.Author.DisplayName))
+            .ForMember(d => d.Image, o => o.MapFrom(m => m.Author.Photos
+                                                                .FirstOrDefault(
+                                                                    photo => photo.IsMain
+                                                                    )
+                                                                .Url));
+
+            // .ForMember(d => d.DisplayName, o => o.MapFrom(tp => tp.User.DisplayName))
+            // .ForMember(d => d.Username, o => o.MapFrom(tp => tp.User.UserName));
+
             //custom value resolver 
-            // .ForMember(d => d.Following, o => o.MapFrom<FollowingResolver>());
+            // .ForMember(d => d.Following, o => o.MapFrom<F     ollowingResolver>());
         }
     }
 }

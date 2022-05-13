@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Core;
@@ -65,8 +66,10 @@ namespace Application.Messages
                     Thread = thread
 
                 };
-
-                thread.Messages.Add(message);
+                thread.Messages = new List<Message>
+                {
+                    message
+                };
 
 
                 bool success = await _context.SaveChangesAsync(cancellationToken) > 0;

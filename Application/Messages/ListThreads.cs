@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Application.Core;
 using Application.Interfaces;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -15,12 +16,12 @@ namespace Application.Messages
 {
     public class ListThreads
     {
-        public class Query : IRequest<Result<List<Domain.Thread>>>
+        public class Query : IRequest<Result<List<ThreadDto>>>
         {
 
         }
 
-        public class Handler : IRequestHandler<Query, Result<List<Domain.Thread>>>
+        public class Handler : IRequestHandler<Query, Result<List<ThreadDto>>>
         {
             private readonly DataContext _context;
             private readonly IMapper _mapper;
@@ -33,7 +34,7 @@ namespace Application.Messages
 
             }
 
-            public async Task<Result<List<Domain.Thread>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<ThreadDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
                 // var comments = await _context.Comments
                 //     .Where(x => x.Activity.Id == request.ActivityId)
@@ -51,15 +52,18 @@ namespace Application.Messages
 
                 var userThreads = await _context.Threads
                                         .AsNoTracking()
+                                        .Include(t => t.Messages)
+                                        .Include(t => t.Participants)
                                         .AsQueryable()
                                         .Where(t =>
                                                 t.Participants.Any(tp => tp.AppUserId == _userAccessor.GetUserId()))
-                                        .OrderByDescending(t => t.Messages.Last().CreatedAt)
+                                        .ProjectTo<ThreadDto>(_mapper.ConfigurationProvider)
+                                        // .ProjectTo<ThreadDto>(_mapper.ConfigurationProvider, new { currentUsername = _userAccessor.GetUsername() })
                                         .ToListAsync(cancellationToken: cancellationToken);
                 // .OrderByDescending(tp => tp.Thread.Messages.Last().CreatedAt);
 
 
-                return Result<List<Domain.Thread>>.Success(userThreads);
+                return Result<List<ThreadDto>>.Success(userThreads);
 
 
                 // var messages = await user.MessagesRecieved

@@ -103,7 +103,7 @@ namespace Persistance.Migrations
 
                     NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("Title", "Description", "Tags", "Category"), "GIN");
 
-                    b.ToTable("Activities");
+                    b.ToTable("Activities", (string)null);
                 });
 
             modelBuilder.Entity("Domain.ActivityAttendee", b =>
@@ -136,7 +136,7 @@ namespace Persistance.Migrations
 
                     b.HasIndex("ActivityId");
 
-                    b.ToTable("ActivityAttendees");
+                    b.ToTable("ActivityAttendees", (string)null);
                 });
 
             modelBuilder.Entity("Domain.ActivityCategories", b =>
@@ -151,7 +151,7 @@ namespace Persistance.Migrations
 
                     b.HasIndex("ActivityId");
 
-                    b.ToTable("ActivityCategories");
+                    b.ToTable("ActivityCategories", (string)null);
                 });
 
             modelBuilder.Entity("Domain.ActivityTag", b =>
@@ -166,7 +166,7 @@ namespace Persistance.Migrations
 
                     b.HasIndex("ActivityId");
 
-                    b.ToTable("ActivityTags");
+                    b.ToTable("ActivityTags", (string)null);
                 });
 
             modelBuilder.Entity("Domain.AppUser", b =>
@@ -259,7 +259,7 @@ namespace Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Comment", b =>
@@ -288,7 +288,7 @@ namespace Persistance.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Interest", b =>
@@ -307,7 +307,7 @@ namespace Persistance.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("Interest");
+                    b.ToTable("Interest", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Message", b =>
@@ -337,7 +337,7 @@ namespace Persistance.Migrations
 
                     b.HasIndex("ThreadId");
 
-                    b.ToTable("Messages");
+                    b.ToTable("Messages", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Notification", b =>
@@ -372,7 +372,7 @@ namespace Persistance.Migrations
 
                     b.HasIndex("SenderId");
 
-                    b.ToTable("Notifications");
+                    b.ToTable("Notifications", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Photo", b =>
@@ -396,7 +396,7 @@ namespace Persistance.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("Photos");
+                    b.ToTable("Photos", (string)null);
                 });
 
             modelBuilder.Entity("Domain.RefreshToken", b =>
@@ -423,7 +423,7 @@ namespace Persistance.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("RefreshToken");
+                    b.ToTable("RefreshToken", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Tag", b =>
@@ -440,7 +440,7 @@ namespace Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tags");
+                    b.ToTable("Tags", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Thread", b =>
@@ -451,7 +451,7 @@ namespace Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Threads");
+                    b.ToTable("Threads", (string)null);
                 });
 
             modelBuilder.Entity("Domain.ThreadParticipant", b =>
@@ -466,7 +466,7 @@ namespace Persistance.Migrations
 
                     b.HasIndex("ThreadId");
 
-                    b.ToTable("ThreadParticipants");
+                    b.ToTable("ThreadParticipants", (string)null);
                 });
 
             modelBuilder.Entity("Domain.UserFollowing", b =>
@@ -481,7 +481,7 @@ namespace Persistance.Migrations
 
                     b.HasIndex("TargetId");
 
-                    b.ToTable("UserFollowings");
+                    b.ToTable("UserFollowings", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
