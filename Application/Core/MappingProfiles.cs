@@ -118,12 +118,12 @@ namespace Application.Core
 
             CreateMap<Thread, ThreadDto>()
             .ForMember(d => d.Id, o => o.MapFrom(t => t.Id))
-            .ForMember(d => d.Contacts, o => o.MapFrom(t =>
-                                            // // .ForMember(d => d.Contacts, o => o.MapFrom((src, dest, destMember, context) =>
-                                            t.Participants.Where(tp => tp.User.UserName != currentUsername)))
+            .ForMember(d => d.Contacts, o => o.MapFrom(t => t.Participants))
+            // // .ForMember(d => d.Contacts, o => o.MapFrom((src, dest, destMember, context) =>
+            // t.Participants.Where(tp => tp.User.UserName != currentUsername)
             .ForMember(d => d.LatestMessage, o => o.MapFrom(t => t.Messages
                                                     .OrderByDescending(m => m.CreatedAt)
-                                                    .Last()
+                                                    .First()
                                                     ));
 
 
