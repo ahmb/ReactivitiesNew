@@ -21,7 +21,11 @@ namespace Application.Core
             CreateMap<Activity, ActivityDto>()
                 .ForMember(d => d.HostUsername, o => o.MapFrom(s => s.Attendees
                             .FirstOrDefault(x => x.IsHost).AppUser.UserName))
-                .ForMember(ad => ad.AttendeeCount, o => o.MapFrom(a => a.Attendees.Count));
+                .ForMember(ad => ad.AttendeeCount,
+                            o => o.MapFrom(
+                                a => a.Attendees.Where(
+                                    a => a.ApprovalStatus == ApprovalStatus.Accepted).Count()
+                                ));
 
 
             CreateMap<Activity, ActivityPendingDto>()

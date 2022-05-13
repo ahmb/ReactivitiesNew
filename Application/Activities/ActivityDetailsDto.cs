@@ -14,16 +14,17 @@ namespace Application.Activities
         public Guid Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public string Category { get; set; }
         public DateTime Date { get; set; }
-        public DateTime EndDate { get; set; }
+        public int Duration { get; set; }
+        // public DateTime EndDate { get; set; }
         public string ImageUrl { get; set; }
-        public string City { get; set; }
-        public string Venue { get; set; }
-        public string Tags { get; set; }
+        // public string City { get; set; }
+        // public string Venue { get; set; }
+        // public string Tags { get; set; }
         public string HostUsername { get; set; }
         public bool IsCancelled { get; set; }
         public bool InPerson { get; set; }
+        public bool Ongoing { get; set; }
         public bool Private { get; set; }
         public int AttendeeCount { get; set; }
         public int AttendeeCountMax { get; set; }

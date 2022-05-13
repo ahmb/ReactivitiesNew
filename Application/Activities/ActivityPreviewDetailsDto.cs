@@ -14,17 +14,14 @@ namespace Application.Activities
         Guid Id { get; set; }
         string Title { get; set; }
         string Description { get; set; }
-        string Category { get; set; }
         DateTime Date { get; set; }
-        DateTime EndDate { get; set; }
         string ImageUrl { get; set; }
-        string City { get; set; }
-        string Venue { get; set; }
-        string Tags { get; set; }
         string HostUsername { get; set; }
         bool IsCancelled { get; set; }
         bool InPerson { get; set; }
         bool Private { get; set; }
+        bool Ongoing { get; set; }
+
         int AttendeeCount { get; set; }
         int AttendeeCountMax { get; set; }
         ICollection<CategoriesDto> Categories { get; set; }
@@ -36,17 +33,19 @@ namespace Application.Activities
         public Guid Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public string Category { get; set; }
         public DateTime Date { get; set; }
-        public DateTime EndDate { get; set; }
+        // public DateTime EndDate { get; set; }
+        public int Duration { get; set; }
         public string ImageUrl { get; set; }
-        public string City { get; set; }
-        public string Venue { get; set; }
-        public string Tags { get; set; }
+        // public string City { get; set; }
+        // public string Venue { get; set; }
+        // public string Tags { get; set; }
         public string HostUsername { get; set; }
         public bool IsCancelled { get; set; }
         public bool InPerson { get; set; }
         public bool Private { get; set; }
+        public bool Ongoing { get; set; }
+
         public int AttendeeCount { get; set; }
         public int AttendeeCountMax { get; set; }
 

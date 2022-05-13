@@ -28,7 +28,7 @@ namespace Application.Messages
         {
             public CommandValidator()
             {
-                RuleFor(x => x.Body).NotEmpty();
+                RuleFor(x => x.Body).NotEmpty().MinimumLength(1).MaximumLength(1024);
                 RuleFor(x => x.Participants).NotEmpty();
             }
         }

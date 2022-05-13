@@ -19,6 +19,7 @@ namespace Domain
         public DateTime Date { get; set; }
 
         public DateTime EndDate { get; set; }
+        public int Duration { get; set; }
 
         public bool Private { get; set; }
         public string City { get; set; }
@@ -34,6 +35,7 @@ namespace Domain
         public bool Published { get; set; } = true;//for approvals
         public bool IsSpam { get; set; } = false;//for spam
         public bool IsCancelled { get; set; } = false;
+        public bool Ongoing { get; set; } = false;
 
         public bool InPerson { get; set; } = false;
         public Guid ChatPassword { get; set; } = Guid.NewGuid();
