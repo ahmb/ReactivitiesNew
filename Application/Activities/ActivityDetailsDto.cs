@@ -16,21 +16,28 @@ namespace Application.Activities
         public string Description { get; set; }
         public DateTime Date { get; set; }
         public int Duration { get; set; }
+        public bool Private { get; set; }
+
         // public DateTime EndDate { get; set; }
         public string ImageUrl { get; set; }
+        public bool IsCancelled { get; set; }
+
         // public string City { get; set; }
         // public string Venue { get; set; }
         // public string Tags { get; set; }
         public string HostUsername { get; set; }
-        public bool IsCancelled { get; set; }
         public bool InPerson { get; set; }
         public bool Ongoing { get; set; }
-        public bool Private { get; set; }
+        public AttendeeDto Host { get; set; }
+
+
         public int AttendeeCount { get; set; }
         public int AttendeeCountMax { get; set; }
         public Guid ChatPassword { get; set; }
 
         public string Assets { get; set; }
+        public SkillLevel SkillLevel { get; set; }
+
 
         //list of AppUsers attending an activity i.e. Attendees
         // [JsonPropertyName("attendees")]

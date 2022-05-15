@@ -66,6 +66,7 @@ namespace Application.Activities
 
                 }
 
+
                 return Result<PagedList<ActivityDto>>.Success(
                     await PagedList<ActivityDto>
                         .CreateAsync(query.ProjectTo<ActivityDto>(_mapper.ConfigurationProvider,

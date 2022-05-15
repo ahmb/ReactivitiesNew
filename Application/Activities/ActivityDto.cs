@@ -17,14 +17,18 @@ namespace Application.Activities
         public DateTime Date { get; set; }
         // public DateTime EndDate { get; set; }
         public int Duration { get; set; }
+        public bool Private { get; set; }
         public string ImageUrl { get; set; }
+        public bool IsCancelled { get; set; }
         // public string City { get; set; }
         // public string Venue { get; set; }
         public string HostUsername { get; set; }
-        public bool IsCancelled { get; set; }
         public bool InPerson { get; set; }
-        public bool Private { get; set; }
         public bool Ongoing { get; set; }
+        public AttendeeDto Host { get; set; }
+        public bool IsGoing { get; set; } = false;
+
+        public SkillLevel SkillLevel { get; set; }
 
         public int AttendeeCount { get; set; }
         public int AttendeeCountMax { get; set; }

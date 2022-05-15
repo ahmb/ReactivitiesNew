@@ -201,10 +201,9 @@ namespace API.Controllers
                     Id = "fb_" + (string)fbInfo.id,
                     Url = (string)fbInfo.picture.data.url,
                     IsMain = true
-                }}
+                }},
+                EmailConfirmed = true //since we dont need tovalidate them via email confirmation
             };
-
-            user.EmailConfirmed = true; //since we dont need tovalidate them via email confirmation
 
             var result = await _userManager.CreateAsync(user);
 

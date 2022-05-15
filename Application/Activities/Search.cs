@@ -29,10 +29,12 @@ namespace Application.Activities
         {
             private readonly DataContext _context;
             private readonly IMapper _mapper;
+            private readonly IUserAccessor _userAccessor;
 
-            public Handler(DataContext context, IMapper mapper)
+            public Handler(DataContext context, IMapper mapper, IUserAccessor userAccessor)
             {
                 _mapper = mapper;
+                _userAccessor = userAccessor;
                 _context = context;
             }
 
@@ -51,7 +53,7 @@ namespace Application.Activities
                        string.Join(' ', a.Title, a.Description, a.Tags, a.Category)
                         )
                     .Matches(request.SearchTerm))
-                    .ProjectTo<ActivityDto>(_mapper.ConfigurationProvider);
+                    .ProjectTo<ActivityDto>(_mapper.ConfigurationProvider, new { currentUsername = _userAccessor.GetUsername() });
 
                 //TODO:Update these values, as they are currently hardcoded
                 return Result<PagedList<ActivityDto>>.Success(

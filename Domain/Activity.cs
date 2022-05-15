@@ -37,6 +37,7 @@ namespace Domain
         public bool IsCancelled { get; set; } = false;
         public bool Ongoing { get; set; } = false;
 
+        public SkillLevel SkillLevel { get; set; } = SkillLevel.Beginner;
         public bool InPerson { get; set; } = false;
         public Guid ChatPassword { get; set; } = Guid.NewGuid();
         public DateTime LastUpdated { get; set; } = DateTime.UtcNow;

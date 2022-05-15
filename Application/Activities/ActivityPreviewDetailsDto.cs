@@ -21,6 +21,7 @@ namespace Application.Activities
         bool InPerson { get; set; }
         bool Private { get; set; }
         bool Ongoing { get; set; }
+        SkillLevel SkillLevel { get; set; }
 
         int AttendeeCount { get; set; }
         int AttendeeCountMax { get; set; }
@@ -28,6 +29,7 @@ namespace Application.Activities
         ICollection<TagDto> Tag { get; set; }
     }
 
+    //Decomissioned , ActivityDto is the 
     public class ActivityPreviewDetailsDto : IActivityDto
     {
         public Guid Id { get; set; }
@@ -45,9 +47,13 @@ namespace Application.Activities
         public bool InPerson { get; set; }
         public bool Private { get; set; }
         public bool Ongoing { get; set; }
+        public AttendeeDto Host { get; set; }
+        public bool IsGoing { get; set; } = false;
 
         public int AttendeeCount { get; set; }
         public int AttendeeCountMax { get; set; }
+
+        public SkillLevel SkillLevel { get; set; }
 
         //list of AppUsers attending an activity i.e. Attendees
         // [JsonPropertyName("attendees")]

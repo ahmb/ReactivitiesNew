@@ -36,36 +36,51 @@ namespace Application.Activities
             CancellationToken cancellationToken)
             {
 
-                var activity = await _context.Activities
+                var activity = _context.Activities
                     .AsNoTracking()
+                    .AsQueryable()
                     .Include(a => a.Tag).ThenInclude(at => at.Tag)
                     .Include(a => a.Categories).ThenInclude(ac => ac.Categories)
                     .Include(a => a.Attendees).ThenInclude(u => u.AppUser)
-                    .SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken: cancellationToken);
+                    .Where(x => x.Id == request.Id);
 
                 var user = await _context.Users.FirstOrDefaultAsync(x =>
                     x.UserName == _userAccessor.GetUsername(), cancellationToken: cancellationToken);
 
-                var previewActivity = _mapper.Map<ActivityPreviewDetailsDto>(activity);
 
-                if (user == null) return Result<IActivityDto>.Success(previewActivity);
+                if (user == null)
+                {
+                    var previewActivity = await activity.ProjectTo<ActivityDto>
+                        (_mapper.ConfigurationProvider, new { currentUsername = _userAccessor.GetUsername() })
+                        .FirstAsync(cancellationToken: cancellationToken);
 
-                var hostUsername = activity.Attendees.FirstOrDefault(x => x.IsHost)?.AppUser?.UserName;
+                    return Result<IActivityDto>.Success(previewActivity
+                    );
 
-                var attendance = activity.Attendees.FirstOrDefault(x => x.AppUser.UserName == user.UserName);
+                }
+
+                var detailedActivity = await activity.ProjectTo<ActivityDetailsDto>
+                        (_mapper.ConfigurationProvider, new { currentUsername = _userAccessor.GetUsername() })
+                        .FirstAsync(cancellationToken: cancellationToken);
+
+
+                var hostUsername = detailedActivity.Attendees.FirstOrDefault(x => x.IsHost)?.Username;
+
+                var attendance = detailedActivity.Attendees.FirstOrDefault(x => x.Username == user.UserName);
 
                 if (attendance == null
                     || attendance.ApprovalStatus == Domain.ApprovalStatus.Pending
-                    || attendance.ApprovalStatus == Domain.ApprovalStatus.Rejected) return Result<IActivityDto>.Success(previewActivity);
-
-                var fullDetailedActivity = _mapper.Map<ActivityDetailsDto>(activity);
+                    || attendance.ApprovalStatus == Domain.ApprovalStatus.Rejected)
+                {
+                    return Result<IActivityDto>.Success(_mapper.Map<ActivityDetailsDto, ActivityDto>(detailedActivity));
+                }
 
                 // if (activity == null)
                 // {
                 //     throw new RestException(HttpStatusCode.NotFound, new { activity = "Not found" });
                 // }
 
-                return Result<IActivityDto>.Success(fullDetailedActivity);
+                return Result<IActivityDto>.Success(detailedActivity);
             }
         }
 

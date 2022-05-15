@@ -18,7 +18,6 @@ namespace Application.Activities
 
         public int FollowingCount { get; set; }
 
-        public bool IsApproved { get; set; }
 
         public int Rating { get; set; }
 

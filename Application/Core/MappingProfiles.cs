@@ -7,14 +7,17 @@ using Application.Categories;
 using Domain;
 using Application.Tags;
 using Application.Messages;
+using Application.Interfaces;
 
 namespace Application.Core
 {
     public class MappingProfiles : AutoMapper.Profile
     {
+
         public MappingProfiles()
         {
             string currentUsername = null;
+
 
             CreateMap<Activity, Activity>();
 
@@ -25,8 +28,11 @@ namespace Application.Core
                             o => o.MapFrom(
                                 a => a.Attendees.Where(
                                     a => a.ApprovalStatus == ApprovalStatus.Accepted).Count()
-                                ));
-
+                                ))
+                .ForMember(ad => ad.Host, a => a.MapFrom(a => a.Attendees
+                    .SingleOrDefault(at => at.IsHost)))
+                .ForMember(dest => dest.IsGoing, opt => opt.MapFrom(a =>
+                    a.Attendees.SingleOrDefault(at => at.AppUser.UserName == currentUsername) != null));
 
             CreateMap<Activity, ActivityPendingDto>()
                 .ForMember(d => d.HostUsername,
@@ -42,7 +48,8 @@ namespace Application.Core
                                     .FirstOrDefault(aa => aa.IsHost).AppUser.UserName))
                 .ForMember(ad => ad.AttendeeCount, o => o.MapFrom(a => a.Attendees.Count))
                 .ForMember(ad => ad.Attendees, o => o.MapFrom(a => a.Attendees.
-                                                    Where(at => at.ApprovalStatus == ApprovalStatus.Accepted)));
+                                                    Where(at => at.ApprovalStatus == ApprovalStatus.Accepted)))
+                .ForMember(ad => ad.Host, a => a.MapFrom(a => a.Attendees.SingleOrDefault(at => at.IsHost)));
             // .ForMember(ad => ad.Categories, o => o.MapFrom(a => a.Categories))
             // .ForMember(ad => ad.Tag, o => o.MapFrom(a => a.Tag));
 
@@ -51,7 +58,9 @@ namespace Application.Core
                 .ForMember(ad => ad.HostUsername,
                             o => o.MapFrom(a => a.Attendees
                                     .FirstOrDefault(aa => aa.IsHost).AppUser.UserName))
-                .ForMember(ad => ad.AttendeeCount, o => o.MapFrom(a => a.Attendees.Count));
+                .ForMember(ad => ad.AttendeeCount, o => o.MapFrom(a => a.Attendees.Count))
+                .ForMember(ad => ad.Host, a => a.MapFrom(a => a.Attendees
+                    .SingleOrDefault(at => at.IsHost)));
             // .ForMember(ad => ad.Categories, o => o.MapFrom(a => a.Categories))
             // .ForMember(ad => ad.Tag, o => o.MapFrom(a => a.Tag));
 
@@ -102,8 +111,7 @@ namespace Application.Core
 
 
             CreateMap<ActivityCategories, CategoriesDto>()
-            .ForMember(d => d.Name, o => o.MapFrom(s => s.Categories.Name))
-            .ForMember(d => d.Description, o => o.MapFrom(s => s.Categories.Description));
+            .ForMember(d => d.Name, o => o.MapFrom(s => s.Categories.Name));
 
 
             CreateMap<ActivityTag, TagDto>()
