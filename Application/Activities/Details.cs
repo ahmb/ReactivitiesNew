@@ -54,8 +54,7 @@ namespace Application.Activities
                         (_mapper.ConfigurationProvider, new { currentUsername = _userAccessor.GetUsername() })
                         .FirstAsync(cancellationToken: cancellationToken);
 
-                    return Result<IActivityDto>.Success(previewActivity
-                    );
+                    return Result<IActivityDto>.Success(previewActivity);
 
                 }
 

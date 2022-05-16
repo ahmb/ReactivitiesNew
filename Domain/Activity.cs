@@ -36,6 +36,7 @@ namespace Domain
         public bool IsSpam { get; set; } = false;//for spam
         public bool IsCancelled { get; set; } = false;
         public bool Ongoing { get; set; } = false;
+        public int OngoingDays { get; set; } = 0;
         public Language Language { get; set; } = Language.English;
 
         public SkillLevel SkillLevel { get; set; } = SkillLevel.Everyone;

@@ -40,13 +40,14 @@ namespace Application.Activities
             {
 
                 var query = _context.Activities
-                    .Where(a => a.Date >= request.Params.StartDate)
                     .Where(a => !a.Private)
                     // .Where(a => a.Published) 
                     .Where(a => !a.IsSpam)
                     .Where(a => !a.IsCancelled)
                     .Where(a => !a.Archived)
                     .Where(a => a.Attendees.Count < a.AttendeeCountMax)
+                    .Where(a => (a.Ongoing && a.Date >= request.Params.StartDate.AddDays(-a.OngoingDays))
+                        || a.Date >= request.Params.StartDate)
                     .OrderBy(a => a.Date)
                     .Include(a => a.Tag).ThenInclude(at => at.Tag)
                     .Include(a => a.Categories).ThenInclude(ac => ac.Categories)

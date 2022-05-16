@@ -230,6 +230,64 @@ namespace Persistance
                         }}
                         )
                     },
+                     new Activity
+                    {
+                        Title = "Past Activity 3 ongoing",
+                        Date = DateTime.Now.AddMonths(-1),
+                        Description = "Activity 1 month ago <- watch + videogames",
+                        // Category = "watch",
+                        Categories = new List<ActivityCategories>{
+                            new ActivityCategories{
+                                Categories  = categoriesList[2]//context.Categories.FirstOrDefault(c =>c.Name =="videogames")
+                            },
+                            new ActivityCategories{
+                                Categories  = categoriesList[3]//context.Categories.FirstOrDefault(c =>c.Name =="watch")
+                            }
+                        },
+                        Category = Utilities.FlattenCategories(
+                                new List<ActivityCategories>{
+                                    new ActivityCategories{
+                                        Categories  = categoriesList[2]//context.Categories.FirstOrDefault(c =>c.Name =="videogames")
+                                    },
+                                    new ActivityCategories{
+                                        Categories  = categoriesList[3]//context.Categories.FirstOrDefault(c =>c.Name =="watch")
+                                    }
+                        }
+                        ),
+                        City = "Paris",
+                        Venue = "The Louvre",
+                        AttendeeCountMax = 2,
+                        ChatPassword = Guid.NewGuid(),
+                        LastUpdated = DateTime.UtcNow,
+                        InPerson = false,
+                        Published = true,
+                        Private = false,
+                        Ongoing = true,
+                        OngoingDays = 31,
+                        Attendees = new List<ActivityAttendee>
+                        {
+                            new ActivityAttendee
+                            {
+                                AppUser = users[0],
+                                IsHost = true,
+                                ApprovalStatus = ApprovalStatus.Accepted
+                            },
+                        },
+                        Tag = new List<ActivityTag>{
+                            new ActivityTag{
+                                Tag = new Tag{
+                                    Name ="youtube"
+                            }
+                        }},
+                        Tags = Utilities.FlattenTags(
+                            new List<ActivityTag>{
+                            new ActivityTag{
+                                Tag = new Tag{
+                                    Name ="youtube"
+                            }
+                        }}
+                        )
+                    },
                     new Activity
                     {
                         Title = "Future Activity 1",
@@ -241,7 +299,7 @@ namespace Persistance
                                 Categories  = categoriesList[4]//context.Categories.FirstOrDefault(c =>c.Name =="business")//categoriesList[4]
                             }
                         },
-                        Category = Persistance.Utils.Utilities.FlattenCategories(
+                        Category = Utilities.FlattenCategories(
                                 new List<ActivityCategories>{
                                 new ActivityCategories{
                                     Categories  = categoriesList[4]//context.Categories.FirstOrDefault(c =>c.Name =="business")//categoriesList[4]
@@ -654,6 +712,56 @@ namespace Persistance
                                 ApprovalStatus = ApprovalStatus.Accepted
 
                             },
+                        },
+                        Tag = new List<ActivityTag>{
+                            new ActivityTag{
+                                Tag = new Tag{
+                                    Name ="grade9science"
+                            }
+                        }},
+                        Tags = Utilities.FlattenTags(
+                            new List<ActivityTag>{
+                            new ActivityTag{
+                                Tag = new Tag{
+                                    Name ="grade9science"
+                            }
+                        }}
+                        )
+                    },
+                     new Activity
+                    {
+                        Title = "Future Activity 9 - private",
+                        Date = DateTime.Now.AddMonths(9),
+                        Description = "Activity 9 months in future <--private",
+                        Categories = new List<ActivityCategories>{
+                            new ActivityCategories{
+                                Categories  = categoriesList[5]//context.Categories.FirstOrDefault(c =>c.Name =="study")//categoriesList[5]
+                            }
+                        },
+                        Category = Utilities.FlattenCategories(
+                            new List<ActivityCategories>{
+                                new ActivityCategories{
+                                    Categories  = categoriesList[5]//context.Categories.FirstOrDefault(c =>c.Name =="study")//categoriesList[5]
+                                }
+                        }
+                        ),
+                        City = "London",
+                        Venue = "Pub",
+                        AttendeeCountMax = 4,
+                        ChatPassword = Guid.NewGuid(),
+                        LastUpdated = DateTime.UtcNow,
+                        InPerson = false,
+                        Published = true,
+                        Private = true,
+                        Attendees = new List<ActivityAttendee>
+                        {
+                            new ActivityAttendee
+                            {
+                                AppUser = users[2],
+                                IsHost = true,
+                                ApprovalStatus = ApprovalStatus.Accepted
+
+                            }
                         },
                         Tag = new List<ActivityTag>{
                             new ActivityTag{

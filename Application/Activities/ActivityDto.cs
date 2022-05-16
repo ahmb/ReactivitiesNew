@@ -25,6 +25,8 @@ namespace Application.Activities
         public string HostUsername { get; set; }
         public bool InPerson { get; set; }
         public bool Ongoing { get; set; }
+        public int OngoingDays { get; set; } = 0;
+
         public AttendeeDto Host { get; set; }
         public bool IsGoing { get; set; } = false;
 
