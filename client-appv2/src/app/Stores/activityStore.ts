@@ -1,7 +1,11 @@
 import { format } from "date-fns";
 import { makeAutoObservable, reaction, runInAction } from "mobx";
 import agent from "../api/agent";
-import { Activity, ActivityFormValues } from "../models/activity";
+import {
+  Activity,
+  ActivityFormValues,
+  ActivityDetails,
+} from "../models/activity";
 import { Pagination, PagingParams } from "../models/pagination";
 import { Profile } from "../models/profile";
 import { store } from "./store";
@@ -9,7 +13,7 @@ import { store } from "./store";
 export default class ActivityStore {
   activities: Activity[] = [];
   activityRegistry = new Map<string, Activity>();
-  selectedActivity: Activity | undefined = undefined;
+  selectedActivity: ActivityDetails | undefined = undefined;
   editMode = false;
   loading = false;
   loadingInitial = false;
@@ -125,25 +129,25 @@ export default class ActivityStore {
   };
 
   loadActivity = async (id: string) => {
-    let activity = this.getActivity(id);
-    if (activity) {
-      this.selectedActivity = activity;
+    // let activity = this.getActivity(id);
+    // if (activity) {
+    //   this.selectedActivity = activity;
+    //   return activity;
+    // } else {
+    this.loadingInitial = true;
+    try {
+      let activity = await agent.Activities.details(id);
+      this.setActivity(activity);
+      runInAction(() => {
+        this.selectedActivity = activity;
+      });
+      this.setLoadingInitial(false);
       return activity;
-    } else {
-      this.loadingInitial = true;
-      try {
-        activity = await agent.Activities.details(id);
-        this.setActivity(activity);
-        runInAction(() => {
-          this.selectedActivity = activity;
-        });
-        this.setLoadingInitial(false);
-        return activity;
-      } catch (error) {
-        console.log(error);
-        this.setLoadingInitial(false);
-      }
+    } catch (error) {
+      console.log(error);
+      this.setLoadingInitial(false);
     }
+    // }
   };
 
   private getActivity = (id: string) => {
@@ -151,19 +155,19 @@ export default class ActivityStore {
   };
 
   private setActivity = (activity: Activity) => {
-    const user = store.userStore.user;
+    // const user = store.userStore.user;
     //check if the users authenticated and logged into the application
-    if (user) {
-      activity.isGoing = activity.attendees?.some(
-        (a) => a.username === user.username
-      );
-      activity.isHost = activity.hostUsername === user.username;
-      activity.host = activity.attendees?.find(
-        (x) => x.username === activity.hostUsername
-      );
-    }
+    // if (user) {
+    //   activity.isGoing = activity.attendees?.some(
+    //     (a) => a.username === user.username
+    //   );
+    //   activity.isHost = activity.hostUsername === user.username;
+    //   activity.host = activity.attendees?.find(
+    //     (x) => x.username === activity.hostUsername
+    //   );
+    // }
     activity.date = new Date(activity.date!);
-    activity.endDate = new Date(activity.endDate!);
+    // activity.endDate = new Date(activity.endDate!);
     this.activityRegistry.set(activity.id, activity);
   };
 
@@ -172,9 +176,9 @@ export default class ActivityStore {
     const attendee = new Profile(user!);
     try {
       await agent.Activities.create(activityFormValues);
-      const newActivity = new Activity(activityFormValues);
+      const newActivity = new ActivityDetails(activityFormValues);
       newActivity.hostUsername = user!.username;
-      newActivity.attendees = [attendee];
+      // newActivity.attendees = [attendee];
       this.setActivity(newActivity);
 
       runInAction(() => {
@@ -199,7 +203,7 @@ export default class ActivityStore {
             ...activity,
           };
           this.activityRegistry.set(activity.id, updatedActivity as Activity);
-          this.selectedActivity = updatedActivity as Activity;
+          this.selectedActivity = updatedActivity as ActivityDetails;
         }
       });
     } catch (error) {
@@ -276,16 +280,16 @@ export default class ActivityStore {
     this.selectedActivity = undefined;
   };
 
-  updateAttendeeFollowing = (username: string) => {
-    this.activityRegistry.forEach((activity) => {
-      activity.attendees.forEach((attendee) => {
-        if (attendee.username === username) {
-          attendee.following
-            ? attendee.followersCount--
-            : attendee.followingCount++;
-          attendee.following = !attendee.following;
-        }
-      });
-    });
-  };
+  // updateAttendeeFollowing = (username: string) => {
+  //   this.activityRegistry.forEach((activity) => {
+  //     activity.attendees.forEach((attendee) => {
+  //       if (attendee.username === username) {
+  //         attendee.following
+  //           ? attendee.followersCount--
+  //           : attendee.followingCount++;
+  //         attendee.following = !attendee.following;
+  //       }
+  //     });
+  //   });
+  // };
 }

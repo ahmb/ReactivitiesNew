@@ -2,7 +2,7 @@ import format from "date-fns/format";
 import { observer } from "mobx-react-lite";
 import { Link } from "react-router-dom";
 import { Segment, Item, Header, Button, Image, Label } from "semantic-ui-react";
-import { Activity } from "../../../app/models/activity";
+import { Activity, ActivityDetails } from "../../../app/models/activity";
 import { useStore } from "../../../app/stores/store";
 
 const activityImageStyle = {
@@ -19,7 +19,7 @@ const activityImageTextStyle = {
 };
 
 interface Props {
-  activity: Activity;
+  activity: ActivityDetails;
 }
 
 export default observer(function ActivityDetailedHeader({ activity }: Props) {

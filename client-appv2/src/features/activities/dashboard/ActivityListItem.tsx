@@ -15,6 +15,7 @@ import {
 import { Activity } from "../../../app/models/activity";
 import ActivityListItemAttendee from "./ActivityListItemAttendee";
 import { categoryOptions } from "../../../app/common/options/categoryOptions";
+import Avatar from "boring-avatars";
 
 interface Props {
   activity: Activity;
@@ -78,14 +79,32 @@ export default function ActivityListItem({ activity }: Props) {
                   <Grid.Row centered stretched>
                     <Grid.Column width={4} style={{ textAlign: "center" }}>
                       <div style={{ paddingLeft: "15px" }}>
-                        <Image
-                          src={activity.host?.image || "/assets/user.png"}
-                          circular
-                          spaced='right'
-                          style={{ height: 45, width: 45 }}
-                          as={NavLink}
-                          to={`/profiles/${activity.host?.username}`}
-                        />
+                        {activity.host?.image && (
+                          <Image
+                            src={activity.host?.image || "/assets/user.png"}
+                            circular
+                            spaced='right'
+                            style={{ height: 45, width: 45 }}
+                            as={NavLink}
+                            to={`/profiles/${activity.host?.username}`}
+                          />
+                        )}
+                        {!activity.host?.image && (
+                          <NavLink to={`/profiles/${activity.host?.username}`}>
+                            <Avatar
+                              size={45}
+                              name={activity.host?.username}
+                              variant='beam'
+                              colors={[
+                                "#D8C395",
+                                "#F77825",
+                                "#F5F03A",
+                                "#F1EFA5",
+                                "#60BB99A",
+                              ]}
+                            />
+                          </NavLink>
+                        )}
                       </div>
                       {/* {activity.host?.displayName} */}
                       <Header
@@ -104,7 +123,7 @@ export default function ActivityListItem({ activity }: Props) {
                         }}></Icon>
                       <Header
                         style={{ marginTop: "auto", paddingLeft: "10px" }}>
-                        {activity.attendees!.length}
+                        {activity.attendeeCount}
                       </Header>
                       {/* </span> */}
                     </Grid.Column>
@@ -158,7 +177,7 @@ export default function ActivityListItem({ activity }: Props) {
                           marginBottom: "0px",
                         }}
                         color='grey'>
-                        <i>to</i>
+                        <i>Duration</i>
                       </Header>
                       <Header
                         color='red'
@@ -168,7 +187,8 @@ export default function ActivityListItem({ activity }: Props) {
                           paddingLeft: "0px",
                           marginBottom: "0px",
                         }}>
-                        {format(activity.endDate!, "h:mm aa")}
+                        {activity.duration}
+                        {/* {format(activity.endDate!, "h:mm aa")} */}
                         {/* dd MMM h:mm aa */}
 
                         {/* {activity.endDate
@@ -192,7 +212,7 @@ export default function ActivityListItem({ activity }: Props) {
                     </Grid.Column>
                     <Grid.Column width={8}>
                       <Image
-                        src={`/assets/categoryImages/${activity.category}.jpg`}
+                        src={`/assets/categoryImages/${activity.categories[0].name}.jpg`}
                         fluid
                         style={{
                           borderRadius: "20px",
@@ -205,7 +225,7 @@ export default function ActivityListItem({ activity }: Props) {
                     style={{ paddingBottom: "0px", paddingTop: "25px" }}>
                     <Container>
                       <Header size='small'>
-                        {
+                        {/* {
                           categoryOptions.filter(
                             (c) => c.value === activity.category
                           )[0]?.icon
@@ -214,7 +234,7 @@ export default function ActivityListItem({ activity }: Props) {
                           categoryOptions.filter(
                             (c) => c.value === activity.category
                           )[0]?.value
-                        }
+                        } */}
                       </Header>
                     </Container>
                   </Grid.Row>

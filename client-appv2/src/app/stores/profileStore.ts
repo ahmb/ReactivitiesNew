@@ -129,7 +129,7 @@ export default class ProfileStore {
     this.loading = true;
     try {
       await agent.Profiles.updateFollowing(username);
-      store.activityStore.updateAttendeeFollowing(username);
+      // store.activityStore.updateAttendeeFollowing(username);
       runInAction(() => {
         //if we are looking at another users profile
         if (

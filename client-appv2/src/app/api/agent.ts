@@ -1,6 +1,10 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
-import { Activity, ActivityFormValues } from "../models/activity";
+import {
+  Activity,
+  ActivityDetails,
+  ActivityFormValues,
+} from "../models/activity";
 import { history } from "../../index";
 import { store } from "../stores/store";
 import { IUser, IUserFormValues } from "../models/user";
@@ -102,7 +106,7 @@ const Activities = {
     Axios.get<PaginatedResult<Activity[]>>("/activities", { params }).then(
       responseBody
     ),
-  details: (id: string) => requests.get<Activity>(`/activities/${id}`),
+  details: (id: string) => requests.get<ActivityDetails>(`/activities/${id}`),
   create: (activity: ActivityFormValues) =>
     requests.post<void>("/activities", activity),
   update: (activity: ActivityFormValues) =>

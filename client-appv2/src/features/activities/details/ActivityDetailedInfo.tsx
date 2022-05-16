@@ -38,9 +38,9 @@ export default observer(function ActivityDetailedInfo({ activity }: Props) {
             <Icon name='marker' size='large' color='teal' />
           </Grid.Column>
           <Grid.Column width={11}>
-            <span>
+            {/* <span>
               {activity.venue}, {activity.city}
-            </span>
+            </span> */}
             <br />
             <span>
               Open Chatroom:

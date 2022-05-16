@@ -22,6 +22,7 @@ import {
 } from "react-simple-horizontal-scroller";
 import { useStickyChecker } from "../common/util/useStickyChecker";
 import { useLocation } from "react-router-dom";
+import Avatar from "boring-avatars";
 
 interface IProps {
   className?: string;
@@ -81,7 +82,7 @@ const NavBar: React.FC<IProps> = ({ className }) => {
               paddingLeft: "0px",
             }}
             header>
-            W<span id='logoAlt'>G</span>
+            W
           </Menu.Item>
           {isLoggedIn && (
             <>
@@ -110,15 +111,34 @@ const NavBar: React.FC<IProps> = ({ className }) => {
                     // }}
                   />
                 </Menu.Item>
-                <Image
-                  src={user?.image || "/assets/user.png"}
-                  // avatar
-                  circular
-                  spaced='right'
-                  style={{ height: 45, width: 45 }}
-                  as={NavLink}
-                  to={`/profiles/${user?.username}`}
-                />
+                {user?.image && (
+                  <Image
+                    src={user?.image || "/assets/user.png"}
+                    // avatar
+                    circular
+                    spaced='right'
+                    style={{ height: 45, width: 45 }}
+                    as={NavLink}
+                    to={`/profiles/${user?.username}`}
+                  />
+                )}
+                {!user?.image && (
+                  <NavLink to={`/profiles/${user?.username}`}>
+                    <Avatar
+                      size={45}
+                      name={user?.username}
+                      variant='beam'
+                      colors={[
+                        "#D8C395",
+                        "#F77825",
+                        "#F5F03A",
+                        "#F1EFA5",
+                        "#60BB99A",
+                      ]}
+                    />
+                  </NavLink>
+                )}
+
                 <Dropdown pointing='top left'>
                   <Dropdown.Menu>
                     <Dropdown.Item

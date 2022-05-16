@@ -6,31 +6,87 @@ export interface Activity {
   id: string;
   title: string;
   description: string;
-  category: string;
   //  #TODO: remove string type
   date: Date | null;
-  endDate: Date | null;
+  // endDate: Date | null;
+  duration: number;
   private: boolean;
   imageUrl: string;
-  city: string;
-  venue: string;
-  latitude: number;
-  longitude: number;
+  // city: string;
+  // venue: string;
+  // latitude: number;
+  // longitude: number;
   isCancelled: boolean;
   hostUsername: string;
   isGoing: boolean;
   isHost: boolean;
+  inPerson: boolean;
+  ongoing: boolean;
+  ongoingDays: number;
+  language: Language;
+  skillLevel: SkillLevel;
   host?: Profile;
-  isApproved: boolean;
+  attendeeCount: number;
+  attendeeCountMax: number;
+  categories: ICategory[];
+  tag: ITag[];
+
   // //  #TODO: remove string type
-  attendees: Profile[];
+  // attendees: Profile[];
   // comments: IComment[] | string;
   // attendees: string;
-  comments: string;
-  tags: string;
+  // comments: string;
+  // tags: string;
+}
+
+export interface ActivityDetails {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  //  #TODO: remove string type
+  date: Date | null;
+  // endDate: Date | null;
+  duration: number;
+  private: boolean;
+  imageUrl: string;
+  // city: string;
+  // venue: string;
+  // latitude: number;
+  // longitude: number;
+  assets: string;
+  chatPassword: string;
+  isCancelled: boolean;
+  hostUsername: string;
+  isGoing: boolean;
+  isHost: boolean;
+  inPerson: boolean;
+  ongoing: boolean;
+  ongoingDays: number;
+  language: Language;
+  skillLevel: SkillLevel;
+  host?: Profile;
+  attendeeCount: number;
+  attendeeCountMax: number;
+  categories: ICategory[];
+  tag: ITag[];
+
+  // //  #TODO: remove string type
+  attendees: Profile[];
+  comments: IComment[] | string;
+  // attendees: string;
+  // comments: string;
+  // tags: string;
 }
 
 export class Activity implements Activity {
+  constructor(init?: ActivityFormValues) {
+    //copy the properties over
+    Object.assign(this, init);
+  }
+}
+
+export class ActivityDetails implements ActivityDetails {
   constructor(init?: ActivityFormValues) {
     //copy the properties over
     Object.assign(this, init);
@@ -45,6 +101,14 @@ export interface IComment {
   username: string;
   displayName: string;
   image: string;
+}
+
+export interface ICategory {
+  name: string;
+}
+
+export interface ITag {
+  name: string;
 }
 
 export interface IUserActivitiesUnreadDto {
@@ -68,9 +132,17 @@ export class ActivityFormValues {
   category: string = "";
   description: string = "";
   date: Date | null = null;
-  endDate: Date | null = null;
-  city: string = "";
-  venue: string = "";
+  duration: number = 0;
+  private: boolean = false;
+  ongoing: boolean = false;
+  imageUrl: string = "";
+  isCancelled: boolean = false;
+  attendeeCountMax: number = 0;
+  categories?: ICategory[] | null;
+  tag?: ITag[] | null;
+  // endDate: Date | null = null;
+  // city: string = "";
+  // venue: string = "";
 
   constructor(activity?: ActivityFormValues) {
     if (activity) {
@@ -79,9 +151,9 @@ export class ActivityFormValues {
       this.category = activity.category;
       this.description = activity.description;
       this.date = activity.date;
-      this.endDate = activity.endDate;
-      this.city = activity.city;
-      this.venue = activity.venue;
+      // this.endDate = activity.endDate;
+      // this.city = activity.city;
+      // this.venue = activity.venue;
     }
   }
 }
@@ -103,4 +175,45 @@ export interface IAttendee {
   isHost: boolean;
   following?: boolean;
   isApproved: boolean;
+}
+
+enum SkillLevel {
+  Everyone,
+  Beginner,
+  Intermediate,
+  Expert,
+}
+
+enum Language {
+  Arabic,
+  Begali,
+  Burmese,
+  CantoneseChinese,
+  English,
+  French,
+  German,
+  Gujarati,
+  Hindi,
+  Italian,
+  Japanese,
+  Javanese,
+  Kannada,
+  Malayalam,
+  MandarinChinese,
+  Marathi,
+  NativeAmerican,
+  Oriya,
+  Persian,
+  Polish,
+  Portuguese,
+  Punjabi,
+  Russian,
+  Spanish,
+  Tamil,
+  Telugu,
+  Thai,
+  Turkish,
+  Ukranian,
+  Urdu,
+  Vietnamese,
 }
