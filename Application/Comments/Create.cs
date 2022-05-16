@@ -1,5 +1,6 @@
 using System;
 using System.Net;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Core;
@@ -50,7 +51,20 @@ namespace Application.Comments
             {
                 //add command handler logic
 
-                Activity activity = await _context.Activities.FindAsync(new object[] { request.ActivityId }, cancellationToken: cancellationToken);
+                // Activity activity = await _context.Activities.FindAsync(new object[] { request.ActivityId }, cancellationToken: cancellationToken);
+
+                var activity = await _context.Activities
+                    // .AsQueryable()
+                    .SingleOrDefaultAsync(a =>
+                        a.Id == request.ActivityId &&
+                        a.Attendees.Any(at => at.AppUserId == _userAccessor.GetUserId() &&
+                        at.ApprovalStatus == Domain.ApprovalStatus.Accepted)
+, cancellationToken: cancellationToken);
+                // .SingleOrDefaultAsync(
+                //     a =>
+                //     a.Id == request.ActivityId &&
+                //     a.Attendees.()
+                // );
 
                 if (activity == null) return null;
 

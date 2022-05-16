@@ -151,6 +151,7 @@ namespace Application.Core
                                                                     )
                                                                 .Url));
 
+            CreateMap<ActivityDetailsDto, ActivityDto>();
             // .ForMember(d => d.DisplayName, o => o.MapFrom(tp => tp.User.DisplayName))
             // .ForMember(d => d.Username, o => o.MapFrom(tp => tp.User.UserName));
 

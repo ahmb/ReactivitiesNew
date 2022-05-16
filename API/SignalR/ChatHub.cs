@@ -7,37 +7,72 @@ using MediatR;
 using Microsoft.AspNetCore.SignalR;
 using System;
 using Microsoft.Extensions.Logging;
+using Application.Interfaces;
 
 namespace API.SignalR
 {
-    [Authorize(Policy = "IsApprovedAttendee")]
+    // [Authorize(Policy = "IsApprovedAttendee")]
     public class ChatHub : Hub
     {
         private readonly IMediator _mediator;
-        public ChatHub(IMediator mediator)
+        private readonly IUserAccessor _userAccessor;
+        private readonly DataContext _context;
+
+        public ChatHub(IMediator mediator, IUserAccessor userAccessor, DataContext context)
         {
+            _userAccessor = userAccessor;
             _mediator = mediator;
+            _context = context;
         }
 
         //the client calls this method name by referring to its name
         public async Task SendComment(Create.Command command)
         {
-            //handle the comment create command, this will create the proper entry in the DBAdd
-            var comment = await _mediator.Send(command);
+            if (_userAccessor.GetUserId() != null)
+            {
+                //         if (_context.Activities.SingleOrDefaultAsync(
+                // a => a.Attendees.Any(
+                //     at => at.AppUserId == _userAccessor.GetUserId())) != null)
+                //         {
+                //handle the comment create command, this will create the proper entry in the DBAdd
+                var comment = await _mediator.Send(command);
 
-            //send the comment to all the clients
-            await Clients.Group(command.ActivityId.ToString())
-                    .SendAsync("ReceiveComment", comment.Value);
+                if (comment != null)
+                {
+                    //send the comment to all the clients
+                    await Clients.Group(command.ActivityId.ToString())
+                            .SendAsync("ReceiveComment", comment.Value);
+                    // }
+                }
+
+
+            }
+
+            await Task.CompletedTask;
+
         }
 
         public override async Task OnConnectedAsync()
         {
-            var httpContext = Context.GetHttpContext();
-            var activityId = httpContext.Request.Query["activityId"];
-            await Groups.AddToGroupAsync(Context.ConnectionId, activityId);
-            var result = await _mediator.Send(new List.Query { ActivityId = Guid.Parse(activityId) });
-            //
-            await Clients.Caller.SendAsync("LoadComments", result.Value);
+            if (_userAccessor.GetUserId() != null)
+            {
+                var httpContext = Context.GetHttpContext();
+                var activityId = httpContext.Request.Query["activityId"];
+                // if (_context.Activities.SingleOrDefaultAsync(
+                //         a => a.Attendees.Any(
+                //             at => at.AppUserId == _userAccessor.GetUserId())) != null)
+                // {
+
+                await Groups.AddToGroupAsync(Context.ConnectionId, activityId);
+                var result = await _mediator.Send(new List.Query { ActivityId = Guid.Parse(activityId), UserId = _userAccessor.GetUserId() });
+                //
+                await Clients.Caller.SendAsync("LoadComments", result.Value);
+                // }
+
+            }
+            await Task.CompletedTask;
+
+            // await Task.CompletedTask;
         }
 
         // public async Task SendMessage(CreateMessage.Command command)
