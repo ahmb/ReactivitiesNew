@@ -22,7 +22,10 @@ export default observer(function ActivityList() {
               paddingBottom: "60px",
               marginBottom: "33px",
             }}>
-            <Label color='blue' ribbon={true} size='large'>
+            <Label
+              style={{ backgroundColor: "#5162FA", color: "white" }}
+              ribbon={true}
+              size='large'>
               {/* {format(
                 new Date(
                   parseInt(group.split("-")[0]),

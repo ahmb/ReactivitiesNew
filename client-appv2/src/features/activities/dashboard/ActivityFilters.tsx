@@ -48,7 +48,12 @@ export default observer(function ActivityFilters() {
             <Button
               icon='calendar'
               circular
-              style={{ position: "absolute", right: "30px" }}
+              style={{
+                position: "absolute",
+                right: "30px",
+                backgroundColor: "#5162FA",
+                color: "white",
+              }}
               size='big'
               onClick={(_) => ToggleIsCalendarVisible()}
               active={isCalendarVisible}

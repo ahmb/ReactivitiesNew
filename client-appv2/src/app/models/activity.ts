@@ -177,14 +177,14 @@ export interface IAttendee {
   isApproved: boolean;
 }
 
-enum SkillLevel {
+export enum SkillLevel {
   Everyone,
   Beginner,
   Intermediate,
   Expert,
 }
 
-enum Language {
+export enum Language {
   Arabic,
   Begali,
   Burmese,

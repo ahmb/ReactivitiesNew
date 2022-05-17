@@ -11,8 +11,9 @@ import {
   Image,
   Grid,
   Header,
+  GridColumn,
 } from "semantic-ui-react";
-import { Activity } from "../../../app/models/activity";
+import { Activity, Language, SkillLevel } from "../../../app/models/activity";
 import ActivityListItemAttendee from "./ActivityListItemAttendee";
 import { categoryOptions } from "../../../app/common/options/categoryOptions";
 import Avatar from "boring-avatars";
@@ -75,170 +76,160 @@ export default function ActivityListItem({ activity }: Props) {
                   circular
                   src={activity.host?.image || "/assets/user.png"}
                 /> */}
-                <Grid>
-                  <Grid.Row centered stretched>
-                    <Grid.Column width={4} style={{ textAlign: "center" }}>
-                      <div style={{ paddingLeft: "15px" }}>
-                        {activity.host?.image && (
-                          <Image
-                            src={activity.host?.image || "/assets/user.png"}
-                            circular
-                            spaced='right'
-                            style={{ height: 45, width: 45 }}
-                            as={NavLink}
-                            to={`/profiles/${activity.host?.username}`}
-                          />
-                        )}
-                        {!activity.host?.image && (
-                          <NavLink to={`/profiles/${activity.host?.username}`}>
-                            <Avatar
-                              size={45}
-                              name={activity.host?.username}
-                              variant='beam'
-                              colors={[
-                                "#D8C395",
-                                "#F77825",
-                                "#F5F03A",
-                                "#F1EFA5",
-                                "#60BB99A",
-                              ]}
+                <Container>
+                  <Grid>
+                    <Grid.Row centered stretched>
+                      <Grid.Column width={4} style={{ textAlign: "center" }}>
+                        <div style={{ paddingLeft: "15px" }}>
+                          {activity.host?.image && (
+                            <Image
+                              src={activity.host?.image || "/assets/user.png"}
+                              circular
+                              spaced='right'
+                              style={{ height: 45, width: 45 }}
+                              as={NavLink}
+                              to={`/profiles/${activity.host?.username}`}
                             />
-                          </NavLink>
-                        )}
-                      </div>
-                      {/* {activity.host?.displayName} */}
-                      <Header
-                        size='small'
-                        style={{ marginTop: "auto", paddingLeft: "5px" }}>
-                        {activity.host?.displayName}
-                      </Header>
-                      <br />
-                      {/* <span style={{ display: "flex" }}> */}
-                      <Icon
-                        name='users'
-                        size='big'
-                        color='grey'
+                          )}
+                          {!activity.host?.image && (
+                            <NavLink
+                              to={`/profiles/${activity.host?.username}`}>
+                              <Avatar
+                                size={45}
+                                name={activity.host?.username}
+                                variant='beam'
+                                colors={[
+                                  "#D8C395",
+                                  "#F77825",
+                                  "#F5F03A",
+                                  "#F1EFA5",
+                                  "#60BB99A",
+                                ]}
+                              />
+                            </NavLink>
+                          )}
+                        </div>
+                        {/* {activity.host?.displayName} */}
+                        <Header
+                          size='small'
+                          style={{ marginTop: "auto", paddingLeft: "5px" }}>
+                          {activity.host?.displayName}
+                        </Header>
+                        <br />
+                        {/* <span style={{ display: "flex" }}> */}
+                        <Icon
+                          name='users'
+                          size='big'
+                          color='grey'
+                          style={{
+                            paddingLeft: "20px",
+                          }}></Icon>
+                        <Header
+                          style={{ marginTop: "auto", paddingLeft: "10px" }}>
+                          {activity.attendeeCount}
+                          {"/"}
+                          {activity.attendeeCountMax}
+                        </Header>
+                        {/* </span> */}
+                      </Grid.Column>
+                      <Grid.Column
+                        width={4}
                         style={{
-                          paddingLeft: "20px",
-                        }}></Icon>
-                      <Header
-                        style={{ marginTop: "auto", paddingLeft: "10px" }}>
-                        {activity.attendeeCount}
-                      </Header>
-                      {/* </span> */}
-                    </Grid.Column>
-                    <Grid.Column
-                      width={4}
-                      style={{
-                        textAlign: "left",
-                        paddingTop: "10px",
-                      }}
-                      verticalAlign='middle'>
-                      <Header
-                        size='tiny'
-                        color='grey'
-                        style={{
-                          marginTop: "auto",
-                          padding: "0px",
-                          marginBottom: "0px",
-                        }}>
-                        <i>from</i>
-                      </Header>
-                      <Header
-                        color='red'
-                        size='medium'
-                        style={{
-                          marginTop: "auto",
-                          padding: "0px",
-                          marginBottom: "0px",
-                        }}>
-                        {format(activity.date!, "h:mm aa")}
-                        {/* dd MMM h:mm aa */}
-                      </Header>
-                      <Header
-                        size='tiny'
-                        color='grey'
-                        style={{
-                          padding: "0px",
-                          margin: "0px",
-                          fontSize: "11px",
-                        }}>
-                        <i>
-                          {Intl.DateTimeFormat().resolvedOptions().timeZone}
-                        </i>
-                      </Header>
-
-                      <br />
-                      <Header
-                        size='tiny'
-                        style={{
-                          marginTop: "auto",
-                          paddingLeft: "0px",
-                          marginBottom: "0px",
+                          textAlign: "left",
+                          marginTop: "-10px",
                         }}
-                        color='grey'>
-                        <i>Duration</i>
-                      </Header>
-                      <Header
-                        color='red'
-                        size='medium'
-                        style={{
-                          marginTop: "auto",
-                          paddingLeft: "0px",
-                          marginBottom: "0px",
-                        }}>
-                        {activity.duration}
-                        {/* {format(activity.endDate!, "h:mm aa")} */}
-                        {/* dd MMM h:mm aa */}
+                        verticalAlign='middle'>
+                        <Header
+                          size='tiny'
+                          color='grey'
+                          style={{
+                            marginTop: "auto",
+                            padding: "0px",
+                            marginBottom: "0px",
+                          }}>
+                          <i> {format(activity.date!, "M/dd")}</i>
+                        </Header>
+                        <Header
+                          color='red'
+                          size='medium'
+                          style={{
+                            marginTop: "auto",
+                            padding: "0px",
+                            marginBottom: "0px",
+                          }}>
+                          {format(activity.date!, "h:mm aa")}
+                          {/* dd MMM h:mm aa */}
+                        </Header>
+                        <Header
+                          size='tiny'
+                          color='grey'
+                          style={{
+                            padding: "0px",
+                            margin: "0px",
+                            fontSize: "11px",
+                          }}>
+                          <i>
+                            {Intl.DateTimeFormat().resolvedOptions().timeZone}
+                          </i>
+                        </Header>
+                        <br />
+                        <Header
+                          color='red'
+                          size='medium'
+                          style={{
+                            marginTop: "auto",
+                            paddingLeft: "0px",
+                            marginBottom: "0px",
+                          }}>
+                          {activity.duration}
+                          {/* {format(activity.endDate!, "h:mm aa")} */}
+                          {/* dd MMM h:mm aa */}
 
-                        {/* {activity.endDate
+                          {/* {activity.endDate
                           ?.toLocaleTimeString()
                           .slice(-2)
                           .toLowerCase()} */}
-                      </Header>
-                      <Header
-                        size='tiny'
-                        color='grey'
-                        style={{
-                          padding: "0px",
-                          margin: "0px",
-                          fontSize: "11px",
-                        }}>
-                        <i>
-                          {" "}
-                          {Intl.DateTimeFormat().resolvedOptions().timeZone}
-                        </i>
-                      </Header>
-                    </Grid.Column>
-                    <Grid.Column width={8}>
-                      <Image
-                        src={`/assets/categoryImages/${activity.categories[0].name}.jpg`}
-                        fluid
-                        style={{
-                          borderRadius: "20px",
-                          boxShadow: "0px 10px 2px 0px aliceblue",
-                        }}
-                      />
-                    </Grid.Column>
-                  </Grid.Row>
-                  <Grid.Row
-                    style={{ paddingBottom: "0px", paddingTop: "25px" }}>
-                    <Container>
-                      <Header size='small'>
-                        {/* {
-                          categoryOptions.filter(
-                            (c) => c.value === activity.category
-                          )[0]?.icon
-                        }
-                        {
-                          categoryOptions.filter(
-                            (c) => c.value === activity.category
-                          )[0]?.value
-                        } */}
-                      </Header>
-                    </Container>
-                  </Grid.Row>
-                </Grid>
+                        </Header>{" "}
+                        <Header
+                          size='tiny'
+                          style={{
+                            marginTop: "auto",
+                            paddingLeft: "0px",
+                            marginBottom: "0px",
+                          }}
+                          color='grey'>
+                          <i>minutes</i>
+                        </Header>
+                      </Grid.Column>
+                      <Grid.Column width={8}>
+                        <Image
+                          src={`/assets/categoryImages/${activity.categories[0].name}.jpg`}
+                          style={{
+                            borderRadius: "20px",
+                            boxShadow: "0px 10px 2px 0px aliceblue",
+                            maxWidth: "200px",
+                            maxHeight: "200px",
+                          }}
+                        />
+                      </Grid.Column>
+                    </Grid.Row>
+                    <Grid.Row stretched style={{ marginBottom: "0px" }}>
+                      <Grid.Column width={8}>
+                        <Header size='small' style={{ display: "inline" }}>
+                          {"Language:   " + Language[activity.language]}
+                        </Header>
+                      </Grid.Column>
+                      <Grid.Column width={8}>
+                        <Header size='small' style={{ display: "inline" }}>
+                          {"Skill Level:   " + SkillLevel[activity.skillLevel]}
+                        </Header>
+                      </Grid.Column>
+                      {/* <span className='listLanguage'> */}
+
+                      {/* </span> */}
+                    </Grid.Row>
+                  </Grid>
+                </Container>
               </Item.Description>
             </Item.Content>
           </Item>
@@ -258,16 +249,31 @@ export default function ActivityListItem({ activity }: Props) {
           paddingTop: "0px",
         }}
         clearing>
-        #tag1 #tag2 #tag3
+        {activity.categories.map((c) => (
+          <p id='listCategories'>
+            {categoryOptions.filter((co) => co.value === c.name)[0].icon +
+              " " +
+              categoryOptions.filter((co) => co.value === c.name)[0].text +
+              "  "}
+          </p>
+        ))}
+        <br />
+        {activity.tag.map((t) => (
+          <p id='listTags'>{"#" + t.name.toString() + " "}</p>
+        ))}
         {/* <span>{activity.description}</span> */}
         <Button
           as={Link}
           to={`/activities/${activity.id}`}
-          color='red'
           floated='right'
           content='View'
           circular
-          style={{ margin: "10px", boxShadow: "#a51c1d 1px 3px 0px 0px" }}
+          style={{
+            margin: "10px",
+            boxShadow: "#404cb8 1px 3px 0px 0px",
+            backgroundColor: "#5162FA",
+            color: "white",
+          }}
         />
       </Segment>
     </Segment.Group>

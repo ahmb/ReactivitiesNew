@@ -28,15 +28,25 @@ background: white;
 #logoAlt {
   font-family: Pacifico;
   font-size: 26px;
-  color: #009ee6;
+  color: #5162FA;
 }
 
 .altFontColor{
-  color: #009ee6;
+  color: #5162FA;
 }
+
+/* .altFontColor{
+  color: #009ee6;
+} */
+
+.secondaryColor{
+  background-color: #5162FA 
+}
+
 
 body {
   background-color: #eaeaea !important;
+  color:rgba(0, 0, 0, 0.808);
 }
 
 
@@ -188,6 +198,21 @@ body {
 
 }
 
+
+#listCategories{
+  display:inline;
+  padding-right: 15px;
+  font-size: large;
+  margin-bottom: 10px;
+}
+
+#listTags{
+  margin-top:20px ;
+  padding-bottom:0px ;
+  font-size:medium;
+  display:inline;
+  margin-bottom: 0px;
+}
 /*home page styles*/
 
 .masthead {
