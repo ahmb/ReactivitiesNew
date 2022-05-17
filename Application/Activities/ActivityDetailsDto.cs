@@ -39,6 +39,8 @@ namespace Application.Activities
 
         public string Assets { get; set; }
         public SkillLevel SkillLevel { get; set; }
+        public Language Language { get; set; } = Language.English;
+
 
 
         //list of AppUsers attending an activity i.e. Attendees

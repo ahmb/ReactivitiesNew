@@ -31,6 +31,8 @@ namespace Application.Activities
         public bool IsGoing { get; set; } = false;
 
         public SkillLevel SkillLevel { get; set; }
+        public Language Language { get; set; } = Language.English;
+
 
         public int AttendeeCount { get; set; }
         public int AttendeeCountMax { get; set; }
