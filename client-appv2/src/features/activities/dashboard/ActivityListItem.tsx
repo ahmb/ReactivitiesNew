@@ -80,7 +80,7 @@ export default function ActivityListItem({ activity }: Props) {
                   <Grid>
                     <Grid.Row centered stretched>
                       <Grid.Column width={4} style={{ textAlign: "center" }}>
-                        <div style={{ paddingLeft: "15px" }}>
+                        <div style={{ alignSelf: "center" }}>
                           {activity.host?.image && (
                             <Image
                               src={activity.host?.image || "/assets/user.png"}
@@ -112,24 +112,25 @@ export default function ActivityListItem({ activity }: Props) {
                         {/* {activity.host?.displayName} */}
                         <Header
                           size='small'
-                          style={{ marginTop: "auto", paddingLeft: "5px" }}>
+                          style={{ marginTop: "auto", alignSelf: "center" }}>
                           {activity.host?.displayName}
                         </Header>
-                        <br />
+                        {/* <br /> */}
                         {/* <span style={{ display: "flex" }}> */}
                         <Icon
                           name='users'
                           size='big'
                           color='grey'
                           style={{
-                            paddingLeft: "20px",
+                            alignSelf: "center",
                           }}></Icon>
                         <Header
-                          style={{ marginTop: "auto", paddingLeft: "10px" }}>
+                          size='tiny'
+                          style={{ marginTop: "auto", alignSelf: "center" }}>
                           {activity.attendeeCount}
-                          {"/"}
-                          {activity.attendeeCountMax}
+                          {" attending"}
                         </Header>
+
                         {/* </span> */}
                       </Grid.Column>
                       <Grid.Column
@@ -139,19 +140,19 @@ export default function ActivityListItem({ activity }: Props) {
                           marginTop: "-10px",
                         }}
                         verticalAlign='middle'>
-                        <Header
+                        {/* <Header
                           size='tiny'
                           color='grey'
                           style={{
                             marginTop: "auto",
                             padding: "0px",
                             marginBottom: "0px",
-                          }}>
-                          <i> {format(activity.date!, "M/dd")}</i>
-                        </Header>
+                          }}> */}
+                        <i> {format(activity.date!, "M/dd")}</i>
+                        {/* </Header> */}
                         <Header
                           color='red'
-                          size='medium'
+                          size='tiny'
                           style={{
                             marginTop: "auto",
                             padding: "0px",
@@ -160,22 +161,23 @@ export default function ActivityListItem({ activity }: Props) {
                           {format(activity.date!, "h:mm aa")}
                           {/* dd MMM h:mm aa */}
                         </Header>
-                        <Header
+                        {/* <Header
                           size='tiny'
                           color='grey'
                           style={{
                             padding: "0px",
                             margin: "0px",
                             fontSize: "11px",
-                          }}>
+                          }}> */}
+                        <p style={{ color: "grey", fontSize: "12px" }}>
                           <i>
                             {Intl.DateTimeFormat().resolvedOptions().timeZone}
                           </i>
-                        </Header>
-                        <br />
+                        </p>
+                        {/* </Header> */}
                         <Header
                           color='red'
-                          size='medium'
+                          size='tiny'
                           style={{
                             marginTop: "auto",
                             paddingLeft: "0px",
@@ -190,16 +192,23 @@ export default function ActivityListItem({ activity }: Props) {
                           .slice(-2)
                           .toLowerCase()} */}
                         </Header>{" "}
-                        <Header
+                        {/* <Header
                           size='tiny'
                           style={{
                             marginTop: "auto",
                             paddingLeft: "0px",
-                            marginBottom: "0px",
+                            // marginBottom: "0px",
                           }}
-                          color='grey'>
+                          color='grey'> */}
+                        <p style={{ color: "grey" }}>
                           <i>minutes</i>
-                        </Header>
+                        </p>
+                        {/* </Header> */}
+                        <p style={{ color: "grey" }}>
+                          {"Maximum " +
+                            activity.attendeeCountMax +
+                            " attendee(s)"}
+                        </p>
                       </Grid.Column>
                       <Grid.Column width={8}>
                         <Image
@@ -207,27 +216,81 @@ export default function ActivityListItem({ activity }: Props) {
                           style={{
                             borderRadius: "20px",
                             boxShadow: "0px 10px 2px 0px aliceblue",
-                            maxWidth: "200px",
-                            maxHeight: "200px",
+                            maxWidth: "150px",
+                            maxHeight: "150px",
+                            alignSelf: "center",
                           }}
                         />
                       </Grid.Column>
                     </Grid.Row>
-                    <Grid.Row stretched style={{ marginBottom: "0px" }}>
+                    <Grid.Row
+                      stretched
+                      centered
+                      style={{ marginBottom: "0px" }}>
                       <Grid.Column width={8}>
-                        <Header size='small' style={{ display: "inline" }}>
-                          {"Language:   " + Language[activity.language]}
-                        </Header>
+                        <p>{"Language:   " + Language[activity.language]}</p>
+                        {/* <p>{"Language:   " + Language[activity.language]}</p> */}
                       </Grid.Column>
                       <Grid.Column width={8}>
-                        <Header size='small' style={{ display: "inline" }}>
+                        <p>
                           {"Skill Level:   " + SkillLevel[activity.skillLevel]}
-                        </Header>
+                        </p>
                       </Grid.Column>
                       {/* <span className='listLanguage'> */}
 
                       {/* </span> */}
                     </Grid.Row>
+                    <Grid.Row
+                      style={{
+                        paddingTop: "0px",
+                        paddingBottom: "0px",
+                        paddingLeft: "15px",
+                      }}>
+                      {activity.categories.map((c) => (
+                        <p id='listCategories'>
+                          {categoryOptions.filter(
+                            (co) => co.value === c.name
+                          )[0].icon +
+                            " " +
+                            categoryOptions.filter(
+                              (co) => co.value === c.name
+                            )[0].text +
+                            "  "}
+                        </p>
+                      ))}
+                    </Grid.Row>
+                    <Grid.Row
+                      style={{
+                        paddingTop: "0px",
+                        paddingBottom: "0px",
+                        paddingLeft: "15px",
+                        marginBottom: "10px",
+                      }}>
+                      <p id='listTags'>
+                        {activity.tag.map((t) => "#" + t.name.toString() + " ")}
+                      </p>
+                    </Grid.Row>
+                    {/* <Grid.Row
+                      style={{
+                        paddingTop: "0px",
+                        paddingBottom: "0px",
+                      }}>
+                      <Grid.Column floated='right'>
+                        <Button
+                          as={Link}
+                          to={`/activities/${activity.id}`}
+                          floated='right'
+                          content='View'
+                          circular
+                          style={{
+                            margin: "10px",
+                            boxShadow: "#404cb8 1px 3px 0px 0px",
+                            backgroundColor: "#5162FA",
+                            color: "white",
+                          }}
+                        />
+                      </Grid.Column>
+                    </Grid.Row> */}
                   </Grid>
                 </Container>
               </Item.Description>
@@ -249,18 +312,6 @@ export default function ActivityListItem({ activity }: Props) {
           paddingTop: "0px",
         }}
         clearing>
-        {activity.categories.map((c) => (
-          <p id='listCategories'>
-            {categoryOptions.filter((co) => co.value === c.name)[0].icon +
-              " " +
-              categoryOptions.filter((co) => co.value === c.name)[0].text +
-              "  "}
-          </p>
-        ))}
-        <br />
-        {activity.tag.map((t) => (
-          <p id='listTags'>{"#" + t.name.toString() + " "}</p>
-        ))}
         {/* <span>{activity.description}</span> */}
         <Button
           as={Link}

@@ -202,12 +202,12 @@ body {
 #listCategories{
   display:inline;
   padding-right: 15px;
-  font-size: large;
+  font-size: medium;
   margin-bottom: 10px;
 }
 
 #listTags{
-  margin-top:20px ;
+  padding-top:0px ;
   padding-bottom:0px ;
   font-size:medium;
   display:inline;

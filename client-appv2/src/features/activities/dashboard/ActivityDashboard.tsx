@@ -30,6 +30,114 @@ export default observer(function ActivityDashboard() {
 
   return (
     <Grid>
+      <Header
+        size='huge'
+        floated='left'
+        style={{
+          // paddingLeft: "10px",
+          paddingTop: "5px",
+          fontSize: "68px",
+        }}>
+        <span
+          style={{
+            paddingTop: "0px",
+            paddingBottom: "0px",
+          }}>
+          <p
+            style={{
+              paddingTop: "0px",
+              paddingBottom: "0px",
+              marginBottom: "0px",
+            }}>
+            Do
+          </p>
+          <p
+            style={{
+              paddingTop: "0px",
+              paddingBottom: "0px",
+              marginBottom: "0px",
+            }}>
+            cool stuff
+          </p>
+          <p
+            style={{
+              paddingTop: "0px",
+              paddingBottom: "0px",
+              marginBottom: "0px",
+            }}>
+            with
+          </p>
+          <p
+            style={{
+              paddingTop: "0px",
+              paddingBottom: "0px",
+              marginBottom: "0px",
+            }}>
+            cool people
+          </p>
+          <p
+            style={{
+              paddingTop: "0px",
+              paddingBottom: "0px",
+              marginBottom: "0px",
+            }}>
+            online*
+          </p>
+        </span>
+      </Header>
+      <Header
+        content={"*psst..you're cool 😁"}
+        size='huge'
+        style={{
+          marginBottom: "0px",
+
+          // paddingTop: "5px",
+        }}
+      />
+      <Header
+        content={
+          "FREE forever - real time text, audio, video and screensharing via the browser"
+        }
+        size='huge'
+        style={{
+          marginBottom: "0px",
+
+          // paddingTop: "5px",
+        }}
+      />
+      <Header
+        content={
+          "Privacy first and personal, SSL Encrypted Peer-to-Peer Chatrooms - max 6 users, with minimal ads if any *"
+        }
+        size='medium'
+        style={{
+          marginBottom: "0px",
+
+          // paddingTop: "5px",
+        }}
+      />
+      <Header
+        content={
+          "* Cellphone connections through 3/4/5G networks are encrypted but inherently require a WannaGo server to bridge peer-to-peer connectivity"
+        }
+        size='tiny'
+        style={{
+          marginBottom: "0px",
+
+          // paddingTop: "5px",
+        }}
+      />
+      <Header
+        content={
+          "We do not tolerate explicit, derogatory or offensive content, please read our policy"
+        }
+        size='medium'
+        style={
+          {
+            // paddingTop: "5px",
+          }
+        }
+      />
       <Grid.Row centered>
         <Slideshow />
       </Grid.Row>

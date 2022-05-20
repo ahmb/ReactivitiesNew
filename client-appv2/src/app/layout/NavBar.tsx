@@ -47,7 +47,7 @@ const NavBar: React.FC<IProps> = ({ className }) => {
   // useEffect(() => {}, [isSidebarOpen]);
 
   return (
-    <Container>
+    <>
       <Menu
         secondary
         fixed='top'
@@ -61,7 +61,7 @@ const NavBar: React.FC<IProps> = ({ className }) => {
                 borderBottom: "1px solid #f4f4f4",
               }
         }>
-        <Container>
+        <>
           <Menu.Item
             // as={Button}
             // to="javascript:void(0)"
@@ -84,6 +84,34 @@ const NavBar: React.FC<IProps> = ({ className }) => {
             header>
             W
           </Menu.Item>
+          {!isLoggedIn && (
+            <>
+              <Menu.Item position='right'>
+                <Button
+                  as={NavLink}
+                  to='/createActivity'
+                  icon='search'
+                  circular
+                  size='mini'
+                />
+              </Menu.Item>
+              <Menu.Item position='right'>
+                <Button
+                  as={Link}
+                  to={`/`}
+                  floated='right'
+                  content='Sign Up or Login'
+                  circular
+                  style={{
+                    margin: "10px",
+                    boxShadow: "#404cb8 1px 3px 0px 0px",
+                    backgroundColor: "#5162FA",
+                    color: "white",
+                  }}
+                />
+              </Menu.Item>
+            </>
+          )}
           {isLoggedIn && (
             <>
               {/* <Menu.Item as={NavLink} to='/activities' name='Activities' />
@@ -158,7 +186,7 @@ const NavBar: React.FC<IProps> = ({ className }) => {
               </Menu.Item>
             </>
           )}
-        </Container>
+        </>
       </Menu>
 
       {/* FILTER NAV */}
@@ -238,7 +266,7 @@ const NavBar: React.FC<IProps> = ({ className }) => {
           </Container>
         </Menu>
       )}
-    </Container>
+    </>
   );
 };
 
