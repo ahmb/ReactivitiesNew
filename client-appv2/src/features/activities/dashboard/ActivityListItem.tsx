@@ -126,10 +126,18 @@ export default function ActivityListItem({ activity }: Props) {
                           }}></Icon>
                         <Header
                           size='tiny'
-                          style={{ marginTop: "auto", alignSelf: "center" }}>
+                          style={{
+                            marginTop: "auto",
+                            alignSelf: "center",
+                            paddigBottom: "0px",
+                            marginBottom: "0px",
+                          }}>
                           {activity.attendeeCount}
                           {" attending"}
                         </Header>
+                        <p style={{ color: "grey" }}>
+                          {"(max " + activity.attendeeCountMax + ")"}
+                        </p>
 
                         {/* </span> */}
                       </Grid.Column>
@@ -174,7 +182,11 @@ export default function ActivityListItem({ activity }: Props) {
                             {Intl.DateTimeFormat().resolvedOptions().timeZone}
                           </i>
                         </p>
+                        <br />
                         {/* </Header> */}
+                        <p style={{ color: "grey" }}>
+                          <i>Duration:</i>
+                        </p>
                         <Header
                           color='red'
                           size='tiny'
@@ -204,11 +216,6 @@ export default function ActivityListItem({ activity }: Props) {
                           <i>minutes</i>
                         </p>
                         {/* </Header> */}
-                        <p style={{ color: "grey" }}>
-                          {"Maximum " +
-                            activity.attendeeCountMax +
-                            " attendee(s)"}
-                        </p>
                       </Grid.Column>
                       <Grid.Column width={8}>
                         <Image

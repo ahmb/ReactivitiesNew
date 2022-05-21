@@ -37,31 +37,41 @@ export default observer(function ActivityFilters() {
 
   return (
     <>
-      <div>
-        <Grid.Row stretched>
-          <Container>
-            <Header
-              size='huge'
-              content='Activities'
-              style={{ float: "left", paddingLeft: "10px", paddingTop: "5px" }}
-            />
-            <Button
-              icon='calendar'
-              circular
-              style={{
-                position: "absolute",
-                right: "30px",
-                backgroundColor: "#5162FA",
-                color: "white",
-              }}
-              size='big'
-              onClick={(_) => ToggleIsCalendarVisible()}
-              active={isCalendarVisible}
-            />
-          </Container>
-        </Grid.Row>
-        <br />
-      </div>
+      <Grid.Row stretched>
+        <Grid.Column width={13}>
+          <Header
+            size='huge'
+            float='left'
+            style={{
+              float: "left",
+              paddingLeft: "10px",
+              paddingTop: "5px",
+            }}>
+            <p id='guestHeader' style={{ fontSize: "42px" }}>
+              Activities
+            </p>
+          </Header>
+        </Grid.Column>
+        {/* <Grid.Column width={4}> */}
+        <Button
+          icon='calendar'
+          circular
+          style={{
+            // position: "absolute",
+            // right: "30px",
+            backgroundColor: "#5162FA",
+            boxShadow: "#404cb8 1px 3px 0px 0px",
+            color: "white",
+            // marginLeft: "30px",
+          }}
+          size='massive'
+          onClick={(_) => ToggleIsCalendarVisible()}
+          active={isCalendarVisible}
+          floated='right'
+        />
+        {/* </Grid.Column> */}
+      </Grid.Row>
+      <br />
 
       <Grid.Row
         className='aliceBlueBg'

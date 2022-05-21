@@ -12,15 +12,27 @@ background: white;
 /* WannaGo Styles */
 @import url("https://fonts.googleapis.com/css?family=Pacifico");
 @import url("https://fonts.googleapis.com/css?family=OpenSans");
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap");
 
 .aliceBlueBg{
   background-color: aliceblue;
 }
 
 
+#guestHeader{
+  font-family: Montserrat;
+  font-weight: 900;
+  font-size: 55px;
+}
+
 #logo {
   font-family: Pacifico;
   font-size: 26px;
+  color: #dc493a;
+}
+
+.fontColor{
   color: #dc493a;
 }
 
@@ -243,3 +255,22 @@ body {
 }
 
 /*end home page styles*/
+
+
+/* ACTIVITY - NEW FORM */
+
+#multiselectcategory {
+  border-radius: 200px;
+}
+
+.select__control {
+  border-radius: 200px;
+}
+
+input {
+  border-radius: 200px;
+}
+
+.activityFormField {
+  border-radius: 200px;
+}

@@ -131,7 +131,11 @@ const NavBar: React.FC<IProps> = ({ className }) => {
                     as={NavLink}
                     to='/createActivity'
                     // color='red'
-                    style={{ backgroundColor: "#5162FA", color: "white" }}
+                    style={{
+                      backgroundColor: "#5162FA",
+                      color: "white",
+                      boxShadow: "#404cb8 1px 3px 0px 0px",
+                    }}
                     icon='plus'
                     size='mini'
                     circular
