@@ -39,8 +39,13 @@ export default function MyFileUploadPreview(props: Props) {
     console.log(thumb);
 
     reader.readAsDataURL(props.file);
-    // setSrc(reader.readAsDataURL(props.file));
+
+    return () => {
+      reader.abort();
+    };
   }, [thumb, props.file]);
+
+  if (!props.file) return null;
 
   return (
     <>

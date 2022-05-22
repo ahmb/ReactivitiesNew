@@ -40,14 +40,24 @@ export default function MyFileUpload(props: Props) {
           id='file'
           name={props.name ?? "file"}
           type='file'
-          value={files[0] ?? undefined}
+          value={files !== null ? files[0] : undefined}
           onChange={(event) => {
+            // if (
+            //   event.currentTarget.files !== null &&
+            //   event.currentTarget.files[0] !== undefined
+            // ) {
+            //   helpers.setValue(event?.currentTarget?.files[0]);
+            //   setFiles(event?.currentTarget?.files[0]);
+            // }
             if (
               event.currentTarget.files !== null &&
               event.currentTarget.files[0] !== undefined
             ) {
-              helpers.setValue(event?.currentTarget?.files[0]);
-              setFiles(event?.currentTarget?.files[0]);
+              helpers.setValue(event?.currentTarget?.files![0]);
+              setFiles(event?.currentTarget?.files![0]);
+            } else {
+              helpers.setValue(undefined);
+              setFiles(null);
             }
           }}
         />
