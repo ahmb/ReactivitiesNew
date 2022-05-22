@@ -28,6 +28,9 @@ import MyMultiSelectInput from "../../../app/common/form/MyMultiSelectInput";
 import MyTextNumberInput from "../../../app/common/form/MyTextNumberInput";
 import MyCheckboxInput from "../../../app/common/form/MyCheckboxInput";
 import MyCheckboxWithTextNumberInput from "../../../app/common/form/MyCheckboxWithTextNumberInput";
+import PhotoUploadSimpleWidget from "../../../app/common/imageUpload/PhotoUploadSimpleWidget";
+import MyFileUpload from "../../../app/common/form/MyFileUpload";
+import MyFileUploadPreview from "../../../app/common/form/MyFileUploadPreview";
 
 export default observer(function ActivityForm() {
   const history = useHistory();
@@ -176,19 +179,17 @@ export default observer(function ActivityForm() {
                   label='Number of attendees allowed (max. 6)'
                   defaultValue={1}
                 />
-
                 <MyCheckboxWithTextNumberInput
                   name='ongoing'
-                  label='Recurring Event?'
+                  label='Repeat until filled? (only visible for creator)'
                   popUpContent='Note: Display this post on the main page for the desired
                   number of days or until the number of attendees is reached'
                   defaultValue={0}
                   textInputName='ongoingDays'
-                  textInputPlaceholder='Number of days'
+                  textInputPlaceholder='Number of days to renew for if not filled, only you can see this'
                   textInputLabel='Repeat for (days)'
                   textInputDefaultValue={0}
                 />
-
                 <MyCheckboxInput
                   name='private'
                   label='Private Event?'
@@ -198,6 +199,7 @@ export default observer(function ActivityForm() {
                   defaultValue={0}
                 />
                 <MySelectInput
+                  label='Language'
                   options={Object.values(Language)
                     .filter(
                       (sl) => sl.toString() !== "0" && !parseInt(sl.toString())
@@ -212,6 +214,7 @@ export default observer(function ActivityForm() {
                   defaultValue='English'
                 />
                 <MySelectInput
+                  label='Skill Level'
                   options={Object.values(SkillLevel)
                     .filter(
                       (sl) => sl.toString() !== "0" && !parseInt(sl.toString())
@@ -224,6 +227,10 @@ export default observer(function ActivityForm() {
                   placeholder='Any skill requirement?'
                   name='skillLevel'
                   defaultValue='Everyone'
+                />
+                <MyFileUpload
+                  name='file'
+                  label='Upload Picture (Optional) - .jpg .png .gif image formats accepted'
                 />
                 {/* <Header content='Location Details' sub color='teal' />
 

@@ -228,7 +228,9 @@ const NavBar: React.FC<IProps> = ({ className }) => {
                   style={{ paddingTop: "10px" }}
                   content='💡'
                 />
-                <p style={{ paddingTop: "5px", paddingLeft: "5px" }}>All</p>
+                <p className='categoryText' style={{ paddingTop: "5px" }}>
+                  All
+                </p>
               </Menu.Item>
 
               <Menu.Item
@@ -239,7 +241,9 @@ const NavBar: React.FC<IProps> = ({ className }) => {
                   style={{ paddingTop: "10px" }}
                   content='😁'
                 />
-                <p style={{ paddingTop: "5px", paddingLeft: "5px" }}>Mine</p>
+                <p className='categoryText' style={{ paddingTop: "5px" }}>
+                  Mine
+                </p>
               </Menu.Item>
               {/* <Menu.Item
               content='Hosting'
@@ -260,7 +264,7 @@ const NavBar: React.FC<IProps> = ({ className }) => {
                     </Header>
                     <span
                       className='categoryText'
-                      style={{ paddingTop: "5px", paddingLeft: "5px" }}>
+                      style={{ paddingTop: "5px" }}>
                       {text}
                     </span>
                   </Menu.Item>

@@ -21,6 +21,8 @@ export default class ActivityStore {
   pagingParams = new PagingParams();
   predicate = new Map().set("all", true);
 
+  uploadingPicture = false;
+
   constructor() {
     // makeObservable(this, {
     //     title: observable,
@@ -279,6 +281,28 @@ export default class ActivityStore {
   clearSelectedActivity = () => {
     this.selectedActivity = undefined;
   };
+
+  uploadPhoto = async (file: Blob) => {
+    this.uploadingPicture = true;
+    try {
+      const response = await agent.Profiles.uploadPhoto(file);
+      const photo = response.data;
+      runInAction(() => {
+        // if (this.profile) {
+        //   this.profile.photos?.push(photo);
+        //   if (photo.isMain && store.userStore.user) {
+        //     store.userStore.setImage(photo.url);
+        //     this.profile.image = photo.url;
+        //   }
+        // }
+        this.uploadingPicture = false;
+      });
+    } catch (error) {
+      console.log(error);
+      runInAction(() => (this.uploadingPicture = false));
+    }
+  };
+
 
   // updateAttendeeFollowing = (username: string) => {
   //   this.activityRegistry.forEach((activity) => {

@@ -43,108 +43,128 @@ export default observer(function ActivityDashboard() {
           <span id='logoAlt'>Go</span>
         </span>
       </Grid.Row>
-      <Circle
-        color='linear-gradient(135deg, #d8c395, #bba981)'
-        // color='linear-gradient(135deg, #a5b4fc, #6366f1)'
-        size={["150px", "150px", "180px", "180px"]}
-        zIndex={-1}
-        left={"-2%"}
-        top={"6%"}
-        position='absolute'
-      />
-      <Header
-        size='huge'
-        floated='left'
-        style={{
-          // paddingLeft: "10px",
-          paddingTop: "35px",
-          fontSize: "68px",
-          fontWeight: "900",
-        }}>
+      <Grid.Row>
+        <Diamond
+          color='linear-gradient(135deg, #93c5fd, #10b981cc)'
+          size='100px'
+          zIndex={-1}
+          position='absolute'
+          top='17em'
+          right='-1em'
+        />
+        <CircleGrid
+          color='#10b981cc'
+          size='175px'
+          zIndex={-1}
+          position='absolute'
+          top='-4em'
+          right='-2em'
+        />
+        <Circle
+          color='linear-gradient(135deg, #d8c395, #bba981)'
+          // color='linear-gradient(135deg, #a5b4fc, #6366f1)'
+          size={["150px", "150px", "180px", "180px"]}
+          zIndex={-1}
+          left={"-2%"}
+          top={"6%"}
+          position='absolute'
+        />
+        <Header
+          size='huge'
+          floated='left'
+          style={{
+            // paddingLeft: "10px",
+            paddingTop: "35px",
+            fontSize: "68px",
+            fontWeight: "900",
+          }}>
+          <span
+            style={{
+              paddingTop: "0px",
+              paddingBottom: "0px",
+            }}
+            id='guestHeader'>
+            <p
+              style={{
+                paddingTop: "0px",
+                paddingBottom: "0px",
+                marginBottom: "0px",
+              }}>
+              Do
+            </p>
+            <p
+              style={{
+                paddingTop: "0px",
+                paddingBottom: "0px",
+                marginBottom: "0px",
+              }}>
+              cool stuff
+            </p>
+            <p
+              style={{
+                paddingTop: "0px",
+                paddingBottom: "0px",
+                marginBottom: "0px",
+              }}>
+              with
+            </p>
+            <p
+              style={{
+                paddingTop: "0px",
+                paddingBottom: "0px",
+                marginBottom: "0px",
+              }}>
+              cool people
+            </p>
+            <p
+              style={{
+                paddingTop: "0px",
+                paddingBottom: "0px",
+                marginBottom: "0px",
+              }}>
+              online
+              <Popup trigger={<span className='altFontColor'>*</span>}>
+                <span className='altFontColor'>*</span>psst..you're cool too 😁
+              </Popup>
+              {/* <span className='altFontColor'>*</span> */}
+            </p>
+          </span>
+        </Header>
+      </Grid.Row>
+      <Grid.Row>
         <span
           style={{
-            paddingTop: "0px",
-            paddingBottom: "0px",
+            width: "20em",
+            height: "5em",
+            display: "inline",
+            fontSize: "32px",
           }}
-          id='guestHeader'>
-          <p
-            style={{
-              paddingTop: "0px",
-              paddingBottom: "0px",
-              marginBottom: "0px",
-            }}>
-            Do
-          </p>
-          <p
-            style={{
-              paddingTop: "0px",
-              paddingBottom: "0px",
-              marginBottom: "0px",
-            }}>
-            cool stuff
-          </p>
-          <p
-            style={{
-              paddingTop: "0px",
-              paddingBottom: "0px",
-              marginBottom: "0px",
-            }}>
-            with
-          </p>
-          <p
-            style={{
-              paddingTop: "0px",
-              paddingBottom: "0px",
-              marginBottom: "0px",
-            }}>
-            cool people
-          </p>
-          <p
-            style={{
-              paddingTop: "0px",
-              paddingBottom: "0px",
-              marginBottom: "0px",
-            }}>
-            online
-            <Popup trigger={<span className='altFontColor'>*</span>}>
-              <span className='altFontColor'>*</span>psst..you're cool too 😁
-            </Popup>
-            {/* <span className='altFontColor'>*</span> */}
-          </p>
+          className='fontColor'>
+          #
+          <span style={{ display: "inline" }}>
+            <Typed
+              strings={[
+                "Coding",
+                "Art",
+                "Design",
+                "Videogames",
+                "Watch TV and Movies",
+                "Startup",
+                "Business",
+                "Study",
+                "Anything!",
+                "Let's gooo!",
+                "In-Person coming soon!",
+                "Scroll down already! :)",
+              ]}
+              typeSpeed={75}
+              backSpeed={50}
+              loop
+              style={{ color: "black" }}
+            />
+          </span>
         </span>
-      </Header>
-      <span
-        style={{
-          width: "20em",
-          height: "5em",
-          display: "inline",
-          fontSize: "32px",
-        }}
-        className='fontColor'>
-        #
-        <span style={{ display: "inline" }}>
-          <Typed
-            strings={[
-              "Coding",
-              "Art",
-              "Design",
-              "Videogames",
-              "Watch TV and Movies",
-              "Startup",
-              "Business",
-              "Study",
-              "Anything!",
-              "Let's gooo!",
-              "In-Person coming soon!",
-              "Scroll down already! :)",
-            ]}
-            typeSpeed={75}
-            backSpeed={50}
-            loop
-            style={{ color: "black" }}
-          />
-        </span>
-      </span>
+      </Grid.Row>
       {/* <Header
         size='huge'
         style={{
@@ -155,60 +175,52 @@ export default observer(function ActivityDashboard() {
         }}>
         <span className='altFontColor'>*</span>psst..you're cool 😁
       </Header> */}
-      <Header
-        content={
-          "Real time text, audio, video and screensharing via the browser - FREE forever"
-        }
-        size='huge'
-        style={{
-          marginBottom: "0px",
-          marginTop: "-60px",
-
-          // paddingTop: "5px",
-        }}
-      />
-      <Diamond
-        color='linear-gradient(135deg, #93c5fd, #10b981cc)'
-        size='100px'
-        zIndex={-1}
-        position='absolute'
-        top='22em'
-        right='-1em'
-      />
-      <CircleGrid
-        color='#10b981cc'
-        size='175px'
-        zIndex={-1}
-        position='absolute'
-        top='1em'
-        right='-2em'
-      />
-      <div
-        style={{ backgroundColor: "grey", padding: "25px", marginTop: "20px" }}>
+      <Grid.Row>
         <Header
           content={
-            "Privacy first and personal, public or private, SSL Encrypted Peer-to-Peer Chatrooms - max 6 users, with minimal ads if any *"
+            "Real time text, audio, video and screensharing via the browser - FREE forever"
           }
-          size='medium'
+          size='huge'
           style={{
             marginBottom: "0px",
-            color: "#eaeaea",
+            marginTop: "-60px",
 
             // paddingTop: "5px",
           }}
         />
-        <Header
-          content={
-            "* Cellphone connections through 3/4/5G networks are encrypted but inherently require a WannaGo server to bridge peer-to-peer connectivity"
-          }
-          size='tiny'
+      </Grid.Row>
+      <Grid.Row>
+        <div
           style={{
-            marginBottom: "0px",
-            color: "#eaeaea",
-            // paddingTop: "5px",
-          }}
-        />
-      </div>
+            backgroundColor: "grey",
+            padding: "25px",
+            // marginTop: "20px",
+          }}>
+          <Header
+            content={
+              "Privacy first and personal, public or private, SSL Encrypted Peer-to-Peer Chatrooms - max 6 users, with minimal ads if any *"
+            }
+            size='medium'
+            style={{
+              marginBottom: "0px",
+              color: "#eaeaea",
+
+              // paddingTop: "5px",
+            }}
+          />
+          <Header
+            content={
+              "* Cellphone connections through 3/4/5G networks are encrypted but inherently require a WannaGo server to bridge peer-to-peer connectivity"
+            }
+            size='tiny'
+            style={{
+              marginBottom: "0px",
+              color: "#eaeaea",
+              // paddingTop: "5px",
+            }}
+          />
+        </div>
+      </Grid.Row>
       <Grid.Row centered>
         <Header
           content={

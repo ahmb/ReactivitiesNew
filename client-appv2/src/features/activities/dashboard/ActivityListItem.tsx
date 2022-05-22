@@ -159,12 +159,12 @@ export default function ActivityListItem({ activity }: Props) {
                         <i> {format(activity.date!, "M/dd")}</i>
                         {/* </Header> */}
                         <Header
-                          color='red'
                           size='tiny'
                           style={{
                             marginTop: "auto",
                             padding: "0px",
                             marginBottom: "0px",
+                            color: "#5162FA",
                           }}>
                           {format(activity.date!, "h:mm aa")}
                           {/* dd MMM h:mm aa */}
@@ -188,12 +188,13 @@ export default function ActivityListItem({ activity }: Props) {
                           <i>Duration:</i>
                         </p>
                         <Header
-                          color='red'
+                          // color='red'
                           size='tiny'
                           style={{
                             marginTop: "auto",
                             paddingLeft: "0px",
                             marginBottom: "0px",
+                            color: "#5162FA",
                           }}>
                           {activity.duration}
                           {/* {format(activity.endDate!, "h:mm aa")} */}

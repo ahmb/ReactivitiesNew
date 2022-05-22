@@ -37,17 +37,18 @@ export default observer(function ActivityFilters() {
 
   return (
     <>
-      <Grid.Row stretched>
+      <Grid.Row>
         <Grid.Column width={13}>
           <Header
             size='huge'
             float='left'
             style={{
               float: "left",
-              paddingLeft: "10px",
               paddingTop: "5px",
             }}>
-            <p id='guestHeader' style={{ fontSize: "42px" }}>
+            <p
+              id='guestHeader'
+              style={{ fontSize: "36px", fontWeight: "normal" }}>
               Activities
             </p>
           </Header>
@@ -64,7 +65,7 @@ export default observer(function ActivityFilters() {
             color: "white",
             // marginLeft: "30px",
           }}
-          size='massive'
+          size='huge'
           onClick={(_) => ToggleIsCalendarVisible()}
           active={isCalendarVisible}
           floated='right'
@@ -122,15 +123,45 @@ export default observer(function ActivityFilters() {
             <Menu.Item
               active={predicate.has("all")}
               onClick={() => setPredicate("all", "true")}>
-              <Header size='huge' style={{ paddingTop: "10px" }} content='💡' />
-              <p style={{ paddingTop: "5px", paddingLeft: "5px" }}>All</p>
+              {/* <Header
+                size='medium'
+                style={
+                  {
+                    // paddingTop: "10px"
+                  }
+                }
+                content='💡'
+              /> */}
+              <p
+                style={{
+                  fontSize: "18px",
+
+                  // paddingTop: "5px", paddingLeft: "5px"
+                }}>
+                💡 All
+              </p>
             </Menu.Item>
 
             <Menu.Item
               active={predicate.has("isGoing")}
               onClick={() => setPredicate("isGoing", "true")}>
-              <Header size='huge' style={{ paddingTop: "10px" }} content='😁' />
-              <p style={{ paddingTop: "5px", paddingLeft: "5px" }}>Mine</p>
+              {/* <Header
+                size='medium'
+                style={
+                  {
+                    // paddingTop: "10px"
+                  }
+                }
+                content='✅'
+              /> */}
+              <p
+                style={{
+                  fontSize: "18px",
+
+                  // paddingTop: "5px", paddingLeft: "5px"
+                }}>
+                ✅ Mine
+              </p>
             </Menu.Item>
             {/* <Menu.Item
               content='Hosting'
@@ -139,21 +170,41 @@ export default observer(function ActivityFilters() {
               style={{ paddingTop: "20px" }}
             /> */}
 
-            {categoryOptions.map(({ id, text, icon }) => (
-              <HorizontalScrollItem id={id} key={id}>
+            {categoryOptions.map(({ id, text, icon, label }) => (
+              <HorizontalScrollItem
+                id={id}
+                key={id}
+                style={{ display: "inline" }}>
                 <Menu.Item
                   key={id}
                   active={predicate.has("isGoing")}
                   // style={{ display: "inline" }}
                   onClick={() => setPredicate("isGoing", "true")}>
-                  <Header size='huge' style={{ paddingTop: "10px" }}>
+                  {/* <Header
+                    size='medium'
+                    style={
+                      {
+                        // paddingTop: "10px"
+                      }
+                    }>
                     {icon + " "}
-                  </Header>
-                  <span
+                  </Header> */}
+                  {/* <p
                     className='categoryText'
-                    style={{ paddingTop: "5px", paddingLeft: "5px" }}>
-                    {text}
-                  </span>
+                    style={{
+                      display: "inline",
+                      // paddingTop: "5px", paddingLeft: "5px"
+                    }}> */}
+                  <p
+                    style={{
+                      whiteSpace: "nowrap",
+                      paddingTop: "7px",
+                      paddingBottom: "7px",
+                      fontSize: "18px",
+                    }}>
+                    {label}
+                  </p>
+                  {/* </p> */}
                 </Menu.Item>
               </HorizontalScrollItem>
             ))}

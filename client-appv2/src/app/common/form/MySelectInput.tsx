@@ -1,5 +1,5 @@
 import { useField } from "formik";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Label, Select } from "semantic-ui-react";
 
 interface Props {
@@ -12,6 +12,12 @@ interface Props {
 
 export default function MySelectInput(props: Props) {
   const [field, meta, helpers] = useField(props.name);
+  const [defValue, setDefValue] = useState("");
+
+  useEffect(() => {
+    helpers.setValue(props.defaultValue);
+  }, []);
+
   return (
     <Form.Field error={meta.touched && !!meta.error}>
       <label>{props.label}</label>
@@ -19,7 +25,7 @@ export default function MySelectInput(props: Props) {
         search
         clearable
         options={props.options}
-        value={field.value || props.defaultValue || null}
+        value={field.value || null}
         onChange={(e, d) => {
           helpers.setValue(d.value);
         }}

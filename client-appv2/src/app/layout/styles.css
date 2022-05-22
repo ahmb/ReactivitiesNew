@@ -274,3 +274,7 @@ input {
 .activityFormField {
   border-radius: 200px;
 }
+
+.categoryText{
+  font-size:small;
+}
