@@ -31,6 +31,7 @@ import MyCheckboxWithTextNumberInput from "../../../app/common/form/MyCheckboxWi
 import PhotoUploadSimpleWidget from "../../../app/common/imageUpload/PhotoUploadSimpleWidget";
 import MyFileUpload from "../../../app/common/form/MyFileUpload";
 import MyFileUploadPreview from "../../../app/common/form/MyFileUploadPreview";
+import MyTagsTextInput from "../../../app/common/form/MyTagsTextInput";
 
 export default observer(function ActivityForm() {
   const history = useHistory();
@@ -154,6 +155,10 @@ export default observer(function ActivityForm() {
                   Goals, for more context. Skills which you
                   are looking for, level of expertise'
                   name='description'
+                />
+                <MyTagsTextInput
+                  name='tags'
+                  placeholder='Relevant tags (max 10) e.g. discussion javascript figma mentorship books kungfu anime ps5'
                 />
                 {/* <MySelectInput
                   options={categoryOptions}

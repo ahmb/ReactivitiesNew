@@ -17,6 +17,7 @@ export default function MyFileUploadPreview(props: Props) {
 
   //using this to cleanup any memory
   useEffect(() => {
+    //TODO: remove logging
     console.log("LOGGING0");
 
     if (!props.file) return;
