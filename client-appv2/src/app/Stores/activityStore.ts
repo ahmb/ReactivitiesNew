@@ -5,6 +5,7 @@ import {
   Activity,
   ActivityFormValues,
   ActivityDetails,
+  ActivityFormValuesNew,
 } from "../models/activity";
 import { Pagination, PagingParams } from "../models/pagination";
 import { Profile } from "../models/profile";
@@ -195,6 +196,28 @@ export default class ActivityStore {
     }
   };
 
+  createActivityNew = async (activityFormValues: ActivityFormValuesNew) => {
+    const user = store.userStore.user;
+    const attendee = new Profile(user!);
+    try {
+      //TODO:fix 204+205
+      await agent.Activities.create(activityFormValues);
+      const newActivity = new ActivityDetails(activityFormValues);
+      newActivity.hostUsername = user!.username;
+      // newActivity.attendees = [attendee];
+      this.setActivity(newActivity);
+      runInAction(() => {
+        this.selectedActivity = newActivity;
+      });
+    } catch (error) {
+      console.log(error);
+      runInAction(() => {
+        this.selectedActivity = undefined;
+        this.editMode = false;
+      });
+    }
+  };
+
   updateActivity = async (activity: ActivityFormValues) => {
     try {
       await agent.Activities.update(activity);
@@ -302,7 +325,6 @@ export default class ActivityStore {
       runInAction(() => (this.uploadingPicture = false));
     }
   };
-
 
   // updateAttendeeFollowing = (username: string) => {
   //   this.activityRegistry.forEach((activity) => {

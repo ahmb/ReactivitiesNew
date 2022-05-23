@@ -141,12 +141,10 @@ export default function ActivityListItem({ activity }: Props) {
                         <p
                           style={{
                             color: "grey",
-                            fontSize: "12px",
+                            fontSize: "10px",
                             marginBottom: "-7px",
                           }}>
-                          <i>
-                            {Intl.DateTimeFormat().resolvedOptions().timeZone}
-                          </i>
+                          {Intl.DateTimeFormat().resolvedOptions().timeZone}
                         </p>
                         <br />
                         <p style={{ fontSize: "small", color: "grey" }}>
@@ -211,9 +209,7 @@ export default function ActivityListItem({ activity }: Props) {
                             color: "#5162FA",
                           }}>
                           {activity.duration}{" "}
-                          <span style={{ color: "grey" }}>
-                            <i>minutes</i>
-                          </span>
+                          <span style={{ color: "grey" }}>mins</span>
                           {/* {format(activity.endDate!, "h:mm aa")} */}
                           {/* dd MMM h:mm aa */}
                           {/* {activity.endDate

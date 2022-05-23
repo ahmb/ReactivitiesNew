@@ -87,7 +87,7 @@ export class Activity implements Activity {
 }
 
 export class ActivityDetails implements ActivityDetails {
-  constructor(init?: ActivityFormValues) {
+  constructor(init?: ActivityFormValues | ActivityFormValuesNew) {
     //copy the properties over
     Object.assign(this, init);
   }
@@ -139,6 +139,7 @@ export class ActivityFormValues {
   attendeeCountMax: number = 0;
   categories?: ICategory[] | null;
   tag?: ITag[] | null;
+
   // endDate: Date | null = null;
   // city: string = "";
   // venue: string = "";
@@ -149,6 +150,42 @@ export class ActivityFormValues {
       this.title = activity.title;
       this.description = activity.description;
       this.date = activity.date;
+      // this.endDate = activity.endDate;
+      // this.city = activity.city;
+      // this.venue = activity.venue;
+    }
+  }
+}
+
+export class ActivityFormValuesNew {
+  id?: string = undefined;
+  title: string = "";
+  description: string = "";
+  date: Date | null = null;
+  duration: number = 0;
+  private: boolean = false;
+  ongoing: boolean = false;
+  ongoingDays: number = 0;
+  imageUrl: string = "";
+  isCancelled: boolean = false;
+  attendeeCountMax: number = 0;
+  categories: ICategory[] | null = null;
+  tag?: ITag[] | null;
+  language: number = 0;
+  skillLevel: number = 0;
+  asset: string = "";
+  file?: File;
+  // endDate: Date | null = null;
+  // city: string = "";
+  // venue: string = "";
+
+  constructor(activity?: ActivityFormValuesNew) {
+    if (activity) {
+      this.id = activity.id;
+      this.title = activity.title;
+      this.description = activity.description;
+      this.date = activity.date;
+      this.language = activity.language;
       // this.endDate = activity.endDate;
       // this.city = activity.city;
       // this.venue = activity.venue;

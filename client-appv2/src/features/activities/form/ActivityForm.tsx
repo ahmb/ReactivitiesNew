@@ -16,6 +16,9 @@ import {
   ActivityFormValues,
   SkillLevel,
   Language,
+  ActivityFormValuesNew,
+  ICategory,
+  ITag,
 } from "../../../app/models/activity";
 import MyMultiSelectInput from "../../../app/common/form/MyMultiSelectInput";
 import MyTextNumberInput from "../../../app/common/form/MyTextNumberInput";
@@ -24,20 +27,30 @@ import MyCheckboxWithTextNumberInput from "../../../app/common/form/MyCheckboxWi
 import MyFileUpload from "../../../app/common/form/MyFileUpload";
 import MyTagsTextInput from "../../../app/common/form/MyTagsTextInput";
 import { Circle, CircleGrid, Diamond } from "react-awesome-shapes";
+const { zonedTimeToUtc, utcToZonedTime, format } = require("date-fns-tz");
 
 export default observer(function ActivityForm() {
   const history = useHistory();
   const { activityStore } = useStore();
-  const { createActivity, updateActivity, loadActivity, loadingInitial } =
-    activityStore;
+  const {
+    createActivity,
+    createActivityNew,
+    updateActivity,
+    loadActivity,
+    loadingInitial,
+  } = activityStore;
   const { id } = useParams<{ id: string }>();
 
-  const [activity, setActivity] = useState<ActivityFormValues>(
-    new ActivityFormValues()
+  // const [activity, setActivity] = useState<ActivityFormValues>(
+  //   new ActivityFormValues()
+  // );
+
+  const [activity, setActivity] = useState<ActivityFormValuesNew>(
+    new ActivityFormValuesNew()
   );
 
-  const [recurringEvent, setRecurringEvent] = React.useState(false);
-  const [privateEvent, setPrivateEvent] = React.useState(0);
+  // const [recurringEvent, setRecurringEvent] = React.useState(false);
+  // const [privateEvent, setPrivateEvent] = React.useState(0);
 
   const validationSchema = Yup.object({
     title: Yup.string().required("Please provide a title for the activity"),
@@ -76,22 +89,46 @@ export default observer(function ActivityForm() {
     if (id)
       loadActivity(id).then((activity) => {
         if (activity) {
-          setActivity(new ActivityFormValues(activity));
+          //TODO:uncomment and fix
+          // setActivity(new ActivityFormValuesNew(activity));
         }
       });
   }, [id, loadActivity]);
 
-  function handleFormSubmit(activity: ActivityFormValues | any) {
+  function handleFormSubmit(activity: ActivityFormValuesNew | any) {
+    console.log("activity is");
     console.log(activity);
-    // if (!activity.id) {
-    //   let newActivity = {
-    //     ...activity,
-    //     id: uuid(),
-    //   };
-    //   createActivity(newActivity).then(() =>
-    //     history.push(`/activities/${newActivity.id}`)
-    //   );
-    // } else {
+    if (!activity.id) {
+      let newActivity: ActivityFormValuesNew = {
+        ...activity,
+        id: uuid(),
+        private: activity.private === 0 ? false : true,
+        ongoing: activity.ongoing === 0 ? false : true,
+        language: Language[activity.language],
+        skillLevel: SkillLevel[activity.skillLevel],
+        ongoingDays: parseInt(activity.ongoingDays),
+        date: (activity.date as Date).toUTCString(),
+        categories: (activity.categories as typeof categoryOptions).map(
+          (c): ICategory => ({
+            name: c.value,
+          })
+        ),
+        tag: Object.entries(activity.tag).map(
+          (k, v): ITag => ({
+            name: k.toString().split(",")[1],
+          })
+        ),
+      };
+      console.log(newActivity.date);
+      console.log("new activity is");
+      console.log(newActivity);
+
+      //TODO:fix createActivity
+      createActivityNew(newActivity).then(() =>
+        history.push(`/activities/${newActivity.id}`)
+      );
+    }
+    // else {
     //   updateActivity(activity).then(() =>
     //     history.push(`/activities/${activity.id}`)
     //   );
@@ -107,7 +144,7 @@ export default observer(function ActivityForm() {
         zIndex={-1}
         position='absolute'
         top='35%'
-        right='-1em'
+        left='-1em'
       />
       <Circle
         color='linear-gradient(135deg, #d8c395, #bba981)'
@@ -129,12 +166,13 @@ export default observer(function ActivityForm() {
       /> */}
 
       <Diamond
+        // color='linear-gradient(135deg, #dc493a, #5162FA)'
         color='linear-gradient(135deg, #93c5fd, #10b981cc)'
         size='100px'
-        zIndex={1}
+        zIndex={-1}
         position='absolute'
-        top='88%'
-        right='1em'
+        top='70%'
+        right='-0.7em'
       />
 
       <Header
