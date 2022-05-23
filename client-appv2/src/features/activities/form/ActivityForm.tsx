@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Button,
-  Header,
-  Segment,
-  Label,
-  Checkbox,
-  Popup,
-} from "semantic-ui-react";
+import { Button, Header, Segment, Label } from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import { Link, useHistory, useParams } from "react-router-dom";
@@ -28,10 +21,9 @@ import MyMultiSelectInput from "../../../app/common/form/MyMultiSelectInput";
 import MyTextNumberInput from "../../../app/common/form/MyTextNumberInput";
 import MyCheckboxInput from "../../../app/common/form/MyCheckboxInput";
 import MyCheckboxWithTextNumberInput from "../../../app/common/form/MyCheckboxWithTextNumberInput";
-import PhotoUploadSimpleWidget from "../../../app/common/imageUpload/PhotoUploadSimpleWidget";
 import MyFileUpload from "../../../app/common/form/MyFileUpload";
-import MyFileUploadPreview from "../../../app/common/form/MyFileUploadPreview";
 import MyTagsTextInput from "../../../app/common/form/MyTagsTextInput";
+import { Circle, CircleGrid, Diamond } from "react-awesome-shapes";
 
 export default observer(function ActivityForm() {
   const history = useHistory();
@@ -48,24 +40,24 @@ export default observer(function ActivityForm() {
   const [privateEvent, setPrivateEvent] = React.useState(0);
 
   const validationSchema = Yup.object({
-    // title: Yup.string().required("Please provide a title for the activity"),
-    // description: Yup.string().required(
-    //   "Please enter a helpful description for others"
-    // ),
-    // categories: Yup.array()
-    //   .of(
-    //     Yup.object().shape({
-    //       value: Yup.string().max(255).required().label("value"),
-    //     })
-    //   )
-    //   .min(1, "minimum 1,")
-    //   .max(3, "maximum 3,")
-    //   .required("Please select atleast 1 category"),
-    // date: Yup.date()
-    //   .required("Please select the start date and time")
-    //   .nullable(),
-    // language: Yup.string().required("Please choose a language"),
-    // skillLevel: Yup.string().required("Please select a skill level"),
+    title: Yup.string().required("Please provide a title for the activity"),
+    description: Yup.string().required(
+      "Please enter a helpful description for others"
+    ),
+    categories: Yup.array()
+      .of(
+        Yup.object().shape({
+          value: Yup.string().max(255).required().label("value"),
+        })
+      )
+      .min(1, "minimum 1")
+      .max(3, "maximum 3")
+      .required("Please select atleast 1 category"),
+    date: Yup.date()
+      .required("Please select the start date and time")
+      .nullable(),
+    language: Yup.string().required("Please choose a language"),
+    skillLevel: Yup.string().required("Please select a skill level"),
     duration: Yup.number()
       .min(10, "Not equal or greater than 10 mins")
       .max(1440, "Must be less than 1 day i.e. 1440 mins")
@@ -109,6 +101,42 @@ export default observer(function ActivityForm() {
   if (loadingInitial) <LoadingComponent content='Loading Activity' />;
   return (
     <>
+      <CircleGrid
+        color='#10b981cc'
+        size='175px'
+        zIndex={-1}
+        position='absolute'
+        top='35%'
+        right='-1em'
+      />
+      <Circle
+        color='linear-gradient(135deg, #d8c395, #bba981)'
+        // color='linear-gradient(135deg, #a5b4fc, #6366f1)'
+        size={["150px", "150px", "180px", "180px"]}
+        zIndex={-1}
+        left={"-2%"}
+        top={"6%"}
+        position='absolute'
+      />
+      {/* <Message
+        color='linear-gradient(135deg, #00b09b, #96c93d)'
+        height='150px'
+        width='180px'
+        zIndex={-1}
+        position='absolute'
+        top='17em'
+        right='-1em'
+      /> */}
+
+      <Diamond
+        color='linear-gradient(135deg, #93c5fd, #10b981cc)'
+        size='100px'
+        zIndex={1}
+        position='absolute'
+        top='88%'
+        right='1em'
+      />
+
       <Header
         content='Fortune favours the brave'
         textAlign='center'
@@ -142,7 +170,7 @@ export default observer(function ActivityForm() {
                 onSubmit={handleSubmit}>
                 <MyMultiSelectInput
                   options={categoryOptions}
-                  placeholder='What kind of thing do you feel doing? Max 3'
+                  placeholder='What kind of thing do you feel doing? (max 3 categories)'
                   name='categories'
                 />
                 <MyTextInput
@@ -151,13 +179,12 @@ export default observer(function ActivityForm() {
                 />
                 <MyTextArea
                   rows={3}
-                  placeholder='Details -   Share any helpful details e.g.
-                  Goals, for more context. Skills which you
-                  are looking for, level of expertise'
+                  placeholder='Details - share any helpful information e.g.
+                  goals, cause, motivation, ideas for more context. List any special skills or qualifications which you may require in an attendee.'
                   name='description'
                 />
                 <MyTagsTextInput
-                  name='tags'
+                  name='tag'
                   placeholder='Relevant tags (max 10) e.g. discussion javascript figma mentorship books kungfu anime ps5'
                 />
                 {/* <MySelectInput
@@ -166,7 +193,7 @@ export default observer(function ActivityForm() {
                   name='category'
                 /> */}
                 <MyDateInput
-                  placeholderText='When would you like to do this'
+                  placeholderText='When would you like to do this - start date time'
                   name='date'
                   showTimeSelect
                   timeCaption='time'
@@ -186,7 +213,7 @@ export default observer(function ActivityForm() {
                 />
                 <MyCheckboxWithTextNumberInput
                   name='ongoing'
-                  label='Repeat until filled? (only visible for creator)'
+                  label='Repeat until filled? (private setting)'
                   popUpContent='Note: Display this post on the main page for the desired
                   number of days or until the number of attendees is reached'
                   defaultValue={0}
@@ -233,6 +260,17 @@ export default observer(function ActivityForm() {
                   name='skillLevel'
                   defaultValue='Everyone'
                 />
+                {/* <MyTextInput
+                  name='asset'
+                  placeholder='Helpful Links , only visible to approved attendees e.g. Git Repo, Figma, Youtube, Movie etc'
+                  label='Sharing Link (Optional)'
+                /> */}
+                <MyTextArea
+                  rows={1}
+                  label='Sharing Link (Optional)'
+                  placeholder='Helpful Links , only visible to approved attendees e.g. Git Repo, Figma, Youtube, Movie etc'
+                  name='asset'
+                />
                 <MyFileUpload
                   name='file'
                   label='Upload Picture (Optional) - .jpg .png .gif image formats accepted'
@@ -245,11 +283,18 @@ export default observer(function ActivityForm() {
                   loading={isSubmitting}
                   floated='right'
                   positive
+                  circular
+                  style={{
+                    backgroundColor: "#5162FA",
+                    color: "white",
+                    boxShadow: "#404cb8 1px 3px 0px 0px",
+                  }}
                   type='submit'
                   content='Submit'
                   disabled={isSubmitting || !dirty || !isValid}
                 />
                 <Button
+                  circular
                   as={Link}
                   to='/activities'
                   floated='right'

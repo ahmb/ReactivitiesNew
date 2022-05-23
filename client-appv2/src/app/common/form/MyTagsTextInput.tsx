@@ -26,6 +26,8 @@ export default function MyTagsTextInput(props: Props) {
       e.preventDefault();
       if (tags.length < 11) {
         setTags((prevState) => [...prevState, trimmedInput]);
+        console.log(...tags, input);
+        helper.setValue({ ...tags, input });
         setInput("");
       }
     }
@@ -34,7 +36,9 @@ export default function MyTagsTextInput(props: Props) {
       e.preventDefault();
       const tagsCopy = [...tags];
       const poppedTag = tagsCopy.pop();
+      console.log(...tagsCopy, input);
       setTags(tagsCopy);
+      helper.setValue({ ...tagsCopy, input });
       setInput(poppedTag);
     }
   };

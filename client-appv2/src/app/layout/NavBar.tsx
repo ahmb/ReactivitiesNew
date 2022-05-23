@@ -5,12 +5,8 @@ import {
   Container,
   Image,
   Dropdown,
-  Checkbox,
-  Grid,
   Header,
   Icon,
-  Segment,
-  Sidebar,
 } from "semantic-ui-react";
 import { Link, NavLink } from "react-router-dom";
 import { observer } from "mobx-react-lite";

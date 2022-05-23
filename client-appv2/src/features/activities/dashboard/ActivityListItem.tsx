@@ -117,45 +117,6 @@ export default function ActivityListItem({ activity }: Props) {
                         </Header>
                         {/* <br /> */}
                         {/* <span style={{ display: "flex" }}> */}
-                        <Icon
-                          name='users'
-                          size='big'
-                          color='grey'
-                          style={{
-                            alignSelf: "center",
-                          }}></Icon>
-                        <Header
-                          size='tiny'
-                          style={{
-                            marginTop: "auto",
-                            alignSelf: "center",
-                            paddigBottom: "0px",
-                            marginBottom: "0px",
-                          }}>
-                          {activity.attendeeCount}
-                          {" attending"}
-                        </Header>
-                        <p style={{ color: "grey" }}>
-                          {"(max " + activity.attendeeCountMax + ")"}
-                        </p>
-
-                        {/* </span> */}
-                      </Grid.Column>
-                      <Grid.Column
-                        width={4}
-                        style={{
-                          textAlign: "left",
-                          marginTop: "-10px",
-                        }}
-                        verticalAlign='middle'>
-                        {/* <Header
-                          size='tiny'
-                          color='grey'
-                          style={{
-                            marginTop: "auto",
-                            padding: "0px",
-                            marginBottom: "0px",
-                          }}> */}
                         <i> {format(activity.date!, "M/dd")}</i>
                         {/* </Header> */}
                         <Header
@@ -177,34 +138,94 @@ export default function ActivityListItem({ activity }: Props) {
                             margin: "0px",
                             fontSize: "11px",
                           }}> */}
-                        <p style={{ color: "grey", fontSize: "12px" }}>
+                        <p
+                          style={{
+                            color: "grey",
+                            fontSize: "12px",
+                            marginBottom: "-7px",
+                          }}>
                           <i>
                             {Intl.DateTimeFormat().resolvedOptions().timeZone}
                           </i>
                         </p>
                         <br />
+                        <p style={{ fontSize: "small", color: "grey" }}>
+                          Language{" "}
+                        </p>
+                        <p>{Language[activity.language]}</p>
+
+                        {/* </span> */}
+                      </Grid.Column>
+                      <Grid.Column
+                        width={4}
+                        style={{
+                          textAlign: "left",
+                          // marginTop: "-10px",
+                        }}
+                        verticalAlign='middle'>
+                        <Icon
+                          name='users'
+                          size='big'
+                          color='grey'
+                          style={{
+                            paddigBottom: "0px",
+                            marginBottom: "0px",
+                            marginTop: "auto",
+
+                            // alignSelf: "center",
+                          }}></Icon>
+                        <Header
+                          size='tiny'
+                          style={{
+                            marginTop: "auto",
+                            // alignSelf: "center",
+                            paddigBottom: "0px",
+                            marginBottom: "0px",
+                          }}>
+                          {activity.attendeeCount}
+                          {" attending"}
+                        </Header>
+                        <p style={{ color: "grey", marginBottom: "0px" }}>
+                          {"(max " + activity.attendeeCountMax + ")"}
+                        </p>
+                        {/* <Header
+                          size='tiny'
+                          color='grey'
+                          style={{
+                            marginTop: "auto",
+                            padding: "0px",
+                            marginBottom: "0px",
+                          }}> */}
+                        <br />
                         {/* </Header> */}
-                        <p style={{ color: "grey" }}>
-                          <i>Duration:</i>
+                        <p style={{ color: "grey", marginBottom: "0px" }}>
+                          Duration
                         </p>
                         <Header
                           // color='red'
                           size='tiny'
                           style={{
-                            marginTop: "auto",
+                            marginTop: "0px",
                             paddingLeft: "0px",
                             marginBottom: "0px",
                             color: "#5162FA",
                           }}>
-                          {activity.duration}
+                          {activity.duration}{" "}
+                          <span style={{ color: "grey" }}>
+                            <i>minutes</i>
+                          </span>
                           {/* {format(activity.endDate!, "h:mm aa")} */}
                           {/* dd MMM h:mm aa */}
-
                           {/* {activity.endDate
                           ?.toLocaleTimeString()
                           .slice(-2)
                           .toLowerCase()} */}
                         </Header>{" "}
+                        <br />
+                        <p style={{ fontSize: "small", color: "grey" }}>
+                          Skill Level
+                        </p>
+                        <p>{SkillLevel[activity.skillLevel]}</p>
                         {/* <Header
                           size='tiny'
                           style={{
@@ -213,9 +234,6 @@ export default function ActivityListItem({ activity }: Props) {
                             // marginBottom: "0px",
                           }}
                           color='grey'> */}
-                        <p style={{ color: "grey" }}>
-                          <i>minutes</i>
-                        </p>
                         {/* </Header> */}
                       </Grid.Column>
                       <Grid.Column width={8}>
@@ -225,29 +243,13 @@ export default function ActivityListItem({ activity }: Props) {
                             borderRadius: "20px",
                             boxShadow: "0px 10px 2px 0px aliceblue",
                             maxWidth: "150px",
-                            maxHeight: "150px",
+                            maxHeight: "200px",
                             alignSelf: "center",
                           }}
                         />
                       </Grid.Column>
                     </Grid.Row>
-                    <Grid.Row
-                      stretched
-                      centered
-                      style={{ marginBottom: "0px" }}>
-                      <Grid.Column width={8}>
-                        <p>{"Language:   " + Language[activity.language]}</p>
-                        {/* <p>{"Language:   " + Language[activity.language]}</p> */}
-                      </Grid.Column>
-                      <Grid.Column width={8}>
-                        <p>
-                          {"Skill Level:   " + SkillLevel[activity.skillLevel]}
-                        </p>
-                      </Grid.Column>
-                      {/* <span className='listLanguage'> */}
 
-                      {/* </span> */}
-                    </Grid.Row>
                     <Grid.Row
                       style={{
                         paddingTop: "0px",

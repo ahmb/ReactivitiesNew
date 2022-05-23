@@ -1,7 +1,5 @@
-import { useField } from "formik";
 import React, { useEffect, useState } from "react";
 import { Form, Label } from "semantic-ui-react";
-import PhotoWidgetCropper from "../imageUpload/PhotoWidgetCropper";
 
 interface Props {
   file: any;
@@ -64,6 +62,7 @@ export default function MyFileUploadPreview(props: Props) {
           marginLeft: "auto",
           marginRight: "auto",
           borderRadius: "30px",
+          marginBottom: "20px",
         }}
       />
     </>

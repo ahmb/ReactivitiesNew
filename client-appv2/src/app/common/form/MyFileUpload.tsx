@@ -1,7 +1,6 @@
 import { useField } from "formik";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Form, Label } from "semantic-ui-react";
-import PhotoWidgetCropper from "../imageUpload/PhotoWidgetCropper";
 import MyFileUploadPreview from "./MyFileUploadPreview";
 
 interface Props {
@@ -67,7 +66,7 @@ export default function MyFileUpload(props: Props) {
           </Label>
         ) : null}
       </Form.Field>
-      <MyFileUploadPreview file={field.value} width={400} height={250} />
+      <MyFileUploadPreview file={field.value} width={300} height={250} />
 
       {/* {files && files.length > 0 && (
         <div

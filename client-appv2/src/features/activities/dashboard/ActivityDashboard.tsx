@@ -178,7 +178,7 @@ export default observer(function ActivityDashboard() {
       <Grid.Row>
         <Header
           content={
-            "Real time text, audio, video and screensharing via the browser - FREE forever"
+            "Real time text, audio, video & screensharing in the browser"
           }
           size='huge'
           style={{
