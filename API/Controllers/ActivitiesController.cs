@@ -33,13 +33,13 @@ namespace API.Controllers
             return HandleResult(await Mediator.Send(new Create.Command { Activity = activity }));
         }
 
-        [Authorize(Policy = "IsActivityHost")]
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Edit(Guid id, Activity activity)
-        {
-            activity.Id = id;
-            return HandleResult(await Mediator.Send(new Edit.Command { Activity = activity }));
-        }
+        // [Authorize(Policy = "IsActivityHost")]
+        // [HttpPut("{id}")]
+        // public async Task<IActionResult> Edit(Guid id, Activity activity)
+        // {
+        //     activity.Id = id;
+        //     return HandleResult(await Mediator.Send(new Edit.Command { Activity = activity }));
+        // }
 
         [Authorize(Policy = "IsActivityHost")]
         [HttpDelete("{id}")]
@@ -87,6 +87,21 @@ namespace API.Controllers
         public async Task<IActionResult> AddPicture([FromForm] IFormFile file, [FromRoute] Guid activityId)
         {
             return HandleResult(await Mediator.Send(new AddPicture.Command { File = file, ActivityId = activityId }));
+        }
+
+
+        [HttpPost("new")]
+        public async Task<IActionResult> AddActivityWithPhoto([FromForm] AddActivity.Command command)
+        {
+            return HandleResult(await Mediator.Send(command));
+        }
+
+        [Authorize(Policy = "IsActivityHost")]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Edit(Guid id, Activity activity)
+        {
+            activity.Id = id;
+            return HandleResult(await Mediator.Send(new Edit.Command { Activity = activity }));
         }
 
 

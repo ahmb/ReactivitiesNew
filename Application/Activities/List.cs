@@ -45,7 +45,10 @@ namespace Application.Activities
                     .Where(a => !a.IsSpam)
                     .Where(a => !a.IsCancelled)
                     .Where(a => !a.Archived)
-                    .Where(a => a.Attendees.Count < a.AttendeeCountMax)
+                    .Where(a => a.Attendees.Where(at =>
+                        at.ApprovalStatus == ApprovalStatus.Accepted && !at.IsHost)
+                        .Count()
+                        < a.AttendeeCountMax)
                     .Where(a => (a.Ongoing && a.Date >= request.Params.StartDate.AddDays(-a.OngoingDays))
                         || a.Date >= request.Params.StartDate)
                     .OrderBy(a => a.Date)

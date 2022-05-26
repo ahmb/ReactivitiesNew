@@ -212,10 +212,11 @@ body {
 
 
 #listCategories{
+  white-space: nowrap;
   display:inline;
-  padding-right: 15px;
+  /* padding-right: 15px; */
   font-size: medium;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 }
 
 #listTags{
@@ -277,4 +278,8 @@ input {
 
 .categoryText{
   font-size:small;
+}
+
+.react-datepicker-popper{
+  z-index: 20;
 }

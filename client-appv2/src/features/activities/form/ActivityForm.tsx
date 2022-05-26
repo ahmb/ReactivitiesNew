@@ -79,7 +79,7 @@ export default observer(function ActivityForm() {
     attendeeCountMax: Yup.number()
       .min(1, "Please select atleast 1 attendee :p")
       .max(
-        6,
+        5,
         "Please enter a number less than 6, lets keep it personal and interactive"
       )
       .required("Please select atleast 1 attendee :p"),
@@ -113,18 +113,26 @@ export default observer(function ActivityForm() {
             name: c.value,
           })
         ),
-        tag: Object.entries(activity.tag).map(
-          (k, v): ITag => ({
-            name: k.toString().split(",")[1],
-          })
-        ),
+        tag: activity["tag"]
+          ? // activity.tag !== undefined || activity.tag !== null
+            Object.entries(activity.tag).map(
+              (k, v): ITag => ({
+                name: k.toString().split(",")[1],
+              })
+            )
+          : ([] as ITag[]),
       };
-      console.log(newActivity.date);
+      let file: File | undefined = newActivity.file;
       console.log("new activity is");
       console.log(newActivity);
+      console.log(newActivity.date);
+      console.log("file is");
+      console.log(file);
+      console.log("new activity stringify is");
+      console.log(JSON.stringify(newActivity));
 
       //TODO:fix createActivity
-      createActivityNew(newActivity).then(() =>
+      createActivityNew(newActivity, file).then(() =>
         history.push(`/activities/${newActivity.id}`)
       );
     }
@@ -208,7 +216,7 @@ export default observer(function ActivityForm() {
                 onSubmit={handleSubmit}>
                 <MyMultiSelectInput
                   options={categoryOptions}
-                  placeholder='What kind of thing do you feel doing? (max 3 categories)'
+                  placeholder='What kind of thing do you feel doing? (upto 3 categories)'
                   name='categories'
                 />
                 <MyTextInput
@@ -223,7 +231,8 @@ export default observer(function ActivityForm() {
                 />
                 <MyTagsTextInput
                   name='tag'
-                  placeholder='Relevant tags (max 10) e.g. discussion javascript figma mentorship books kungfu anime ps5'
+                  placeholder='Relevant tags (upto 8) e.g. discussion javascript figma mentorship books kungfu anime ps5'
+                  maxTagCount={7}
                 />
                 {/* <MySelectInput
                   options={categoryOptions}
@@ -246,7 +255,7 @@ export default observer(function ActivityForm() {
                 <MyTextNumberInput
                   name='attendeeCountMax'
                   placeholder='How many would you like to interact with'
-                  label='Number of attendees allowed (max. 6)'
+                  label='Number of attendees allowed (max 5)'
                   defaultValue={1}
                 />
                 <MyCheckboxWithTextNumberInput

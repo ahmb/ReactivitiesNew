@@ -19,6 +19,7 @@ import {
 import { useStickyChecker } from "../common/util/useStickyChecker";
 import { useLocation } from "react-router-dom";
 import Avatar from "boring-avatars";
+import ScrollToTop from "react-scroll-to-top";
 
 interface IProps {
   className?: string;
@@ -168,7 +169,7 @@ const NavBar: React.FC<IProps> = ({ className }) => {
                   </NavLink>
                 )}
 
-                <Dropdown pointing='top left'>
+                <Dropdown>
                   <Dropdown.Menu>
                     <Dropdown.Item
                       as={Link}
@@ -219,26 +220,28 @@ const NavBar: React.FC<IProps> = ({ className }) => {
               <Menu.Item
                 active={predicate.has("all")}
                 onClick={() => setPredicate("all", "true")}>
-                <Header
-                  size='huge'
-                  style={{ paddingTop: "10px" }}
-                  content='💡'
-                />
-                <p className='categoryText' style={{ paddingTop: "5px" }}>
-                  All
+                <p
+                  style={{
+                    whiteSpace: "nowrap",
+                    paddingTop: "7px",
+                    paddingBottom: "7px",
+                    fontSize: "14px",
+                  }}>
+                  💡 All
                 </p>
               </Menu.Item>
 
               <Menu.Item
                 active={predicate.has("isGoing")}
                 onClick={() => setPredicate("isGoing", "true")}>
-                <Header
-                  size='huge'
-                  style={{ paddingTop: "10px" }}
-                  content='😁'
-                />
-                <p className='categoryText' style={{ paddingTop: "5px" }}>
-                  Mine
+                <p
+                  style={{
+                    whiteSpace: "nowrap",
+                    paddingTop: "7px",
+                    paddingBottom: "7px",
+                    fontSize: "14px",
+                  }}>
+                  ✅ Mine
                 </p>
               </Menu.Item>
               {/* <Menu.Item
@@ -248,27 +251,36 @@ const NavBar: React.FC<IProps> = ({ className }) => {
               style={{ paddingTop: "20px" }}
             /> */}
 
-              {categoryOptions.map(({ id, text, icon }) => (
+              {categoryOptions.map(({ id, text, icon, label }) => (
                 <HorizontalScrollItem id={id} key={id}>
                   <Menu.Item
                     key={id}
                     active={predicate.has("isGoing")}
                     // style={{ display: "inline" }}
                     onClick={() => setPredicate("isGoing", "true")}>
-                    <Header size='huge' style={{ paddingTop: "10px" }}>
-                      {icon + " "}
-                    </Header>
-                    <span
+                    {/* <span
                       className='categoryText'
                       style={{ paddingTop: "5px" }}>
-                      {text}
-                    </span>
+                      {label}
+                    </span> */}
+                    <p
+                      style={{
+                        whiteSpace: "nowrap",
+                        paddingTop: "7px",
+                        paddingBottom: "7px",
+                        fontSize: "14px",
+                      }}>
+                      {label}
+                    </p>
                   </Menu.Item>
                 </HorizontalScrollItem>
               ))}
             </HorizontalScrollContainer>
           </Container>
         </Menu>
+      )}
+      {isFilterNavSticky && location.pathname.endsWith("activities") && (
+        <ScrollToTop style={{ borderRadius: "15px" }} smooth top={-1} />
       )}
     </>
   );

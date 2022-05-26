@@ -13,19 +13,6 @@ export default function MyFileUpload(props: Props) {
 
   const [files, setFiles] = useState<any>([]);
 
-  //using this to cleanup any memory
-  // useEffect(() => {
-  //   return () => {
-  //     // if (file !== undefined || file !== null) {
-  //     //   URL.revokeObjectURL(file.preview);
-  //     // }
-
-  //     files.forEach((file: any) => {
-  //       URL.revokeObjectURL(file.preview);
-  //     });
-  //   };
-  // }, [files, setFiles]);
-
   return (
     <>
       <Form.Field error={meta.touched && !!meta.error}>
@@ -66,7 +53,7 @@ export default function MyFileUpload(props: Props) {
           </Label>
         ) : null}
       </Form.Field>
-      <MyFileUploadPreview file={field.value} width={300} height={250} />
+      <MyFileUploadPreview file={field.value} width={"23em"} height={"23em"} />
 
       {/* {files && files.length > 0 && (
         <div

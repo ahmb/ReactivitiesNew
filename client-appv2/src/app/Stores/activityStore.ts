@@ -196,12 +196,12 @@ export default class ActivityStore {
     }
   };
 
-  createActivityNew = async (activityFormValues: ActivityFormValuesNew) => {
+  createActivityNew = async (activityFormValues: ActivityFormValuesNew, file : File | undefined) => {
     const user = store.userStore.user;
     const attendee = new Profile(user!);
     try {
       //TODO:fix 204+205
-      await agent.Activities.create(activityFormValues);
+      await agent.Activities.createNew(activityFormValues, file);
       const newActivity = new ActivityDetails(activityFormValues);
       newActivity.hostUsername = user!.username;
       // newActivity.attendees = [attendee];

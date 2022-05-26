@@ -27,7 +27,8 @@ namespace Application.Core
                 .ForMember(ad => ad.AttendeeCount,
                             o => o.MapFrom(
                                 a => a.Attendees.Where(
-                                    a => a.ApprovalStatus == ApprovalStatus.Accepted).Count()
+                                    a => a.ApprovalStatus == ApprovalStatus.Accepted &&
+                                    !a.IsHost).Count()
                                 ))
                 .ForMember(ad => ad.Host, a => a.MapFrom(a => a.Attendees
                     .SingleOrDefault(at => at.IsHost)))
@@ -111,7 +112,8 @@ namespace Application.Core
 
 
             CreateMap<ActivityCategories, CategoriesDto>()
-            .ForMember(d => d.Name, o => o.MapFrom(s => s.Categories.Name));
+            .ForMember(d => d.Name, o => o.MapFrom(s => s.Categories.Name))
+            .ForMember(d => d.CId, o => o.MapFrom(s => s.Categories.Id));
 
 
             CreateMap<ActivityTag, TagDto>()

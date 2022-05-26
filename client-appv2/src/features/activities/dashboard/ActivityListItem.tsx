@@ -52,11 +52,22 @@ export default function ActivityListItem({ activity }: Props) {
 
           {activity.isHost && <Label circular>Hosting</Label>}
           {activity.isGoing && !activity.isHost && (
-            <Label circular>Attending </Label>
+            <Label
+              circular
+              horizontal
+              attached='top right'
+              style={{
+                marginTop: "20px",
+                marginRight: "20px",
+                backgroundColor: "#37cf37",
+                color: "white",
+              }}>
+              attending
+            </Label>
           )}
         </Container>
         <Item.Group style={{ borderRadius: "inherit", paddingTop: "0px" }}>
-          <Item style={{ paddingBottom: "0px" }}>
+          <Item style={{ paddingBottom: "0px", marginBottom: "0px" }}>
             <Item.Content>
               <Item.Header
                 as={Link}
@@ -79,14 +90,17 @@ export default function ActivityListItem({ activity }: Props) {
                 <Container>
                   <Grid>
                     <Grid.Row centered stretched>
-                      <Grid.Column width={4} style={{ textAlign: "center" }}>
+                      <Grid.Column
+                        verticalAlign='middle'
+                        width={4}
+                        style={{ textAlign: "center", alignItems: "center" }}>
                         <div style={{ alignSelf: "center" }}>
                           {activity.host?.image && (
                             <Image
                               src={activity.host?.image || "/assets/user.png"}
                               circular
                               spaced='right'
-                              style={{ height: 45, width: 45 }}
+                              style={{ height: 65, width: 65 }}
                               as={NavLink}
                               to={`/profiles/${activity.host?.username}`}
                             />
@@ -95,7 +109,7 @@ export default function ActivityListItem({ activity }: Props) {
                             <NavLink
                               to={`/profiles/${activity.host?.username}`}>
                               <Avatar
-                                size={45}
+                                size={65}
                                 name={activity.host?.username}
                                 variant='beam'
                                 colors={[
@@ -112,20 +126,89 @@ export default function ActivityListItem({ activity }: Props) {
                         {/* {activity.host?.displayName} */}
                         <Header
                           size='small'
-                          style={{ marginTop: "auto", alignSelf: "center" }}>
+                          style={{
+                            marginTop: "auto",
+                            alignSelf: "center",
+                            alignItems: "center",
+                          }}>
                           {activity.host?.displayName}
                         </Header>
                         {/* <br /> */}
-                        {/* <span style={{ display: "flex" }}> */}
-                        <i> {format(activity.date!, "M/dd")}</i>
-                        {/* </Header> */}
+                        <Icon
+                          name='users'
+                          size='big'
+                          color='grey'
+                          style={{
+                            paddigBottom: "0px",
+                            marginBottom: "0px",
+                            marginTop: "20%",
+
+                            // alignSelf: "center",
+                          }}></Icon>
                         <Header
                           size='tiny'
                           style={{
                             marginTop: "auto",
-                            padding: "0px",
+                            // alignSelf: "center",
+                            paddigBottom: "0px",
+                            marginBottom: "0px",
+                          }}>
+                          {activity.attendeeCount}{" "}
+                          <p
+                            style={{
+                              color: "grey",
+                              marginBottom: "0px",
+                              display: "inline",
+                            }}>
+                            {"(" + activity.attendeeCountMax + ")"}
+                          </p>
+                        </Header>
+
+                        {/* <br /> */}
+                        {/* <span style={{ display: "flex" }}> */}
+
+                        {/* </span> */}
+                      </Grid.Column>
+
+                      <Grid.Column width={12}>
+                        <Image
+                          src={
+                            activity.imageUrl ??
+                            `/assets/categoryImages/${activity.categories[0].name}.jpg`
+                          }
+                          style={{
+                            borderRadius: "20px",
+                            boxShadow: "0px 10px 2px 0px aliceblue",
+                            // maxWidth: "18em",
+                            // maxHeight: "13em",
+                            maxWidth: "90%",
+                            maxHeight: "20em",
+                            alignSelf: "center",
+                            objectFit: "fill",
+                          }}
+                        />
+                      </Grid.Column>
+                    </Grid.Row>
+                    <Grid.Row>
+                      <Grid.Column width={4} textAlign='center'>
+                        <p
+                          style={{
+                            // color: "grey",
+                            // fontSize: "12px",
+                            marginBottom: "0px",
+                            paddingBottom: "0px",
+                          }}>
+                          {format(activity.date!, "M/dd")}
+                        </p>
+                        {/* </Header> */}
+                        <Header
+                          size='tiny'
+                          style={{
+                            marginTop: "0px",
+                            // padding: "0px",
                             marginBottom: "0px",
                             color: "#5162FA",
+                            whiteSpace: "nowrap",
                           }}>
                           {format(activity.date!, "h:mm aa")}
                           {/* dd MMM h:mm aa */}
@@ -146,59 +229,9 @@ export default function ActivityListItem({ activity }: Props) {
                           }}>
                           {Intl.DateTimeFormat().resolvedOptions().timeZone}
                         </p>
-                        <br />
-                        <p style={{ fontSize: "small", color: "grey" }}>
-                          Language{" "}
-                        </p>
-                        <p>{Language[activity.language]}</p>
-
-                        {/* </span> */}
                       </Grid.Column>
-                      <Grid.Column
-                        width={4}
-                        style={{
-                          textAlign: "left",
-                          // marginTop: "-10px",
-                        }}
-                        verticalAlign='middle'>
-                        <Icon
-                          name='users'
-                          size='big'
-                          color='grey'
-                          style={{
-                            paddigBottom: "0px",
-                            marginBottom: "0px",
-                            marginTop: "auto",
-
-                            // alignSelf: "center",
-                          }}></Icon>
-                        <Header
-                          size='tiny'
-                          style={{
-                            marginTop: "auto",
-                            // alignSelf: "center",
-                            paddigBottom: "0px",
-                            marginBottom: "0px",
-                          }}>
-                          {activity.attendeeCount}
-                          {" attending"}
-                        </Header>
-                        <p style={{ color: "grey", marginBottom: "0px" }}>
-                          {"(max " + activity.attendeeCountMax + ")"}
-                        </p>
-                        {/* <Header
-                          size='tiny'
-                          color='grey'
-                          style={{
-                            marginTop: "auto",
-                            padding: "0px",
-                            marginBottom: "0px",
-                          }}> */}
-                        <br />
-                        {/* </Header> */}
-                        <p style={{ color: "grey", marginBottom: "0px" }}>
-                          Duration
-                        </p>
+                      <Grid.Column width={4} textAlign='center'>
+                        <p style={{ fontSize: "small" }}>Duration</p>
                         <Header
                           // color='red'
                           size='tiny'
@@ -208,74 +241,73 @@ export default function ActivityListItem({ activity }: Props) {
                             marginBottom: "0px",
                             color: "#5162FA",
                           }}>
-                          {activity.duration}{" "}
-                          <span style={{ color: "grey" }}>mins</span>
-                          {/* {format(activity.endDate!, "h:mm aa")} */}
-                          {/* dd MMM h:mm aa */}
-                          {/* {activity.endDate
+                          <span
+                            style={{
+                              whiteSpace: "nowrap",
+                              // color: "grey"
+                            }}>
+                            {activity.duration + " "}mins
+                          </span>
+                        </Header>{" "}
+                      </Grid.Column>
+
+                      {/* {format(activity.endDate!, "h:mm aa")} */}
+                      {/* dd MMM h:mm aa */}
+                      {/* {activity.endDate
                           ?.toLocaleTimeString()
                           .slice(-2)
                           .toLowerCase()} */}
-                        </Header>{" "}
-                        <br />
-                        <p style={{ fontSize: "small", color: "grey" }}>
-                          Skill Level
-                        </p>
+
+                      <Grid.Column width={4} textAlign='center'>
+                        <p style={{ fontSize: "small" }}>Skill Level</p>
                         <p>{SkillLevel[activity.skillLevel]}</p>
-                        {/* <Header
-                          size='tiny'
-                          style={{
-                            marginTop: "auto",
-                            paddingLeft: "0px",
-                            // marginBottom: "0px",
-                          }}
-                          color='grey'> */}
-                        {/* </Header> */}
                       </Grid.Column>
-                      <Grid.Column width={8}>
-                        <Image
-                          src={`/assets/categoryImages/${activity.categories[0].name}.jpg`}
-                          style={{
-                            borderRadius: "20px",
-                            boxShadow: "0px 10px 2px 0px aliceblue",
-                            maxWidth: "150px",
-                            maxHeight: "200px",
-                            alignSelf: "center",
-                          }}
-                        />
+                      <Grid.Column width={4} textAlign='center'>
+                        <p style={{ fontSize: "small" }}>Language </p>
+                        <p>{Language[activity.language]}</p>
                       </Grid.Column>
                     </Grid.Row>
 
                     <Grid.Row
-                      style={{
-                        paddingTop: "0px",
-                        paddingBottom: "0px",
-                        paddingLeft: "15px",
-                      }}>
+                      style={
+                        {
+                          // paddingBottom: "0px",
+                          // paddingLeft: "15px",
+                        }
+                      }>
                       {activity.categories.map((c) => (
-                        <p id='listCategories'>
-                          {categoryOptions.filter(
-                            (co) => co.value === c.name
-                          )[0].icon +
-                            " " +
-                            categoryOptions.filter(
+                        <Grid.Column
+                          width={4}
+                          textAlign='center'
+                          style={{ paddingLeft: "0px" }}>
+                          <p id='listCategories'>
+                            {categoryOptions.filter(
                               (co) => co.value === c.name
-                            )[0].text +
-                            "  "}
-                        </p>
+                            )[0].icon +
+                              " " +
+                              categoryOptions.filter(
+                                (co) => co.value === c.name
+                              )[0].text +
+                              "  "}
+                          </p>
+                        </Grid.Column>
                       ))}
                     </Grid.Row>
-                    <Grid.Row
-                      style={{
-                        paddingTop: "0px",
-                        paddingBottom: "0px",
-                        paddingLeft: "15px",
-                        marginBottom: "10px",
-                      }}>
-                      <p id='listTags'>
-                        {activity.tag.map((t) => "#" + t.name.toString() + " ")}
-                      </p>
-                    </Grid.Row>
+                    {activity.tag.length > 0 && (
+                      <Grid.Row
+                        style={{
+                          paddingTop: "0px",
+                          // paddingBottom: "0px",
+                          // paddingLeft: "15px",
+                          // marginBottom: "10px",
+                        }}>
+                        {activity.tag.map((t) => (
+                          <Grid.Column width={4} textAlign='center'>
+                            <p id='listTags'>#{t.name}</p>
+                          </Grid.Column>
+                        ))}
+                      </Grid.Row>
+                    )}
                     {/* <Grid.Row
                       style={{
                         paddingTop: "0px",

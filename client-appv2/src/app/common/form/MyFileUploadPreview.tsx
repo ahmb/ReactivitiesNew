@@ -4,8 +4,8 @@ import { Form, Label } from "semantic-ui-react";
 interface Props {
   file: any;
   label?: string;
-  height?: number;
-  width?: number;
+  height?: string;
+  width?: string;
 }
 
 export default function MyFileUploadPreview(props: Props) {

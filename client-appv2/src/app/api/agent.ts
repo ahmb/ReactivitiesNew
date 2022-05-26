@@ -4,6 +4,7 @@ import {
   Activity,
   ActivityDetails,
   ActivityFormValues,
+  ActivityFormValuesNew,
 } from "../models/activity";
 import { history } from "../../index";
 import { store } from "../stores/store";
@@ -11,6 +12,7 @@ import { IUser, IUserFormValues } from "../models/user";
 import { IPhoto, Profile, UserActivity } from "../models/profile";
 import { PaginatedResult } from "../models/pagination";
 import Axios from "axios";
+import { act } from "react-dom/test-utils";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -120,8 +122,19 @@ const Activities = {
       headers: { "Content-type": "multipart/form-data" },
     });
   },
-  createNew: (activity: ActivityFormValues) =>
-    requests.post<void>("/activities", activity),
+  createNew: (activity: ActivityFormValuesNew, file: File | undefined) => {
+    delete activity.file;
+    let formData = new FormData();
+    formData.append("Activity", JSON.stringify(activity));
+    if (file) {
+      formData.append("File", file);
+    }
+    console.log("formData is");
+    console.log(formData);
+    return axios.post<void>("/activities/new", formData, {
+      headers: { "Content-type": "multipart/form-data" },
+    });
+  },
 };
 
 const Account = {

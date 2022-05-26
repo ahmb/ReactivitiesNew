@@ -10,7 +10,6 @@ import ActivityListItemPlaceholder from "./ActivityListItemPlaceholder";
 import Slideshow from "../../../app/layout/Slideshow";
 import Typed from "react-typed";
 import { Circle, CircleGrid, Diamond, Cross } from "react-awesome-shapes";
-import ScrollToTop from "react-scroll-to-top";
 
 export default observer(function ActivityDashboard() {
   const { activityStore } = useStore();
@@ -75,7 +74,7 @@ export default observer(function ActivityDashboard() {
           style={{
             // paddingLeft: "10px",
             paddingTop: "35px",
-            fontSize: "68px",
+            fontSize: "67px",
             fontWeight: "900",
           }}>
           <span
@@ -108,24 +107,26 @@ export default observer(function ActivityDashboard() {
               }}>
               with
             </p>
+            <span style={{ whiteSpace: "nowrap" }}>
+              <p
+                style={{
+                  paddingTop: "0px",
+                  paddingBottom: "0px",
+                  marginBottom: "0px",
+                }}>
+                cool people{" "}
+                <Popup trigger={<span className='altFontColor'>*</span>}>
+                  <span className='altFontColor'>*</span>psst..you're cool
+                </Popup>
+              </p>
+            </span>
             <p
               style={{
                 paddingTop: "0px",
                 paddingBottom: "0px",
                 marginBottom: "0px",
               }}>
-              cool people
-            </p>
-            <p
-              style={{
-                paddingTop: "0px",
-                paddingBottom: "0px",
-                marginBottom: "0px",
-              }}>
-              online
-              <Popup trigger={<span className='altFontColor'>*</span>}>
-                <span className='altFontColor'>*</span>psst..you're cool too 😁
-              </Popup>
+              globally
               {/* <span className='altFontColor'>*</span> */}
             </p>
           </span>
@@ -198,7 +199,7 @@ export default observer(function ActivityDashboard() {
           }}>
           <Header
             content={
-              "Privacy first and personal, public or private, SSL Encrypted Peer-to-Peer Chatrooms - max 6 users, with minimal ads if any *"
+              "Privacy first and personal, public or private, SSL Encrypted peer-to-peer transient Chatrooms - with up to 5 other users, free forever with minimal ads if any *"
             }
             size='medium'
             style={{
@@ -210,7 +211,7 @@ export default observer(function ActivityDashboard() {
           />
           <Header
             content={
-              "* Cellphone connections through 3/4/5G networks are encrypted but inherently require a WannaGo server to bridge peer-to-peer connectivity"
+              "* Connections through VPN & 3/4/5G networks will remain encrypted but inherently require a WannaGo server to bridge peer-to-peer connectivity"
             }
             size='tiny'
             style={{
@@ -271,11 +272,7 @@ export default observer(function ActivityDashboard() {
           )}
         </Grid.Column>
       </Grid.Row>
-      <Grid.Row>
-        <Grid.Column width={16}>
-          <ScrollToTop smooth top={-1} />
-        </Grid.Column>
-      </Grid.Row>
+      <Grid.Row></Grid.Row>
       <Grid.Row>
         <Grid.Column width={16}>
           <Loader active={loadingNext} />

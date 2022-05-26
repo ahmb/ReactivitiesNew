@@ -24,11 +24,6 @@ namespace API.Controllers
             return HandleResult(await Mediator.Send(new SetMain.Command { Id = id }));
         }
 
-        [HttpPost("/activity")]
-        public async Task<IActionResult> AddActivityPhoto([FromForm] AddActivity.Command command)
-        {
-            return HandleResult(await Mediator.Send(command));
-        }
 
     }
 }

@@ -6,6 +6,7 @@ interface Props {
   placeholder: string;
   name: string;
   label?: string;
+  maxTagCount?: number;
 }
 
 export default function MyTagsTextInput(props: Props) {
@@ -24,7 +25,7 @@ export default function MyTagsTextInput(props: Props) {
 
     if (key === " " && trimmedInput.length && !tags.includes(trimmedInput)) {
       e.preventDefault();
-      if (tags.length < 11) {
+      if (tags.length <= (props.maxTagCount ?? 10)) {
         setTags((prevState) => [...prevState, trimmedInput]);
         console.log(...tags, input);
         helper.setValue({ ...tags, input });
