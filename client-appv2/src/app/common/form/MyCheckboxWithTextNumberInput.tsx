@@ -18,7 +18,7 @@ interface Props extends CheckboxProps {
   name: string;
   type?: "checkbox" | "radio" | undefined;
   label?: string;
-  defaultValue?: string | number | undefined;
+  defaultValue?: number | undefined;
   popUpContent?: string;
   onChange?: (event: any, data: any) => void;
   textInputName: string;
@@ -32,8 +32,13 @@ export default function MyCheckboxWithTextNumberInput(props: Props) {
   const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
+    console.log("props are");
+    console.log(props);
     helpers.setValue(props.defaultValue ?? null);
-  }, []);
+    if (props.defaultValue) {
+      props.defaultValue === 0 ? setIsChecked(false) : setIsChecked(true);
+    }
+  }, [props.defaultValue]);
 
   return (
     <Form.Field error={meta.touched && !!meta.error}>
@@ -45,6 +50,7 @@ export default function MyCheckboxWithTextNumberInput(props: Props) {
         // value={privateEvent}
         // checked={privateEvent === 1}
         value={field.value || 0}
+        checked={field.value === 0 ? false : true}
         onChange={
           props.onChange ??
           ((e, data) => {

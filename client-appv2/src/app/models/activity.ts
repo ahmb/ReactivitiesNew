@@ -1,5 +1,6 @@
 // import { covertDateUTCtoLocal } from "../common/util/util";
 
+import { categoryOptions } from "../common/options/categoryOptions";
 import { Profile } from "./profile";
 
 export interface Activity {
@@ -87,7 +88,7 @@ export class Activity implements Activity {
 }
 
 export class ActivityDetails implements ActivityDetails {
-  constructor(init?: ActivityFormValues | ActivityFormValuesNew) {
+  constructor(init?: ActivityFormValuesNew | ActivityFormValues) {
     //copy the properties over
     Object.assign(this, init);
   }
@@ -163,29 +164,25 @@ export class ActivityFormValuesNew {
   description: string = "";
   date: Date | null = null;
   duration: number = 0;
-  private: boolean = false;
-  ongoing: boolean = false;
+  private: boolean | number = false;
+  ongoing: boolean | number = false;
   ongoingDays: number = 0;
   imageUrl: string = "";
   isCancelled: boolean = false;
   attendeeCountMax: number = 0;
-  categories: ICategory[] | null = null;
-  tag?: ITag[] | null;
-  language: number = 0;
-  skillLevel: number = 0;
-  asset: string = "";
+  categories: ICategory[] | typeof categoryOptions | null = null;
+  tag?: ITag[] | string[] | null;
+  language: number | string = 0;
+  skillLevel: number | string = 0;
+  assets: string = "";
   file?: File;
   // endDate: Date | null = null;
   // city: string = "";
   // venue: string = "";
 
-  constructor(activity?: ActivityFormValuesNew) {
+  constructor(activity?: Partial<ActivityFormValuesNew>) {
     if (activity) {
-      this.id = activity.id;
-      this.title = activity.title;
-      this.description = activity.description;
-      this.date = activity.date;
-      this.language = activity.language;
+      Object.assign(this, activity);
       // this.endDate = activity.endDate;
       // this.city = activity.city;
       // this.venue = activity.venue;

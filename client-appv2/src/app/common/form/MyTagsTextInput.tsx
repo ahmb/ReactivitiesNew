@@ -1,5 +1,5 @@
 import { useField } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Label } from "semantic-ui-react";
 
 interface Props {
@@ -7,6 +7,7 @@ interface Props {
   name: string;
   label?: string;
   maxTagCount?: number;
+  previouslySetValue?: string[];
 }
 
 export default function MyTagsTextInput(props: Props) {
@@ -43,6 +44,15 @@ export default function MyTagsTextInput(props: Props) {
       setInput(poppedTag);
     }
   };
+
+  useEffect(() => {
+    if (props.previouslySetValue) {
+      console.log("props.previouslySetValue is");
+      console.log(props.previouslySetValue);
+      setTags(props.previouslySetValue);
+      helper.setValue(props.previouslySetValue);
+    }
+  }, [props.previouslySetValue]);
 
   return (
     <Form.Field error={meta.touched && !!meta.error}>

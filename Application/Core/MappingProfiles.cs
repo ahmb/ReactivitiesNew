@@ -112,8 +112,8 @@ namespace Application.Core
 
 
             CreateMap<ActivityCategories, CategoriesDto>()
-            .ForMember(d => d.Name, o => o.MapFrom(s => s.Categories.Name))
-            .ForMember(d => d.CId, o => o.MapFrom(s => s.Categories.Id));
+            .ForMember(d => d.Name, o => o.MapFrom(s => s.Categories.Name));
+            // .ForMember(d => d.CId, o => o.MapFrom(s => s.Categories.Id));
 
 
             CreateMap<ActivityTag, TagDto>()

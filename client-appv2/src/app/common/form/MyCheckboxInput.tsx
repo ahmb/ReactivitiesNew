@@ -1,5 +1,5 @@
 import { useField } from "formik";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Checkbox,
@@ -24,10 +24,15 @@ interface Props extends CheckboxProps {
 
 export default function MyCheckboxInput(props: Props) {
   const [field, meta, helpers] = useField(props.name);
+  const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
+    console.log(props);
     helpers.setValue(props.defaultValue ?? null);
-  }, []);
+    if (props.defaultValue) {
+      props.defaultValue === 0 ? setIsChecked(false) : setIsChecked(true);
+    }
+  }, [props.defaultValue]);
 
   return (
     <Form.Field error={meta.touched && !!meta.error}>
@@ -36,6 +41,7 @@ export default function MyCheckboxInput(props: Props) {
         name={props.name}
         label={props.label}
         type={props.type || "radio"}
+        checked={isChecked}
         // value={privateEvent}
         // checked={privateEvent === 1}
         value={field.value || 0}

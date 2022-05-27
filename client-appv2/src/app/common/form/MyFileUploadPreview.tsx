@@ -6,6 +6,7 @@ interface Props {
   label?: string;
   height?: string;
   width?: string;
+  imageUrl?: string;
 }
 
 export default function MyFileUploadPreview(props: Props) {
@@ -17,12 +18,9 @@ export default function MyFileUploadPreview(props: Props) {
   useEffect(() => {
     //TODO: remove logging
     console.log("LOGGING0");
-
     if (!props.file) return;
     console.log("LOGGING1");
-
     // if (props.file === null || props.file === undefined) return;
-
     setLoading(true);
     console.log("LOGGING2");
     console.log(thumb);
@@ -44,13 +42,13 @@ export default function MyFileUploadPreview(props: Props) {
     };
   }, [thumb, props.file]);
 
-  if (!props.file) return null;
+  if (!props.file && !props.imageUrl) return null;
 
   return (
     <>
       <label>{props.label}</label>
       <img
-        src={(thumb as any) ?? undefined}
+        src={props.imageUrl ?? (thumb as any) ?? undefined}
         alt={props?.file?.name ?? undefined}
         className='img-thumbnail mt-2'
         // height={props.height ?? 200}

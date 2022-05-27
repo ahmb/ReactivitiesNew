@@ -6,6 +6,7 @@ import MyFileUploadPreview from "./MyFileUploadPreview";
 interface Props {
   name: string;
   label?: string;
+  imageUrl?: string;
 }
 
 export default function MyFileUpload(props: Props) {
@@ -53,7 +54,12 @@ export default function MyFileUpload(props: Props) {
           </Label>
         ) : null}
       </Form.Field>
-      <MyFileUploadPreview file={field.value} width={"23em"} height={"23em"} />
+      <MyFileUploadPreview
+        file={field.value}
+        width={"23em"}
+        height={"23em"}
+        imageUrl={props.imageUrl}
+      />
 
       {/* {files && files.length > 0 && (
         <div

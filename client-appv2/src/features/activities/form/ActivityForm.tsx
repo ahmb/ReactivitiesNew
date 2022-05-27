@@ -19,6 +19,7 @@ import {
   ActivityFormValuesNew,
   ICategory,
   ITag,
+  ActivityDetails,
 } from "../../../app/models/activity";
 import MyMultiSelectInput from "../../../app/common/form/MyMultiSelectInput";
 import MyTextNumberInput from "../../../app/common/form/MyTextNumberInput";
@@ -48,6 +49,8 @@ export default observer(function ActivityForm() {
   const [activity, setActivity] = useState<ActivityFormValuesNew>(
     new ActivityFormValuesNew()
   );
+
+  const [loadedActivity, setLoadedActivity] = useState<ActivityDetails>();
 
   // const [recurringEvent, setRecurringEvent] = React.useState(false);
   // const [privateEvent, setPrivateEvent] = React.useState(0);
@@ -85,57 +88,81 @@ export default observer(function ActivityForm() {
       .required("Please select atleast 1 attendee :p"),
   });
 
+  // loadActivity(id).then((activity) => {
+  //   if (activity) {
+  //     setActivity(new ActivityFormValuesNew(activity));
+  //   }
+
   useEffect(() => {
-    if (id)
+    if (id) {
       loadActivity(id).then((activity) => {
         if (activity) {
-          //TODO:uncomment and fix
-          // setActivity(new ActivityFormValuesNew(activity));
+          console.log(activity);
+          const activityFormValues = new ActivityFormValuesNew({
+            ...activity,
+            categories: activity.categories.map(
+              (c) => categoryOptions.filter((co) => co.value === c.name)[0]
+            ),
+            tag: activity.tag.map((t) => t.name),
+            ongoing: activity.ongoing ? 1 : 0,
+            private: activity.private ? 1 : 0,
+            language: Language[activity.language],
+            skillLevel: SkillLevel[activity.skillLevel],
+          });
+          console.log(activityFormValues);
+          setActivity(activityFormValues);
+        } else {
+          console.log("no activity found");
         }
       });
+    } else {
+      console.log("no activity id found");
+      console.log("default activity without id:");
+      console.log(activity);
+    }
   }, [id, loadActivity]);
 
   function handleFormSubmit(activity: ActivityFormValuesNew | any) {
     console.log("activity is");
     console.log(activity);
-    if (!activity.id) {
-      let newActivity: ActivityFormValuesNew = {
-        ...activity,
-        id: uuid(),
-        private: activity.private === 0 ? false : true,
-        ongoing: activity.ongoing === 0 ? false : true,
-        language: Language[activity.language],
-        skillLevel: SkillLevel[activity.skillLevel],
-        ongoingDays: parseInt(activity.ongoingDays),
-        date: (activity.date as Date).toUTCString(),
-        categories: (activity.categories as typeof categoryOptions).map(
-          (c): ICategory => ({
-            name: c.value,
-          })
-        ),
-        tag: activity["tag"]
-          ? // activity.tag !== undefined || activity.tag !== null
-            Object.entries(activity.tag).map(
-              (k, v): ITag => ({
-                name: k.toString().split(",")[1],
-              })
-            )
-          : ([] as ITag[]),
-      };
-      let file: File | undefined = newActivity.file;
-      console.log("new activity is");
-      console.log(newActivity);
-      console.log(newActivity.date);
-      console.log("file is");
-      console.log(file);
-      console.log("new activity stringify is");
-      console.log(JSON.stringify(newActivity));
+    // if (!activity.id) {
+    let newActivity: ActivityFormValuesNew = {
+      ...activity,
+      id: activity.id ?? uuid(),
+      private: activity.private === 0 ? false : true,
+      ongoing: activity.ongoing === 0 ? false : true,
+      language: Language[activity.language],
+      skillLevel: SkillLevel[activity.skillLevel],
+      ongoingDays: parseInt(activity.ongoingDays),
+      date: (activity.date as Date).toUTCString(),
+      categories: (activity.categories as typeof categoryOptions).map(
+        (c): ICategory => ({
+          name: c.value,
+        })
+      ),
+      tag: activity["tag"]
+        ? // activity.tag !== undefined || activity.tag !== null
+          Object.entries(activity.tag).map(
+            (k, v): ITag => ({
+              name: k.toString().split(",")[1],
+            })
+          )
+        : ([] as ITag[]),
+    };
+    let file: File | undefined = newActivity.file;
+    console.log("new activity is");
+    console.log(newActivity);
+    console.log(newActivity.date);
+    console.log("file is");
+    console.log(file);
+    console.log("new activity stringify is");
+    console.log(JSON.stringify(newActivity));
 
-      //TODO:fix createActivity
-      createActivityNew(newActivity, file).then(() =>
-        history.push(`/activities/${newActivity.id}`)
-      );
-    }
+    //TODO:fix createActivity
+    createActivityNew(newActivity, file).then(() =>
+      history.push(`/activities/${newActivity.id}`)
+    );
+    // }
     // else {
     //   updateActivity(activity).then(() =>
     //     history.push(`/activities/${activity.id}`)
@@ -233,6 +260,7 @@ export default observer(function ActivityForm() {
                   name='tag'
                   placeholder='Relevant tags (upto 8) e.g. discussion javascript figma mentorship books kungfu anime ps5'
                   maxTagCount={7}
+                  previouslySetValue={(activity.tag as string[]) ?? undefined}
                 />
                 {/* <MySelectInput
                   options={categoryOptions}
@@ -263,11 +291,11 @@ export default observer(function ActivityForm() {
                   label='Repeat until filled? (private setting)'
                   popUpContent='Note: Display this post on the main page for the desired
                   number of days or until the number of attendees is reached'
-                  defaultValue={0}
+                  defaultValue={(activity.ongoing ? 1 : 0) ?? 0}
                   textInputName='ongoingDays'
                   textInputPlaceholder='Number of days to renew for if not filled, only you can see this'
                   textInputLabel='Repeat for (days)'
-                  textInputDefaultValue={0}
+                  textInputDefaultValue={activity.ongoingDays ?? 0}
                 />
                 <MyCheckboxInput
                   name='private'
@@ -275,7 +303,7 @@ export default observer(function ActivityForm() {
                   popUpContent='Note: Private activities do not appear on the main page, but
                     can be accessed via the URL. Use this when connecting with
                     someone you already know'
-                  defaultValue={0}
+                  defaultValue={(activity.private ? 1 : 0) ?? 0}
                 />
                 <MySelectInput
                   label='Language'
@@ -290,7 +318,11 @@ export default observer(function ActivityForm() {
                     }))}
                   placeholder='Language of communication'
                   name='language'
-                  defaultValue='English'
+                  defaultValue={
+                    (activity.language === 0 && !activity.id
+                      ? "English"
+                      : activity.language) ?? "English"
+                  }
                 />
                 <MySelectInput
                   label='Skill Level'
@@ -305,7 +337,11 @@ export default observer(function ActivityForm() {
                     }))}
                   placeholder='Any skill requirement?'
                   name='skillLevel'
-                  defaultValue='Everyone'
+                  defaultValue={
+                    (activity.skillLevel === 0 && !activity.id
+                      ? "Everyone"
+                      : activity.skillLevel) ?? "Everyone"
+                  }
                 />
                 {/* <MyTextInput
                   name='asset'
@@ -316,11 +352,12 @@ export default observer(function ActivityForm() {
                   rows={1}
                   label='Sharing Link (Optional)'
                   placeholder='Helpful Links , only visible to approved attendees e.g. Git Repo, Figma, Youtube, Movie etc'
-                  name='asset'
+                  name='assets'
                 />
                 <MyFileUpload
                   name='file'
                   label='Upload Picture (Optional) - .jpg .png .gif image formats accepted'
+                  imageUrl={activity.imageUrl}
                 />
                 {/* <Header content='Location Details' sub color='teal' />
 
