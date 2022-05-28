@@ -135,6 +135,24 @@ const Activities = {
       headers: { "Content-type": "multipart/form-data" },
     });
   },
+  updateNew: (activity: ActivityFormValuesNew, file: File | undefined) => {
+    delete activity.file;
+
+    let formData = new FormData();
+    formData.append("Activity", JSON.stringify(activity));
+    if (file) {
+      formData.append("File", file);
+    }
+    console.log("edited formData is");
+    console.log(formData);
+    console.log("edited formData is");
+    console.log(activity);
+
+    // `/activities/${activity.id}`
+    return axios.put<void>(`/activities/${activity.id}`, formData, {
+      headers: { "Content-type": "multipart/form-data" },
+    });
+  },
 };
 
 const Account = {

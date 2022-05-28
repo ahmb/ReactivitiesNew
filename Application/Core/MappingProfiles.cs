@@ -11,11 +11,36 @@ using Application.Interfaces;
 
 namespace Application.Core
 {
+    public static class MappingExpressionsHelper
+    {
+        public static IMappingExpression<TSource, TDestination> MapOnlyIfChanged<TSource, TDestination>
+        (this IMappingExpression<TSource, TDestination> map)
+        {
+            map.ForAllMembers(source =>
+            {
+                source.Condition((sourceObject, destObject, sourceProperty, destProperty) =>
+                {
+
+                    if (sourceProperty == null)
+                    {
+                        return !(destProperty == null);
+
+                    }
+                    return !sourceProperty.Equals(destProperty);
+
+                });
+            });
+            return map;
+        }
+    }
+
     public class MappingProfiles : AutoMapper.Profile
     {
 
+
         public MappingProfiles()
         {
+
             string currentUsername = null;
 
 
@@ -153,7 +178,44 @@ namespace Application.Core
                                                                     )
                                                                 .Url));
 
-            CreateMap<ActivityDetailsDto, ActivityDto>();
+            CreateMap<ActivityDetailsDto, Activity>()
+            .ForMember(d => d.Attendees, o => o.Ignore())
+            .ForMember(d => d.Comments, o => o.Ignore())
+            .ForMember(d => d.Categories, o => o.Ignore())
+            .ForMember(d => d.Tag, o => o.Ignore())
+            .ForMember(d => d.ImageUrl, o => o.Ignore())
+            .ForMember(d => d.Picture, o => o.Ignore())
+            // .ForMember(d => d.Categories, o => o.MapFrom((s, d, o) =>
+            //     s.Categories.Select(c =>
+            //          new ActivityCategories
+            //          {
+            //              Categories = new Domain.Categories
+            //              {
+            //                  Name = c.Name
+            //              },
+            //              Activity = d
+            //          })))
+            // .ForMember(d => d.Tag, o => o.MapFrom((s, d, o) =>
+            //     s.Tag.Select(c =>
+            //          new ActivityTag
+            //          {
+            //              Tag = new Domain.Tag
+            //              {
+            //                  Name = c.Name
+            //              },
+            //              Activity = d
+            //          })))
+            // {
+            //     Categories = new Domain.Categories { Name = s.Categories. }
+            // } ))
+            .MapOnlyIfChanged();
+
+
+
+
+
+
+
             // .ForMember(d => d.DisplayName, o => o.MapFrom(tp => tp.User.DisplayName))
             // .ForMember(d => d.Username, o => o.MapFrom(tp => tp.User.UserName));
 

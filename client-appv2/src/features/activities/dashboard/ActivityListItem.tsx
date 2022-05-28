@@ -72,7 +72,12 @@ export default function ActivityListItem({ activity }: Props) {
               <Item.Header
                 as={Link}
                 to={`/activities/${activity.id}`}
-                style={{ paddingTop: "5px", paddingBottom: "20px" }}>
+                style={{
+                  paddingTop: "3%",
+                  paddingBottom: "20px",
+                  paddingLeft: "2%",
+                  paddingRight: "2%",
+                }}>
                 {activity.title}
               </Item.Header>
               <Item.Description>
@@ -89,7 +94,7 @@ export default function ActivityListItem({ activity }: Props) {
                 /> */}
                 <Container>
                   <Grid>
-                    <Grid.Row centered stretched>
+                    <Grid.Row centered verticalAlign='middle'>
                       <Grid.Column
                         verticalAlign='middle'
                         width={4}
@@ -170,7 +175,11 @@ export default function ActivityListItem({ activity }: Props) {
                         {/* </span> */}
                       </Grid.Column>
 
-                      <Grid.Column width={12}>
+                      <Grid.Column
+                        width={12}
+                        textAlign='center'
+                        verticalAlign='middle'
+                        stretched>
                         <Image
                           src={
                             activity.imageUrl ??
@@ -181,10 +190,10 @@ export default function ActivityListItem({ activity }: Props) {
                             boxShadow: "0px 10px 2px 0px aliceblue",
                             // maxWidth: "18em",
                             // maxHeight: "13em",
-                            maxWidth: "90%",
-                            maxHeight: "20em",
+                            maxWidth: "100%",
+                            maxHeight: "250px",
                             alignSelf: "center",
-                            objectFit: "fill",
+                            objectFit: "none",
                           }}
                         />
                       </Grid.Column>
@@ -264,7 +273,9 @@ export default function ActivityListItem({ activity }: Props) {
                       </Grid.Column>
                       <Grid.Column width={4} textAlign='center'>
                         <p style={{ fontSize: "small" }}>Language </p>
-                        <p>{Language[activity.language]}</p>
+                        <p style={{ overflow: "hidden" }}>
+                          {Language[activity.language]}
+                        </p>
                       </Grid.Column>
                     </Grid.Row>
 

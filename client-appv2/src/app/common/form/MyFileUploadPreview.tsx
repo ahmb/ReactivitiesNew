@@ -17,6 +17,8 @@ export default function MyFileUploadPreview(props: Props) {
   //using this to cleanup any memory
   useEffect(() => {
     //TODO: remove logging
+    console.log("file upload preview props");
+    console.log(props);
     console.log("LOGGING0");
     if (!props.file) return;
     console.log("LOGGING1");
@@ -48,7 +50,11 @@ export default function MyFileUploadPreview(props: Props) {
     <>
       <label>{props.label}</label>
       <img
-        src={props.imageUrl ?? (thumb as any) ?? undefined}
+        src={
+          (thumb as any) ??
+          (props.imageUrl !== "" ? props.imageUrl : undefined) ??
+          undefined
+        }
         alt={props?.file?.name ?? undefined}
         className='img-thumbnail mt-2'
         // height={props.height ?? 200}

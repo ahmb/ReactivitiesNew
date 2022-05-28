@@ -196,7 +196,10 @@ export default class ActivityStore {
     }
   };
 
-  createActivityNew = async (activityFormValues: ActivityFormValuesNew, file : File | undefined) => {
+  createActivityNew = async (
+    activityFormValues: ActivityFormValuesNew,
+    file: File | undefined
+  ) => {
     const user = store.userStore.user;
     const attendee = new Profile(user!);
     try {
@@ -229,6 +232,31 @@ export default class ActivityStore {
           };
           this.activityRegistry.set(activity.id, updatedActivity as Activity);
           this.selectedActivity = updatedActivity as ActivityDetails;
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  updateActivityNew = async (
+    activity: ActivityFormValuesNew,
+    file: File | undefined
+  ) => {
+    try {
+      await agent.Activities.updateNew(activity, file);
+      runInAction(() => {
+        if (activity.id) {
+          let updatedActivity = {
+            ...this.getActivity(activity.id),
+            ...activity,
+          };
+          //TODO: update this so that when its added back to the registry , its got the correct object
+          // this.activityRegistry.set(
+          //   activity.id,
+          //   updatedActivity as ActivityDetails
+          // );
+          // this.selectedActivity = updatedActivity as ActivityDetails;
         }
       });
     } catch (error) {

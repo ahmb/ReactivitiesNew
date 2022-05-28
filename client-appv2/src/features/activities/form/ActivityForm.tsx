@@ -37,6 +37,7 @@ export default observer(function ActivityForm() {
     createActivity,
     createActivityNew,
     updateActivity,
+    updateActivityNew,
     loadActivity,
     loadingInitial,
   } = activityStore;
@@ -56,10 +57,14 @@ export default observer(function ActivityForm() {
   // const [privateEvent, setPrivateEvent] = React.useState(0);
 
   const validationSchema = Yup.object({
-    title: Yup.string().required("Please provide a title for the activity"),
-    description: Yup.string().required(
-      "Please enter a helpful description for others"
-    ),
+    title: Yup.string()
+      .min(30, "Please add more details")
+      .max(200, "Reached maximum characater limit")
+      .required("Please provide a title for the activity"),
+    description: Yup.string()
+      .min(40, "Please add more details")
+      .max(12080, "Reached maximum character limit")
+      .required("Please enter a helpful description for others"),
     categories: Yup.array()
       .of(
         Yup.object().shape({
@@ -108,6 +113,7 @@ export default observer(function ActivityForm() {
             private: activity.private ? 1 : 0,
             language: Language[activity.language],
             skillLevel: SkillLevel[activity.skillLevel],
+            assets: (activity.assets !== "" ? activity.assets : "") ?? "",
           });
           console.log(activityFormValues);
           setActivity(activityFormValues);
@@ -125,49 +131,74 @@ export default observer(function ActivityForm() {
   function handleFormSubmit(activity: ActivityFormValuesNew | any) {
     console.log("activity is");
     console.log(activity);
-    // if (!activity.id) {
-    let newActivity: ActivityFormValuesNew = {
-      ...activity,
-      id: activity.id ?? uuid(),
-      private: activity.private === 0 ? false : true,
-      ongoing: activity.ongoing === 0 ? false : true,
-      language: Language[activity.language],
-      skillLevel: SkillLevel[activity.skillLevel],
-      ongoingDays: parseInt(activity.ongoingDays),
-      date: (activity.date as Date).toUTCString(),
-      categories: (activity.categories as typeof categoryOptions).map(
-        (c): ICategory => ({
-          name: c.value,
-        })
-      ),
-      tag: activity["tag"]
-        ? // activity.tag !== undefined || activity.tag !== null
-          Object.entries(activity.tag).map(
-            (k, v): ITag => ({
-              name: k.toString().split(",")[1],
-            })
-          )
-        : ([] as ITag[]),
-    };
-    let file: File | undefined = newActivity.file;
-    console.log("new activity is");
-    console.log(newActivity);
-    console.log(newActivity.date);
-    console.log("file is");
-    console.log(file);
-    console.log("new activity stringify is");
-    console.log(JSON.stringify(newActivity));
+    if (!activity.id) {
+      let newActivity: ActivityFormValuesNew = {
+        ...activity,
+        id: activity.id ?? uuid(),
+        private: activity.private === 0 ? false : true,
+        ongoing: activity.ongoing === 0 ? false : true,
+        language: Language[activity.language],
+        skillLevel: SkillLevel[activity.skillLevel],
+        ongoingDays: parseInt(activity.ongoingDays),
+        date: (activity.date as Date).toUTCString(),
+        categories: (activity.categories as typeof categoryOptions).map(
+          (c): ICategory => ({
+            name: c.value,
+          })
+        ),
+        tag: activity["tag"]
+          ? // activity.tag !== undefined || activity.tag !== null
+            Object.entries(activity.tag).map(
+              (k, v): ITag => ({
+                name: k.toString().split(",")[1],
+              })
+            )
+          : ([] as ITag[]),
+      };
+      let file: File | undefined = newActivity.file;
+      console.log("new activity is");
+      console.log(newActivity);
+      console.log("file is");
+      console.log(file);
+      console.log("new activity stringify is");
+      console.log(JSON.stringify(newActivity));
 
-    //TODO:fix createActivity
-    createActivityNew(newActivity, file).then(() =>
-      history.push(`/activities/${newActivity.id}`)
-    );
-    // }
-    // else {
-    //   updateActivity(activity).then(() =>
-    //     history.push(`/activities/${activity.id}`)
-    //   );
-    // }
+      createActivityNew(newActivity, file).then(() =>
+        history.push(`/activities/${newActivity.id}`)
+      );
+    } else {
+      //TODO:fix updteActivity
+      console.log("Submitting an editted activity");
+      console.log(activity);
+      let file: File | undefined = activity.file;
+
+      let newActivity: ActivityFormValuesNew = {
+        ...activity,
+        private: activity.private === 0 ? false : true,
+        ongoing: activity.ongoing === 0 ? false : true,
+        language: Language[activity.language],
+        skillLevel: SkillLevel[activity.skillLevel],
+        ongoingDays: parseInt(activity.ongoingDays),
+        date: (activity.date as Date).toUTCString(),
+        categories: (activity.categories as typeof categoryOptions).map(
+          (c): ICategory => ({
+            name: c.value,
+          })
+        ),
+        tag: activity["tag"]
+          ? // activity.tag !== undefined || activity.tag !== null
+            Object.entries(activity.tag).map(
+              (k, v): ITag => ({
+                name: k.toString().split(",")[1],
+              })
+            )
+          : ([] as ITag[]),
+      };
+
+      updateActivityNew(newActivity, file).then(() =>
+        history.push(`/activities/${newActivity.id}`)
+      );
+    }
   }
 
   if (loadingInitial) <LoadingComponent content='Loading Activity' />;

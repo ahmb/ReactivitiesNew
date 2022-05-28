@@ -98,10 +98,10 @@ namespace API.Controllers
 
         [Authorize(Policy = "IsActivityHost")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Edit(Guid id, Activity activity)
+        public async Task<IActionResult> EditActivityWithPhoto(Guid id, [FromForm] EditActivity.Command command)
         {
-            activity.Id = id;
-            return HandleResult(await Mediator.Send(new Edit.Command { Activity = activity }));
+            command.InputId = id;
+            return HandleResult(await Mediator.Send(command));
         }
 
 
