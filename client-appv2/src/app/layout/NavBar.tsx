@@ -279,9 +279,11 @@ const NavBar: React.FC<IProps> = ({ className }) => {
           </Container>
         </Menu>
       )}
-      {isFilterNavSticky && location.pathname.endsWith("activities") && (
-        <ScrollToTop style={{ borderRadius: "15px" }} smooth top={-1} />
-      )}
+      {isFilterNavSticky &&
+        !isSidebarOpen &&
+        location.pathname.endsWith("activities") && (
+          <ScrollToTop style={{ borderRadius: "15px" }} smooth top={-1} />
+        )}
     </>
   );
 };

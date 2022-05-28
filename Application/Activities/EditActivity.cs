@@ -68,7 +68,6 @@ namespace Application.Activities
                     .Include(a => a.Categories).ThenInclude(ac => ac.Categories)
                     .SingleOrDefaultAsync(
                         a => a.Id == newActivityDto.Id,
-                            //  new object[] { newActivityDto.Id },
                             cancellationToken: cancellationToken
                     );
 
@@ -96,10 +95,6 @@ namespace Application.Activities
                         activity.Picture = photo;
                         activity.ImageUrl = photo.Url;
                     }
-
-                    // newActivityDto.Attendees = null;
-                    // newActivityDto.Comments = null;
-
 
                     var dtoCategoriesArray = newActivityDto.Categories.Select(c => c.Name).ToArray();
 
@@ -129,18 +124,12 @@ namespace Application.Activities
                             }
                             if (categoriesToRemove.Contains(category.Name))
                             {
-                                activity.Categories.Remove(new ActivityCategories
-                                {
-                                    Categories = category,
-                                    CategoriesId = category.Id,
-                                    Activity = activity,
-                                    ActivityId = activity.Id
-                                });
+                                var categoriesAfterRemoval =
+                                activity.Categories.Where(c => c.Categories.Name != category.Name);
+
+                                activity.Categories = categoriesAfterRemoval.ToList();
                             }
-
                         }
-
-
                     }
 
                     var dtoTagArray = newActivityDto.Tag.Select(c => c.Name).ToArray();
@@ -151,111 +140,73 @@ namespace Application.Activities
 
                     var tagsToRemove = entityTagArray.Except(dtoTagArray);
 
+                    // if (tagsToAdd.Any())
+                    // {
+                    //     foreach (var tag in tagsToAdd)
+                    //     {
+                    //         activity.Tag.Add(new ActivityTag
+                    //         {
+                    //             Tag = new Tag
+                    //             {
+                    //                 Name = tag,
+                    //             },
+                    //             Activity = activity
+                    //         });
+                    //     }
+
+                    // }
+
                     if (tagsToAdd.Any() || tagsToRemove.Any())
                     {
                         var tag = await _context.Tags.AsQueryable().Where(
                                                 c => tagsToAdd.Contains(c.Name) || tagsToRemove.Contains(c.Name)
                                             ).ToListAsync(cancellationToken: cancellationToken);
-
-                        foreach (var atag in tag)
+                        foreach (var tagToAdd in tagsToAdd)
                         {
-                            if (tagsToAdd.Contains(atag.Name))
+                            if (tag.Any(t => t.Name == tagToAdd))
                             {
-                                activity.Tag.Add(new ActivityTag
-                                {
-                                    Tag = atag,
-                                    Activity = activity
-                                });
+                                activity.Tag.Add(
+                                    new ActivityTag
+                                    {
+                                        Tag = tag.SingleOrDefault(t => t.Name == tagToAdd),
+                                        Activity = activity
+                                    })
+                                    ;
                             }
-                            if (tagsToRemove.Contains(atag.Name))
+                            if (!tag.Any(t => t.Name == tagToAdd))
                             {
-                                activity.Tag.Remove(new ActivityTag
-                                {
-                                    Tag = atag,
-                                    Activity = activity
-                                });
+                                activity.Tag.Add(
+                                    new ActivityTag
+                                    {
+                                        Tag = new Tag
+                                        {
+                                            Name = tagToAdd,
+                                        },
+                                        Activity = activity
+                                    })
+                                    ;
                             }
+                        }
 
+                        foreach (var tagToRemove in tagsToRemove)
+                        {
+                            if (tag.Any(t => t.Name == tagToRemove))
+                            {
+                                var tagsAfterRemoval =
+                                activity.Tag.Where(t => t.Tag.Name != tagToRemove);
+
+                                activity.Tag = tagsAfterRemoval.ToList();
+                            }
                         }
                     }
 
-
-
-
                     activity = _mapper.Map(newActivityDto, activity);
-
-                    // var newActivity = new Activity
-                    // {
-                    //     Id = newActivityDto.Id,
-                    //     Title = newActivityDto.Title,
-                    //     Description = newActivityDto.Description,
-                    //     Date = newActivityDto.Date,
-                    //     Duration = newActivityDto.Duration,
-                    //     Private = newActivityDto.Private,
-                    //     Ongoing = newActivityDto.Ongoing,
-                    //     OngoingDays = newActivityDto.OngoingDays,
-                    //     ImageUrl = photo?.Url,
-                    //     Picture = photo ?? null,
-                    //     Assets = newActivityDto.Assets,
-                    //     AttendeeCountMax = newActivityDto.AttendeeCountMax,
-                    //     Archived = false,
-                    //     Published = true,
-                    //     IsCancelled = false,
-                    //     IsSpam = false,
-                    //     Language = newActivityDto.Language,
-                    //     SkillLevel = newActivityDto.SkillLevel,
-                    //     InPerson = false
-                    // };
-
-                    // foreach (var category in newActivityDto.Categories)
-                    // {
-                    //     newActivity.Categories.Add(
-                    //         new ActivityCategories
-                    //         {
-                    //             Categories = await _context.Categories.SingleOrDefaultAsync(c => c.Name == category.Name, cancellationToken: cancellationToken),
-                    //             Activity = newActivity
-                    //         }
-                    //         // _context.Categories.Where(c => c.Name == category.Name)
-                    //         );
-                    // }
-
-                    // foreach (var tag in newActivityDto.Tag)
-                    // {
-                    //     newActivity.Tag.Add(
-                    //         new ActivityTag
-                    //         {
-                    //             Tag = new Tag { Name = tag.Name },
-                    //             Activity = newActivity
-                    //         }
-                    //     );
-                    // }
-
-
-                    // // update the code to add a useractivity or attendee 
-                    // var attendee = new ActivityAttendee
-                    // {
-                    //     AppUser = user,
-                    //     Activity = newActivity,
-                    //     IsHost = true,
-                    //     DateJoined = DateTime.Now.ToUniversalTime(),
-                    //     IsApproved = true,
-                    //     ApprovalStatus = ApprovalStatus.Accepted
-                    // };
-
-                    // newActivity.Attendees.Add(attendee);
-
-                    // _context.Activities.Add(newActivity);
-                    // if (photo != null)
-                    // {
-                    //     newActivity.ImageUrl = photo.Url;
-                    //     newActivity.Picture = photo;
-                    // }
 
                     bool result = await _context.SaveChangesAsync(cancellationToken) > 0;
 
                     var res = new Result<Unit>();
 
-                    if (!result) return Result<Unit>.Failure("An error occured while creating the Activity.");
+                    if (!result) return Result<Unit>.Failure("An error occured while editing the Activity.");
 
                     return Result<Unit>.Success(Unit.Value);
 
@@ -269,10 +220,6 @@ namespace Application.Activities
 
                     return Result<Unit>.Failure("An error occured while editing the Activity.");
                 }
-                // var success = await _context.SaveChangesAsync(cancellationToken) > 0;
-
-                // if (success) 
-
             }
         }
     }
