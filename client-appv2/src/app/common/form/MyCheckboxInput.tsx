@@ -50,6 +50,7 @@ export default function MyCheckboxInput(props: Props) {
           ((e, data) => {
             console.log(data);
             helpers.setValue(data.checked ? 1 : 0);
+            data.checked ? setIsChecked(true) : setIsChecked(false);
           })
         }
       />

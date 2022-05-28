@@ -185,30 +185,10 @@ namespace Application.Core
             .ForMember(d => d.Tag, o => o.Ignore())
             .ForMember(d => d.ImageUrl, o => o.Ignore())
             .ForMember(d => d.Picture, o => o.Ignore())
-            // .ForMember(d => d.Categories, o => o.MapFrom((s, d, o) =>
-            //     s.Categories.Select(c =>
-            //          new ActivityCategories
-            //          {
-            //              Categories = new Domain.Categories
-            //              {
-            //                  Name = c.Name
-            //              },
-            //              Activity = d
-            //          })))
-            // .ForMember(d => d.Tag, o => o.MapFrom((s, d, o) =>
-            //     s.Tag.Select(c =>
-            //          new ActivityTag
-            //          {
-            //              Tag = new Domain.Tag
-            //              {
-            //                  Name = c.Name
-            //              },
-            //              Activity = d
-            //          })))
-            // {
-            //     Categories = new Domain.Categories { Name = s.Categories. }
-            // } ))
             .MapOnlyIfChanged();
+
+            CreateMap<ActivityDetailsDto, ActivityDto>();
+
 
 
 

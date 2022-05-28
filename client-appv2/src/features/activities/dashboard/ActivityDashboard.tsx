@@ -156,7 +156,7 @@ export default observer(function ActivityDashboard() {
                 "Anything!",
                 "Let's gooo!",
                 "In-Person coming soon!",
-                "Scroll down already! :)",
+                "Scroll down already!",
               ]}
               typeSpeed={75}
               backSpeed={50}
