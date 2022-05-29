@@ -29,10 +29,16 @@ export default observer(function ActivityDetailedChat({ activityId }: Props) {
       <Segment
         textAlign='center'
         attached='top'
-        inverted
-        color='teal'
-        style={{ border: "none" }}>
-        <Header>Chat about this event</Header>
+        basic
+        // inverted
+        // color='teal'
+        style={{
+          // border: "none",
+          // backgroundColor: "#dc493a"
+          color: "black",
+          backgroundColor: "aliceblue",
+        }}>
+        <Header size='small'>Discussion</Header>
       </Segment>
       <Segment attached clearing>
         <Formik

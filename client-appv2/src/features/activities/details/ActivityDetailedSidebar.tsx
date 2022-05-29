@@ -16,12 +16,13 @@ export default observer(function ActivityDetailedSidebar({
     <>
       <Segment
         textAlign='center'
-        style={{ border: "none" }}
+        style={{ backgroundColor: "aliceblue", color: "grey" }}
+        basic
         attached='top'
-        secondary
-        inverted
-        color='teal'>
-        {attendees.length} {attendees.length === 1 ? "Person" : "People"} going
+        secondary>
+        Guest List
+        {/* {attendees.length}{" "}
+        {attendees.length === 1 ? "Person" : "People"} going */}
       </Segment>
       <Segment attached>
         <List relaxed divided>

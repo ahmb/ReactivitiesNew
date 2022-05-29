@@ -53,31 +53,31 @@ export default observer(function ActivityFilters() {
             </p>
           </Header>
         </Grid.Column>
-        {/* <Grid.Column width={4}> */}
-        <Button
-          icon='calendar'
-          circular
-          style={{
-            // position: "absolute",
-            // right: "30px",
-            backgroundColor: "#5162FA",
-            boxShadow: "#404cb8 1px 3px 0px 0px",
-            color: "white",
-            // marginLeft: "30px",
-          }}
-          size='huge'
-          onClick={(_) => ToggleIsCalendarVisible()}
-          active={isCalendarVisible}
-          floated='right'
-        />
-        {/* </Grid.Column> */}
+        <Grid.Column width={3}>
+          <Button
+            icon='calendar'
+            circular
+            style={{
+              // position: "absolute",
+              // right: "30px",
+              backgroundColor: "#5162FA",
+              boxShadow: "#404cb8 1px 3px 0px 0px",
+              color: "white",
+              // marginLeft: "30px",
+            }}
+            size='huge'
+            onClick={(_) => ToggleIsCalendarVisible()}
+            active={isCalendarVisible}
+            floated='right'
+          />
+        </Grid.Column>
       </Grid.Row>
       <br />
 
       <Grid.Row
         className='aliceBlueBg'
         style={{
-          padding: "30px 10px 20px 10px",
+          padding: "2% 2% 2%",
           borderRadius: "20px 20px 0px 0px",
         }}>
         {transitions(

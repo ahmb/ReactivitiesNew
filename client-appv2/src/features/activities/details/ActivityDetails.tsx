@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Grid } from "semantic-ui-react";
+import { Grid, Header } from "semantic-ui-react";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
 import { useStore } from "../../../app/stores/store";
 import { useParams } from "react-router-dom";
@@ -28,13 +28,24 @@ export default observer(function ActivityDetails() {
 
   return (
     <Grid>
-      <Grid.Column width={10}>
+      <Grid.Column width={16}>
         <ActivityDetailedHeader activity={activity} />
         <ActivityDetailedInfo activity={activity} />
-        <ActivityDetailedChat activityId={activity.id} />
-      </Grid.Column>
-      <Grid.Column width={6}>
-        <ActivityDetailedSidebar activity={activity} />
+        {activity.attendees && (
+          <>
+            <ActivityDetailedSidebar activity={activity} />
+            <ActivityDetailedChat activityId={activity.id} />
+          </>
+        )}
+        {!activity.attendees && (
+          <>
+            <Header style={{ color: "grey", textAlign: "center" }}>
+              🔒 Request an invite, to unlock the chatroom , view the guest list
+              and engage in discussion
+            </Header>
+            <br />
+          </>
+        )}
       </Grid.Column>
     </Grid>
   );
