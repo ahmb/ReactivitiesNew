@@ -43,79 +43,83 @@ export default observer(function ActivityDetailedHeader({ activity }: Props) {
     activityStore: { updateAttendance, loading, cancelActivityToggle },
   } = useStore();
   return (
-    <Segment.Group>
-      <Segment
-        basic
-        attached='top'
-        style={{
-          //  padding: "0",
-          backgroundColor: "aliceBlue",
-        }}>
-        {activity.isCancelled && (
-          <Label
-            style={{ position: "absolute", zIndex: 1000, left: -14, top: 20 }}
-            ribbon
-            content='Cancelled'
-            color='red'
-            circular
-          />
-        )}
-        <Image
-          centered
-          src={
-            activity.imageUrl ??
-            `/assets/categoryImages/${activity.categories[0].name}.jpg`
-          }
-          style={{
-            borderRadius: "20px",
-            boxShadow: "0px 10px 2px 0px #80808021",
-            // maxWidth: "18em",
-            // maxHeight: "13em",
-            maxWidth: "100%",
-            maxHeight: "100%",
-            alignSelf: "center",
-            objectFit: "fill",
-          }}
-        />
+    <>
+      <Button circular exact as={NavLink} to={"/activities"}>
+        <Icon name='angle left' />
+      </Button>
+      <Segment.Group>
         <Segment
-          // style={activityImageTextStyle}
-          style={{ paddingBottom: "0px" }}
-          basic>
-          <Item.Group>
-            <Item>
-              <Item.Content style={{ textAlign: "center" }}>
-                <Header
-                  size='huge'
-                  content={activity.title}
-                  textAlign='center'
-                  style={{ marginBottom: "15px" }}
-                />
-                <Grid>
-                  <Grid.Row>
-                    <Grid.Column width={4} textAlign='center'>
-                      <p
-                        style={{
-                          // color: "grey",
-                          // fontSize: "12px",
-                          marginBottom: "0px",
-                          paddingBottom: "0px",
-                        }}>
-                        {format(activity.date!, "M/dd")}
-                      </p>
-                      {/* </Header> */}
-                      <Header
-                        size='tiny'
-                        style={{
-                          marginTop: "0px",
-                          // padding: "0px",
-                          marginBottom: "0px",
-                          color: "#5162FA",
-                          whiteSpace: "nowrap",
-                        }}>
-                        {format(activity.date!, "h:mm aa")}
-                        {/* dd MMM h:mm aa */}
-                      </Header>
-                      {/* <Header
+          basic
+          attached='top'
+          style={{
+            //  padding: "0",
+            backgroundColor: "aliceBlue",
+          }}>
+          {activity.isCancelled && (
+            <Label
+              style={{ position: "absolute", zIndex: 1000, left: -14, top: 20 }}
+              ribbon
+              content='Cancelled'
+              color='red'
+              circular
+            />
+          )}
+          <Image
+            centered
+            src={
+              activity.imageUrl ??
+              `/assets/categoryImages/${activity.categories[0].name}.jpg`
+            }
+            style={{
+              borderRadius: "20px",
+              boxShadow: "0px 10px 2px 0px #80808021",
+              // maxWidth: "18em",
+              // maxHeight: "13em",
+              maxWidth: "100%",
+              maxHeight: "100%",
+              alignSelf: "center",
+              objectFit: "fill",
+            }}
+          />
+          <Segment
+            // style={activityImageTextStyle}
+            style={{ paddingBottom: "0px" }}
+            basic>
+            <Item.Group>
+              <Item>
+                <Item.Content style={{ textAlign: "center" }}>
+                  <Header
+                    size='huge'
+                    content={activity.title}
+                    textAlign='center'
+                    style={{ marginBottom: "15px" }}
+                  />
+                  <Grid>
+                    <Grid.Row>
+                      <Grid.Column width={4} textAlign='center'>
+                        <p
+                          style={{
+                            // color: "grey",
+                            // fontSize: "12px",
+                            marginBottom: "0px",
+                            paddingBottom: "0px",
+                          }}>
+                          {format(activity.date!, "M/dd")}
+                        </p>
+                        {/* </Header> */}
+                        <Header
+                          size='tiny'
+                          style={{
+                            marginTop: "0px",
+                            // padding: "0px",
+                            marginBottom: "0px",
+                            color: "#5162FA",
+                            whiteSpace: "nowrap",
+                          }}>
+                          {format(activity.date!, "h:mm aa")}
+                          {/* dd MMM h:mm aa */}
+                        </Header>
+                        {/* <Header
                           size='tiny'
                           color='grey'
                           style={{
@@ -123,189 +127,191 @@ export default observer(function ActivityDetailedHeader({ activity }: Props) {
                             margin: "0px",
                             fontSize: "11px",
                           }}> */}
-                      <p
-                        style={{
-                          color: "grey",
-                          fontSize: "10px",
-                          marginBottom: "-7px",
-                        }}>
-                        {Intl.DateTimeFormat().resolvedOptions().timeZone}
-                      </p>
-                    </Grid.Column>
-                    <Grid.Column width={4} textAlign='center'>
-                      <p style={{ fontSize: "small" }}>Duration</p>
-                      <Header
-                        // color='red'
-                        size='tiny'
-                        style={{
-                          marginTop: "0px",
-                          paddingLeft: "0px",
-                          marginBottom: "0px",
-                          color: "#5162FA",
-                        }}>
-                        <span
+                        <p
                           style={{
-                            whiteSpace: "nowrap",
-                            // color: "grey"
+                            color: "grey",
+                            fontSize: "10px",
+                            marginBottom: "-7px",
                           }}>
-                          {activity.duration + " "}mins
-                        </span>
-                      </Header>{" "}
-                    </Grid.Column>
+                          {Intl.DateTimeFormat().resolvedOptions().timeZone}
+                        </p>
+                      </Grid.Column>
+                      <Grid.Column width={4} textAlign='center'>
+                        <p style={{ fontSize: "small" }}>Duration</p>
+                        <Header
+                          // color='red'
+                          size='tiny'
+                          style={{
+                            marginTop: "0px",
+                            paddingLeft: "0px",
+                            marginBottom: "0px",
+                            color: "#5162FA",
+                          }}>
+                          <span
+                            style={{
+                              whiteSpace: "nowrap",
+                              // color: "grey"
+                            }}>
+                            {activity.duration + " "}mins
+                          </span>
+                        </Header>{" "}
+                      </Grid.Column>
 
-                    {/* {format(activity.endDate!, "h:mm aa")} */}
-                    {/* dd MMM h:mm aa */}
-                    {/* {activity.endDate
+                      {/* {format(activity.endDate!, "h:mm aa")} */}
+                      {/* dd MMM h:mm aa */}
+                      {/* {activity.endDate
                           ?.toLocaleTimeString()
                           .slice(-2)
                           .toLowerCase()} */}
 
-                    <Grid.Column width={4} textAlign='center'>
-                      <p style={{ fontSize: "small" }}>Skill Level</p>
-                      <p>{SkillLevel[activity.skillLevel]}</p>
-                    </Grid.Column>
-                    <Grid.Column width={4} textAlign='center'>
-                      <p style={{ fontSize: "small" }}>Language </p>
-                      <p style={{ overflow: "hidden" }}>
-                        {Language[activity.language]}
-                      </p>
-                    </Grid.Column>
-                  </Grid.Row>
-                  <Grid.Row centered verticalAlign='middle'>
-                    <Grid.Column
-                      verticalAlign='middle'
-                      width={8}
-                      style={{ textAlign: "center", alignItems: "center" }}>
-                      <div style={{ alignSelf: "center" }}>
-                        {activity.host?.image && (
-                          <Image
-                            src={activity.host?.image || "/assets/user.png"}
-                            circular
-                            spaced='right'
-                            style={{ height: 65, width: 65 }}
-                            as={NavLink}
-                            to={`/profiles/${activity.host?.username}`}
-                          />
-                        )}
-                        {!activity.host?.image && (
-                          <NavLink to={`/profiles/${activity.host?.username}`}>
-                            <Avatar
-                              size={65}
-                              name={activity.host?.username}
-                              variant='beam'
-                              colors={[
-                                "#D8C395",
-                                "#F77825",
-                                "#F5F03A",
-                                "#F1EFA5",
-                                "#60BB99A",
-                              ]}
-                            />
-                          </NavLink>
-                        )}
-                      </div>
-                      {/* {activity.host?.displayName} */}
-                      <Header
-                        size='small'
-                        style={{
-                          marginTop: "auto",
-                          alignSelf: "center",
-                          alignItems: "center",
-                        }}>
-                        {activity.host?.displayName}
-                      </Header>
-                      {/* <br /> */}
-                    </Grid.Column>
-                    <Grid.Column
-                      verticalAlign='middle'
-                      width={8}
-                      style={{ textAlign: "center", alignItems: "center" }}>
-                      <Icon
-                        name='users'
-                        size='big'
-                        color='grey'
-                        style={
-                          {
-                            // paddigBottom: "0px",
-                            // marginBottom: "0px",
-                            // alignSelf: "center",
-                          }
-                        }></Icon>
-                      <Header
-                        size='tiny'
-                        style={{
-                          marginTop: "auto",
-                          // alignSelf: "center",
-                          paddigBottom: "0px",
-                          marginBottom: "0px",
-                        }}>
-                        {activity.attendeeCount}{" "}
-                        <p
-                          style={{
-                            color: "grey",
-                            marginBottom: "0px",
-                            display: "inline",
-                          }}>
-                          {"(" + activity.attendeeCountMax + ")"}
+                      <Grid.Column width={4} textAlign='center'>
+                        <p style={{ fontSize: "small" }}>Skill Level</p>
+                        <p>{SkillLevel[activity.skillLevel]}</p>
+                      </Grid.Column>
+                      <Grid.Column width={4} textAlign='center'>
+                        <p style={{ fontSize: "small" }}>Language </p>
+                        <p style={{ overflow: "hidden" }}>
+                          {Language[activity.language]}
                         </p>
-                      </Header>
+                      </Grid.Column>
+                    </Grid.Row>
+                    <Grid.Row centered verticalAlign='middle'>
+                      <Grid.Column
+                        verticalAlign='middle'
+                        width={8}
+                        style={{ textAlign: "center", alignItems: "center" }}>
+                        <div style={{ alignSelf: "center" }}>
+                          {activity.host?.image && (
+                            <Image
+                              src={activity.host?.image || "/assets/user.png"}
+                              circular
+                              spaced='right'
+                              style={{ height: 65, width: 65 }}
+                              as={NavLink}
+                              to={`/profiles/${activity.host?.username}`}
+                            />
+                          )}
+                          {!activity.host?.image && (
+                            <NavLink
+                              to={`/profiles/${activity.host?.username}`}>
+                              <Avatar
+                                size={65}
+                                name={activity.host?.username}
+                                variant='beam'
+                                colors={[
+                                  "#D8C395",
+                                  "#F77825",
+                                  "#F5F03A",
+                                  "#F1EFA5",
+                                  "#60BB99A",
+                                ]}
+                              />
+                            </NavLink>
+                          )}
+                        </div>
+                        {/* {activity.host?.displayName} */}
+                        <Header
+                          size='small'
+                          style={{
+                            marginTop: "auto",
+                            alignSelf: "center",
+                            alignItems: "center",
+                          }}>
+                          {activity.host?.displayName}
+                        </Header>
+                        {/* <br /> */}
+                      </Grid.Column>
+                      <Grid.Column
+                        verticalAlign='middle'
+                        width={8}
+                        style={{ textAlign: "center", alignItems: "center" }}>
+                        <Icon
+                          name='users'
+                          size='big'
+                          color='grey'
+                          style={
+                            {
+                              // paddigBottom: "0px",
+                              // marginBottom: "0px",
+                              // alignSelf: "center",
+                            }
+                          }></Icon>
+                        <Header
+                          size='tiny'
+                          style={{
+                            marginTop: "auto",
+                            // alignSelf: "center",
+                            paddigBottom: "0px",
+                            marginBottom: "0px",
+                          }}>
+                          {activity.attendeeCount}{" "}
+                          <p
+                            style={{
+                              color: "grey",
+                              marginBottom: "0px",
+                              display: "inline",
+                            }}>
+                            {"(" + activity.attendeeCountMax + ")"}
+                          </p>
+                        </Header>
 
-                      {/* <br /> */}
-                      {/* <span style={{ display: "flex" }}> */}
+                        {/* <br /> */}
+                        {/* <span style={{ display: "flex" }}> */}
 
-                      {/* </span> */}
-                    </Grid.Column>
-                  </Grid.Row>
-                </Grid>
-              </Item.Content>
-            </Item>
-          </Item.Group>
+                        {/* </span> */}
+                      </Grid.Column>
+                    </Grid.Row>
+                  </Grid>
+                </Item.Content>
+              </Item>
+            </Item.Group>
+          </Segment>
         </Segment>
-      </Segment>
-      <Segment clearing attached='bottom'>
-        {activity.isHost ? (
-          <>
-            <Button
-              color={activity.isCancelled ? "green" : "red"}
-              floated='left'
-              basic
-              loading={loading}
-              onClick={cancelActivityToggle}
-              content={
-                activity.isCancelled
-                  ? "Re-activiate Activity"
-                  : "Cancel Activity"
-              }
-            />
-            <Button
-              color='orange'
-              floated='right'
-              as={Link}
-              to={`/manage/${activity.id}`}
-              disabled={activity.isCancelled}>
-              Manage Event
+        <Segment clearing attached='bottom'>
+          {activity.isHost ? (
+            <>
+              <Button
+                color={activity.isCancelled ? "green" : "red"}
+                floated='left'
+                basic
+                loading={loading}
+                onClick={cancelActivityToggle}
+                content={
+                  activity.isCancelled
+                    ? "Re-activiate Activity"
+                    : "Cancel Activity"
+                }
+              />
+              <Button
+                color='orange'
+                floated='right'
+                as={Link}
+                to={`/manage/${activity.id}`}
+                disabled={activity.isCancelled}>
+                Manage Event
+              </Button>
+            </>
+          ) : activity.isGoing ? (
+            <Button onClick={updateAttendance} loading={loading}>
+              Cancel attendance
             </Button>
-          </>
-        ) : activity.isGoing ? (
-          <Button onClick={updateAttendance} loading={loading}>
-            Cancel attendance
-          </Button>
-        ) : (
-          <Button
-            onClick={updateAttendance}
-            disabled={activity.isCancelled}
-            circular
-            floated='right'
-            style={{
-              backgroundColor: "#5162FA",
-              color: "white",
-              boxShadow: "#404cb8 1px 3px 0px 0px",
-            }}
-            loading={loading}>
-            Request Invite
-          </Button>
-        )}
-      </Segment>
-    </Segment.Group>
+          ) : (
+            <Button
+              onClick={updateAttendance}
+              disabled={activity.isCancelled}
+              circular
+              floated='right'
+              style={{
+                backgroundColor: "#5162FA",
+                color: "white",
+                boxShadow: "#404cb8 1px 3px 0px 0px",
+              }}
+              loading={loading}>
+              Request Invite
+            </Button>
+          )}
+        </Segment>
+      </Segment.Group>
+    </>
   );
 });

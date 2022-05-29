@@ -79,6 +79,7 @@ export default observer(function ActivityFilters() {
         style={{
           padding: "2% 2% 2%",
           borderRadius: "20px 20px 0px 0px",
+          paddingBottom: "3%",
         }}>
         {transitions(
           (styles, isCalendarVisible) =>
