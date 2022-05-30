@@ -36,10 +36,11 @@ export default observer(function ActivityDetailedChat({ activityId }: Props) {
         style={{
           // border: "none",
           // backgroundColor: "#dc493a"
-          color: "black",
           backgroundColor: "aliceblue",
         }}>
-        <Header size='small'>Discussion</Header>
+        <Header size='tiny' style={{ color: "grey" }}>
+          Discussion
+        </Header>
       </Segment>
       <Segment attached clearing>
         <Formik
@@ -93,7 +94,7 @@ export default observer(function ActivityDetailedChat({ activityId }: Props) {
                   }}>
                   <NavLink to={`/profiles/${comment.username}`}>
                     <Avatar
-                      size={30}
+                      size={25}
                       name={comment.username}
                       variant='beam'
                       colors={[

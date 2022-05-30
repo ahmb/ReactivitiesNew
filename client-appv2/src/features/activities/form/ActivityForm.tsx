@@ -40,6 +40,8 @@ export default observer(function ActivityForm() {
     updateActivityNew,
     loadActivity,
     loadingInitial,
+    cancelActivityToggle,
+    loading,
   } = activityStore;
   const { id } = useParams<{ id: string }>();
 
@@ -51,7 +53,7 @@ export default observer(function ActivityForm() {
     new ActivityFormValuesNew()
   );
 
-  const [loadedActivity, setLoadedActivity] = useState<ActivityDetails>();
+  const [isActivityLoaded, setIsActivityLoaded] = useState(false);
 
   // const [recurringEvent, setRecurringEvent] = React.useState(false);
   // const [privateEvent, setPrivateEvent] = React.useState(0);
@@ -117,6 +119,7 @@ export default observer(function ActivityForm() {
           });
           console.log(activityFormValues);
           setActivity(activityFormValues);
+          setIsActivityLoaded(true);
         } else {
           console.log("no activity found");
         }
@@ -201,7 +204,8 @@ export default observer(function ActivityForm() {
     }
   }
 
-  if (loadingInitial) <LoadingComponent content='Loading Activity' />;
+  if (loadingInitial || !isActivityLoaded)
+    <LoadingComponent content='Loading Activity' />;
   return (
     <>
       <CircleGrid
@@ -395,6 +399,26 @@ export default observer(function ActivityForm() {
                 <MyTextInput placeholder='City' name='city' />
                 <MyTextInput placeholder='Venue' name='venue' /> */}
                 <Button
+                  color={activity.isCancelled ? "green" : "red"}
+                  floated='left'
+                  disabled={isSubmitting || loadingInitial || !isActivityLoaded}
+                  circular
+                  loading={loading}
+                  onClick={cancelActivityToggle}
+                  style={
+                    activity.isCancelled
+                      ? {
+                          boxShadow: "#28833e 1px 3px 0px 0px",
+                        }
+                      : {
+                          boxShadow: "#c50000 1px 3px 0px 0px",
+                        }
+                  }
+                  content={
+                    activity.isCancelled ? "Enable Activity" : "Cancel Activity"
+                  }
+                />
+                <Button
                   loading={isSubmitting}
                   floated='right'
                   positive
@@ -411,10 +435,11 @@ export default observer(function ActivityForm() {
                 <Button
                   circular
                   as={Link}
-                  to='/activities'
+                  to={`/activities/${activity.id}`}
                   floated='right'
                   type='button'
                   content='Cancel'
+                  style={{ boxShadow: "#969696 1px 3px 0px 0px" }}
                 />
               </Form>
             )}

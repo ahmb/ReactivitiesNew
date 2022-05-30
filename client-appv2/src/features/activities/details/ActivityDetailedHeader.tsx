@@ -20,6 +20,7 @@ import {
 } from "../../../app/models/activity";
 import { useStore } from "../../../app/stores/store";
 import { categoryOptions } from "../../../app/common/options/categoryOptions";
+import { useEffect } from "react";
 
 const activityImageStyle = {
   filter: "brightness(30%)",
@@ -42,9 +43,15 @@ export default observer(function ActivityDetailedHeader({ activity }: Props) {
   const {
     activityStore: { updateAttendance, loading, cancelActivityToggle },
   } = useStore();
+
   return (
     <>
-      <Button circular exact as={NavLink} to={"/activities"}>
+      <Button
+        circular
+        exact
+        as={NavLink}
+        to={"/activities"}
+        style={{ boxShadow: "#969696 1px 3px 0px 0px" }}>
         <Icon name='angle left' />
       </Button>
       <Segment.Group>
@@ -58,10 +65,10 @@ export default observer(function ActivityDetailedHeader({ activity }: Props) {
           {activity.isCancelled && (
             <Label
               style={{ position: "absolute", zIndex: 1000, left: -14, top: 20 }}
-              ribbon
               content='Cancelled'
               color='red'
               circular
+              size='huge'
             />
           )}
           <Image
@@ -273,30 +280,24 @@ export default observer(function ActivityDetailedHeader({ activity }: Props) {
           {activity.isHost ? (
             <>
               <Button
-                color={activity.isCancelled ? "green" : "red"}
-                floated='left'
-                basic
-                loading={loading}
-                onClick={cancelActivityToggle}
-                content={
-                  activity.isCancelled
-                    ? "Re-activiate Activity"
-                    : "Cancel Activity"
-                }
-              />
-              <Button
-                color='orange'
+                circular
+                style={{
+                  backgroundColor: "#e0e1e2",
+                  color: "#525252",
+                  boxShadow: "#969696 1px 3px 0px 0px",
+                }}
                 floated='right'
                 as={Link}
-                to={`/manage/${activity.id}`}
-                disabled={activity.isCancelled}>
-                Manage Event
+                to={`/manage/${activity.id}`}>
+                Edit
               </Button>
             </>
           ) : activity.isGoing ? (
-            <Button onClick={updateAttendance} loading={loading}>
-              Cancel attendance
-            </Button>
+            <>
+              <span>
+                🎉<i>Attendance confirmed</i>
+              </span>
+            </>
           ) : (
             <Button
               onClick={updateAttendance}

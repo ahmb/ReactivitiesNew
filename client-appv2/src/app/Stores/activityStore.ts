@@ -158,18 +158,20 @@ export default class ActivityStore {
   };
 
   //TODO: fix this to add activity back to the registry
-  private setActivity = (activity: Activity) => {
-    // const user = store.userStore.user;
-    //check if the users authenticated and logged into the application
-    // if (user) {
-    //   activity.isGoing = activity.attendees?.some(
-    //     (a) => a.username === user.username
-    //   );
-    //   activity.isHost = activity.hostUsername === user.username;
-    //   activity.host = activity.attendees?.find(
-    //     (x) => x.username === activity.hostUsername
-    //   );
-    // }
+  private setActivity = (activity: Activity | ActivityDetails) => {
+    const user = store.userStore.user;
+    // check if the users authenticated and logged into the application
+    if (user) {
+      activity.isGoing =
+        "attendees" in activity
+          ? activity.attendees?.some((a) => a.username === user.username)
+          : false;
+      // activity.isGoing = activity.isGoing;
+      activity.isHost = activity.hostUsername === user.username;
+      // activity.host = activity.hostUsername;.attendees?.find(
+      //   (x) => x.username === activity.hostUsername
+      // );
+    }
     activity.date = new Date(activity.date!);
     // activity.endDate = new Date(activity.endDate!);
     this.activityRegistry.set(activity.id, activity);

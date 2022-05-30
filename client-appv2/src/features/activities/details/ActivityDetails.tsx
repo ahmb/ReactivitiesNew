@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Grid, Header } from "semantic-ui-react";
+import { Container, Grid, Header, Icon, Segment } from "semantic-ui-react";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
 import { useStore } from "../../../app/stores/store";
 import { useParams } from "react-router-dom";
@@ -36,6 +36,22 @@ export default observer(function ActivityDetails() {
       <Grid.Column width={16}>
         <ActivityDetailedHeader activity={activity} />
         <ActivityDetailedInfo activity={activity} />
+        {activity.attendees && activity.assets && (
+          <Segment>
+            <Grid>
+              <Grid.Row
+                style={{
+                  paddingLeft: "5%",
+                  paddingRight: "5%",
+                  paddingTop: "2%",
+                  paddingBottom: "2%",
+                }}>
+                <Icon name='linkify' color='grey' />
+                {activity.assets}
+              </Grid.Row>
+            </Grid>
+          </Segment>
+        )}
         {activity.attendees && (
           <>
             <Grid>

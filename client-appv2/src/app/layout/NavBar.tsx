@@ -90,6 +90,7 @@ const NavBar: React.FC<IProps> = ({ className }) => {
                   icon='search'
                   circular
                   size='mini'
+                  style={{ boxShadow: "#969696 1px 3px 0px 0px" }}
                 />
               </Menu.Item>
               <Menu.Item position='right'>
@@ -113,7 +114,7 @@ const NavBar: React.FC<IProps> = ({ className }) => {
             <>
               {/* <Menu.Item as={NavLink} to='/activities' name='Activities' />
               <Menu.Item as={NavLink} to='/errors' name='Errors' /> */}
-              <Menu.Item position='right'>
+              <Menu.Item position='right' style={{ padding: "0px" }}>
                 <Menu.Item position='right'>
                   <Button
                     as={NavLink}
@@ -121,6 +122,8 @@ const NavBar: React.FC<IProps> = ({ className }) => {
                     icon='search'
                     circular
                     size='mini'
+                    style={{ boxShadow: "#969696 1px 3px 0px 0px" }}
+                    disabled
                   />
                 </Menu.Item>
                 <Menu.Item position='right'>
@@ -141,49 +144,51 @@ const NavBar: React.FC<IProps> = ({ className }) => {
                     // }}
                   />
                 </Menu.Item>
-                {user?.image && (
-                  <Image
-                    src={user?.image || "/assets/user.png"}
-                    // avatar
-                    circular
-                    spaced='right'
-                    style={{ height: 45, width: 45 }}
-                    as={NavLink}
-                    to={`/profiles/${user?.username}`}
-                  />
-                )}
-                {!user?.image && (
-                  <NavLink to={`/profiles/${user?.username}`}>
-                    <Avatar
-                      size={45}
-                      name={user?.username}
-                      variant='beam'
-                      colors={[
-                        "#D8C395",
-                        "#F77825",
-                        "#F5F03A",
-                        "#F1EFA5",
-                        "#60BB99A",
-                      ]}
-                    />
-                  </NavLink>
-                )}
-
-                <Dropdown>
-                  <Dropdown.Menu>
-                    <Dropdown.Item
-                      as={Link}
+                <Menu.Item style={{ padding: "0px" }}>
+                  {user?.image && (
+                    <Image
+                      src={user?.image || "/assets/user.png"}
+                      // avatar
+                      circular
+                      style={{ height: 50, width: 50 }}
+                      as={NavLink}
                       to={`/profiles/${user?.username}`}
-                      text='My Profile'
-                      icon='user'
                     />
-                    <Dropdown.Item
-                      onClick={logout}
-                      text='Logout'
-                      icon='power'
-                    />
-                  </Dropdown.Menu>
-                </Dropdown>
+                  )}
+                  {!user?.image && (
+                    <NavLink to={`/profiles/${user?.username}`}>
+                      <Avatar
+                        size={47}
+                        name={user?.username}
+                        variant='beam'
+                        colors={[
+                          "#D8C395",
+                          "#F77825",
+                          "#F5F03A",
+                          "#F1EFA5",
+                          "#60BB99A",
+                        ]}
+                      />
+                    </NavLink>
+                  )}
+
+                  <Dropdown simple>
+                    <Dropdown.Menu
+                      style={{
+                        position: "absolute",
+                        top: "120px",
+                        left: "-80px",
+                        borderRadius: "20px",
+                      }}>
+                      <Dropdown.Item
+                        as={Link}
+                        to={`/profiles/${user?.username}`}
+                        text='My Profile'
+                      />
+                      <Dropdown.Item onClick={logout} text='Sign out' />
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </Menu.Item>
               </Menu.Item>
             </>
           )}
@@ -204,7 +209,7 @@ const NavBar: React.FC<IProps> = ({ className }) => {
                   zIndex: "0",
                   marginLeft: "0px",
                   marginRight: "0px",
-                  marginTop: "71px",
+                  marginTop: "68px",
                 }
               : {
                   backgroundColor: "white",
@@ -212,7 +217,7 @@ const NavBar: React.FC<IProps> = ({ className }) => {
                   borderBottom: "1px solid #f4f4f4",
                   marginLeft: "0px",
                   marginRight: "0px",
-                  marginTop: "71px",
+                  marginTop: "68px",
                 }
           }>
           <Container>

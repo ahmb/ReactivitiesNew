@@ -2,16 +2,30 @@ import Avatar from "boring-avatars";
 import { observer } from "mobx-react-lite";
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
-import { Segment, List, Item, Label, Image } from "semantic-ui-react";
+import {
+  Segment,
+  List,
+  Item,
+  Label,
+  Image,
+  Header,
+  Button,
+  Grid,
+} from "semantic-ui-react";
 import { Activity, ActivityDetails } from "../../../app/models/activity";
+import { useStore } from "../../../app/stores/store";
 
 interface Props {
   activity: ActivityDetails;
 }
 
 export default observer(function ActivityDetailedSidebar({
-  activity: { attendees, host },
+  activity: { attendees, host, isGoing, isHost },
 }: Props) {
+  const {
+    activityStore: { updateAttendance, loading, cancelActivityToggle },
+  } = useStore();
+
   if (!attendees) return null;
   return (
     <>
@@ -21,7 +35,10 @@ export default observer(function ActivityDetailedSidebar({
         basic
         attached='top'
         secondary>
-        Guest List
+        <Header size='tiny' style={{ color: "grey" }}>
+          Guest List
+        </Header>
+
         {/* {attendees.length}{" "}
         {attendees.length === 1 ? "Person" : "People"} going */}
       </Segment>
@@ -88,6 +105,26 @@ export default observer(function ActivityDetailedSidebar({
           )}
         </List>
       </Segment>
+      {isGoing && !isHost && (
+        <Grid style={{ marginTop: "5px", paddingBottom: "5px" }}>
+          <Grid.Row>
+            <Grid.Column textAlign='right'>
+              <Button
+                color='red'
+                onClick={updateAttendance}
+                loading={loading}
+                circular
+                style={{
+                  boxShadow: "#c50000 1px 3px 0px 0px",
+                  // marginTop: "10px",
+                  // marginBottom: "10px",
+                }}>
+                Cancel attendance
+              </Button>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      )}
     </>
   );
 });
