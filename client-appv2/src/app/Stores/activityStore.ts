@@ -157,6 +157,7 @@ export default class ActivityStore {
     return this.activityRegistry.get(id);
   };
 
+  //TODO: fix this to add activity back to the registry
   private setActivity = (activity: Activity) => {
     // const user = store.userStore.user;
     //check if the users authenticated and logged into the application

@@ -212,6 +212,8 @@ export default observer(function ActivityDetailedHeader({ activity }: Props) {
                         {/* {activity.host?.displayName} */}
                         <Header
                           size='small'
+                          as={Link}
+                          to={`/profiles/${activity.host?.username}`}
                           style={{
                             marginTop: "auto",
                             alignSelf: "center",

@@ -60,6 +60,7 @@ namespace Application.Core
                 .ForMember(dest => dest.IsGoing, opt => opt.MapFrom(a =>
                     a.Attendees.SingleOrDefault(at => at.AppUser.UserName == currentUsername) != null));
 
+            //for unread activities
             CreateMap<Activity, ActivityPendingDto>()
                 .ForMember(d => d.HostUsername,
                             o => o.MapFrom(a => a.Attendees
@@ -72,7 +73,9 @@ namespace Application.Core
                 .ForMember(d => d.HostUsername,
                             o => o.MapFrom(a => a.Attendees
                                     .FirstOrDefault(aa => aa.IsHost).AppUser.UserName))
-                .ForMember(ad => ad.AttendeeCount, o => o.MapFrom(a => a.Attendees.Count))
+                .ForMember(ad => ad.AttendeeCount, o => o.MapFrom(a => a.Attendees.Where(
+                                    a => a.ApprovalStatus == ApprovalStatus.Accepted &&
+                                    !a.IsHost).Count()))
                 .ForMember(ad => ad.Attendees, o => o.MapFrom(a => a.Attendees.
                                                     Where(at => at.ApprovalStatus == ApprovalStatus.Accepted)))
                 .ForMember(ad => ad.Host, a => a.MapFrom(a => a.Attendees.SingleOrDefault(at => at.IsHost)));
@@ -187,14 +190,13 @@ namespace Application.Core
             .ForMember(d => d.Picture, o => o.Ignore())
             .MapOnlyIfChanged();
 
-            CreateMap<ActivityDetailsDto, ActivityDto>();
-
-
-
-
-
-
-
+            CreateMap<ActivityDetailsDto, ActivityDto>()
+            .ForMember(ad => ad.AttendeeCount,
+            o => o.MapFrom(
+                a => a.Attendees.Where(
+                    a => a.ApprovalStatus == ApprovalStatus.Accepted &&
+                    !a.IsHost).Count()
+                ));
 
             // .ForMember(d => d.DisplayName, o => o.MapFrom(tp => tp.User.DisplayName))
             // .ForMember(d => d.Username, o => o.MapFrom(tp => tp.User.UserName));

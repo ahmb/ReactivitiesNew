@@ -2,11 +2,12 @@ import { formatDistance } from "date-fns";
 import { Formik, Form, Field, FieldProps } from "formik";
 import { observer } from "mobx-react-lite";
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { Segment, Header, Comment, Loader } from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
 import * as Yup from "yup";
 import SimpleWebRTC from "../../../app/webrtc/SimpleWebRtc";
+import Avatar from "boring-avatars";
 
 interface Props {
   activityId: string;
@@ -80,7 +81,32 @@ export default observer(function ActivityDetailedChat({ activityId }: Props) {
         <Comment.Group>
           {commentStore.comments.map((comment) => (
             <Comment key={comment.id}>
-              <Comment.Avatar src={comment.image || "/assets/user.png"} />
+              {comment.image && (
+                <Comment.Avatar src={comment.image || "/assets/user.png"} />
+              )}
+              {!comment.image && (
+                <span
+                  style={{
+                    float: "left",
+                    marginBottom: "3%",
+                    paddingRight: "10px",
+                  }}>
+                  <NavLink to={`/profiles/${comment.username}`}>
+                    <Avatar
+                      size={30}
+                      name={comment.username}
+                      variant='beam'
+                      colors={[
+                        "#D8C395",
+                        "#F77825",
+                        "#F5F03A",
+                        "#F1EFA5",
+                        "#60BB99A",
+                      ]}
+                    />
+                  </NavLink>
+                </span>
+              )}
               <Comment.Content>
                 <Comment.Author as={Link} to={`/profiles/${comment.username}`}>
                   {comment.displayName}

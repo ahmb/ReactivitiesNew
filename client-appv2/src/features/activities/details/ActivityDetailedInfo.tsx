@@ -27,11 +27,11 @@ export default observer(function ActivityDetailedInfo({ activity }: Props) {
                 }}>
                 Details
               </p>
-              <p
+              <Container
                 style={{
                   fontSize: "18px",
-                  padding: "5%",
-                  paddingBottom: "2%",
+                  // padding: "5%",
+                  // paddingBottom: "2%",
                 }}>
                 {activity.description}
                 {activity.tag.length > 0 && (
@@ -44,7 +44,7 @@ export default observer(function ActivityDetailedInfo({ activity }: Props) {
                       // marginBottom: "0px",
                     }}>
                     <Grid.Row
-                      textAlign='left'
+                      // textAlign='left'
                       verticalAlign='middle'
                       style={
                         {
@@ -56,7 +56,7 @@ export default observer(function ActivityDetailedInfo({ activity }: Props) {
                       }>
                       {activity.categories.map((c) => (
                         <Grid.Column
-                          key={activity.id}
+                          key={c.name}
                           width={5}
                           // textAlign='center'
                           // style={{ paddingLeft: "0px" }}
@@ -85,7 +85,10 @@ export default observer(function ActivityDetailedInfo({ activity }: Props) {
                       }>
                       {activity.tag.map((t) => (
                         // <Grid.Column width={5} textAlign='center'>
-                        <p id='listTags' style={{ paddingLeft: "2%" }}>
+                        <p
+                          id='listTags'
+                          style={{ paddingLeft: "2%" }}
+                          key={t.name}>
                           <span className='fontColor'>#</span>
                           {t.name}
                         </p>
@@ -95,7 +98,7 @@ export default observer(function ActivityDetailedInfo({ activity }: Props) {
                   </Grid>
                   // </Segment>
                 )}
-              </p>
+              </Container>
             </Grid.Column>
           </Grid>
         </Segment>

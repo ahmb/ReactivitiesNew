@@ -288,7 +288,7 @@ export default function ActivityListItem({ activity }: Props) {
                       }>
                       {activity.categories.map((c) => (
                         <Grid.Column
-                          key={activity.id}
+                          key={c.name}
                           width={4}
                           textAlign='center'
                           style={{ paddingLeft: "0px" }}>
@@ -314,7 +314,10 @@ export default function ActivityListItem({ activity }: Props) {
                           // marginBottom: "10px",
                         }}>
                         {activity.tag.map((t) => (
-                          <Grid.Column width={4} textAlign='center'>
+                          <Grid.Column
+                            key={t.name}
+                            width={4}
+                            textAlign='center'>
                             <p id='listTags'>
                               {" "}
                               <span className='fontColor'>#</span>

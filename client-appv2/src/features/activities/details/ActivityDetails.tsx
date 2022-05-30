@@ -20,7 +20,12 @@ export default observer(function ActivityDetails() {
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
-    if (id) loadActivity(id);
+    if (id)
+      loadActivity(id).then((a) => {
+        console.log("loaded activity details:");
+        console.log(a);
+      });
+
     return () => clearSelectedActivity();
   }, [id, loadActivity, clearSelectedActivity]);
 
@@ -33,6 +38,27 @@ export default observer(function ActivityDetails() {
         <ActivityDetailedInfo activity={activity} />
         {activity.attendees && (
           <>
+            <Grid>
+              <Grid.Row>
+                <div
+                  style={{
+                    backgroundColor: "grey",
+                    padding: "25px",
+                    // marginTop: "20px",
+                  }}>
+                  <Header
+                    content={
+                      "The Chatroom, Guest list and Discussion features are only visible to approved attendees. You may use it to coordinate and/or share any preparation material etc "
+                    }
+                    size='small'
+                    style={{
+                      marginBottom: "0px",
+                      color: "#eaeaea",
+                    }}
+                  />
+                </div>
+              </Grid.Row>
+            </Grid>
             <ActivityDetailedSidebar activity={activity} />
             <ActivityDetailedChat activityId={activity.id} />
           </>
