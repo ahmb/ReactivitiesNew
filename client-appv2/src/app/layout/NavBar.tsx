@@ -215,6 +215,7 @@ const NavBar: React.FC<IProps> = ({ className }) => {
                   backgroundColor: "white",
                   width: "100%",
                   borderBottom: "1px solid #f4f4f4",
+                  zIndex: "1",
                   marginLeft: "0px",
                   marginRight: "0px",
                   marginTop: "68px",

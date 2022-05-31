@@ -165,7 +165,7 @@ export default class ActivityStore {
       activity.isGoing =
         "attendees" in activity
           ? activity.attendees?.some((a) => a.username === user.username)
-          : false;
+          : activity.isGoing;
       // activity.isGoing = activity.isGoing;
       activity.isHost = activity.hostUsername === user.username;
       // activity.host = activity.hostUsername;.attendees?.find(

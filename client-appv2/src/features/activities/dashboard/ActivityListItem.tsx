@@ -50,7 +50,20 @@ export default function ActivityListItem({ activity }: Props) {
             />
           )}
 
-          {activity.isHost && <Label circular>Hosting</Label>}
+          {activity.isHost && (
+            <Label
+              circular
+              horizontal
+              attached='top right'
+              style={{
+                marginTop: "20px",
+                marginRight: "20px",
+                backgroundColor: "#37cf37",
+                color: "white",
+              }}>
+              hosting
+            </Label>
+          )}
           {activity.isGoing && !activity.isHost && (
             <Label
               circular
