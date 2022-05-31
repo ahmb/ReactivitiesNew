@@ -6,6 +6,7 @@ import {
   ActivityFormValues,
   ActivityDetails,
   ActivityFormValuesNew,
+  ApprovalStatus,
 } from "../models/activity";
 import { Pagination, PagingParams } from "../models/pagination";
 import { Profile } from "../models/profile";
@@ -296,15 +297,17 @@ export default class ActivityStore {
               (a) => a.username !== user?.username
             );
           this.selectedActivity.isGoing = false;
-        } else {
-          const attendee = new Profile(user!);
-          this.selectedActivity?.attendees?.push(attendee);
-          this.selectedActivity!.isGoing = true;
         }
-        this.activityRegistry.set(
-          this.selectedActivity!.id,
-          this.selectedActivity!
-        );
+        this.selectedActivity!.approvalStatus = ApprovalStatus.Pending;
+        // else {
+        //   const attendee = new Profile(user!);
+        //   this.selectedActivity?.attendees?.push(attendee);
+        //   this.selectedActivity!.isGoing = true;
+        // }
+        // this.activityRegistry.set(
+        //   this.selectedActivity!.id,
+        //   this.selectedActivity!
+        // );
       });
     } catch (error) {
       console.log(error);

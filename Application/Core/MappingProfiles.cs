@@ -58,7 +58,13 @@ namespace Application.Core
                 .ForMember(ad => ad.Host, a => a.MapFrom(a => a.Attendees
                     .SingleOrDefault(at => at.IsHost)))
                 .ForMember(dest => dest.IsGoing, opt => opt.MapFrom(a =>
-                    a.Attendees.SingleOrDefault(at => at.AppUser.UserName == currentUsername) != null));
+                    a.Attendees.SingleOrDefault(at => at.AppUser.UserName == currentUsername && at.ApprovalStatus == ApprovalStatus.Accepted) != null))
+                .ForMember(ad => ad.ApprovalStatus, o => o.MapFrom(add =>
+                    add.Attendees.SingleOrDefault(at => at.AppUser.UserName == currentUsername) != null ?
+                    add.Attendees.SingleOrDefault(at => at.AppUser.UserName == currentUsername).ApprovalStatus :
+                    ApprovalStatus.NotRequested
+                ))
+                ;
 
             //for unread activities
             CreateMap<Activity, ActivityPendingDto>()
@@ -78,7 +84,14 @@ namespace Application.Core
                                     !a.IsHost).Count()))
                 .ForMember(ad => ad.Attendees, o => o.MapFrom(a => a.Attendees.
                                                     Where(at => at.ApprovalStatus == ApprovalStatus.Accepted)))
-                .ForMember(ad => ad.Host, a => a.MapFrom(a => a.Attendees.SingleOrDefault(at => at.IsHost)));
+                .ForMember(ad => ad.Host, o => o.MapFrom(a => a.Attendees.SingleOrDefault(at => at.IsHost)))
+                .ForMember(ad => ad.ApprovalStatus, o => o.MapFrom(add =>
+                    add.Attendees.SingleOrDefault(at => at.AppUser.UserName == currentUsername) != null ?
+                    add.Attendees.SingleOrDefault(at => at.AppUser.UserName == currentUsername).ApprovalStatus :
+                    ApprovalStatus.NotRequested
+                ))
+                ;
+
             // .ForMember(ad => ad.Categories, o => o.MapFrom(a => a.Categories))
             // .ForMember(ad => ad.Tag, o => o.MapFrom(a => a.Tag));
 

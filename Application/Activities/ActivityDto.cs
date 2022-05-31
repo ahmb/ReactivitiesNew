@@ -36,6 +36,8 @@ namespace Application.Activities
 
         public int AttendeeCount { get; set; }
         public int AttendeeCountMax { get; set; }
+        public ApprovalStatus ApprovalStatus { get; set; } = ApprovalStatus.NotRequested;
+
 
         //list of AppUsers attending an activity i.e. Attendees
         // [JsonPropertyName("attendees")]

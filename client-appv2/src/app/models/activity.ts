@@ -29,6 +29,7 @@ export interface Activity {
   host?: Profile;
   attendeeCount: number;
   attendeeCountMax: number;
+  approvalStatus: ApprovalStatus;
   categories: ICategory[];
   tag: ITag[];
 
@@ -69,6 +70,7 @@ export interface ActivityDetails {
   host?: Profile;
   attendeeCount: number;
   attendeeCountMax: number;
+  approvalStatus: ApprovalStatus;
   categories: ICategory[];
   tag: ITag[];
 
@@ -214,6 +216,13 @@ export enum SkillLevel {
   Beginner,
   Intermediate,
   Expert,
+}
+
+export enum ApprovalStatus {
+  Pending,
+  Accepted,
+  Rejected,
+  NotRequested,
 }
 
 export enum Language {

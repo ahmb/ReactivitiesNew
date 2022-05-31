@@ -71,7 +71,12 @@ namespace Application.Activities
                     || attendance.ApprovalStatus == Domain.ApprovalStatus.Pending
                     || attendance.ApprovalStatus == Domain.ApprovalStatus.Rejected)
                 {
-                    return Result<IActivityDto>.Success(_mapper.Map<ActivityDetailsDto, ActivityDto>(detailedActivity));
+                    var previewActivity = await activity.ProjectTo<ActivityDto>
+                        (_mapper.ConfigurationProvider, new { currentUsername = _userAccessor.GetUsername() })
+                        .FirstAsync(cancellationToken: cancellationToken);
+
+                    return Result<IActivityDto>.Success(previewActivity);
+                    // return Result<IActivityDto>.Success(_mapper.Map<ActivityDetailsDto, ActivityDto>(detailedActivity));
                 }
 
                 // if (activity == null)

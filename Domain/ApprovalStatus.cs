@@ -4,6 +4,7 @@ namespace Domain
     {
         Pending,
         Accepted,
-        Rejected
+        Rejected,
+        NotRequested
     }
 }
