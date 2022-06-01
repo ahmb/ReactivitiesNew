@@ -73,7 +73,7 @@ const NavBar: React.FC<IProps> = ({ className }) => {
           <Menu.Item
             id='logo'
             as={NavLink}
-            to='/activities'
+            to='/'
             style={{
               backgroundColor: "white",
               paddingLeft: "0px",
@@ -96,7 +96,7 @@ const NavBar: React.FC<IProps> = ({ className }) => {
               <Menu.Item position='right'>
                 <Button
                   as={Link}
-                  to={`/`}
+                  to={`/login`}
                   floated='right'
                   content='Sign Up or Login'
                   circular
@@ -152,11 +152,11 @@ const NavBar: React.FC<IProps> = ({ className }) => {
                       circular
                       style={{ height: 50, width: 50 }}
                       as={NavLink}
-                      to={`/profiles/${user?.username}`}
+                      to={"/home"}
                     />
                   )}
                   {!user?.image && (
-                    <NavLink to={`/profiles/${user?.username}`}>
+                    <NavLink to={"/home"}>
                       <Avatar
                         size={47}
                         name={user?.username}
@@ -196,7 +196,7 @@ const NavBar: React.FC<IProps> = ({ className }) => {
       </Menu>
 
       {/* FILTER NAV */}
-      {isFilterNavSticky && location.pathname.endsWith("activities") && (
+      {isFilterNavSticky && location.pathname === "/" && (
         <Menu
           secondary
           fixed='top'
@@ -285,11 +285,9 @@ const NavBar: React.FC<IProps> = ({ className }) => {
           </Container>
         </Menu>
       )}
-      {isFilterNavSticky &&
-        !isSidebarOpen &&
-        location.pathname.endsWith("activities") && (
-          <ScrollToTop style={{ borderRadius: "15px" }} smooth top={-1} />
-        )}
+      {isFilterNavSticky && !isSidebarOpen && location.pathname === "/" && (
+        <ScrollToTop style={{ borderRadius: "15px" }} smooth top={-1} />
+      )}
     </>
   );
 };

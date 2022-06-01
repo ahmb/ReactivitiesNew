@@ -71,6 +71,11 @@ body {
   ) !important;
 }
 
+/* HOMEPAGE */
+.ui.loading.segment:before{
+background:#eaeaea !important;
+}
+
 /* ACTIVITIES PAGE */
 .react-calendar__tile--now {
   background-color: #009ee6;

@@ -51,7 +51,7 @@ export default observer(function ActivityDetailedHeader({ activity }: Props) {
         circular
         exact
         as={NavLink}
-        to={"/activities"}
+        to={"/"}
         style={{ boxShadow: "#969696 1px 3px 0px 0px" }}>
         <Icon name='angle left' />
       </Button>

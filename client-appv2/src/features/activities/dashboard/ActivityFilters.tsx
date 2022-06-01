@@ -109,7 +109,7 @@ export default observer(function ActivityFilters() {
         <Menu
           size='large'
           style={
-            !isFilterNavSticky && location.pathname.endsWith("activities")
+            !isFilterNavSticky && location.pathname === "/"
               ? { width: "100%", marginTop: 25 }
               : {
                   width: "100%",

@@ -87,9 +87,10 @@ function App() {
     <>
       <ToastContainer position='top-center' hideProgressBar />
       <ModalContainer />
-      <Route exact path='/' component={HomePage} />
+      {/* <Route exact path='/' component={HomePage} /> */}
+
       <Route
-        path={"/(.+)"}
+        path={"/(.*)"}
         render={() => (
           <>
             <NavBar />
@@ -168,11 +169,9 @@ function App() {
                       : { ...unlockScrollStyle, marginTop: "7em" }
                   }>
                   <Switch>
-                    <Route
-                      exact
-                      path='/activities'
-                      component={ActivityDashboard}
-                    />
+                    <Route exact path='/' component={ActivityDashboard} />
+
+                    {/* <Route exact path='/' component={ActivityDashboard} /> */}
                     <Route path='/activities/:id' component={ActivityDetails} />
                     <PrivateRoute
                       key={location.key}
@@ -191,6 +190,7 @@ function App() {
                       component={ConfirmEmail}
                     />
                     <Route path='/login' component={LoginForm} />
+                    <PrivateRoute path='/home' component={HomePage} />
                     <Route component={NotFound} />
                   </Switch>
                 </Container>

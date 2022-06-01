@@ -125,6 +125,7 @@ export default observer(function ActivityDetailedInfo({ activity }: Props) {
               />
             </Grid.Column>
             <Grid.Column width={8}>
+              //TODO: update with correct url depending on env
               <Button
                 icon='external alternate'
                 content='Open Chatroom'
@@ -136,8 +137,8 @@ export default observer(function ActivityDetailedInfo({ activity }: Props) {
                   boxShadow: "#404cb8 1px 3px 0px 0px",
                 }}
                 onClick={onClickUrl(
-                  `http://localhost:8080/?name=a&user=ahmad&pass=${activity.chatPassword}`
-                  // "http://localhost:5000/chatroom/index.html"
+                  `http://localhost:8080/?name=${activity.id}&user=ahmad&pass=${activity.chatPassword}`
+                  // `http://localhost:5000/chatroom/index.html?name=${activity.id}&user=ahmad&pass=${activity.chatPassword}`
                 )}
               />
             </Grid.Column>
