@@ -7,6 +7,8 @@ import {
   ActivityDetails,
   ActivityFormValuesNew,
   ApprovalStatus,
+  IUserActivitiesUnreadDto,
+  UnreadActivity,
 } from "../models/activity";
 import { Pagination, PagingParams } from "../models/pagination";
 import { Profile } from "../models/profile";
@@ -22,6 +24,7 @@ export default class ActivityStore {
   pagination: Pagination | null = null;
   pagingParams = new PagingParams();
   predicate = new Map().set("all", true);
+  unreadActivities: UnreadActivity[] = [];
 
   uploadingPicture = false;
 
@@ -156,6 +159,17 @@ export default class ActivityStore {
 
   private getActivity = (id: string) => {
     return this.activityRegistry.get(id);
+  };
+
+  private setUnreadActivities = (unreadActivitiesInput: UnreadActivity[]) => {
+    this.unreadActivities = unreadActivitiesInput;
+    // if (unreadActivitiesInput !== null) {
+    //   for (let i = 0; i < unreadActivitiesInput.length; i++) {
+    //     if (!this.unreadActivities.includes(unreadActivitiesInput[i])) {
+    //       this.unreadActivities.push(unreadActivitiesInput[i]);
+    //     }
+    //   }
+    // }
   };
 
   //TODO: fix this to add activity back to the registry
@@ -357,6 +371,20 @@ export default class ActivityStore {
     } catch (error) {
       console.log(error);
       runInAction(() => (this.uploadingPicture = false));
+    }
+  };
+
+  loadUnreadActivities = async () => {
+    this.loadingInitial = true;
+    try {
+      let unreadActivities = await agent.Activities.unread();
+
+      this.setUnreadActivities(unreadActivities);
+      this.setLoadingInitial(false);
+      return unreadActivities;
+    } catch (error) {
+      console.log(error);
+      this.setLoadingInitial(false);
     }
   };
 

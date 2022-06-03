@@ -55,55 +55,24 @@ namespace Application.Activities
                 pendingAttendanceQuery = pendingAttendanceQuery
                                            .Where(a => a.Attendees.Any(aa => aa.ApprovalStatus == ApprovalStatus.Pending));
 
-                var pendingAttendance = pendingAttendanceQuery
-                    .ProjectTo<ActivityPendingDto>(_mapper.ConfigurationProvider, new { currentUsername = _userAccessor.GetUsername() })
-                    .ToListAsync(cancellationToken: cancellationToken);
+                pendingAttendanceQuery = pendingAttendanceQuery.Where(a => a.Date.AddMinutes(-a.Duration).AddDays(-a.OngoingDays)
+                                                                         >= DateTime.UtcNow);
 
-                return Result<List<ActivityPendingDto>>.Success(await pendingAttendance);
+                pendingAttendanceQuery = pendingAttendanceQuery.OrderBy(a => a.Date);
 
-                // var queryable = currentUser.Activities
-                //     .AsQueryable();
+                try
+                {
+                    var pendingAttendance = pendingAttendanceQuery
+                        .ProjectTo<ActivityPendingDto>(_mapper.ConfigurationProvider, new { currentUsername = _userAccessor.GetUsername() })
+                        .ToListAsync(cancellationToken: cancellationToken);
 
-                // //get activities where hes the host
-                // var activitiesHosted = queryable.Where(aa => aa.IsHost && aa.Activity.Date > DateTime.Now);
-
-                // var userActivityList = new List<UserActivitiesUnreadDto>();
-
-                // foreach (var activtiyHosted in activitiesHosted)
-                // {
-
-                //     //activity attendees to approve for activities hosted
-                //     var userActivityAttenddees = _context.ActivityAttendees
-                //                                     .OrderBy(aa => aa.Activity.Date)
-                //                                     .Where(aa => aa.ActivityId == activtiyHosted.ActivityId &&
-                // //                                          !aa.IsHost && !aa.Read).ToList();
-
-                //     foreach (var userActivityAttendee in userActivityAttenddees)
-                //     {
-                //         string requestorImage;
-                //         if (userActivityAttendee.AppUser.Photos.FirstOrDefault(photo => photo.IsMain) == null)
-                //         {
-                //             requestorImage = String.Empty;
-                //         }
-                //         else
-                //         {
-                //             requestorImage = userActivityAttendee.AppUser.Photos.FirstOrDefault(photo => photo.IsMain).Url;
-                //         }
-                //         userActivityList.Add(new UserActivitiesUnreadDto
-                //         {
-                //             RequestorName = userActivityAttendee.AppUser.DisplayName,
-                //             RequestorUserName = userActivityAttendee.AppUser.UserName,
-                //             RequestDateTime = userActivityAttendee.DateJoined,
-                //             ActivityId = userActivityAttendee.Activity.Id,
-                //             ActivityName = userActivityAttendee.Activity.Title,
-                //             ActivityDateTime = userActivityAttendee.Activity.Date,
-                //             RequestorImage = requestorImage
-                //         });
-                //     }
-
-                // }
-
-                // return userActivityList;
+                    return Result<List<ActivityPendingDto>>.Success(await pendingAttendance);
+                }
+                catch
+                {
+                    return Result<List<ActivityPendingDto>>.Failure("Issue occured during Get - Unread Activity ");
+                    throw;
+                }
 
             }
         }

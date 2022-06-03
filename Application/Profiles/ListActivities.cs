@@ -42,7 +42,8 @@ namespace Application.Profiles
                 {
                     "past" => query.Where(a => a.Date <= DateTime.Now),
                     "hosting" => query.Where(a => a.HostUsername == request.Username),
-                    _ => query.Where(a => a.Date >= DateTime.Now)
+                    "future" => query.Where(a => a.Date > DateTime.Now),
+                    _ => query.Where(a => a.Date > DateTime.Now)
                 };
 
                 var activities = await query.ToListAsync(cancellationToken: cancellationToken);

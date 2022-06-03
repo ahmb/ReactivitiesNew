@@ -5,6 +5,8 @@ import {
   ActivityDetails,
   ActivityFormValues,
   ActivityFormValuesNew,
+  IUserActivitiesUnreadDto,
+  UnreadActivity,
 } from "../models/activity";
 import { history } from "../../index";
 import { store } from "../stores/store";
@@ -115,6 +117,7 @@ const Activities = {
     requests.put<void>(`/activities/${activity.id}`, activity),
   delete: (id: string) => requests.del<void>(`/activities/${id}`),
   attend: (id: string) => requests.post<void>(`/activities/${id}/attend`, {}),
+  unread: () => requests.get<UnreadActivity[]>("/activities/unread"),
   uploadPhoto: (file: Blob) => {
     let formData = new FormData();
     formData.append("File", file);
@@ -129,8 +132,6 @@ const Activities = {
     if (file) {
       formData.append("File", file);
     }
-    console.log("formData is");
-    console.log(formData);
     return axios.post<void>("/activities/new", formData, {
       headers: { "Content-type": "multipart/form-data" },
     });
@@ -143,12 +144,6 @@ const Activities = {
     if (file) {
       formData.append("File", file);
     }
-    console.log("edited formData is");
-    console.log(formData);
-    console.log("edited formData is");
-    console.log(activity);
-
-    // `/activities/${activity.id}`
     return axios.put<void>(`/activities/${activity.id}`, formData, {
       headers: { "Content-type": "multipart/form-data" },
     });

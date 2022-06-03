@@ -25,8 +25,8 @@ interface Props {
 export default function ActivityListItem({ activity }: Props) {
   return (
     <Segment.Group
-      className='activityDateGroup'
       raised
+      className='activityDateGroup'
       style={{ borderRadius: "50px" }}>
       <Segment
         style={{

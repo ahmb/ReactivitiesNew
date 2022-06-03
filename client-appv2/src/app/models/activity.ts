@@ -258,3 +258,12 @@ export enum Language {
   Urdu,
   Vietnamese,
 }
+
+export interface UnreadActivity {
+  id: string;
+  title: string;
+  hostUserName: string;
+  attendeeCount: number;
+  attendeeCountMax: number;
+  attendees: Profile[];
+}

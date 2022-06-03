@@ -52,7 +52,7 @@ namespace API.Middleware
                     context.Response.StatusCode = (int)restEx.Code;
                     break;
                 case Exception e:
-                    logger.LogError(e, e.Message);
+                    logger.LogError("Exception occured: {a} with message {b}", e, e.Message);
                     // errors = string.IsNullOrWhiteSpace(e.Message) ? "Error" : e.Message;
                     context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                     break;
