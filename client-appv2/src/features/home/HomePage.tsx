@@ -46,7 +46,7 @@ export default observer(function HomePage() {
 
   return (
     // <Segment vertical>
-    <Container>
+    <Container style={{ marginTop: "7em" }}>
       <span style={{ display: "inline" }}>
         <Header size='huge' style={{ display: "inline" }}>
           🏠{" "}

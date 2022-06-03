@@ -170,31 +170,28 @@ export default observer(function ActivityLog() {
                 ))}
               {currentTabName !== "requests" &&
                 userActivities.map((activity: UserActivity) => (
-                  <>
-                    <Card
-                      style={{ borderRadius: "20px" }}
-                      as={Link}
-                      to={`/activities/${activity.id}`}
-                      key={activity.id}>
-                      <Card.Content>
-                        <Card.Header textAlign='center'>
-                          {activity.title}
-                        </Card.Header>
-                        <Card.Meta textAlign='center'>
-                          <div>
-                            {format(new Date(activity.date), "eeee do MMMM")}
-                          </div>
-                          <div>{format(new Date(activity.date), "h:mm a")}</div>
-                        </Card.Meta>
-                      </Card.Content>
-                      <Card.Description>
-                        Hosted by @ {activity.hostUsername}
-                        {/* <NavLink to={`/profiles/${activity.hostUsername}`}> */}
-                        {/* </NavLink> */}
-                      </Card.Description>
-                    </Card>
-                    <br />
-                  </>
+                  <Card
+                    style={{ borderRadius: "20px", padding:"10px" }}
+                    as={Link}
+                    to={`/activities/${activity.id}`}
+                    key={activity.id}>
+                    <Card.Content>
+                      <Card.Header textAlign='center'>
+                        {activity.title}
+                      </Card.Header>
+                      <Card.Meta textAlign='center'>
+                        <div>
+                          {format(new Date(activity.date), "eeee do MMMM")}
+                        </div>
+                        <div>{format(new Date(activity.date), "h:mm a")}</div>
+                      </Card.Meta>
+                    </Card.Content>
+                    <Card.Description>
+                      Hosted by @ {activity.hostUsername}
+                      {/* <NavLink to={`/profiles/${activity.hostUsername}`}> */}
+                      {/* </NavLink> */}
+                    </Card.Description>
+                  </Card>
                 ))}
             </Card.Group>
           </Grid.Column>

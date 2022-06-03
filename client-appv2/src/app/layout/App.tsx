@@ -166,7 +166,7 @@ function App() {
                   style={
                     commonStore.isSidebarOpen
                       ? { ...lockScrollStyle, marginTop: "7em" }
-                      : { ...unlockScrollStyle, marginTop: "7em" }
+                      : { ...unlockScrollStyle, marginTop: "5em" }
                   }>
                   <Switch>
                     <Route exact path='/' component={ActivityDashboard} />

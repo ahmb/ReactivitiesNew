@@ -32,7 +32,7 @@ export default observer(function ActivityDetails() {
   if (loadingInitial || !activity) return <LoadingComponent />;
 
   return (
-    <Grid>
+    <Grid style={{ marginTop: "2em" }}>
       <Grid.Column width={16}>
         <ActivityDetailedHeader activity={activity} />
         <ActivityDetailedInfo activity={activity} />

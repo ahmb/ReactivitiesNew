@@ -83,7 +83,7 @@ const NavBar: React.FC<IProps> = ({ className }) => {
           </Menu.Item>
           {!isLoggedIn && (
             <>
-              <Menu.Item position='right'>
+              {/* <Menu.Item position='right'>
                 <Button
                   as={NavLink}
                   to='/createActivity'
@@ -92,7 +92,7 @@ const NavBar: React.FC<IProps> = ({ className }) => {
                   size='mini'
                   style={{ boxShadow: "#969696 1px 3px 0px 0px" }}
                 />
-              </Menu.Item>
+              </Menu.Item> */}
               <Menu.Item position='right'>
                 <Button
                   as={Link}
@@ -115,7 +115,7 @@ const NavBar: React.FC<IProps> = ({ className }) => {
               {/* <Menu.Item as={NavLink} to='/activities' name='Activities' />
               <Menu.Item as={NavLink} to='/errors' name='Errors' /> */}
               <Menu.Item position='right' style={{ padding: "0px" }}>
-                <Menu.Item position='right'>
+                {/* <Menu.Item position='right'>
                   <Button
                     as={NavLink}
                     to='/createActivity'
@@ -125,7 +125,7 @@ const NavBar: React.FC<IProps> = ({ className }) => {
                     style={{ boxShadow: "#969696 1px 3px 0px 0px" }}
                     disabled
                   />
-                </Menu.Item>
+                </Menu.Item> */}
                 <Menu.Item position='right'>
                   <Button
                     as={NavLink}
