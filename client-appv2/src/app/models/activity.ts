@@ -266,4 +266,5 @@ export interface UnreadActivity {
   attendeeCount: number;
   attendeeCountMax: number;
   attendees: Profile[];
+  date: Date;
 }

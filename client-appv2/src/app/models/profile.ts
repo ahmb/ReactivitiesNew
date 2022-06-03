@@ -37,5 +37,6 @@ export interface UserActivity {
   title: string;
   category: string;
   date: Date;
+  imageUrl: string;
+  hostUsername: string;
 }
-

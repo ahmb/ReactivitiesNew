@@ -28,6 +28,14 @@ export default observer(function HomePage() {
       //   setActiveTab(0);
       // };
     }
+    if (userStore.user && profile?.username !== userStore.user?.username) {
+      console.log("userStore.user.username");
+      console.log(userStore.user?.username);
+      loadProfile(userStore.user?.username);
+      // return () => {
+      //   setActiveTab(0);
+      // };
+    }
   }, [loadProfile, profile]);
 
   if (loadingProfile) return <LoadingComponent content='Loading Homepage...' />;
@@ -44,7 +52,7 @@ export default observer(function HomePage() {
             <Header
               as='h2'
               content={` Welcome back, ${profile?.displayName}!`}
-              style={{ display: "inline" }}
+              style={{ display: "inline", color: "#363636de" }}
             />
             <br />
             <br />

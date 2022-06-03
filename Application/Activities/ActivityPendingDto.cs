@@ -17,6 +17,7 @@ namespace Application.Activities
         public int AttendeeCount { get; set; }
         public int AttendeeCountMax { get; set; }
 
+        public DateTime Date { get; set; }
         //list of AppUsers attending an activity i.e. Attendees
         // [JsonPropertyName("attendees")]
         public ICollection<AttendeeDto> Attendees { get; set; }
