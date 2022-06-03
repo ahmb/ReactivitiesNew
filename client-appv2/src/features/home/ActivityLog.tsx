@@ -92,103 +92,109 @@ export default observer(function ActivityLog() {
               {unreadActivities &&
                 currentTabName === "requests" &&
                 unreadActivities.length > 0 &&
-                unreadActivities.map(
-                  (unreadActivity: UnreadActivity, index2) => (
-                    <>
-                      {" "}
-                      <Header key={index2}>{unreadActivity.title}</Header>
-                      {unreadActivity.attendees.map(
-                        (attendee: Profile, index) => (
-                          <Card key={index} style={{ borderRadius: "20px" }}>
-                            <Card.Content>
-                              {!attendee.image && (
-                                <NavLink to={`/profiles/${attendee.username}`}>
-                                  <Avatar
-                                    size={65}
-                                    name={attendee.username}
-                                    variant='beam'
-                                    colors={[
-                                      "#D8C395",
-                                      "#F77825",
-                                      "#F5F03A",
-                                      "#F1EFA5",
-                                      "#60BB99A",
-                                    ]}
-                                  />
-                                </NavLink>
-                              )}
-                              {attendee.image && (
-                                <Image
-                                  floated='right'
-                                  size='mini'
-                                  src={attendee.image}
-                                  circular
-                                  style={{ height: 65, width: 65 }}
-                                  as={NavLink}
-                                  to={`/profiles/${attendee.username}`}
-                                />
-                              )}
-                              <Card.Header>{attendee.displayName}</Card.Header>
-                              <Card.Meta>
-                                <div>@{attendee.username}</div>
-                              </Card.Meta>
-                              <Card.Description>
-                                {attendee.displayName} would like to join your
-                                activity!
-                              </Card.Description>
-                              <Card.Content extra>
-                                <div
-                                //  className='ui two buttons'
-                                >
-                                  <Button
-                                    circular
-                                    color='green'
-                                    style={{
-                                      boxShadow: "#248039 1px 3px 0px 0px",
-                                    }}>
-                                    Approve
-                                  </Button>
-                                  <Button
-                                    circular
-                                    color='red'
-                                    style={{
-                                      boxShadow: "#c50000 1px 3px 0px 0px",
-                                    }}>
-                                    Decline
-                                  </Button>
-                                </div>
-                              </Card.Content>
-                            </Card.Content>
-                          </Card>
-                        )
-                      )}
-                    </>
-                  )
-                )}
+                unreadActivities.map((unreadActivity: UnreadActivity) => (
+                  <div
+                    className='invitesForActivity'
+                    key={unreadActivity.id}
+                    style={{ margin: "20px" }}>
+                    <Header>{unreadActivity.title}</Header>
+                    {unreadActivity.attendees.map((attendee: Profile) => (
+                      <Card
+                        centered
+                        key={attendee.username}
+                        style={{
+                          borderRadius: "20px",
+                        }}>
+                        <Card.Content>
+                          {!attendee.image && (
+                            <NavLink to={`/profiles/${attendee.username}`}>
+                              <Avatar
+                                size={65}
+                                name={attendee.username}
+                                variant='beam'
+                                colors={[
+                                  "#D8C395",
+                                  "#F77825",
+                                  "#F5F03A",
+                                  "#F1EFA5",
+                                  "#60BB99A",
+                                ]}
+                              />
+                            </NavLink>
+                          )}
+                          {attendee.image && (
+                            <Image
+                              floated='right'
+                              size='mini'
+                              src={attendee.image}
+                              circular
+                              style={{ height: 65, width: 65 }}
+                              as={NavLink}
+                              to={`/profiles/${attendee.username}`}
+                            />
+                          )}
+                          <Card.Header>{attendee.displayName}</Card.Header>
+                          <Card.Meta>
+                            <div>@{attendee.username}</div>
+                          </Card.Meta>
+                          <Card.Description>
+                            {attendee.displayName} would like to join your
+                            activity
+                          </Card.Description>
+                          <Card.Content extra>
+                            <div
+                            //  className='ui two buttons'
+                            >
+                              <Button
+                                circular
+                                color='green'
+                                style={{
+                                  boxShadow: "#248039 1px 3px 0px 0px",
+                                }}>
+                                Approve
+                              </Button>
+                              <Button
+                                circular
+                                color='red'
+                                style={{
+                                  boxShadow: "#c50000 1px 3px 0px 0px",
+                                }}>
+                                Decline
+                              </Button>
+                            </div>
+                          </Card.Content>
+                        </Card.Content>
+                      </Card>
+                    ))}
+                  </div>
+                ))}
               {currentTabName !== "requests" &&
                 userActivities.map((activity: UserActivity) => (
-                  <Card
-                    style={{ borderRadius: "20px" }}
-                    as={Link}
-                    to={`/activities/${activity.id}`}
-                    key={activity.id}>
-                    <Card.Content>
-                      <Card.Header textAlign='center'>
-                        {activity.title}
-                      </Card.Header>
-                      <Card.Meta textAlign='center'>
-                        <div>
-                          {format(new Date(activity.date), "eeee do MMMM")}
-                        </div>
-                        <div>{format(new Date(activity.date), "h:mm a")}</div>
-                      </Card.Meta>
-                    </Card.Content>
-                    <Card.Description>
-                      Hosted by @ {activity.hostUsername}
-                      {/* <NavLink to={`/profiles/${activity.hostUsername}`}> */}
-                      {/* </NavLink> */}
-                    </Card.Description>
-                  </Card>
+                  <>
+                    <Card
+                      style={{ borderRadius: "20px" }}
+                      as={Link}
+                      to={`/activities/${activity.id}`}
+                      key={activity.id}>
+                      <Card.Content>
+                        <Card.Header textAlign='center'>
+                          {activity.title}
+                        </Card.Header>
+                        <Card.Meta textAlign='center'>
+                          <div>
+                            {format(new Date(activity.date), "eeee do MMMM")}
+                          </div>
+                          <div>{format(new Date(activity.date), "h:mm a")}</div>
+                        </Card.Meta>
+                      </Card.Content>
+                      <Card.Description>
+                        Hosted by @ {activity.hostUsername}
+                        {/* <NavLink to={`/profiles/${activity.hostUsername}`}> */}
+                        {/* </NavLink> */}
+                      </Card.Description>
+                    </Card>
+                    <br />
+                  </>
                 ))}
             </Card.Group>
           </Grid.Column>

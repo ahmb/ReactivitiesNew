@@ -28,7 +28,11 @@ export default observer(function HomePage() {
       //   setActiveTab(0);
       // };
     }
-    if (userStore.user && profile?.username !== userStore.user?.username) {
+    if (
+      userStore.user &&
+      profile !== null &&
+      profile?.username !== userStore.user?.username
+    ) {
       console.log("userStore.user.username");
       console.log(userStore.user?.username);
       loadProfile(userStore.user?.username);
