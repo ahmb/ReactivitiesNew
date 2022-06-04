@@ -435,9 +435,7 @@ export default observer(function ActivityForm() {
                 <Button
                   circular
                   as={Link}
-                  to={
-                    activity.id ? `/activities/${activity.id}` : "/activities"
-                  }
+                  to={activity.id ? `/activities/${activity.id}` : "/"}
                   floated='right'
                   type='button'
                   content='Cancel'

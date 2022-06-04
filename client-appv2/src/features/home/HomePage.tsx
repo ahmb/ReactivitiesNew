@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import React, { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, NavLink, useParams } from "react-router-dom";
 import {
   Button,
   Container,
@@ -53,11 +53,12 @@ export default observer(function HomePage() {
         </Header>
         {userStore.isLoggedIn && profile && (
           <>
-            <Header
-              as='h2'
-              content={` Welcome back, ${profile?.displayName}!`}
-              style={{ display: "inline", color: "#363636de" }}
-            />
+            <Header as='h2' style={{ display: "inline", color: "#363636de" }}>
+              Welcome back,{" "}
+              <NavLink to={`/profiles/${profile.username}`}>
+                {profile?.displayName}
+              </NavLink>
+            </Header>
             <br />
             <br />
             <ActivityLog />

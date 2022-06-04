@@ -4,6 +4,7 @@ import ActivityDashboard from "../../features/activities/dashboard/ActivityDashb
 import {
   Button,
   Container,
+  Grid,
   Header,
   Icon,
   Menu,
@@ -81,7 +82,11 @@ function App() {
   ]);
 
   if (!commonStore.appLoaded)
-    return <LoadingComponent content='Loading app..' />;
+    return (
+      // <div style={{ marginTop: "20em" }}>
+      <LoadingComponent content='Loading app..' style={{ marginTop: 0 }} />
+      // </div>
+    );
 
   return (
     <>

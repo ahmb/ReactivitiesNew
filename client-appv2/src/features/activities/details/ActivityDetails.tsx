@@ -29,7 +29,8 @@ export default observer(function ActivityDetails() {
     return () => clearSelectedActivity();
   }, [id, loadActivity, clearSelectedActivity]);
 
-  if (loadingInitial || !activity) return <LoadingComponent />;
+  if (loadingInitial || !activity)
+    return <LoadingComponent content='Loading details...' />;
 
   return (
     <Grid style={{ marginTop: "2em" }}>
