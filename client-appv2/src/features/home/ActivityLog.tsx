@@ -30,8 +30,14 @@ export default observer(function ActivityLog() {
   const { loadUserActivities, profile, loadingActivities, userActivities } =
     profileStore;
 
-  const { loadUnreadActivities, unreadActivities, loadingInitial } =
-    activityStore;
+  const {
+    loadUnreadActivities,
+    unreadActivities,
+    loadingInitial,
+    handleInvite,
+    loadingApproveActivity,
+    loadingRejectActivity,
+  } = activityStore;
 
   const [currentTabName, setCurrentTabName] = useState("");
 
@@ -97,7 +103,9 @@ export default observer(function ActivityLog() {
                     className='invitesForActivity'
                     key={unreadActivity.id}
                     style={{ margin: "20px" }}>
-                    <Header>{unreadActivity.title}</Header>
+                    <NavLink to={`/activities/${unreadActivity.id}`}>
+                      <Header>{unreadActivity.title}</Header>
+                    </NavLink>
                     {unreadActivity.attendees.map((attendee: Profile) => (
                       <Card
                         centered
@@ -147,6 +155,16 @@ export default observer(function ActivityLog() {
                             >
                               <Button
                                 circular
+                                onClick={() => {
+                                  handleInvite(
+                                    true,
+                                    unreadActivity.id,
+                                    attendee.username
+                                  );
+                                }}
+                                loading={
+                                  loadingApproveActivity === unreadActivity.id
+                                }
                                 color='green'
                                 style={{
                                   boxShadow: "#248039 1px 3px 0px 0px",
@@ -155,6 +173,16 @@ export default observer(function ActivityLog() {
                               </Button>
                               <Button
                                 circular
+                                onClick={() => {
+                                  handleInvite(
+                                    false,
+                                    unreadActivity.id,
+                                    attendee.username
+                                  );
+                                }}
+                                loading={
+                                  loadingRejectActivity === unreadActivity.id
+                                }
                                 color='red'
                                 style={{
                                   boxShadow: "#c50000 1px 3px 0px 0px",
@@ -171,7 +199,7 @@ export default observer(function ActivityLog() {
               {currentTabName !== "requests" &&
                 userActivities.map((activity: UserActivity) => (
                   <Card
-                    style={{ borderRadius: "20px", padding:"10px" }}
+                    style={{ borderRadius: "20px", padding: "10px" }}
                     as={Link}
                     to={`/activities/${activity.id}`}
                     key={activity.id}>

@@ -70,7 +70,8 @@ namespace Application.Activities
                 }
 
 
-                if (attendance.IsApproved == true)
+                if (attendance.IsApproved == true || attendance.ApprovalStatus == ApprovalStatus.Pending ||
+                 attendance.ApprovalStatus == ApprovalStatus.Accepted)
                 {
                     attendance.IsApproved = false;
                     attendance.ApprovalStatus = ApprovalStatus.Rejected;

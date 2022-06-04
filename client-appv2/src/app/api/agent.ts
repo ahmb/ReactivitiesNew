@@ -118,6 +118,10 @@ const Activities = {
   delete: (id: string) => requests.del<void>(`/activities/${id}`),
   attend: (id: string) => requests.post<void>(`/activities/${id}/attend`, {}),
   unread: () => requests.get<UnreadActivity[]>("/activities/unread"),
+  approve: (id: string, username: string) =>
+    requests.post(`/activities/${id}/approve/${username}`, {}),
+  reject: (id: string, username: string) =>
+    requests.post(`/activities/${id}/reject/${username}`, {}),
   uploadPhoto: (file: Blob) => {
     let formData = new FormData();
     formData.append("File", file);

@@ -54,6 +54,7 @@ export default observer(function ActivityDetailedHeader({ activity }: Props) {
         to={"/"}
         style={{ boxShadow: "#969696 1px 3px 0px 0px" }}>
         <Icon name='angle left' />
+        All Activities
       </Button>
       <Segment.Group>
         <Segment

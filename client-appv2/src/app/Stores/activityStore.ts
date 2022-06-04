@@ -1,5 +1,6 @@
 import { format } from "date-fns";
 import { makeAutoObservable, reaction, runInAction } from "mobx";
+import { toast } from "react-toastify";
 import agent from "../api/agent";
 import {
   Activity,
@@ -25,6 +26,8 @@ export default class ActivityStore {
   pagingParams = new PagingParams();
   predicate = new Map().set("all", true);
   unreadActivities: UnreadActivity[] = [];
+  loadingApproveActivity = "";
+  loadingRejectActivity = "";
 
   uploadingPicture = false;
 
@@ -385,6 +388,42 @@ export default class ActivityStore {
     } catch (error) {
       console.log(error);
       this.setLoadingInitial(false);
+    }
+  };
+
+  handleInvite = async (
+    approve: boolean,
+    activityId: string,
+    username: string
+  ) => {
+    try {
+      if (approve) {
+        this.loadingApproveActivity = activityId;
+        await agent.Activities.approve(activityId, username);
+        runInAction(() => {
+          this.loadingApproveActivity = "";
+          this.unreadActivities = this.unreadActivities.filter(
+            (a) => a.id !== activityId
+          );
+        });
+      }
+      if (!approve) {
+        this.loadingRejectActivity = activityId;
+        await agent.Activities.reject(activityId, username);
+        runInAction(() => {
+          this.loadingRejectActivity = "";
+          this.unreadActivities = this.unreadActivities.filter(
+            (a) => a.id !== activityId
+          );
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Problem occured during invite handling");
+      runInAction(() => {
+        this.loadingApproveActivity = "";
+        this.loadingRejectActivity = "";
+      });
     }
   };
 

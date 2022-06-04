@@ -67,7 +67,7 @@ namespace API.Controllers
             return HandleResult(await Mediator.Send(new Approve.Command { Id = id, Username = username }));
         }
 
-        [HttpDelete("{id}/reject/{username}")]
+        [HttpPost("{id}/reject/{username}")]
         [Authorize(Policy = "IsActivityHost")]
         public async Task<ActionResult<Unit>> Reject(Guid id, string username)
         {
