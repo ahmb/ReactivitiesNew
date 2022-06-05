@@ -93,7 +93,9 @@ const NavBar: React.FC<IProps> = ({ className }) => {
                   style={{ boxShadow: "#969696 1px 3px 0px 0px" }}
                 />
               </Menu.Item> */}
-              <Menu.Item position='right'>
+              <Menu.Item
+                position='right'
+                style={{ paddingTop: "0px", paddingBottom: "0px" }}>
                 <Button
                   as={Link}
                   to={`/login`}

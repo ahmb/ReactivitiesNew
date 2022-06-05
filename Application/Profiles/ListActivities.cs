@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Core;
+using Application.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
@@ -24,19 +25,30 @@ namespace Application.Profiles
         {
             private readonly DataContext _context;
             private readonly IMapper _mapper;
-            public Handler(DataContext context, IMapper mapper)
+
+            private readonly IUserAccessor _userAccessor;
+
+            public Handler(DataContext context, IMapper mapper, IUserAccessor userAccessor)
             {
                 _mapper = mapper;
                 _context = context;
+                _userAccessor = userAccessor;
             }
 
             public async Task<Result<List<UserActivityDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var query = _context.ActivityAttendees
+                var select = _context.ActivityAttendees
                     .Where(u => u.AppUser.UserName == request.Username
-                    && u.ApprovalStatus == Domain.ApprovalStatus.Accepted)
-                    .ProjectTo<UserActivityDto>(_mapper.ConfigurationProvider)
-                    .AsQueryable();
+                    && u.ApprovalStatus == Domain.ApprovalStatus.Accepted);
+
+                if (request.Predicate == "published" || _userAccessor.GetUsername() != request.Username)
+                // if (_userAccessor.GetUsername() != request.Username || request.Predicate == "published")
+                {
+                    select = select.Where(attendee => attendee.Activity.PublishedToProfile == true);
+                }
+
+                var query = select.ProjectTo<UserActivityDto>(_mapper.ConfigurationProvider)
+                                .AsQueryable();
 
                 query = request.Predicate switch
                 {

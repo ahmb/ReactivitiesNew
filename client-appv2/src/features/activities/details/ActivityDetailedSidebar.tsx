@@ -47,9 +47,9 @@ export default observer(function ActivityDetailedSidebar({
           {attendees.map(
             (attendee) =>
               attendee.username !== host?.username && (
-                <span style={{ display: "inline" }} key={attendee.username}>
+                <span style={{ display: "grid" }} key={attendee.username}>
                   <Item
-                    style={{ position: "relative" }}
+                    // style={{ position: "relative" }}
                     key={attendee.username}>
                     {attendee.username === host?.username && (
                       <Label
@@ -88,7 +88,8 @@ export default observer(function ActivityDetailedSidebar({
                     <Item.Content verticalAlign='middle'>
                       <Item.Header
                         as='h3'
-                        style={{ padding: "20px", marginLeft: "15%" }}>
+                        // style={{ padding: "20px", marginLeft: "15%" }}
+                      >
                         <Link to={`/profiles/${attendee.username}`}>
                           {attendee.displayName}
                         </Link>

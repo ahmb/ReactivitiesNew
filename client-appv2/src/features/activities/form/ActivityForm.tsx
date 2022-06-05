@@ -113,6 +113,7 @@ export default observer(function ActivityForm() {
             tag: activity.tag.map((t) => t.name),
             ongoing: activity.ongoing ? 1 : 0,
             private: activity.private ? 1 : 0,
+            publishedToProfile: activity.publishedToProfile,
             language: Language[activity.language],
             skillLevel: SkillLevel[activity.skillLevel],
             assets: (activity.assets !== "" ? activity.assets : "") ?? "",
@@ -140,6 +141,7 @@ export default observer(function ActivityForm() {
         id: activity.id ?? uuid(),
         private: activity.private === 0 ? false : true,
         ongoing: activity.ongoing === 0 ? false : true,
+        publishedToProfile: activity.publushedToProfile === 0 ? false : true,
         language: Language[activity.language],
         skillLevel: SkillLevel[activity.skillLevel],
         ongoingDays: parseInt(activity.ongoingDays),
@@ -179,6 +181,7 @@ export default observer(function ActivityForm() {
         ...activity,
         private: activity.private === 0 ? false : true,
         ongoing: activity.ongoing === 0 ? false : true,
+        publishedToProfile: activity.publishedToProfile === 0 ? false : true,
         language: Language[activity.language],
         skillLevel: SkillLevel[activity.skillLevel],
         ongoingDays: parseInt(activity.ongoingDays),
@@ -339,6 +342,12 @@ export default observer(function ActivityForm() {
                     can be accessed via the URL. Use this when connecting with
                     someone you already know'
                   defaultValue={(activity.private ? 1 : 0) ?? 0}
+                />
+                <MyCheckboxInput
+                  name='publishedToProfile'
+                  label='Visible to others on your profile?'
+                  popUpContent='Note: Do you want this activity to appear in your profile when someone else is viewing it'
+                  defaultValue={(activity.publishedToProfile ? 1 : 0) ?? 0}
                 />
                 <MySelectInput
                   label='Language'

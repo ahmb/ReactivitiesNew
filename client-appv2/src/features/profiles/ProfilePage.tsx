@@ -22,12 +22,15 @@ export default observer(function ProfilePage() {
   if (loadingProfile) return <LoadingComponent content='Loading profile...' />;
 
   return (
-    <Grid>
+    <Grid style={{ marginTop: "2em" }}>
       <Grid.Column width={16}>
         {profile && (
           <>
             <ProfileHeader profile={profile} />
             <ProfileContent profile={profile} />
+            <br />
+            <br />
+            <br />
           </>
         )}
       </Grid.Column>

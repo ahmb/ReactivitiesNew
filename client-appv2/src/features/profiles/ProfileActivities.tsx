@@ -7,9 +7,9 @@ import { format } from "date-fns";
 import { useStore } from "../../app/stores/store";
 
 const panes = [
-  { menuItem: "Future Events", pane: { key: "future" } },
-  { menuItem: "Past Events", pane: { key: "past" } },
-  { menuItem: "Hosting", pane: { key: "hosting" } },
+  { menuItem: "Published Activities", pane: { key: "published" } },
+  // { menuItem: "Past Events", pane: { key: "past" } },
+  // { menuItem: "Hosting", pane: { key: "hosting" } },
 ];
 
 export default observer(function ProfileActivities() {
@@ -18,28 +18,30 @@ export default observer(function ProfileActivities() {
     profileStore;
 
   useEffect(() => {
-    loadUserActivities(profile!.username);
+    loadUserActivities(profile!.username, "published");
   }, [loadUserActivities, profile]);
 
   const handleTabChange = (e: SyntheticEvent, data: TabProps) => {
     loadUserActivities(
       profile!.username,
-      panes[data.activeIndex as number].pane.key
+      // panes[data.activeIndex as number].pane.key
+      "published"
     );
   };
 
   return (
-    <Tab.Pane loading={loadingActivities}>
+    <Tab.Pane
+      loading={loadingActivities}
+      style={{ minHeight: "300px", borderRadius: "20px" }}>
       <Grid>
         <Grid.Column width={16}>
-          <Header floated='left' icon='calendar' content={"Activities"} />
-        </Grid.Column>
-        <Grid.Column width={16}>
-          <Tab
+          {/* <Tab
             panes={panes}
             menu={{ secondary: true, pointing: true }}
             onTabChange={(e, data) => handleTabChange(e, data)}
-          />
+          /> */}
+          <Header floated='left' content={"Published Activities"} />
+
           <br />
           <Card.Group itemsPerRow={4}>
             {userActivities.map((activity: UserActivity) => (

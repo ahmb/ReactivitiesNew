@@ -18,6 +18,9 @@ namespace Application.Activities
         public int Duration { get; set; }
         public bool Private { get; set; }
 
+        public bool PublishedToProfile { get; set; }
+        
+
         // public DateTime EndDate { get; set; }
         public string ImageUrl { get; set; }
         public bool IsCancelled { get; set; }

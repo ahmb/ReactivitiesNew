@@ -18,15 +18,15 @@ export default observer(function ProfileContent({ profile }: Props) {
   const panes = [
     { menuItem: "About", render: () => <ProfileAbout /> },
     { menuItem: "Photos", render: () => <ProfilePhotos profile={profile} /> },
-    { menuItem: "Events", render: () => <ProfileActivities /> },
+    { menuItem: "Activities", render: () => <ProfileActivities /> },
     { menuItem: "Followers", render: () => <ProfileFollowings /> },
     { menuItem: "Following", render: () => <ProfileFollowings /> },
   ];
 
   return (
     <Tab
-      menu={{ fluid: true, vertical: true }}
-      menuPosition='right'
+      menu={{ fluid: true, vertical: false }}
+      // menuPosition='right'
       panes={panes}
       onTabChange={(e, data) => profileStore.setActiveTab(data.activeIndex)}
     />

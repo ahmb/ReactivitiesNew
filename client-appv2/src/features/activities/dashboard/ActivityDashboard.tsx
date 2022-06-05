@@ -158,8 +158,8 @@ export default observer(function ActivityDashboard() {
                 "In-Person coming soon!",
                 "Scroll down already!",
               ]}
-              typeSpeed={75}
-              backSpeed={50}
+              // typeSpeed={75}
+              // backSpeed={50}
               loop
               style={{ color: "black" }}
             />
@@ -179,7 +179,7 @@ export default observer(function ActivityDashboard() {
       <Grid.Row>
         <Header
           content={
-            "Real time text, audio, video & screensharing in the browser"
+            "Built-in real time text, audio, video & screensharing in the browser"
           }
           size='huge'
           style={{

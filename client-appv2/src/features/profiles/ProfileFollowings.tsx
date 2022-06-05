@@ -9,21 +9,22 @@ export default observer(function ProfileFollowings() {
   const { profile, followings, loadingFollowings, activeTab } = profileStore;
 
   return (
-    <Tab.Pane loading={loadingFollowings}>
+    <Tab.Pane
+      loading={loadingFollowings}
+      style={{ minHeight: "300px", borderRadius: "20px" }}>
       <Grid>
         <Grid.Column width={16}>
           <Header
             floated='left'
-            icon={"user"}
-            content={
-              activeTab === 3
-                ? `People following ${profile!.displayName}`
-                : `People ${profile!.displayName} is following`
-            }
+            // content={
+            //   activeTab === 3
+            //     ? `${profile!.displayName}s followers`
+            //     : `${profile!.displayName} is following`
+            // }
           />
         </Grid.Column>
         <Grid.Column width={16}>
-          <Card.Group itemsPerRow={4}>
+          <Card.Group itemsPerRow={2}>
             {followings.map((profile) => (
               <ProfileCard key={profile.username} profile={profile} />
             ))}

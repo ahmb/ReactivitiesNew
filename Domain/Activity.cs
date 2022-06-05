@@ -22,6 +22,9 @@ namespace Domain
         public int Duration { get; set; }
 
         public bool Private { get; set; }
+
+
+        public bool PublishedToProfile { get; set; }
         public string City { get; set; }
         public string Venue { get; set; }
 

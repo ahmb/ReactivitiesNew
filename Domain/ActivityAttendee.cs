@@ -17,5 +17,8 @@ namespace Domain
         public bool Read { get; set; }
         public ApprovalStatus ApprovalStatus { get; set; } = ApprovalStatus.Pending;
 
+        public string ApprovalRequestComment { get; set; }
+
+
     }
 }

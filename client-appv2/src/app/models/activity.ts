@@ -12,6 +12,7 @@ export interface Activity {
   // endDate: Date | null;
   duration: number;
   private: boolean;
+  publishedToProfile: boolean;
   imageUrl: string;
   // city: string;
   // venue: string;
@@ -51,6 +52,7 @@ export interface ActivityDetails {
   // endDate: Date | null;
   duration: number;
   private: boolean;
+  publishedToProfile: boolean;
   imageUrl: string;
   // city: string;
   // venue: string;
@@ -178,6 +180,7 @@ export class ActivityFormValuesNew {
   skillLevel: number | string = 0;
   assets: string = "";
   file?: File;
+  publishedToProfile: boolean | number = false;
   // endDate: Date | null = null;
   // city: string = "";
   // venue: string = "";

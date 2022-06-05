@@ -21,7 +21,8 @@ background: white;
 
 
 #guestHeader{
-  font-family: Montserrat;
+  font-family: system-ui;
+  /* font-family: Montserrat; */
   font-weight: 900;
   font-size: 55px;
 }
@@ -128,6 +129,12 @@ background:#eaeaea !important;
 
 
 /* ActivitiesList */
+
+
+/* Font flickering fix for google fonts */
+html.wf-loading * {
+  opacity: 0;
+}
 
 .zigzag::after {
   content:'';

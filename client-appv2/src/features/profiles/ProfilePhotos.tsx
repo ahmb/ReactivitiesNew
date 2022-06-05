@@ -45,14 +45,19 @@ export default observer(function ProfilePhotos({ profile }: Props) {
   }
 
   return (
-    <Tab.Pane>
+    <Tab.Pane style={{ minHeight: "300px", borderRadius: "20px" }}>
       <Grid>
         <Grid.Column width={16}>
-          <Header icon='image' content='Photos' floated='left' />
+          <Header content='Photos' floated='left' />
           {isCurrentUser && (
             <Button
               floated='right'
-              basic
+              circular
+              style={{
+                backgroundColor: "#e0e1e2",
+                color: "#525252",
+                boxShadow: "#969696 1px 3px 0px 0px",
+              }}
               content={addPhotoMode ? "Cancel" : "Add Photo"}
               onClick={() => setAddPhotoMode(!addPhotoMode)}
             />

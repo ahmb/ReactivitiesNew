@@ -22,24 +22,29 @@ export default observer(function FollowButtion({ profile }: Props) {
   }
 
   return (
-    <Reveal animated='move'>
-      <Reveal.Content visible style={{ width: "100%" }}>
+    <>
+      {/* <Reveal.Content visible style={{ width: "100%" }}>
         <Button
           fluid
-          color='teal'
+          color='grey'
           content={profile.following ? "Following" : "Not following"}
         />
-      </Reveal.Content>
+      </Reveal.Content> */}
 
-      <Reveal.Content hidden style={{ width: "100%" }}>
-        <Button
-          fluid
-          color={profile.following ? "red" : "green"}
-          content={profile.following ? "Unfollow" : "Follow"}
-          loading={loading}
-          onClick={(e) => handleFollow(e, profile.username)}
-        />
-      </Reveal.Content>
-    </Reveal>
+      {/* <Reveal.Content hidden style={{ width: "100%" }}> */}
+      <Button
+        circular
+        color={profile.following ? "red" : "green"}
+        content={profile.following ? "Unfollow" : "Follow"}
+        loading={loading}
+        onClick={(e) => handleFollow(e, profile.username)}
+        style={
+          profile.following
+            ? { boxShadow: "#c50000 1px 3px 0px 0px", margin: "1%" }
+            : { boxShadow: "#198933 1px 3px 0px 0px", margin: "1%" }
+        }
+      />
+      {/* </Reveal.Content> */}
+    </>
   );
 });
