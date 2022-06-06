@@ -296,3 +296,11 @@ input {
 .react-datepicker-popper{
   z-index: 20;
 }
+
+
+
+/* ACTIVITY DETAILS PAGE */
+
+.chatAvatar{
+  border-radius: 20px !important;
+}

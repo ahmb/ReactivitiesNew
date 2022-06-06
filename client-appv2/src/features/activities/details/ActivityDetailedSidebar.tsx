@@ -61,7 +61,10 @@ export default observer(function ActivityDetailedSidebar({
                     )}
                     {attendee.image && (
                       <Image
-                        size='tiny'
+                        floated='left'
+                        circular
+                        style={{ height: "65px", width: "65px" }}
+                        // size='tiny'
                         src={attendee.image || "/assets/user.png"}
                         as={NavLink}
                         to={`/profiles/${attendee.username}`}

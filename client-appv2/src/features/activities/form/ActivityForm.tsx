@@ -55,6 +55,8 @@ export default observer(function ActivityForm() {
 
   const [isActivityLoaded, setIsActivityLoaded] = useState(false);
 
+  const [showCancelButton, setShowCancelButton] = useState(false);
+
   // const [recurringEvent, setRecurringEvent] = React.useState(false);
   // const [privateEvent, setPrivateEvent] = React.useState(0);
 
@@ -104,6 +106,7 @@ export default observer(function ActivityForm() {
     if (id) {
       loadActivity(id).then((activity) => {
         if (activity) {
+          setShowCancelButton(true);
           console.log(activity);
           const activityFormValues = new ActivityFormValuesNew({
             ...activity,
@@ -407,26 +410,32 @@ export default observer(function ActivityForm() {
 
                 <MyTextInput placeholder='City' name='city' />
                 <MyTextInput placeholder='Venue' name='venue' /> */}
-                <Button
-                  color={activity.isCancelled ? "green" : "red"}
-                  floated='left'
-                  disabled={isSubmitting || loadingInitial || !isActivityLoaded}
-                  circular
-                  loading={loading}
-                  onClick={cancelActivityToggle}
-                  style={
-                    activity.isCancelled
-                      ? {
-                          boxShadow: "#28833e 1px 3px 0px 0px",
-                        }
-                      : {
-                          boxShadow: "#c50000 1px 3px 0px 0px",
-                        }
-                  }
-                  content={
-                    activity.isCancelled ? "Enable Activity" : "Cancel Activity"
-                  }
-                />
+                {showCancelButton && (
+                  <Button
+                    color={activity.isCancelled ? "green" : "red"}
+                    floated='left'
+                    disabled={
+                      isSubmitting || loadingInitial || !isActivityLoaded
+                    }
+                    circular
+                    loading={loading}
+                    onClick={cancelActivityToggle}
+                    style={
+                      activity.isCancelled
+                        ? {
+                            boxShadow: "#28833e 1px 3px 0px 0px",
+                          }
+                        : {
+                            boxShadow: "#c50000 1px 3px 0px 0px",
+                          }
+                    }
+                    content={
+                      activity.isCancelled
+                        ? "Enable Activity"
+                        : "Cancel Activity"
+                    }
+                  />
+                )}
                 <Button
                   loading={isSubmitting}
                   floated='right'

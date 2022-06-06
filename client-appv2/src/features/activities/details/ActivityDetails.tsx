@@ -65,7 +65,7 @@ export default observer(function ActivityDetails() {
                   }}>
                   <Header
                     content={
-                      "The Chatroom, Guest list and Discussion features are only visible to approved attendees. You may use it to coordinate and/or share any preparation material etc "
+                      "The Chatroom, Guest list and Discussion features are only visible to approved attendees. Please DO NOT click on any unknown links or share sensitive information "
                     }
                     size='small'
                     style={{

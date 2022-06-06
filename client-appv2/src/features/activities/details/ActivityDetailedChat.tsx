@@ -83,7 +83,10 @@ export default observer(function ActivityDetailedChat({ activityId }: Props) {
           {commentStore.comments.map((comment) => (
             <Comment key={comment.id}>
               {comment.image && (
-                <Comment.Avatar src={comment.image || "/assets/user.png"} />
+                <Comment.Avatar
+                  src={comment.image || "/assets/user.png"}
+                  className='chatAvatar'
+                />
               )}
               {!comment.image && (
                 <span

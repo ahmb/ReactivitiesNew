@@ -20,7 +20,7 @@ export default function LoadingComponent({
     <Grid
       style={{
         height: segmentHeightPx + "em",
-        backgroundColor: "grey",
+        backgroundColor: "#eaeaea",
         zIndex: 1,
         top: "-20em",
       }}>
