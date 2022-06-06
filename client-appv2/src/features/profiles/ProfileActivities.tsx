@@ -32,7 +32,10 @@ export default observer(function ProfileActivities() {
   return (
     <Tab.Pane
       loading={loadingActivities}
-      style={{ minHeight: "300px", borderRadius: "20px" }}>
+      style={{
+        //  minHeight: "300px",
+        borderRadius: "20px",
+      }}>
       <Grid>
         <Grid.Column width={16}>
           {/* <Tab
@@ -40,19 +43,23 @@ export default observer(function ProfileActivities() {
             menu={{ secondary: true, pointing: true }}
             onTabChange={(e, data) => handleTabChange(e, data)}
           /> */}
-          <Header floated='left' content={"Published Activities"} />
-
+          <Grid.Row>
+            <Header content={"Published Activities"} />
+          </Grid.Row>
           <br />
-          <Card.Group itemsPerRow={4}>
+          <Card.Group itemsPerRow={2}>
             {userActivities.map((activity: UserActivity) => (
               <Card
                 as={Link}
                 to={`/activities/${activity.id}`}
                 key={activity.id}>
-                <Image
+                {/* <Image
                   src={`/assets/categoryImages/${activity.category}.jpg`}
-                  style={{ minHeight: 100, objectFit: "cover" }}
-                />
+                  style={{
+                    // minHeight: 100,
+                    objectFit: "cover",
+                  }}
+                /> */}
                 <Card.Content>
                   <Card.Header textAlign='center'>{activity.title}</Card.Header>
                   <Card.Meta textAlign='center'>

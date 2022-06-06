@@ -4,14 +4,21 @@ import { Button, Header, Icon, Segment } from "semantic-ui-react";
 
 export default function NotFound() {
   return (
-    <Segment placeholder>
+    <Segment
+      placeholder
+      style={{ borderRadius: "20px", paddingTop: "3em", marginTop: "30px" }}>
       <Header icon>
-        <Icon name='search' />
-        Oops, sorry - we've looked everywhere and could not find what you are
-        looking for.
+        {/* <Icon name='search' /> */}
+        <img src='data:image/png;base64,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' />
+        <br />
+        Oops, sorry we ran into an issue
       </Header>
+      <p style={{ textAlign: "center" }}>
+        Our tech support team will be looking into this, please contact us if
+        this is not resolved within 48 hrs
+      </p>
       <Segment.Inline>
-        <Button as={Link} to='/activities' primary>
+        <Button circular positive as={Link} to='/' primary>
           Return to activities page
         </Button>
       </Segment.Inline>

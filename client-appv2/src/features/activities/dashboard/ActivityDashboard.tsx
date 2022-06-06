@@ -153,6 +153,8 @@ export default observer(function ActivityDashboard() {
                 "Startup",
                 "Business",
                 "Study",
+                "Projects",
+                "Learn by doing",
                 "Anything!",
                 "Let's gooo!",
                 "In-Person coming soon!",

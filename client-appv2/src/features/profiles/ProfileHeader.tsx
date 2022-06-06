@@ -10,6 +10,7 @@ import {
   Statistic,
 } from "semantic-ui-react";
 import { Profile } from "../../app/models/profile";
+import { useStore } from "../../app/stores/store";
 import FollowButton from "./FollowButton";
 
 interface Props {
@@ -17,16 +18,20 @@ interface Props {
 }
 
 export default observer(function ProfileHeader({ profile }: Props) {
+  const {
+    userStore: { isLoggedIn },
+  } = useStore();
+
   return (
     <>
       <Grid style={{ marginBottom: "1%" }}>
-        <Grid.Column width={10}>
+        <Grid.Column width={12}>
           <Item.Group>
             <Item>
               {profile.image && (
                 <Item.Image
                   avatar
-                  size='massive'
+                  size='large'
                   src={profile.image || "/assets/user.png"}
                 />
               )}
@@ -61,13 +66,13 @@ export default observer(function ProfileHeader({ profile }: Props) {
             </Item>
           </Item.Group>
         </Grid.Column>
-        <Grid.Column width={6} textAlign='right' verticalAlign='bottom'>
+        <Grid.Column width={4} textAlign='right' verticalAlign='bottom'>
           {/* <Statistic.Group widths={2}>
             <Statistic label='Followers' value={profile.followersCount} />
             <Statistic label='Following' value={profile.followingCount} />
           </Statistic.Group> */}
           {/* <Divider /> */}
-          <FollowButton profile={profile} />
+          {isLoggedIn && <FollowButton profile={profile} />}
         </Grid.Column>
       </Grid>
     </>

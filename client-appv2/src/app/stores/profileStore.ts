@@ -76,6 +76,27 @@ export default class ProfileStore {
     }
   };
 
+  uploadProfilePhoto = async (file: Blob) => {
+    this.uploading = true;
+    try {
+      const response = await agent.Profiles.uploadProfilePhoto(file);
+      const photo = response.data;
+      runInAction(() => {
+        if (this.profile) {
+          this.profile.photos?.push(photo);
+          if (photo.isMain && store.userStore.user) {
+            store.userStore.setImage(photo.url);
+            this.profile.image = photo.url;
+          }
+        }
+        this.uploading = false;
+      });
+    } catch (error) {
+      console.log(error);
+      runInAction(() => (this.uploading = false));
+    }
+  };
+
   setMainPhoto = async (photo: IPhoto) => {
     this.loading = true;
     try {

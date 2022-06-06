@@ -13,7 +13,7 @@ export default observer(function ProfilePhotos({ profile }: Props) {
   const {
     profileStore: {
       isCurrentUser,
-      uploadPhoto,
+      uploadProfilePhoto,
       uploading,
       loading,
       setMainPhoto,
@@ -25,7 +25,7 @@ export default observer(function ProfilePhotos({ profile }: Props) {
   const [target, setTarget] = useState("");
 
   function handlePhotoUpload(file: Blob) {
-    uploadPhoto(file).then(() => setAddPhotoMode(false));
+    uploadProfilePhoto(file).then(() => setAddPhotoMode(false));
   }
 
   function handleSetMainPhoto(
@@ -70,16 +70,15 @@ export default observer(function ProfilePhotos({ profile }: Props) {
               loading={uploading}
             />
           ) : (
-            <Card.Group itemsPerRow={5}>
+            <Card.Group itemsPerRow={2}>
               {profile.photos?.map((photo) => (
-                <Card key={photo.id}>
-                  <Image src={photo?.url} />
+                <Card key={photo.id} style={{ maxHeight: "450px" }}>
+                  <Image src={photo?.url} style={{ maxHeight: "400px" }} />
                   {isCurrentUser && (
                     <Button.Group fluid widths={2}>
                       <Button
-                        basic
                         color='green'
-                        content='Main'
+                        content='Set Main'
                         name={"main" + photo.id}
                         disabled={photo.isMain}
                         loading={target === "main" + photo.id && loading}

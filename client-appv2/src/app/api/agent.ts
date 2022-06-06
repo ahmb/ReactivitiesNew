@@ -181,6 +181,13 @@ const Profiles = {
       headers: { "Content-type": "multipart/form-data" },
     });
   },
+  uploadProfilePhoto: (file: Blob) => {
+    let formData = new FormData();
+    formData.append("File", file);
+    return axios.post<IPhoto>("/photos/profilepic", formData, {
+      headers: { "Content-type": "multipart/form-data" },
+    });
+  },
   setMainPhoto: (id: string) => requests.post(`/photos/${id}/setMain`, {}),
   deletePhoto: (id: string) => requests.del(`/photos/${id}`),
   updateProfile: (profile: Partial<Profile>) =>

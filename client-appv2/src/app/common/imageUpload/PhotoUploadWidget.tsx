@@ -28,14 +28,14 @@ export default function PhotoUploadWidget({ uploadPhoto, loading }: Props) {
   }, [files]);
 
   return (
-    <Grid>
-      <Grid.Column width={4}>
-        <Header sub color='teal' content='Step1 - Add Photo' />
+    <Grid centered>
+      <Grid.Column width={12}>
+        <Header content='Step1 - Add Photo: Cick here or drag and drop' />
         <PhotoWidgetDropzone setFiles={setFiles} />
       </Grid.Column>
-      <Grid.Column width={1} />
-      <Grid.Column width={4}>
-        <Header sub color='teal' content='Step2 - Resize Image' />
+      {/* <Grid.Column width={1} /> */}
+      <Grid.Column width={12}>
+        <Header content='Step2 - Resize or Crop Image' />
         {files && files.length > 0 && (
           <PhotoWidgetCropper
             setCropper={setCropper}
@@ -43,9 +43,9 @@ export default function PhotoUploadWidget({ uploadPhoto, loading }: Props) {
           />
         )}
       </Grid.Column>
-      <Grid.Column width={1} />
-      <Grid.Column width={4}>
-        <Header sub color='teal' content='Step3 - Preview & Upload' />
+      {/* <Grid.Column width={1} /> */}
+      <Grid.Column width={12}>
+        <Header content='Step3 - Preview & Upload' />
         {files && files.length > 0 && (
           <>
             <div

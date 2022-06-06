@@ -18,6 +18,7 @@ namespace Application.Photos
         {
             //insert properties
             public IFormFile File { get; set; }
+
         }
 
         public class Handler : IRequestHandler<Command, Result<Photo>>
@@ -42,7 +43,7 @@ namespace Application.Photos
 
                 if (user == null) return null;
 
-                var photoUploadResult = await _photoAccessor.AddPhoto(request.File);
+                var photoUploadResult = await _photoAccessor.AddProfilePhoto(request.File);
 
                 var photo = new Photo
                 {

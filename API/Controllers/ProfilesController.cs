@@ -7,6 +7,7 @@ namespace API.Controllers
     public class ProfilesController : BaseController
     {
         [HttpGet("{username}")]
+        [AllowAnonymous]
         public async Task<IActionResult> Get(string username)
         {
             return HandleResult(await Mediator.Send(new Details.Query { Username = username }));
@@ -21,6 +22,7 @@ namespace API.Controllers
         }
 
         [HttpGet("{username}/activities")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetUserActivities(string username,
         string predicate)
         {

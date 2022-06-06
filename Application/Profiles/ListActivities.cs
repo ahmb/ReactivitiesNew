@@ -47,6 +47,8 @@ namespace Application.Profiles
                     select = select.Where(attendee => attendee.Activity.PublishedToProfile == true);
                 }
 
+                select = select.Where(attendee => !attendee.Activity.Private);
+
                 var query = select.ProjectTo<UserActivityDto>(_mapper.ConfigurationProvider)
                                 .AsQueryable();
 
@@ -55,6 +57,7 @@ namespace Application.Profiles
                     "past" => query.Where(a => a.Date <= DateTime.Now).OrderByDescending(a => a.Date),
                     "hosting" => query.Where(a => a.HostUsername == request.Username),
                     "future" => query.Where(a => a.Date > DateTime.Now).OrderBy(a => a.Date),
+                    "published" => query.OrderByDescending(a => a.Date),
                     _ => query.Where(a => a.Date > DateTime.Now).OrderBy(a => a.Date)
                 };
 

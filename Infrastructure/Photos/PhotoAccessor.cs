@@ -31,6 +31,32 @@ namespace Infrastructure.Photos
         }
 
         [Obsolete("Using obsolete secureuri property")]
+        public async Task<PhotoUploadResult> AddProfilePhoto(IFormFile file)
+        {
+            if (file != null && file.Length > 0)
+            {
+                await using var stream = file.OpenReadStream();
+                var uploadParams = new ImageUploadParams
+                {
+                    File = new FileDescription(file.FileName, stream),
+                    Transformation = new Transformation().Height(400).Width(400).Crop("fill").Gravity("face")
+                };
+                var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+
+                if (uploadResult.Error != null)
+                    throw new Exception(uploadResult.Error.Message);
+
+                return new PhotoUploadResult
+                {
+                    PublicId = uploadResult.PublicId,
+                    Url = uploadResult.SecureUrl.ToString()
+                };
+            }
+            return null;
+        }
+
+
+        [Obsolete("Using obsolete secureuri property")]
         public async Task<PhotoUploadResult> AddPhoto(IFormFile file)
         {
             if (file != null && file.Length > 0)

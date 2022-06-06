@@ -12,6 +12,12 @@ namespace API.Controllers
             return HandleResult(await Mediator.Send(command));
         }
 
+        [HttpPost("profilepic")]
+        public async Task<IActionResult> AddProfile([FromForm] Add.Command command)
+        {
+            return HandleResult(await Mediator.Send(command));
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
