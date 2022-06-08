@@ -28,9 +28,9 @@ namespace Application.Activities
             private readonly DataContext _context;
             private readonly IMapper _mapper;
             private readonly IUserAccessor _userAccessor;
-            private readonly ILogger _logger;
+            private readonly ILogger<Handler> _logger;
 
-            public Handler(DataContext context, IMapper mapper, IUserAccessor userAccessor, ILogger logger)
+            public Handler(DataContext context, IMapper mapper, IUserAccessor userAccessor, ILogger<Handler> logger)
             {
                 _userAccessor = userAccessor;
                 _logger = logger;
@@ -63,9 +63,16 @@ namespace Application.Activities
                     //      new { currentUsername = _userAccessor.GetUsername() })
                     .AsQueryable();
 
-                if (request.Params.IsGoing && !request.Params.IsHost)
+                // if (request.Params.IsGoing && !request.Params.IsHost)
+                // {
+                //     query = query.Where(x => x.Attendees.Any(aa => aa.AppUser.UserName == _userAccessor.GetUsername()
+                //         && aa.ApprovalStatus == ApprovalStatus.Accepted));
+                // }
+
+                if (request.Params.IsGoing)
                 {
-                    query = query.Where(x => x.Attendees.Any(aa => aa.AppUser.UserName == _userAccessor.GetUsername()));
+                    query = query.Where(x => x.Attendees.Any(aa => aa.AppUser.UserName == _userAccessor.GetUsername()
+                        && aa.ApprovalStatus == ApprovalStatus.Accepted));
                 }
 
                 if (request.Params.IsHost && !request.Params.IsGoing)
@@ -74,10 +81,8 @@ namespace Application.Activities
 
                 }
 
-
                 if (request.Params.Category != null)
                 {
-                    _logger.LogInformation("Value for category in the Params is {category}", request.Params.Category.ToString());
 
                     query = query.Where(a => a.Categories.Any(c => c.Categories.Name == request.Params.Category));
                 }
