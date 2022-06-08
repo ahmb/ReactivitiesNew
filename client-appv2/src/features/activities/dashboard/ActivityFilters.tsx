@@ -40,18 +40,20 @@ export default observer(function ActivityFilters() {
       <Grid.Row>
         <Grid.Column width={13}>
           <Header
-            size='huge'
             float='left'
+            content='Activities'
             style={{
               float: "left",
               paddingTop: "5px",
-            }}>
-            <p
-              id='guestHeader'
+              fontSize: "36px",
+            }}
+          />
+          {/* <p
+              // id='guestHeader'
               style={{ fontSize: "36px", fontWeight: "normal" }}>
               Activities
-            </p>
-          </Header>
+            </p> */}
+          {/* </Header> */}
         </Grid.Column>
         <Grid.Column width={3}>
           <Button
@@ -171,31 +173,15 @@ export default observer(function ActivityFilters() {
               style={{ paddingTop: "20px" }}
             /> */}
 
-            {categoryOptions.map(({ id, text, icon, label }) => (
+            {categoryOptions.map(({ id, text, icon, label, value }) => (
               <HorizontalScrollItem
                 id={id}
                 key={id}
                 style={{ display: "inline" }}>
                 <Menu.Item
                   key={id}
-                  active={predicate.has("isGoing")}
-                  // style={{ display: "inline" }}
-                  onClick={() => setPredicate("isGoing", "true")}>
-                  {/* <Header
-                    size='medium'
-                    style={
-                      {
-                        // paddingTop: "10px"
-                      }
-                    }>
-                    {icon + " "}
-                  </Header> */}
-                  {/* <p
-                    className='categoryText'
-                    style={{
-                      display: "inline",
-                      // paddingTop: "5px", paddingLeft: "5px"
-                    }}> */}
+                  active={(predicate.get("category") as string) === value}
+                  onClick={() => setPredicate("category", value)}>
                   <p
                     style={{
                       whiteSpace: "nowrap",
@@ -205,7 +191,6 @@ export default observer(function ActivityFilters() {
                     }}>
                     {label}
                   </p>
-                  {/* </p> */}
                 </Menu.Item>
               </HorizontalScrollItem>
             ))}

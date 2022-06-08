@@ -34,31 +34,7 @@ export default observer(function ActivityDashboard() {
   return (
     <Grid>
       {/* d8c395 */}
-      <Diamond
-        color='linear-gradient(135deg, #93c5fd, #10b981cc)'
-        size='100px'
-        zIndex={-1}
-        position='absolute'
-        top='17em'
-        right='-1em'
-      />
-      <CircleGrid
-        color='#10b981cc'
-        size='175px'
-        zIndex={-1}
-        position='absolute'
-        top='-4em'
-        right='-2em'
-      />
-      <Circle
-        color='linear-gradient(135deg, #d8c395, #bba981)'
-        // color='linear-gradient(135deg, #a5b4fc, #6366f1)'
-        size={["150px", "150px", "180px", "180px"]}
-        zIndex={-1}
-        left={"-2%"}
-        top={"6%"}
-        position='absolute'
-      />
+
       {/* #bba981 */}
       {!isLoggedIn && (
         <>
@@ -69,6 +45,31 @@ export default observer(function ActivityDashboard() {
             </span>
           </Grid.Row>
           <Grid.Row>
+            <Diamond
+              color='linear-gradient(135deg, #93c5fd, #10b981cc)'
+              size='100px'
+              zIndex={-1}
+              position='absolute'
+              top='17em'
+              right='-1em'
+            />
+            <CircleGrid
+              color='#10b981cc'
+              size='175px'
+              zIndex={-1}
+              position='absolute'
+              top='-4em'
+              right='-2em'
+            />
+            <Circle
+              color='linear-gradient(135deg, #d8c395, #bba981)'
+              // color='linear-gradient(135deg, #a5b4fc, #6366f1)'
+              size={["150px", "150px", "180px", "180px"]}
+              zIndex={-1}
+              left={"-2%"}
+              top={"6%"}
+              position='absolute'
+            />
             <Header
               size='huge'
               floated='left'
@@ -242,16 +243,48 @@ export default observer(function ActivityDashboard() {
       )}
       <Grid.Row centered>
         <Slideshow />
+        {isLoggedIn && (
+          <>
+            <Diamond
+              color='linear-gradient(135deg, #93c5fd, #10b981cc)'
+              size='100px'
+              zIndex={-1}
+              position='absolute'
+              top='39em'
+              left='-1em'
+            />
+            <CircleGrid
+              color='#10b981cc'
+              size='175px'
+              zIndex={-1}
+              position='absolute'
+              top='15em'
+              right='-2em'
+            />
+            <Circle
+              color='linear-gradient(135deg, #d8c395, #bba981)'
+              // color='linear-gradient(135deg, #a5b4fc, #6366f1)'
+              size={["150px", "150px", "180px", "180px"]}
+              zIndex={-1}
+              left={"-2%"}
+              top={"10em"}
+              position='absolute'
+            />
+          </>
+        )}
       </Grid.Row>
-      <Cross
-        position='absolute'
-        size='150px'
-        // color='#0ea5e9'
-        color='linear-gradient(135deg, #F7971E, #FFD200)'
-        zIndex={-1}
-        top='37em'
-        left='-2em'
-      />
+
+      {!isLoggedIn && (
+        <Cross
+          position='absolute'
+          size='150px'
+          // color='#0ea5e9'
+          color='linear-gradient(135deg, #F7971E, #FFD200)'
+          zIndex={-1}
+          top='34em'
+          left='-2em'
+        />
+      )}
       <ActivityFilters />
 
       <Grid.Row style={{ paddingTop: "0px" }}>

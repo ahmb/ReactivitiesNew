@@ -11,6 +11,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistance;
 using AutoMapper.QueryableExtensions;
+using Microsoft.Extensions.Logging;
 
 namespace Application.Activities
 {
@@ -27,12 +28,15 @@ namespace Application.Activities
             private readonly DataContext _context;
             private readonly IMapper _mapper;
             private readonly IUserAccessor _userAccessor;
+            private readonly ILogger _logger;
 
-            public Handler(DataContext context, IMapper mapper, IUserAccessor userAccessor)
+            public Handler(DataContext context, IMapper mapper, IUserAccessor userAccessor, ILogger logger)
             {
                 _userAccessor = userAccessor;
+                _logger = logger;
                 _mapper = mapper;
                 _context = context;
+
             }
 
             //handler that returns a list all the activities in the database context
@@ -68,6 +72,14 @@ namespace Application.Activities
                 {
                     query = query.Where(a => a.Attendees.FirstOrDefault(aa => aa.IsHost).AppUser.UserName == _userAccessor.GetUsername());
 
+                }
+
+
+                if (request.Params.Category != null)
+                {
+                    _logger.LogInformation("Value for category in the Params is {category}", request.Params.Category.ToString());
+
+                    query = query.Where(a => a.Categories.Any(c => c.Categories.Name == request.Params.Category));
                 }
 
 

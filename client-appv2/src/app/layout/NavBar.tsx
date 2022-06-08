@@ -258,19 +258,12 @@ const NavBar: React.FC<IProps> = ({ className }) => {
               onClick={() => setPredicate("isHost", "true")}
               style={{ paddingTop: "20px" }}
             /> */}
-
-              {categoryOptions.map(({ id, text, icon, label }) => (
+              {categoryOptions.map(({ id, text, icon, label, value }) => (
                 <HorizontalScrollItem id={id} key={id}>
                   <Menu.Item
                     key={id}
-                    active={predicate.has("isGoing")}
-                    // style={{ display: "inline" }}
-                    onClick={() => setPredicate("isGoing", "true")}>
-                    {/* <span
-                      className='categoryText'
-                      style={{ paddingTop: "5px" }}>
-                      {label}
-                    </span> */}
+                    active={(predicate.get("category") as string) === value}
+                    onClick={() => setPredicate("category", value)}>
                     <p
                       style={{
                         whiteSpace: "nowrap",

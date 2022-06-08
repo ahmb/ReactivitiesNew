@@ -75,6 +75,11 @@ export default class ActivityStore {
       case "startDate":
         this.predicate.delete("startDate");
         this.predicate.set("startDate", value);
+        break;
+      case "category":
+        resetPredicate();
+        this.predicate.set("category", value);
+        break;
     }
   };
 
