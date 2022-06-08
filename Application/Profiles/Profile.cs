@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Domain;
 using System.Text.Json.Serialization;
+using System;
 
 namespace Application.Profiles
 {
@@ -19,6 +20,7 @@ namespace Application.Profiles
         public int FollowersCount { get; set; }
 
         public int FollowingCount { get; set; }
+        public DateTime DateJoined { get; set; }
 
         // public ICollection<string> Interests  { get; set; }
 

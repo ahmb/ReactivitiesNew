@@ -47,6 +47,7 @@ export default class ProfileStore {
       const profile = await agent.Profiles.get(username);
       runInAction(() => {
         this.profile = profile;
+        this.profile.dateJoined = new Date(profile.dateJoined);
         this.loadingProfile = false;
       });
     } catch (error) {

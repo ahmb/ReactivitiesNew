@@ -16,6 +16,7 @@ export default observer(function ActivityFilters() {
   const {
     activityStore: { predicate, setPredicate },
     commonStore: { setIsFilterNavSticky, isFilterNavSticky },
+    userStore: { isLoggedIn },
   } = useStore();
 
   const [isCalendarVisible, setIsCalendarVisible] = useState(false);
@@ -144,28 +145,18 @@ export default observer(function ActivityFilters() {
                 💡 All
               </p>
             </Menu.Item>
-
-            <Menu.Item
-              active={predicate.has("isGoing")}
-              onClick={() => setPredicate("isGoing", "true")}>
-              {/* <Header
-                size='medium'
-                style={
-                  {
-                    // paddingTop: "10px"
-                  }
-                }
-                content='✅'
-              /> */}
-              <p
-                style={{
-                  fontSize: "18px",
-
-                  // paddingTop: "5px", paddingLeft: "5px"
-                }}>
-                ✅ Mine
-              </p>
-            </Menu.Item>
+            {isLoggedIn && (
+              <Menu.Item
+                active={predicate.has("isGoing")}
+                onClick={() => setPredicate("isGoing", "true")}>
+                <p
+                  style={{
+                    fontSize: "18px",
+                  }}>
+                  ✅ Mine
+                </p>
+              </Menu.Item>
+            )}
             {/* <Menu.Item
               content='Hosting'
               active={predicate.has("isHost")}

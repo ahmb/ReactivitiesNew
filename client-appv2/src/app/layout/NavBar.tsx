@@ -238,20 +238,21 @@ const NavBar: React.FC<IProps> = ({ className }) => {
                   💡 All
                 </p>
               </Menu.Item>
-
-              <Menu.Item
-                active={predicate.has("isGoing")}
-                onClick={() => setPredicate("isGoing", "true")}>
-                <p
-                  style={{
-                    whiteSpace: "nowrap",
-                    paddingTop: "7px",
-                    paddingBottom: "7px",
-                    fontSize: "14px",
-                  }}>
-                  ✅ Mine
-                </p>
-              </Menu.Item>
+              {isLoggedIn && (
+                <Menu.Item
+                  active={predicate.has("isGoing")}
+                  onClick={() => setPredicate("isGoing", "true")}>
+                  <p
+                    style={{
+                      whiteSpace: "nowrap",
+                      paddingTop: "7px",
+                      paddingBottom: "7px",
+                      fontSize: "14px",
+                    }}>
+                    ✅ Mine
+                  </p>
+                </Menu.Item>
+              )}
               {/* <Menu.Item
               content='Hosting'
               active={predicate.has("isHost")}

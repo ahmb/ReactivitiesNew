@@ -150,6 +150,12 @@ export default function ActivityListItem({ activity }: Props) {
                             alignItems: "center",
                           }}>
                           {activity.host?.displayName}
+                          <br />
+                          <span>
+                            <Icon name='star' size='small' />
+                            <Icon name='star outline' size='small' />
+                            <Icon name='star outline' size='small' />
+                          </span>
                         </Header>
                         {/* <br /> */}
                         <Icon

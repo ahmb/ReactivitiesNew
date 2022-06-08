@@ -1,11 +1,14 @@
 import Avatar from "boring-avatars";
+import { format } from "date-fns";
 import { observer } from "mobx-react-lite";
 import React from "react";
 import {
   Divider,
   Grid,
   Header,
+  Icon,
   Item,
+  Popup,
   Segment,
   Statistic,
 } from "semantic-ui-react";
@@ -61,7 +64,19 @@ export default observer(function ProfileHeader({ profile }: Props) {
                   {profile.followingCount} following{" "}
                   {" " + profile.followersCount} followers
                 </Item.Meta>
-                <Item.Extra>Reputation *NEW USER*</Item.Extra>
+                <Item.Extra>
+                  <p>Joined - {format(profile.dateJoined, "M/yy")}</p>
+
+                  <span>
+                    <Icon name='star' size='large' />
+                    <Icon name='star outline' size='large' />
+                    <Icon name='star outline' size='large' />
+                  </span>
+                  <Popup trigger={<span className='altFontColor'>*</span>}>
+                    <span className='altFontColor'>*</span>Reputation goes up
+                    with positive feedback and time
+                  </Popup>
+                </Item.Extra>
               </Item.Content>
             </Item>
           </Item.Group>

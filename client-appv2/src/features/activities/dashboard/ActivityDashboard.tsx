@@ -157,6 +157,8 @@ export default observer(function ActivityDashboard() {
                     "Study",
                     "Projects",
                     "Learn by doing",
+                    "No strings attached",
+                    "Make friends!",
                     "Anything!",
                     "Let's gooo!",
                     "In-Person coming soon!",

@@ -9,6 +9,7 @@ export interface Profile {
   followersCount: number;
   followingCount: number;
   photos?: IPhoto[];
+  dateJoined: Date;
   // interests: IInterest[] ;
 }
 
