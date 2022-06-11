@@ -68,9 +68,13 @@ export default observer(function ProfileHeader({ profile }: Props) {
                   <p>Joined - {format(profile.dateJoined, "M/yy")}</p>
 
                   <span>
-                    <Icon name='star' size='large' />
-                    <Icon name='star outline' size='large' />
-                    <Icon name='star outline' size='large' />
+                    <Icon
+                      name='star'
+                      size='large'
+                      style={{ color: "#FFD700" }}
+                    />
+                    {/* <Icon name='star outline' size='large' />
+                    <Icon name='star outline' size='large' /> */}
                   </span>
                   <Popup trigger={<span className='altFontColor'>*</span>}>
                     <span className='altFontColor'>*</span>Reputation goes up

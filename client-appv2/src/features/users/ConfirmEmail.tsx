@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Button, Header, Icon, Segment } from "semantic-ui-react";
 import agent from "../../app/api/agent";
@@ -59,20 +60,34 @@ export default function ConfirmEmail() {
       case Status.Success:
         return (
           <div>
-            <p>Email has been verified - you can now login</p>
+            <p>Your email is now verified, please login with your account</p>
             <Button
+              as={Link}
+              to={`/login`}
+              // floated='right'
+              content='Login'
+              circular
+              style={{
+                // margin: "10px",
+                boxShadow: "#404cb8 1px 3px 0px 0px",
+                backgroundColor: "#5162FA",
+                color: "white",
+              }}
+            />
+            {/* <Button
               primary
               onClick={() => modalStore.openModal(<LoginForm />)}
               size='huge'
               content='Login'
-            />
+              circular
+            /> */}
           </div>
         );
     }
   }
 
   return (
-    <Segment placeholder textAlign='center'>
+    <Segment placeholder textAlign='center' style={{ borderRadius: "20px" }}>
       <Header icon>
         <Icon name='envelope' />
         Email verification

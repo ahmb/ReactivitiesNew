@@ -13,7 +13,8 @@ interface Props {
 }
 
 export default observer(function ProfileContent({ profile }: Props) {
-  const { profileStore } = useStore();
+  const { profileStore, userStore } = useStore();
+  const { isLoggedIn } = userStore;
 
   const panes = [
     { menuItem: "About", render: () => <ProfileAbout /> },
@@ -23,11 +24,17 @@ export default observer(function ProfileContent({ profile }: Props) {
     { menuItem: "Following", render: () => <ProfileFollowings /> },
   ];
 
+  const panesGuest = [
+    { menuItem: "About", render: () => <ProfileAbout /> },
+    { menuItem: "Photos", render: () => <ProfilePhotos profile={profile} /> },
+    { menuItem: "Activities", render: () => <ProfileActivities /> },
+  ];
+
   return (
     <Tab
       menu={{ fluid: true, vertical: false }}
       // menuPosition='right'
-      panes={panes}
+      panes={isLoggedIn ? panes : panesGuest}
       onTabChange={(e, data) => profileStore.setActiveTab(data.activeIndex)}
     />
   );

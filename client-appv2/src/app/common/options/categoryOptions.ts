@@ -23,5 +23,13 @@ export const categoryOptions = [
     label: "💰  Business",
   },
   { icon: "📖", text: "Study", value: "study", id: "6", label: "📖  Study" },
-  { icon: "👋", text: "Misc.", value: "misc", id: "7", label: "👋  Misc." },
+  { icon: "🎶", text: "Music", value: "music", id: "7", label: "🎶  Music" },
+  {
+    icon: "🤹",
+    text: "Content",
+    value: "content",
+    id: "8",
+    label: "🤹  Content",
+  },
+  { icon: "👋", text: "Misc.", value: "misc", id: "9", label: "👋  Misc." },
 ];

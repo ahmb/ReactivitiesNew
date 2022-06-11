@@ -152,9 +152,13 @@ export default function ActivityListItem({ activity }: Props) {
                           {activity.host?.displayName}
                           <br />
                           <span>
-                            <Icon name='star' size='small' />
-                            <Icon name='star outline' size='small' />
-                            <Icon name='star outline' size='small' />
+                            <Icon
+                              name='star'
+                              size='small'
+                              style={{ color: "#FFD700" }}
+                            />
+                            {/* <Icon name='star outline' size='small' />
+                            <Icon name='star outline' size='small' /> */}
                           </span>
                         </Header>
                         {/* <br /> */}

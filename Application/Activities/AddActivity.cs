@@ -47,14 +47,14 @@ namespace Application.Activities
 
                 Photo photo = null;
 
+                _logger.LogInformation("Executing AddActivity for:");
+                _logger.LogInformation("{a}", request.Activity);
+
                 try
                 {
                     var newActivityDto = JsonConvert.DeserializeObject<ActivityDetailsDto>(request.Activity);
 
                     if (newActivityDto.AttendeeCountMax > 5) return Result<Unit>.Failure("Error : Attendee Count Max exceeded 5");
-
-
-
 
                     var user = await _context.Users
                         .Include(p => p.Photos)
@@ -144,11 +144,14 @@ namespace Application.Activities
 
                     bool result = await _context.SaveChangesAsync(cancellationToken) > 0;
 
+                    _logger.LogInformation("Successfully executed AddActivity");
+
                     var res = new Result<Unit>();
 
                     if (!result) return Result<Unit>.Failure("An error occured while creating the Activity.");
 
                     return Result<Unit>.Success(Unit.Value);
+
 
                 }
                 catch (Exception e)

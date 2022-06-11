@@ -15,18 +15,18 @@ export default function Slideshow() {
   return (
     <CarouselProvider
       //   hasMasterSpinner={true}
-      naturalSlideWidth={400}
-      naturalSlideHeight={300}
+      naturalSlideWidth={750}
+      naturalSlideHeight={350}
       interval={5000}
       isPlaying={true}
-      totalSlides={4}
+      totalSlides={5}
       infinite={true}>
       <Slider
         style={{
-          height: "300px",
-          width: "400px",
+          height: "350px",
+          width: "750px",
           justifyContent: "center",
-          alignItems: "center",
+          alignItems: "fill",
         }}>
         <Slide index={0}>
           {" "}
@@ -36,13 +36,22 @@ export default function Slideshow() {
           />
         </Slide>
         <Slide index={1}>
-          <Image hasMasterSpinner src='/assets/exploreSlideshow/study.jpg' />
+          <Image hasMasterSpinner src='/assets/exploreSlideshow/watch.jpg' />
         </Slide>
         <Slide index={2}>
-          <Image hasMasterSpinner src='/assets/exploreSlideshow/design.jpg' />
+          <Image
+            hasMasterSpinner
+            src='/assets/exploreSlideshow/followYourDreams.jpg'
+          />
         </Slide>
         <Slide index={3}>
-          <Image hasMasterSpinner src='/assets/exploreSlideshow/code.jpg' />
+          <Image
+            hasMasterSpinner
+            src='/assets/exploreSlideshow/combineSkills.jpg'
+          />
+        </Slide>
+        <Slide index={4}>
+          <Image hasMasterSpinner src='/assets/exploreSlideshow/create.jpg' />
         </Slide>
       </Slider>
       <ButtonBack

@@ -16,22 +16,31 @@ export default function RegisterSuccess() {
   }
 
   return (
-    <Segment placeholder textAlign='center'>
+    <Segment placeholder textAlign='center' style={{ borderRadius: "20px" }}>
       <Header icon color='green'>
         <Icon name='check' />
         Successfully registered!
       </Header>
       <p>
-        Please check your email (including junk email) for the verificatin email
+        <b>Final Step - Email verification is required to login</b>
+      </p>
+      <p>
+        Please check your email, including junk email, for the verification
+        email
       </p>
       {email && (
         <>
-          <p>Didn't recieve the email? Click the below button to resend</p>
+          <br />
+          <p style={{ color: "grey" }}>
+            Didn't recieve the email? Click the below button to have it resent
+          </p>
           <Button
-            primary
+            circular
+            color='grey'
+            style={{ boxShadow: "#5d5d5d 1px 3px 0px 0px" }}
             onClick={handleConfirmEmailResend}
-            content='Resent email'
-            size='huge'
+            content='Resend email'
+            size='medium'
           />
         </>
       )}

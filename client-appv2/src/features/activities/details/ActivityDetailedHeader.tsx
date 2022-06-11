@@ -43,6 +43,7 @@ interface Props {
 export default observer(function ActivityDetailedHeader({ activity }: Props) {
   const {
     activityStore: { updateAttendance, loading, cancelActivityToggle },
+    userStore: { isLoggedIn },
   } = useStore();
 
   return (
@@ -278,69 +279,71 @@ export default observer(function ActivityDetailedHeader({ activity }: Props) {
             </Item.Group>
           </Segment>
         </Segment>
-        <Segment clearing attached='bottom'>
-          {
-            activity.isHost ? (
-              <>
+        {isLoggedIn && (
+          <Segment clearing attached='bottom'>
+            {
+              activity.isHost ? (
+                <>
+                  <Button
+                    circular
+                    style={{
+                      backgroundColor: "#e0e1e2",
+                      color: "#525252",
+                      boxShadow: "#969696 1px 3px 0px 0px",
+                    }}
+                    floated='right'
+                    as={Link}
+                    to={`/manage/${activity.id}`}>
+                    Edit
+                  </Button>
+                </>
+              ) : activity.isGoing ? (
+                <>
+                  <span>
+                    🎉<i>Attendance confirmed</i>
+                  </span>
+                </>
+              ) : activity.approvalStatus == ApprovalStatus.NotRequested ? (
                 <Button
+                  onClick={updateAttendance}
+                  disabled={activity.isCancelled}
                   circular
-                  style={{
-                    backgroundColor: "#e0e1e2",
-                    color: "#525252",
-                    boxShadow: "#969696 1px 3px 0px 0px",
-                  }}
                   floated='right'
-                  as={Link}
-                  to={`/manage/${activity.id}`}>
-                  Edit
+                  style={{
+                    backgroundColor: "#5162FA",
+                    color: "white",
+                    boxShadow: "#404cb8 1px 3px 0px 0px",
+                  }}
+                  loading={loading}>
+                  Request Invite
                 </Button>
-              </>
-            ) : activity.isGoing ? (
-              <>
-                <span>
-                  🎉<i>Attendance confirmed</i>
-                </span>
-              </>
-            ) : activity.approvalStatus == ApprovalStatus.NotRequested ? (
-              <Button
-                onClick={updateAttendance}
-                disabled={activity.isCancelled}
-                circular
-                floated='right'
-                style={{
-                  backgroundColor: "#5162FA",
-                  color: "white",
-                  boxShadow: "#404cb8 1px 3px 0px 0px",
-                }}
-                loading={loading}>
-                Request Invite
-              </Button>
-            ) : (
-              // // activity.approvalStatus == ApprovalStatus.Pending ||
-              // //   activity.approvalStatus == ApprovalStatus.Rejected ?
-              <Button
-                onClick={updateAttendance}
-                disabled={true}
-                circular
-                floated='right'
-                style={{
-                  backgroundColor: "#5162FA",
-                  color: "white",
-                  boxShadow: "#404cb8 1px 3px 0px 0px",
-                }}
-                loading={loading}>
-                Pending approval
-              </Button>
-            )
-            // : (
-            //   <>
-            //     <span>
-            //       🎉<i>Attendance confirmed</i>
-            //     </span>
-            //   </>
-            // )
-          }
-        </Segment>
+              ) : (
+                // // activity.approvalStatus == ApprovalStatus.Pending ||
+                // //   activity.approvalStatus == ApprovalStatus.Rejected ?
+                <Button
+                  onClick={updateAttendance}
+                  disabled={true}
+                  circular
+                  floated='right'
+                  style={{
+                    backgroundColor: "#5162FA",
+                    color: "white",
+                    boxShadow: "#404cb8 1px 3px 0px 0px",
+                  }}
+                  loading={loading}>
+                  Pending approval
+                </Button>
+              )
+              // : (
+              //   <>
+              //     <span>
+              //       🎉<i>Attendance confirmed</i>
+              //     </span>
+              //   </>
+              // )
+            }
+          </Segment>
+        )}
       </Segment.Group>
     </>
   );

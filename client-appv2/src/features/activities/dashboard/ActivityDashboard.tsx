@@ -195,6 +195,22 @@ export default observer(function ActivityDashboard() {
                 // paddingTop: "5px",
               }}
             />
+            <br />
+            <br />
+            <br />
+            <Header
+              content={
+                "Instantly create or join engaging activities, in groups of 2 to 6"
+              }
+              color='grey'
+              size='large'
+              style={{
+                marginBottom: "0px",
+                marginTop: "-60px",
+                paddingBottom: "0px",
+                // paddingTop: "5px",
+              }}
+            />
           </Grid.Row>
           <Grid.Row>
             <div
@@ -205,7 +221,7 @@ export default observer(function ActivityDashboard() {
               }}>
               <Header
                 content={
-                  "Privacy first and personal, public or private, SSL Encrypted peer-to-peer transient Chatrooms - with up to 5 other users, free forever with minimal ads if any *"
+                  "WannaGo prioritizes privacy, hobbies, respectful collaboration and potential for connection, between you and upto 5 other like minded people, from around the world. Create public or private, SSL Encrypted peer-to-peer Chatrooms - free forever with minimal ads if any *"
                 }
                 size='medium'
                 style={{
