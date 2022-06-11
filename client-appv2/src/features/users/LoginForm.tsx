@@ -66,10 +66,10 @@ export default function LoginForm() {
               autoComplete='off'
               style={{ paddingTop: "2em", paddingBottom: "2em" }}>
               <Header as='h1' content='Login' textAlign='left' />
-              <MyTextInput name='email' placeholder='email' />
+              <MyTextInput name='email' placeholder='Email' />
               <MyTextInput
                 name='password'
-                placeholder='password'
+                placeholder='Password'
                 type='password'
               />
               <ErrorMessage

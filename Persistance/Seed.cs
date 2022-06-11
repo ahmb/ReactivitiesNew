@@ -93,6 +93,14 @@ namespace Persistance
                             Description="Paint, Sketch, Draw anime, Photoshop, Illustraor, Figma, Web & App"
                         },
                         new Categories {
+                            Name = "music",
+                            Description="Singing, playing instruments and generally jamming out"
+                        },
+                        new Categories {
+                            Name = "content",
+                            Description="online content creation "
+                        },
+                        new Categories {
                             Name = "videogames",
                             Description="Coordinate an online game or match making, Discussion"
                         },

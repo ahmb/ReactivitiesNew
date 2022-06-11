@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using API.DTOs;
+using API.DTOs.Validators;
 using API.Services;
 using Domain;
 using Infrastructure.Email;
@@ -74,6 +75,20 @@ namespace API.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
+
+            var registerDtoValidator = new RegisterDtoValidator();
+
+            var results = registerDtoValidator.Validate(registerDto);
+
+            if (!results.IsValid)
+            {
+                foreach (var failure in results.Errors)
+                {
+                    ModelState.AddModelError(failure.PropertyName, failure.ErrorMessage);
+                }
+                return ValidationProblem();
+            }
+
             if (await _userManager.Users.AnyAsync(x => x.Email == registerDto.Email))
             {
                 ModelState.AddModelError("email", "Email taken");
@@ -101,9 +116,9 @@ namespace API.Controllers
             token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
 
             var verifyUrl = $"{origin}/account/verifyEmail?token={token}&email={user.Email}";
-            var message = $"<p>Please click the below link to verify your email address:</p><p><a href='{verifyUrl}'>Click to verify email</a></p>";
+            var message = $"<h1>WannaGo<h1><h3>Thanks for registering!</h3><p>Registered username:{registerDto.Username}</p><p>Please click the below link to verify your email address:</p><p><a href='{verifyUrl}'>Click to verify email</a></p><br/><br/><p>Please disregard this email if you did not register.</p>";
 
-            await _emailSender.SendEmailAsync(user.Email, "Please verify email", message);
+            await _emailSender.SendEmailAsync(user.Email, "WannaGo - Registration : Please verify to login", message);
 
             return Ok("Registration success - please verify email");
         }
@@ -137,9 +152,9 @@ namespace API.Controllers
             token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
 
             var verifyUrl = $"{origin}/account/verifyEmail?token={token}&email={user.Email}";
-            var message = $"<p>Please click the below link to verify your email address:</p><p><a href='{verifyUrl}'>Click to verify email</a></p>";
+            var message = $"<h1>WannaGo<h1><h3>Thanks for registering!</h3><p>Registered username:{user.UserName}</p><p>Please click the below link to verify your email address:</p><p><a href='{verifyUrl}'>Click to verify email</a></p><br/><br/><p>Please disregard this email if you did not register.</p>";
 
-            await _emailSender.SendEmailAsync(user.Email, "Please verify email", message);
+            await _emailSender.SendEmailAsync(user.Email, "WannaGo - Registration : Please verify to login", message);
 
             return Ok("Email verification link resent");
         }
