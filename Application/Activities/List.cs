@@ -28,9 +28,9 @@ namespace Application.Activities
             private readonly DataContext _context;
             private readonly IMapper _mapper;
             private readonly IUserAccessor _userAccessor;
-            private readonly ILogger<Handler> _logger;
+            private readonly ILogger<List> _logger;
 
-            public Handler(DataContext context, IMapper mapper, IUserAccessor userAccessor, ILogger<Handler> logger)
+            public Handler(DataContext context, IMapper mapper, IUserAccessor userAccessor, ILogger<List> logger)
             {
                 _userAccessor = userAccessor;
                 _logger = logger;
