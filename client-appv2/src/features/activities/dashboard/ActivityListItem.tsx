@@ -11,10 +11,8 @@ import {
   Image,
   Grid,
   Header,
-  GridColumn,
 } from "semantic-ui-react";
 import { Activity, Language, SkillLevel } from "../../../app/models/activity";
-import ActivityListItemAttendee from "./ActivityListItemAttendee";
 import { categoryOptions } from "../../../app/common/options/categoryOptions";
 import Avatar from "boring-avatars";
 

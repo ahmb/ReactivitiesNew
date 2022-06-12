@@ -85,11 +85,10 @@ export default observer(function ActivityLog() {
         style={{
           background: "none",
           border: "none",
-          minHeight: "100%",
           minWidth: "100%",
         }}
         loading={loadingActivities || loadingInitial}>
-        <Grid>
+        <Grid style={{ minHeight: "900px" }}>
           <Grid.Column width={16} style={{ padding: "1%" }} textAlign='center'>
             <br />
 

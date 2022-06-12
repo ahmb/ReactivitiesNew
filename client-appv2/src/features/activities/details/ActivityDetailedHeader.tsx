@@ -13,7 +13,6 @@ import {
   Icon,
 } from "semantic-ui-react";
 import {
-  Activity,
   ActivityDetails,
   ApprovalStatus,
   Language,
@@ -21,20 +20,19 @@ import {
 } from "../../../app/models/activity";
 import { useStore } from "../../../app/stores/store";
 import { categoryOptions } from "../../../app/common/options/categoryOptions";
-import { useEffect } from "react";
 
-const activityImageStyle = {
-  filter: "brightness(30%)",
-};
+// const activityImageStyle = {
+//   filter: "brightness(30%)",
+// };
 
-const activityImageTextStyle = {
-  position: "absolute",
-  bottom: "5%",
-  left: "5%",
-  width: "100%",
-  height: "auto",
-  color: "white",
-};
+// const activityImageTextStyle = {
+//   position: "absolute",
+//   bottom: "5%",
+//   left: "5%",
+//   width: "100%",
+//   height: "auto",
+//   color: "white",
+// };
 
 interface Props {
   activity: ActivityDetails;
@@ -42,7 +40,7 @@ interface Props {
 
 export default observer(function ActivityDetailedHeader({ activity }: Props) {
   const {
-    activityStore: { updateAttendance, loading, cancelActivityToggle },
+    activityStore: { updateAttendance, loading },
     userStore: { isLoggedIn },
   } = useStore();
 
@@ -306,7 +304,7 @@ export default observer(function ActivityDetailedHeader({ activity }: Props) {
                     🎉<i>Attendance confirmed</i>
                   </span>
                 </>
-              ) : activity.approvalStatus == ApprovalStatus.NotRequested ? (
+              ) : activity.approvalStatus === ApprovalStatus.NotRequested ? (
                 <Button
                   onClick={updateAttendance}
                   disabled={activity.isCancelled}

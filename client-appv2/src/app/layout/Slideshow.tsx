@@ -9,7 +9,7 @@ import {
 } from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
 import "pure-react-carousel/dist/react-carousel.es.css";
-import { Button, Icon } from "semantic-ui-react";
+import { Icon } from "semantic-ui-react";
 
 export default function Slideshow() {
   return (

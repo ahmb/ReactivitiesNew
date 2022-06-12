@@ -33,7 +33,7 @@ export default observer(function ProfileActivities() {
     <Tab.Pane
       loading={loadingActivities}
       style={{
-        //  minHeight: "300px",
+        minHeight: "300px",
         borderRadius: "20px",
       }}>
       <Grid>

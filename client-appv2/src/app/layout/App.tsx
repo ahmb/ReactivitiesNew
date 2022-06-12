@@ -4,7 +4,6 @@ import ActivityDashboard from "../../features/activities/dashboard/ActivityDashb
 import {
   Button,
   Container,
-  Grid,
   Header,
   Icon,
   Menu,
@@ -12,7 +11,7 @@ import {
 } from "semantic-ui-react";
 import { observer } from "mobx-react-lite";
 import HomePage from "../../features/home/HomePage";
-import { Route, Switch, useLocation } from "react-router-dom";
+import { NavLink, Route, Switch, useLocation } from "react-router-dom";
 import ActivityForm from "../../features/activities/form/ActivityForm";
 import ActivityDetails from "../../features/activities/details/ActivityDetails";
 import TestError from "../../features/errors/TestError";
@@ -28,6 +27,8 @@ import PrivateRoute from "./PrivateRoute";
 import RegisterSuccess from "../../features/users/RegisterSuccess";
 import ConfirmEmail from "../../features/users/ConfirmEmail";
 import CommonStore from "../stores/commonStore";
+import { history } from "../../index";
+
 import {
   disableBodyScroll,
   enableBodyScroll,
@@ -51,6 +52,12 @@ function App() {
 
   const unlockScrollStyle = {
     // height: "100%",
+  };
+
+  const closeSideBarAndNav = (to: string) => {
+    clearAllBodyScrollLocks();
+    commonStore.toggleSidebar();
+    history.push(to);
   };
 
   useEffect(() => {
@@ -146,23 +153,23 @@ function App() {
                   </span>
                   {/* </span> */}
                 </Menu.Item>
-                <Menu.Item as='a'>
+                <Menu.Item as='a' onClick={(_) => closeSideBarAndNav("/home")}>
                   <Header size='huge' style={{ display: "inline" }}>
                     🏠{" "}
                   </Header>
                   Home
                 </Menu.Item>
-                <Menu.Item as='a'>
+                <Menu.Item as='a' onClick={(_) => closeSideBarAndNav("/")}>
                   <Header size='huge' style={{ display: "inline" }}>
                     💡{" "}
                   </Header>
                   Activities
                 </Menu.Item>
-                <Menu.Item> </Menu.Item> <Menu.Item as='a'>FAQ</Menu.Item>{" "}
+                {/* <Menu.Item> </Menu.Item> <Menu.Item as='a'>FAQ</Menu.Item>{" "}
                 <Menu.Item as='a'>About</Menu.Item>{" "}
                 <Menu.Item as='a'>Contact</Menu.Item>{" "}
                 <Menu.Item as='a'>Code of Conduct</Menu.Item>{" "}
-                <Menu.Item as='a'>Terms of Service</Menu.Item>{" "}
+                <Menu.Item as='a'>Terms of Service</Menu.Item>{" "} */}
               </Sidebar>
 
               <Sidebar.Pusher dimmed={commonStore.isSidebarOpen}>
@@ -170,8 +177,8 @@ function App() {
                   // id='targetElementId'
                   style={
                     commonStore.isSidebarOpen
-                      ? { ...lockScrollStyle, marginTop: "7em" }
-                      : { ...unlockScrollStyle, marginTop: "5em" }
+                      ? { ...lockScrollStyle, marginTop: "80px" }
+                      : { ...unlockScrollStyle, marginTop: "80px" }
                   }>
                   <Switch>
                     <Route exact path='/' component={ActivityDashboard} />
