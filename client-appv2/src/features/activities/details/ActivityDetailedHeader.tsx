@@ -78,7 +78,10 @@ export default observer(function ActivityDetailedHeader({ activity }: Props) {
             centered
             src={
               activity.imageUrl ??
-              `/assets/categoryImages/${activity.categories[0].name}.jpg`
+              categoryOptions.filter(
+                (c) => c.value === activity.categories[0].name
+              )[0].src
+              // `/assets/categoryImages/${activity.categories[0].name}.jpg`
             }
             style={{
               borderRadius: "20px",

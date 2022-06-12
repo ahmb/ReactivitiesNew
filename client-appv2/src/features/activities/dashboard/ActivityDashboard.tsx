@@ -200,7 +200,7 @@ export default observer(function ActivityDashboard() {
             <br />
             <Header
               content={
-                "Instantly create or join engaging activities, in groups of 2 to 6"
+                "Instantly create, schedule or join engaging activities, in groups of 2 to 6"
               }
               color='grey'
               size='large'
@@ -221,7 +221,7 @@ export default observer(function ActivityDashboard() {
               }}>
               <Header
                 content={
-                  "WannaGo prioritizes privacy, hobbies, respectful collaboration and potential for connection, between you and upto 5 other like minded people, from around the world. Create public or private, SSL Encrypted peer-to-peer Chatrooms - free forever with minimal ads if any *"
+                  "WannaGo values privacy, hobbies, respectful collaboration and potential for connection, between you and upto 5 other like minded people, from around the world. Create public or private, SSL Encrypted peer-to-peer Chatrooms - free forever with minimal ads if any *"
                 }
                 size='medium'
                 style={{
@@ -308,6 +308,9 @@ export default observer(function ActivityDashboard() {
       <Grid.Row style={{ paddingTop: "0px" }}>
         <Grid.Column style={{ padding: "0px" }}>
           {activityStore.loadingInitial && !loadingNext ? (
+            //  || true
+            // {activityStore.loadingInitial && !loadingNext ? (
+
             <>
               <ActivityListItemPlaceholder />
               <ActivityListItemPlaceholder />

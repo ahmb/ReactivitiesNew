@@ -32,26 +32,32 @@ export default function Slideshow() {
           {" "}
           <Image
             hasMasterSpinner
-            src='/assets/exploreSlideshow/collaborate.jpg'
+            src='https://res.cloudinary.com/dpvigehxt/image/upload/v1655008516/categoryImages/collaborate_nq9zj1.jpg'
           />
         </Slide>
         <Slide index={1}>
-          <Image hasMasterSpinner src='/assets/exploreSlideshow/watch.jpg' />
+          <Image
+            hasMasterSpinner
+            src='https://res.cloudinary.com/dpvigehxt/image/upload/v1655008515/categoryImages/watch_vftanf.jpg'
+          />
         </Slide>
         <Slide index={2}>
           <Image
             hasMasterSpinner
-            src='/assets/exploreSlideshow/followYourDreams.jpg'
+            src='https://res.cloudinary.com/dpvigehxt/image/upload/v1655008515/categoryImages/followYourDreams_bgy8c6.jpg'
           />
         </Slide>
         <Slide index={3}>
           <Image
             hasMasterSpinner
-            src='/assets/exploreSlideshow/combineSkills.jpg'
+            src='https://res.cloudinary.com/dpvigehxt/image/upload/v1655008516/categoryImages/combineSkills_mllkru.jpg'
           />
         </Slide>
         <Slide index={4}>
-          <Image hasMasterSpinner src='/assets/exploreSlideshow/create.jpg' />
+          <Image
+            hasMasterSpinner
+            src='https://res.cloudinary.com/dpvigehxt/image/upload/v1655008516/categoryImages/create_tjkgpf.jpg'
+          />
         </Slide>
       </Slider>
       <ButtonBack
