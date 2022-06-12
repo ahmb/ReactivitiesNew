@@ -15,6 +15,13 @@ import ScrollToTop from "./app/layout/ScrollToTop";
 
 export const history = createBrowserHistory();
 
+// replace console.* for disable log on production
+if (process.env.NODE_ENV === "production") {
+  console.log = () => {};
+  console.error = () => {};
+  console.debug = () => {};
+}
+
 ReactDOM.render(
   <StoreContext.Provider value={store}>
     <Router history={history}>

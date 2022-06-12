@@ -259,6 +259,39 @@ export default observer(function ActivityDashboard() {
           </Grid.Row>
         </>
       )}
+      {isLoggedIn && (
+        <Grid.Row centered>
+          <Header
+            content={
+              "We do not tolerate explicit, derogatory or offensive content"
+            }
+            size='small'
+            // floated='right'
+            style={
+              {
+                // paddingTop: "5px",
+                // float: "center",
+              }
+            }
+            color='grey'
+          />
+
+          {/* <Header
+            content={
+              "WannaGo ver.0.7 Please submit issues or feedback to: contact@iwannagoapp.com "
+            }
+            size='small'
+            // floated='right'
+            style={
+              {
+                // paddingTop: "5px",
+                // float: "center",
+              }
+            }
+            color='grey'
+          /> */}
+        </Grid.Row>
+      )}
       <Grid.Row centered>
         <Slideshow />
         {isLoggedIn && (
@@ -303,6 +336,7 @@ export default observer(function ActivityDashboard() {
           left='-2em'
         />
       )}
+
       <ActivityFilters />
 
       <Grid.Row style={{ paddingTop: "0px" }}>

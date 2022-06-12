@@ -47,7 +47,7 @@ namespace Application.Profiles
                     select = select.Where(attendee => attendee.Activity.PublishedToProfile == true);
                 }
 
-                select = select.Where(attendee => !attendee.Activity.Private);
+                // select = select.Where(attendee => !attendee.Activity.Private);
 
                 var query = select.ProjectTo<UserActivityDto>(_mapper.ConfigurationProvider)
                                 .AsQueryable();

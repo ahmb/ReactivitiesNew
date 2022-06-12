@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "./NavBar";
 import ActivityDashboard from "../../features/activities/dashboard/ActivityDashboard";
 import {
@@ -11,13 +11,13 @@ import {
 } from "semantic-ui-react";
 import { observer } from "mobx-react-lite";
 import HomePage from "../../features/home/HomePage";
-import { NavLink, Route, Switch, useLocation } from "react-router-dom";
+import { Route, Switch, useLocation } from "react-router-dom";
 import ActivityForm from "../../features/activities/form/ActivityForm";
 import ActivityDetails from "../../features/activities/details/ActivityDetails";
-import TestError from "../../features/errors/TestError";
+// import TestError from "../../features/errors/TestError";
 import { ToastContainer } from "react-toastify";
 import NotFound from "../../features/errors/NotFound";
-import ServerError from "../../features/errors/ServerError";
+// import ServerError from "../../features/errors/ServerError";
 import LoginForm from "../../features/users/LoginForm";
 import { useStore } from "../stores/store";
 import LoadingComponent from "./LoadingComponent";
@@ -26,12 +26,10 @@ import ProfilePage from "../../features/profiles/ProfilePage";
 import PrivateRoute from "./PrivateRoute";
 import RegisterSuccess from "../../features/users/RegisterSuccess";
 import ConfirmEmail from "../../features/users/ConfirmEmail";
-import CommonStore from "../stores/commonStore";
 import { history } from "../../index";
 
 import {
   disableBodyScroll,
-  enableBodyScroll,
   clearAllBodyScrollLocks,
   BodyScrollOptions,
 } from "body-scroll-lock";
@@ -41,9 +39,6 @@ function App() {
   const { commonStore, userStore } = useStore();
   const [targetElement, setTargetElement] = useState<Element | null>(null);
   const [scrollPosition, setScrollPosition] = useState(window.pageYOffset);
-  const options: BodyScrollOptions = {
-    reserveScrollBarGap: true,
-  };
 
   const lockScrollStyle = {
     // maxHeight: window.innerHeight,
@@ -66,6 +61,10 @@ function App() {
     } else {
       userStore.getFacebookLoginStatus().then(() => commonStore.setAppLoaded());
     }
+
+    const options: BodyScrollOptions = {
+      reserveScrollBarGap: true,
+    };
 
     setTargetElement(document.querySelector("#targetElementId"));
     if (commonStore.isSidebarOpen && targetElement !== null) {
@@ -153,6 +152,8 @@ function App() {
                   </span>
                   {/* </span> */}
                 </Menu.Item>
+                <Menu.Item></Menu.Item>
+
                 <Menu.Item as='a' onClick={(_) => closeSideBarAndNav("/home")}>
                   <Header size='huge' style={{ display: "inline" }}>
                     🏠{" "}
@@ -164,6 +165,37 @@ function App() {
                     💡{" "}
                   </Header>
                   Activities
+                </Menu.Item>
+
+                <Menu.Item></Menu.Item>
+                <Menu.Item>
+                  <Header size='huge' style={{ display: "inline" }}>
+                    🤝{" "}
+                  </Header>
+                  Code of Conduct
+                </Menu.Item>
+                <Menu.Item>
+                  <Header size='huge' style={{ display: "inline" }}>
+                    📰{" "}
+                  </Header>
+                  Biweekly Newsletter
+                </Menu.Item>
+                <Menu.Item>
+                  <Header size='huge' style={{ display: "inline" }}>
+                    💬{" "}
+                  </Header>
+                  Contact
+                </Menu.Item>
+                <Menu.Item></Menu.Item>
+                <Menu.Item></Menu.Item>
+                <Menu.Item></Menu.Item>
+                <Menu.Item>
+                  <Header
+                    size='tiny'
+                    color='grey'
+                    style={{ display: "inline" }}>
+                    <i>WannaGo alpha - version 0.7</i>
+                  </Header>
                 </Menu.Item>
                 {/* <Menu.Item> </Menu.Item> <Menu.Item as='a'>FAQ</Menu.Item>{" "}
                 <Menu.Item as='a'>About</Menu.Item>{" "}

@@ -8,11 +8,9 @@ import {
   ActivityDetails,
   ActivityFormValuesNew,
   ApprovalStatus,
-  IUserActivitiesUnreadDto,
   UnreadActivity,
 } from "../models/activity";
 import { Pagination, PagingParams } from "../models/pagination";
-import { Profile } from "../models/profile";
 import { store } from "./store";
 
 export default class ActivityStore {
@@ -237,7 +235,7 @@ export default class ActivityStore {
 
   createActivity = async (activityFormValues: ActivityFormValues) => {
     const user = store.userStore.user;
-    const attendee = new Profile(user!);
+    // const attendee = new Profile(user!);
     try {
       await agent.Activities.create(activityFormValues);
       const newActivity = new ActivityDetails(activityFormValues);
@@ -262,7 +260,7 @@ export default class ActivityStore {
     file: File | undefined
   ) => {
     const user = store.userStore.user;
-    const attendee = new Profile(user!);
+    // const attendee = new Profile(user!);
     try {
       //TODO:fix 204+205
       await agent.Activities.createNew(activityFormValues, file);
@@ -313,11 +311,11 @@ export default class ActivityStore {
             ...activity,
           };
           //TODO: update this so that when its added back to the registry , its got the correct object
-          // this.activityRegistry.set(
-          //   activity.id,
-          //   updatedActivity as ActivityDetails
-          // );
-          // this.selectedActivity = updatedActivity as ActivityDetails;
+          this.activityRegistry.set(
+            activity.id,
+            updatedActivity as ActivityDetails
+          );
+          this.selectedActivity = updatedActivity as ActivityDetails;
         }
       });
     } catch (error) {
@@ -399,8 +397,9 @@ export default class ActivityStore {
   uploadPhoto = async (file: Blob) => {
     this.uploadingPicture = true;
     try {
-      const response = await agent.Profiles.uploadPhoto(file);
-      const photo = response.data;
+      // const response =
+      await agent.Profiles.uploadPhoto(file);
+      // const photo = response.data; unused
       runInAction(() => {
         // if (this.profile) {
         //   this.profile.photos?.push(photo);

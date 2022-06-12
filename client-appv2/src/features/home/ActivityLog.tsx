@@ -13,10 +13,7 @@ import { Link, NavLink } from "react-router-dom";
 import { Profile, UserActivity } from "../../app/models/profile";
 import { format } from "date-fns";
 import { useStore } from "../../app/stores/store";
-import {
-  IUserActivitiesUnreadDto,
-  UnreadActivity,
-} from "../../app/models/activity";
+import { UnreadActivity } from "../../app/models/activity";
 import Avatar from "boring-avatars";
 
 const panes = [
@@ -42,15 +39,15 @@ export default observer(function ActivityLog() {
   const [currentTabName, setCurrentTabName] = useState("");
 
   useEffect(() => {
-    console.log("unread activities ");
-    unreadActivities.forEach((a) => console.log(a.date));
+    // console.log("unread activities ");
+    // unreadActivities.forEach((a) => console.log(a.date));
 
-    console.log("userActivities activities ");
-    userActivities.forEach((a) => console.log(a.date));
+    // console.log("userActivities activities ");
+    // userActivities.forEach((a) => console.log(a.date));
 
-    if (currentTabName === "") {
-      loadUserActivities(profile!.username);
-    }
+    // if (currentTabName === "") {
+    loadUserActivities(profile!.username);
+    // }
   }, [loadUserActivities, profile, unreadActivities?.length, setCurrentTabName]);
 
   const handleTabChange = (e: SyntheticEvent, data: TabProps) => {

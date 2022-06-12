@@ -1,16 +1,16 @@
-import React, { SyntheticEvent, useEffect } from "react";
+import React, { useEffect } from "react";
 import { observer } from "mobx-react-lite";
-import { Tab, Grid, Header, Card, Image, TabProps } from "semantic-ui-react";
+import { Tab, Grid, Header, Card } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { UserActivity } from "../../app/models/profile";
 import { format } from "date-fns";
 import { useStore } from "../../app/stores/store";
 
-const panes = [
-  { menuItem: "Published Activities", pane: { key: "published" } },
-  // { menuItem: "Past Events", pane: { key: "past" } },
-  // { menuItem: "Hosting", pane: { key: "hosting" } },
-];
+// const panes = [
+//   { menuItem: "Published Activities", pane: { key: "published" } },
+//   // { menuItem: "Past Events", pane: { key: "past" } },
+//   // { menuItem: "Hosting", pane: { key: "hosting" } },
+// ];
 
 export default observer(function ProfileActivities() {
   const { profileStore } = useStore();
@@ -21,13 +21,13 @@ export default observer(function ProfileActivities() {
     loadUserActivities(profile!.username, "published");
   }, [loadUserActivities, profile]);
 
-  const handleTabChange = (e: SyntheticEvent, data: TabProps) => {
-    loadUserActivities(
-      profile!.username,
-      // panes[data.activeIndex as number].pane.key
-      "published"
-    );
-  };
+  // const handleTabChange = (e: SyntheticEvent, data: TabProps) => {
+  //   loadUserActivities(
+  //     profile!.username,
+  //     // panes[data.activeIndex as number].pane.key
+  //     "published"
+  //   );
+  // };
 
   return (
     <Tab.Pane

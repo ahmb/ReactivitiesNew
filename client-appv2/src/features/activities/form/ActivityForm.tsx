@@ -13,13 +13,11 @@ import MySelectInput from "../../../app/common/form/MySelectInput";
 import { categoryOptions } from "../../../app/common/options/categoryOptions";
 import MyDateInput from "../../../app/common/form/MyDateInput";
 import {
-  ActivityFormValues,
   SkillLevel,
   Language,
   ActivityFormValuesNew,
   ICategory,
   ITag,
-  ActivityDetails,
 } from "../../../app/models/activity";
 import MyMultiSelectInput from "../../../app/common/form/MyMultiSelectInput";
 import MyTextNumberInput from "../../../app/common/form/MyTextNumberInput";
@@ -28,15 +26,14 @@ import MyCheckboxWithTextNumberInput from "../../../app/common/form/MyCheckboxWi
 import MyFileUpload from "../../../app/common/form/MyFileUpload";
 import MyTagsTextInput from "../../../app/common/form/MyTagsTextInput";
 import { Circle, CircleGrid, Diamond } from "react-awesome-shapes";
-const { zonedTimeToUtc, utcToZonedTime, format } = require("date-fns-tz");
 
 export default observer(function ActivityForm() {
   const history = useHistory();
   const { activityStore } = useStore();
   const {
-    createActivity,
+    // createActivity,
     createActivityNew,
-    updateActivity,
+    // updateActivity,
     updateActivityNew,
     loadActivity,
     loadingInitial,
@@ -133,7 +130,7 @@ export default observer(function ActivityForm() {
       console.log("default activity without id:");
       console.log(activity);
     }
-  }, [id, loadActivity]);
+  }, [id, loadActivity, activity]);
 
   function handleFormSubmit(activity: ActivityFormValuesNew | any) {
     console.log("activity is");
