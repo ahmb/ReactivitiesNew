@@ -87,7 +87,7 @@ export default observer(function ActivityForm() {
       .min(10, "Not equal or greater than 10 mins")
       .max(1440, "Must be less than 1 day i.e. 1440 mins")
       .required("Please enter a number between 10 to 1440 mins"),
-    ongoingDays: Yup.number().nullable(),
+    ongoingDays: Yup.number().nullable().max(7, "Maximum of 7 days allowed"),
     attendeeCountMax: Yup.number()
       .min(1, "Please select atleast 1 attendee :p")
       .max(

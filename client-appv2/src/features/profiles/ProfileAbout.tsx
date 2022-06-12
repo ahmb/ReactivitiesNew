@@ -10,7 +10,7 @@ export default observer(function ProfileAbout() {
   const [editMode, setEditMode] = useState(false);
 
   return (
-    <Tab.Pane style={{ minHeight: "300px", borderRadius: "20px" }}>
+    <Tab.Pane style={{ minHeight: "500px", borderRadius: "20px" }}>
       <Grid>
         <Grid.Column width='16'>
           <Header floated='left' content={`About ${profile?.displayName}`} />

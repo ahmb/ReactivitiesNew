@@ -45,7 +45,7 @@ export default observer(function ProfilePhotos({ profile }: Props) {
   }
 
   return (
-    <Tab.Pane style={{ minHeight: "300px", borderRadius: "20px" }}>
+    <Tab.Pane style={{ minHeight: "500px", borderRadius: "20px" }}>
       <Grid>
         <Grid.Column width={16}>
           <Header content='Photos' floated='left' />
