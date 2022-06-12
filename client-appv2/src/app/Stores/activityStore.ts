@@ -180,6 +180,22 @@ export default class ActivityStore {
     // }
   };
 
+  // a and b are javascript Date objects
+  dateDiffInDays(a: Date, b: Date): number {
+    // Discard the time and time-zone information.
+    const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+    const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+    const msPerDay = 1000 * 60 * 60 * 24;
+
+    return Math.floor((utc2 - utc1) / msPerDay);
+  }
+
+  addDays(date: Date, days: number): Date {
+    var result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+  }
+
   //TODO: fix this to add activity back to the registry
   private setActivity = (activity: Activity | ActivityDetails) => {
     const user = store.userStore.user;
@@ -196,6 +212,25 @@ export default class ActivityStore {
       // );
     }
     activity.date = new Date(activity.date!);
+
+    const today = new Date();
+    let dayDiff = this.dateDiffInDays(activity.date, today);
+
+    if (dayDiff > 0) {
+      if (activity.ongoing && activity.ongoingDays > 0) {
+        //update the date to the latest supported date
+
+        //if even the activity is in the past, even with ongoingDays
+        if (dayDiff > activity.ongoingDays) {
+          //add the max allowed days to the activity date
+          activity.date = this.addDays(activity.date, activity.ongoingDays);
+        }
+        //if  the activity is in the past, but is ongoing for
+        if (!(dayDiff > activity.ongoingDays)) {
+          activity.date = this.addDays(activity.date, dayDiff);
+        }
+      }
+    }
     // activity.endDate = new Date(activity.endDate!);
     this.activityRegistry.set(activity.id, activity);
   };
