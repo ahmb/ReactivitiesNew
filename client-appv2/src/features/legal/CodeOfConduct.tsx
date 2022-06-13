@@ -32,7 +32,7 @@ export default function CodeofConduct() {
         online and off. Anyone who violates this code of conduct may be
         sanctioned or expelled from these spaces at the discretion of the
         administrators.
-        <h2>Content Ownership</h2>
+        <h2>ContentOwnership</h2>
         <p>
           Any and all material(s) which may be produced or created during a
           WannaGo session, are owned equally by all the parties, which were
@@ -171,7 +171,7 @@ export default function CodeofConduct() {
         <p>
           If you are being harassed by a member of our community, notice that
           someone else is being harassed, or have any other concerns, please
-          contact the administrators via EleventyMeetup@gmail.com. Using the
+          contact the administrators via contact@iwannagoapp.com. Using the
           subject "CoC report" will automatically forward to all admins. If the
           person who is harassing you is on the admin team, they will not be
           involved in handling or resolving the incident.
@@ -181,7 +181,7 @@ export default function CodeofConduct() {
           we can. If you do not get a timely response (for example, if no admins
           are currently online) then please put your personal safety and
           well-being first, and consider logging out and/or contacting the
-          admins by email at EleventyMeetup@gmail.com.
+          admins by email at contact@iwannagoapp.com.
         </p>
         <p>
           This code of conduct applies to our community's spaces, but if you are

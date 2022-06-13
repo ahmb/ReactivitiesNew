@@ -168,7 +168,8 @@ export default observer(function ActivityFilters() {
               <HorizontalScrollItem
                 id={id}
                 key={id}
-                style={{ display: "inline" }}>
+                style={{ display: "inline" }}
+                >
                 <Menu.Item
                   key={id}
                   active={(predicate.get("category") as string) === value}

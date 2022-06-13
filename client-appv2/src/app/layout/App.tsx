@@ -196,7 +196,14 @@ function App() {
                   Biweekly Newsletter <br/><i>*Coming Soon*</i>
                 </Menu.Item> */}
                 <Menu.Item></Menu.Item>
-                <Menu.Item></Menu.Item>
+                <Menu.Item>
+                  <a
+                    href='https://twitter.com/iWannaGoApp'
+                    target='_blank'
+                    rel='noreferrer'>
+                    <Icon name='twitter' />
+                  </a>
+                </Menu.Item>
                 <Menu.Item>
                   <Header
                     size='tiny'

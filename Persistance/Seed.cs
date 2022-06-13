@@ -787,8 +787,17 @@ namespace Persistance
                         )
                     }
                 };
-                await context.Activities.AddRangeAsync(activities);
-                await context.SaveChangesAsync();
+
+                var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
+                // Depending on if in development or production, add the test activity data
+                // connection string, or development connection string from env var.
+                if (env == "Development")
+                {
+                    await context.Activities.AddRangeAsync(activities);
+                    await context.SaveChangesAsync();
+                }
+
             }
         }
     }
