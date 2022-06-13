@@ -4,12 +4,15 @@ import { Segment, Grid, Container, Button } from "semantic-ui-react";
 import { categoryOptions } from "../../../app/common/options/categoryOptions";
 import { onClickUrl } from "../../../app/common/util/helpers";
 import { ActivityDetails } from "../../../app/models/activity";
+import { useStore } from "../../../app/stores/store";
 
 interface Props {
   activity: ActivityDetails;
 }
 
 export default observer(function ActivityDetailedInfo({ activity }: Props) {
+  const { userStore } = useStore();
+
   return (
     <>
       <Segment.Group>
@@ -138,10 +141,10 @@ export default observer(function ActivityDetailedInfo({ activity }: Props) {
                 onClick={
                   process.env.NODE_ENV === "production"
                     ? onClickUrl(
-                        `/chatroom/index.html?name=${activity.id}&user=ahmad&pass=${activity.chatPassword}`
+                        `/chatroom/index.html?name=${activity.id}&user=${userStore.user?.displayName}&pass=${activity.chatPassword}`
                       )
                     : onClickUrl(
-                        `http://localhost:8080/?name=${activity.id}&user=ahmad&pass=${activity.chatPassword}`
+                        `http://localhost:8080/?name=${activity.id}&user=${userStore.user?.displayName}&pass=${activity.chatPassword}`
                       )
                 }
               />
