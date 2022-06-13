@@ -58,8 +58,13 @@ background: white;
 
 
 body {
+  font-family: -apple-system, "system-ui", "Segoe UI", Helvetica, Arial, sans-serif;
   background-color: #eaeaea !important;
   color:rgba(0, 0, 0, 0.808);
+}
+
+.ui.header {
+  font-family: -apple-system, "system-ui", "Segoe UI", Helvetica, Arial, sans-serif;
 }
 
 

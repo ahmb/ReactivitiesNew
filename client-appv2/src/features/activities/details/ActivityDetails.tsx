@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Container, Grid, Header, Icon, Segment } from "semantic-ui-react";
+import { Grid, Header, Icon, Segment } from "semantic-ui-react";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
 import { useStore } from "../../../app/stores/store";
 import { useParams } from "react-router-dom";
@@ -56,7 +56,7 @@ export default observer(function ActivityDetails() {
         {activity.attendees && (
           <>
             <Grid>
-              <Grid.Row>
+              <Grid.Row centered>
                 <div
                   style={{
                     backgroundColor: "grey",

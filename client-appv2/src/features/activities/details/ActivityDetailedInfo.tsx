@@ -1,10 +1,9 @@
-import { format } from "date-fns";
 import { observer } from "mobx-react-lite";
 import React from "react";
-import { Segment, Grid, Icon, Container, Button } from "semantic-ui-react";
+import { Segment, Grid, Container, Button } from "semantic-ui-react";
 import { categoryOptions } from "../../../app/common/options/categoryOptions";
 import { onClickUrl } from "../../../app/common/util/helpers";
-import { Activity, ActivityDetails } from "../../../app/models/activity";
+import { ActivityDetails } from "../../../app/models/activity";
 
 interface Props {
   activity: ActivityDetails;
@@ -125,7 +124,6 @@ export default observer(function ActivityDetailedInfo({ activity }: Props) {
               />
             </Grid.Column>
             <Grid.Column width={8}>
-              //TODO: update with correct url depending on env
               <Button
                 icon='external alternate'
                 content='Open Chatroom'
@@ -136,10 +134,15 @@ export default observer(function ActivityDetailedInfo({ activity }: Props) {
                   color: "white",
                   boxShadow: "#404cb8 1px 3px 0px 0px",
                 }}
-                onClick={onClickUrl(
-                  `http://localhost:8080/?name=${activity.id}&user=ahmad&pass=${activity.chatPassword}`
-                  // `http://localhost:5000/chatroom/index.html?name=${activity.id}&user=ahmad&pass=${activity.chatPassword}`
-                )}
+                onClick={
+                  process.env.NODE_ENV === "production"
+                    ? onClickUrl(
+                        `/chatroom/index.html?name=${activity.id}&user=ahmad&pass=${activity.chatPassword}`
+                      )
+                    : onClickUrl(
+                        `http://localhost:8080/?name=${activity.id}&user=ahmad&pass=${activity.chatPassword}`
+                      )
+                }
               />
             </Grid.Column>
           </Grid>

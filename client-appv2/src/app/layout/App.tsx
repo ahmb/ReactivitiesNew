@@ -33,6 +33,8 @@ import {
   clearAllBodyScrollLocks,
   BodyScrollOptions,
 } from "body-scroll-lock";
+import CodeOfConduct from "../../features/legal/CodeOfConduct";
+import Contact from "../../features/contact/Contact";
 
 function App() {
   const location = useLocation();
@@ -168,24 +170,30 @@ function App() {
                 </Menu.Item>
 
                 <Menu.Item></Menu.Item>
-                <Menu.Item>
+                <Menu.Item as='a' onClick={(_) => closeSideBarAndNav("/code")}>
                   <Header size='huge' style={{ display: "inline" }}>
                     🤝{" "}
                   </Header>
                   Code of Conduct
                 </Menu.Item>
-                <Menu.Item>
-                  <Header size='huge' style={{ display: "inline" }}>
-                    📰{" "}
-                  </Header>
-                  Biweekly Newsletter
-                </Menu.Item>
-                <Menu.Item>
+
+                <Menu.Item
+                  as='a'
+                  onClick={(_) => closeSideBarAndNav("/contact")}>
                   <Header size='huge' style={{ display: "inline" }}>
                     💬{" "}
                   </Header>
                   Contact
                 </Menu.Item>
+                {/* <Menu.Item
+                // as='a'
+                // onClick={(_) => closeSideBarAndNav("/newsletter")}
+                >
+                  <Header size='huge' style={{ display: "inline" }}>
+                    📰{" "}
+                  </Header>
+                  Biweekly Newsletter <br/><i>*Coming Soon*</i>
+                </Menu.Item> */}
                 <Menu.Item></Menu.Item>
                 <Menu.Item></Menu.Item>
                 <Menu.Item></Menu.Item>
@@ -235,6 +243,10 @@ function App() {
                     />
                     <Route path='/login' component={LoginForm} />
                     <PrivateRoute path='/home' component={HomePage} />
+                    <Route path='/code' component={CodeOfConduct} />
+                    <Route path='/contact' component={Contact} />
+                    {/* <Route path='/newsletter' component={Newsletter} /> */}
+
                     <Route component={NotFound} />
                   </Switch>
                 </Container>

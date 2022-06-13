@@ -203,7 +203,7 @@ export default observer(function ActivityDashboard() {
                 "Instantly create, schedule or join engaging activities, in groups of 2 to 6"
               }
               color='grey'
-              size='large'
+              size='medium'
               style={{
                 marginBottom: "0px",
                 marginTop: "-60px",

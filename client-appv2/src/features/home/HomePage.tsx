@@ -1,14 +1,7 @@
 import { observer } from "mobx-react-lite";
 import React, { useEffect } from "react";
-import { Link, NavLink, useParams } from "react-router-dom";
-import {
-  Button,
-  Container,
-  Header,
-  Segment,
-  Image,
-  Divider,
-} from "semantic-ui-react";
+import { NavLink } from "react-router-dom";
+import { Button, Container, Header, Divider } from "semantic-ui-react";
 import LoadingComponent from "../../app/layout/LoadingComponent";
 import { useStore } from "../../app/stores/store";
 import LoginForm from "../users/LoginForm";
@@ -40,7 +33,7 @@ export default observer(function HomePage() {
       //   setActiveTab(0);
       // };
     }
-  }, [loadProfile, profile]);
+  }, [loadProfile, profile, userStore.user]);
 
   if (loadingProfile) return <LoadingComponent content='Loading Homepage...' />;
 
