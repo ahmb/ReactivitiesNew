@@ -60,6 +60,7 @@ export default observer(function ActivityFilters() {
           <Button
             icon='calendar'
             circular
+            className='calendarToggleButton'
             style={{
               // position: "absolute",
               // right: "30px",

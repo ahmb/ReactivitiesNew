@@ -82,6 +82,11 @@ body {
 background:#eaeaea !important;
 }
 
+#signUpButton:hover{
+  background-color: #dc493a !important;
+  box-shadow: #9b443b 1px 3px 0px 0px !important;
+}
+
 /* ACTIVITIES PAGE */
 .react-calendar__tile--now {
   background-color: #009ee6;
@@ -131,10 +136,22 @@ background:#eaeaea !important;
   flex-shrink: 0;
 }
 
-
-
 /* ActivitiesList */
+.viewButton:hover{
+  background-color: #dc493a !important;
+  box-shadow: #9b443b 1px 3px 0px 0px !important;
+}
 
+.navCreateButton:hover{
+  background-color: #dc493a !important;
+  box-shadow: #9b443b 1px 3px 0px 0px !important;
+}
+
+
+.calendarToggleButton:hover{
+  background-color: #dc493a !important;
+  box-shadow: #9b443b 1px 3px 0px 0px !important;
+}
 
 /* Font flickering fix for google fonts */
 html.wf-loading * {

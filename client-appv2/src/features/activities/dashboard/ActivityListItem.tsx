@@ -399,6 +399,7 @@ export default function ActivityListItem({ activity }: Props) {
           to={`/activities/${activity.id}`}
           floated='right'
           content='View'
+          className='viewButton'
           circular
           style={{
             margin: "10px",

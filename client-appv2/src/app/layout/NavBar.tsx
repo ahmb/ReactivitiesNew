@@ -101,6 +101,7 @@ const NavBar: React.FC<IProps> = ({ className }) => {
                   to={`/login`}
                   floated='right'
                   content='Sign Up or Login'
+                  id='signUpButton'
                   circular
                   style={{
                     margin: "10px",
@@ -138,6 +139,7 @@ const NavBar: React.FC<IProps> = ({ className }) => {
                       color: "white",
                       boxShadow: "#404cb8 1px 3px 0px 0px",
                     }}
+                    className='navCreateButton'
                     icon='plus'
                     size='mini'
                     circular
