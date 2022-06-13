@@ -10,6 +10,7 @@ import ActivityListItemPlaceholder from "./ActivityListItemPlaceholder";
 import Slideshow from "../../../app/layout/Slideshow";
 import Typed from "react-typed";
 import { Circle, CircleGrid, Diamond, Cross } from "react-awesome-shapes";
+import { NavLink } from "react-router-dom";
 
 export default observer(function ActivityDashboard() {
   const { activityStore, userStore } = useStore();
@@ -246,16 +247,15 @@ export default observer(function ActivityDashboard() {
           </Grid.Row>
           <Grid.Row centered>
             <Header
-              content={
-                "We do not tolerate explicit, derogatory or offensive content, please read our policy"
-              }
               size='medium'
               floated='right'
               style={{
                 // paddingTop: "5px",
                 float: "center",
-              }}
-            />
+              }}>
+              We do not tolerate explicit, derogatory or offensive content,
+              please read our <NavLink to={"/code"}>Code of Conduct</NavLink>
+            </Header>
           </Grid.Row>
         </>
       )}

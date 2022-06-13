@@ -128,7 +128,7 @@ export default observer(function ActivityLog() {
                           )}
                           {attendee.image && (
                             <Image
-                              floated='right'
+                              // floated='right'
                               size='mini'
                               src={attendee.image}
                               circular

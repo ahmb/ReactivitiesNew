@@ -169,7 +169,6 @@ function App() {
                   Activities
                 </Menu.Item>
 
-                <Menu.Item></Menu.Item>
                 <Menu.Item as='a' onClick={(_) => closeSideBarAndNav("/code")}>
                   <Header size='huge' style={{ display: "inline" }}>
                     🤝{" "}
@@ -196,12 +195,11 @@ function App() {
                 </Menu.Item> */}
                 <Menu.Item></Menu.Item>
                 <Menu.Item></Menu.Item>
-                <Menu.Item></Menu.Item>
                 <Menu.Item>
                   <Header
                     size='tiny'
                     color='grey'
-                    style={{ display: "inline" }}>
+                    style={{ display: "inline", fontSize: "10px" }}>
                     <i>WannaGo alpha - version 0.7</i>
                   </Header>
                 </Menu.Item>

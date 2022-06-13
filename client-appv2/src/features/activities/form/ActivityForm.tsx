@@ -69,12 +69,16 @@ export default observer(function ActivityForm() {
     categories: Yup.array()
       .of(
         Yup.object().shape({
-          value: Yup.string().max(255).required().label("value"),
+          value: Yup.string()
+            .max(255)
+            .required("Category selection is required")
+            .label("value"),
         })
       )
       .min(1, "minimum 1")
       .max(3, "maximum 3")
-      .required("Please select atleast 1 category"),
+      .required("Please select atleast 1 category")
+      .nullable(),
     date: Yup.date()
       .required("Please select the start date and time")
       .nullable(),
