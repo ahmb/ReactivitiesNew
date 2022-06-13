@@ -336,3 +336,9 @@ input {
 .chatAvatar{
   border-radius: 20px !important;
 }
+
+
+/* SLIDER MENU  */
+.ui.vertical.menu .item:before {
+  background-color: transparent;
+}

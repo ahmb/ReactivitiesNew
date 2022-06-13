@@ -127,12 +127,14 @@ function App() {
                         top: scrollPosition,
                         maxHeight: window.innerHeight,
                         zIndex: "10",
+                        backgroundColor: "aliceblue",
                         // paddingTop: "60px",
                       }
                     : {
                         ...unlockScrollStyle,
                         width: "100%",
                         zIndex: "10",
+                        backgroundColor: "aliceblue",
                         // paddingTop: "60px",
                       }
                 }>
