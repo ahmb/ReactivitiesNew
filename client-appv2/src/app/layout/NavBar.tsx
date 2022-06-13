@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Menu,
   Button,
   Container,
   Image,
   Dropdown,
-  Header,
   Icon,
 } from "semantic-ui-react";
 import { Link, NavLink } from "react-router-dom";

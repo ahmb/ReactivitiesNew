@@ -9,13 +9,12 @@ import {
   HorizontalScrollContainer,
   HorizontalScrollItem,
 } from "react-simple-horizontal-scroller";
-import { useStickyChecker } from "../../../app/common/util/useStickyChecker";
 import { useLocation } from "react-router-dom";
 
 export default observer(function ActivityFilters() {
   const {
     activityStore: { predicate, setPredicate },
-    commonStore: { setIsFilterNavSticky, isFilterNavSticky },
+    commonStore: { isFilterNavSticky },
     userStore: { isLoggedIn },
   } = useStore();
 
