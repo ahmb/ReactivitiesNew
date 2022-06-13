@@ -306,6 +306,7 @@ export default observer(function ActivityDetailedHeader({ activity }: Props) {
                 </>
               ) : activity.approvalStatus === ApprovalStatus.NotRequested ? (
                 <Button
+                  className='genericHoverButton'
                   onClick={updateAttendance}
                   disabled={activity.isCancelled}
                   circular

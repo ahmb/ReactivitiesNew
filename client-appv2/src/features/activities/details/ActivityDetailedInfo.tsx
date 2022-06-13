@@ -125,6 +125,7 @@ export default observer(function ActivityDetailedInfo({ activity }: Props) {
             </Grid.Column>
             <Grid.Column width={8}>
               <Button
+                className='openChatroomButton'
                 icon='external alternate'
                 content='Open Chatroom'
                 // floated='right'

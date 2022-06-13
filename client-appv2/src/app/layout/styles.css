@@ -153,6 +153,16 @@ background:#eaeaea !important;
   box-shadow: #9b443b 1px 3px 0px 0px !important;
 }
 
+.openChatroomButton:hover{
+  background-color: #dc493a !important;
+  box-shadow: #9b443b 1px 3px 0px 0px !important;
+}
+
+.genericHoverButton:hover{
+  background-color: #dc493a !important;
+  box-shadow: #9b443b 1px 3px 0px 0px !important;
+}
+
 /* Font flickering fix for google fonts */
 html.wf-loading * {
   opacity: 0;

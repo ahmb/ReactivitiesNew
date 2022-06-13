@@ -400,6 +400,7 @@ export default function ActivityListItem({ activity }: Props) {
           floated='right'
           content='View'
           className='viewButton'
+          size='large'
           circular
           style={{
             margin: "10px",
