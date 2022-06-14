@@ -795,8 +795,10 @@ namespace Persistance
                 if (env == "Development")
                 {
                     await context.Activities.AddRangeAsync(activities);
-                    await context.SaveChangesAsync();
                 }
+                await context.SaveChangesAsync();
+
+
 
             }
         }
