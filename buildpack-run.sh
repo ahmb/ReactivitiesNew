@@ -1,1 +1,1 @@
-cp -R API/wwwroot heroku_output/ 
+cp -R API/wwwroot heroku_output/ >> buildPackError.log
