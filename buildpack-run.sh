@@ -3,3 +3,5 @@
 echo "$(pwd)"
 echo "$(ls)"
 cp -R API/wwwroot /app/heroku_output
+cd /app/heroku_output
+ls w*
