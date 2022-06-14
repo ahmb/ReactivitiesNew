@@ -1,0 +1,1 @@
+cp -R API/wwwroot heroku_output/ 
