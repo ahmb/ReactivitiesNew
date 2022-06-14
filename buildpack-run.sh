@@ -3,7 +3,7 @@
 echo "ECHO inside temp"
 echo "$(pwd)"
 echo "$(ls)"
-cp -R API/wwwrootchat /app/heroku_output
+cp -r API/wwwrootchat heroku_output/
 cd /app/heroku_output
 echo "ECHO LS in HEROKU OUTPUT"
 echo "$(ls)"
