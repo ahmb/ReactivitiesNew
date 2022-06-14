@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Domain;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 using Persistance;
 using Persistance.Utils;
 namespace Persistance
@@ -11,7 +12,7 @@ namespace Persistance
     public class Seed
     {
         public static async Task SeedData(DataContext context,
-            UserManager<AppUser> userManager)
+            UserManager<AppUser> userManager, ILogger<Seed> _logger)
         {
             //Create categories
             // if (!context.Categories.Any())
@@ -794,10 +795,11 @@ namespace Persistance
                 // connection string, or development connection string from env var.
                 if (env == "Development")
                 {
+                    _logger.LogInformation("Seeded Data: Activities");
                     await context.Activities.AddRangeAsync(activities);
                 }
                 await context.SaveChangesAsync();
-
+                _logger.LogInformation("Seeded Data: Users + Categories");
 
 
             }
