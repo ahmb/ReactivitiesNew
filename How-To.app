@@ -302,3 +302,11 @@ Client App Webrtc - SimpleWebRTC
 1. to make npm start run, because its only compatible with node 16 not 17:
 
  export NODE_OPTIONS=--openssl-legacy-provider 
+
+
+
+----
+
+setup Heroku with GoDaddy
+
+https://www.youtube.com/watch?v=CxrzD73r6Rw&ab_channel=NDCConferences

@@ -3,9 +3,24 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
 using Microsoft.AspNetCore.Http;
+using Serilog;
+using Microsoft.AspNetCore.ResponseCompression;
 
+var configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .AddJsonFile(
+                    $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", EnvironmentVariableTarget.Process)}.json",
+                    true)
+                .AddEnvironmentVariables()
+                .Build();
+
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(configuration)
+    .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog();
 
 //add services to container 
 //ConfigureServices();
@@ -70,6 +85,12 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
 });
 
+
+builder.Services.AddResponseCompression(options =>
+{
+    options.Providers.Add<GzipCompressionProvider>();
+    options.EnableForHttps = true;
+});
 
 
 //Configure the http request pipeline
@@ -141,6 +162,9 @@ app.UseDefaultFiles();
 
 app.UseStaticFiles();
 
+
+
+
 app.UseDefaultFiles(new DefaultFilesOptions()
 {
     FileProvider = new PhysicalFileProvider(
@@ -156,6 +180,7 @@ app.UseStaticFiles(new StaticFileOptions()
     RequestPath = new PathString("/chatroom")
 });
 
+app.UseResponseCompression();
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -177,6 +202,7 @@ var services = scope.ServiceProvider;
 
 try
 {
+    Log.Information("Starting Database Migration and Seeding");
     var context = services.GetRequiredService<DataContext>();
     var userManager = services.GetRequiredService<UserManager<AppUser>>();
     await context.Database.MigrateAsync();
@@ -184,8 +210,20 @@ try
 }
 catch (Exception ex)
 {
-    var logger = services.GetRequiredService<ILogger<Program>>();
-    logger.LogError(ex, "An error occured during migraiton");
+    Log.Fatal(ex, "An error occured during migraiton");
 }
 
-await app.RunAsync();
+try
+{
+    Log.Information("Starting web host");
+    await app.RunAsync();
+
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Host terminated unexpectedly");
+}
+finally
+{
+    Log.CloseAndFlush();
+}
