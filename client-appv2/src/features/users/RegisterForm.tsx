@@ -16,6 +16,7 @@ export default observer(function RegisterForm() {
         style={{
           borderRadius: "20px",
           backgroundColor: "aliceblue",
+          maxWidth: "95vw",
         }}
         raised>
         <Formik

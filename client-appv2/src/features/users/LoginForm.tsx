@@ -50,7 +50,7 @@ export default function LoginForm() {
           </Grid.Row>
         </Grid.Column>
       </Grid>
-      <Segment style={{ borderRadius: "20px" }} raised>
+      <Segment style={{ borderRadius: "20px", maxWidth: "95vw" }} raised>
         {isLoggedIn && <Redirect to='/' />}
         <Formik
           initialValues={{ email: "", password: "", error: null }}
@@ -102,7 +102,7 @@ export default function LoginForm() {
       </Header>
       <RegisterForm />
       <svg
-        width='100%'
+        width='80vw'
         viewBox='0 0 425 481'
         fill='none'
         xmlns='http://www.w3.org/2000/svg'>
@@ -476,10 +476,10 @@ export default function LoginForm() {
         />
         <defs>
           <clipPath id='Group41_clip0-272-2454'>
-            <rect width='380' height='480' fill='white' />
+            <rect width='300' height='400' fill='white' />
           </clipPath>
           <clipPath id='Group41_clip1-272-2454'>
-            <rect width='380' height='480' fill='white' />
+            <rect width='300' height='400' fill='white' />
           </clipPath>
         </defs>
       </svg>

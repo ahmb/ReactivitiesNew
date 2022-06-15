@@ -50,7 +50,12 @@ const NavBar: React.FC<IProps> = ({ className }) => {
         size='large'
         style={
           isSidebarOpen
-            ? { backgroundColor: "white", width: "100%", zIndex: "0" }
+            ? {
+                backgroundColor: "white",
+                width: "100%",
+
+                // zIndex: "0"
+              }
             : {
                 backgroundColor: "white",
                 width: "100%",
@@ -64,7 +69,10 @@ const NavBar: React.FC<IProps> = ({ className }) => {
             // as={NavLink}
             // to='/activities'
             header
-            onClick={(e, d) => toggleSidebar()}
+            onClick={(e, d) => {
+              toggleSidebar();
+              e.stopPropagation();
+            }}
             style={{ paddingRight: "0px" }}>
             {!isSidebarOpen && <Icon name='bars' size='large' />}
             {isSidebarOpen && <Icon name='angle left' size='large' />}
@@ -209,7 +217,7 @@ const NavBar: React.FC<IProps> = ({ className }) => {
               ? {
                   backgroundColor: "white",
                   width: "100%",
-                  zIndex: "0",
+                  // zIndex: "0",
                   marginLeft: "0px",
                   marginRight: "0px",
                   marginTop: "68px",
@@ -218,7 +226,7 @@ const NavBar: React.FC<IProps> = ({ className }) => {
                   backgroundColor: "white",
                   width: "100%",
                   borderBottom: "1px solid #f4f4f4",
-                  zIndex: "1",
+                  // zIndex: "1",
                   marginLeft: "0px",
                   marginRight: "0px",
                   marginTop: "68px",

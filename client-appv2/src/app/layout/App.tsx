@@ -35,6 +35,7 @@ import {
 } from "body-scroll-lock";
 import CodeOfConduct from "../../features/legal/CodeOfConduct";
 import Contact from "../../features/contact/Contact";
+import MySliderMenu from "./MySliderMenu";
 
 function App() {
   const location = useLocation();
@@ -101,167 +102,55 @@ function App() {
       <ToastContainer position='top-center' hideProgressBar />
       <ModalContainer />
       {/* <Route exact path='/' component={HomePage} /> */}
+      <div id='mySliderMenuContainer'>
+        <Route
+          path={"/(.*)"}
+          render={() => (
+            <>
+              <NavBar />
+              <MySliderMenu
+                handleMouseDown={commonStore.toggleSidebar}
+                menuVisibility={commonStore.isSidebarOpen}
+              />
 
-      <Route
-        path={"/(.*)"}
-        render={() => (
-          <>
-            <NavBar />
-
-            <Sidebar.Pushable>
-              <Sidebar
-                id='targetElementId'
-                as={Menu}
-                animation='overlay'
-                icon='labeled'
-                direction='left'
-                vertical
-                visible={commonStore.isSidebarOpen}
-                width='wide'
+              <Container
+                // id='targetElementId'
                 style={
                   commonStore.isSidebarOpen
-                    ? {
-                        ...lockScrollStyle,
-                        width: "100%",
-                        position: "absolute",
-                        top: scrollPosition,
-                        maxHeight: window.innerHeight,
-                        zIndex: "10",
-                        backgroundColor: "aliceblue",
-                        // paddingTop: "60px",
-                      }
-                    : {
-                        ...unlockScrollStyle,
-                        width: "100%",
-                        zIndex: "10",
-                        backgroundColor: "aliceblue",
-                        // paddingTop: "60px",
-                      }
+                    ? { ...lockScrollStyle, marginTop: "80px" }
+                    : { ...unlockScrollStyle, marginTop: "80px" }
                 }>
-                <Menu.Item style={{ padding: 50 }}>
-                  <Button
-                    onClick={(_) => commonStore.toggleSidebar()}
-                    floated='left'
-                    circular>
-                    <Icon name='angle left' />
-                  </Button>
-                </Menu.Item>
-                <Menu.Item>
-                  {/* <span style={{ display: "flex", textAlign: "center" }}> */}
-                  <span id='logo' style={{ textAlign: "center" }}>
-                    Wanna
-                  </span>
-                  <span id='logoAlt' style={{ textAlign: "center" }}>
-                    Go
-                  </span>
-                  {/* </span> */}
-                </Menu.Item>
-                <Menu.Item></Menu.Item>
+                <Switch>
+                  <Route exact path='/' component={ActivityDashboard} />
 
-                <Menu.Item as='a' onClick={(_) => closeSideBarAndNav("/home")}>
-                  <Header size='huge' style={{ display: "inline" }}>
-                    🏠{" "}
-                  </Header>
-                  Home
-                </Menu.Item>
-                <Menu.Item as='a' onClick={(_) => closeSideBarAndNav("/")}>
-                  <Header size='huge' style={{ display: "inline" }}>
-                    💡{" "}
-                  </Header>
-                  Activities
-                </Menu.Item>
-
-                <Menu.Item as='a' onClick={(_) => closeSideBarAndNav("/code")}>
-                  <Header size='huge' style={{ display: "inline" }}>
-                    🤝{" "}
-                  </Header>
-                  Code of Conduct
-                </Menu.Item>
-
-                <Menu.Item
-                  as='a'
-                  onClick={(_) => closeSideBarAndNav("/contact")}>
-                  <Header size='huge' style={{ display: "inline" }}>
-                    💬{" "}
-                  </Header>
-                  Contact
-                </Menu.Item>
-                {/* <Menu.Item
-                // as='a'
-                // onClick={(_) => closeSideBarAndNav("/newsletter")}
-                >
-                  <Header size='huge' style={{ display: "inline" }}>
-                    📰{" "}
-                  </Header>
-                  Biweekly Newsletter <br/><i>*Coming Soon*</i>
-                </Menu.Item> */}
-                <Menu.Item></Menu.Item>
-                <Menu.Item>
-                  <a
-                    href='https://twitter.com/iWannaGoApp'
-                    target='_blank'
-                    rel='noreferrer'>
-                    <Icon name='twitter' />
-                  </a>
-                </Menu.Item>
-                <Menu.Item>
-                  <Header
-                    size='tiny'
-                    color='grey'
-                    style={{ display: "inline", fontSize: "10px" }}>
-                    <i>WannaGo alpha - version 0.7</i>
-                  </Header>
-                </Menu.Item>
-                {/* <Menu.Item> </Menu.Item> <Menu.Item as='a'>FAQ</Menu.Item>{" "}
-                <Menu.Item as='a'>About</Menu.Item>{" "}
-                <Menu.Item as='a'>Contact</Menu.Item>{" "}
-                <Menu.Item as='a'>Code of Conduct</Menu.Item>{" "}
-                <Menu.Item as='a'>Terms of Service</Menu.Item>{" "} */}
-              </Sidebar>
-
-              <Sidebar.Pusher dimmed={commonStore.isSidebarOpen}>
-                <Container
-                  // id='targetElementId'
-                  style={
-                    commonStore.isSidebarOpen
-                      ? { ...lockScrollStyle, marginTop: "80px" }
-                      : { ...unlockScrollStyle, marginTop: "80px" }
-                  }>
-                  <Switch>
-                    <Route exact path='/' component={ActivityDashboard} />
-
-                    {/* <Route exact path='/' component={ActivityDashboard} /> */}
-                    <Route path='/activities/:id' component={ActivityDetails} />
-                    <PrivateRoute
-                      key={location.key}
-                      path={["/createActivity", "/manage/:id"]}
-                      component={ActivityForm}
-                    />
-                    <Route path='/profiles/:username' component={ProfilePage} />
-                    {/* <Route path='/errors' component={TestError} />
+                  {/* <Route exact path='/' component={ActivityDashboard} /> */}
+                  <Route path='/activities/:id' component={ActivityDetails} />
+                  <PrivateRoute
+                    key={location.key}
+                    path={["/createActivity", "/manage/:id"]}
+                    component={ActivityForm}
+                  />
+                  <Route path='/profiles/:username' component={ProfilePage} />
+                  {/* <Route path='/errors' component={TestError} />
                           <Route path='/server-error' component={ServerError} /> */}
-                    <Route
-                      path='/account/registerSuccess'
-                      component={RegisterSuccess}
-                    />
-                    <Route
-                      path='/account/verifyEmail'
-                      component={ConfirmEmail}
-                    />
-                    <Route path='/login' component={LoginForm} />
-                    <PrivateRoute path='/home' component={HomePage} />
-                    <Route path='/code' component={CodeOfConduct} />
-                    <Route path='/contact' component={Contact} />
-                    {/* <Route path='/newsletter' component={Newsletter} /> */}
+                  <Route
+                    path='/account/registerSuccess'
+                    component={RegisterSuccess}
+                  />
+                  <Route path='/account/verifyEmail' component={ConfirmEmail} />
+                  <Route path='/login' component={LoginForm} />
+                  <PrivateRoute path='/home' component={HomePage} />
+                  <Route path='/code' component={CodeOfConduct} />
+                  <Route path='/contact' component={Contact} />
+                  {/* <Route path='/newsletter' component={Newsletter} /> */}
 
-                    <Route component={NotFound} />
-                  </Switch>
-                </Container>
-              </Sidebar.Pusher>
-            </Sidebar.Pushable>
-          </>
-        )}
-      />
+                  <Route component={NotFound} />
+                </Switch>
+              </Container>
+            </>
+          )}
+        />
+      </div>
     </>
   );
 }
