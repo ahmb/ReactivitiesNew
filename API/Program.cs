@@ -7,10 +7,12 @@ using Serilog;
 using Microsoft.AspNetCore.ResponseCompression;
 
 var configuration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
-                .AddJsonFile(
-                    $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", EnvironmentVariableTarget.Process)}.json",
-                    true)
+                // .AddJsonFile("appsettings.json")
+                // .AddJsonFile(
+                //     $"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", EnvironmentVariableTarget.Process)}.json",
+                //     true)
+                //TODO: Update this and fix above for respective env, this is a temp fix
+                .AddJsonFile("appsettings.Development.json")
                 .AddEnvironmentVariables()
                 .Build();
 
