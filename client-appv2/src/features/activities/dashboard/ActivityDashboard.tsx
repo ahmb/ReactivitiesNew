@@ -52,15 +52,17 @@ export default observer(function ActivityDashboard() {
               zIndex={-1}
               position='absolute'
               top='17em'
-              right='-1em'
+              right='5vw'
+              style={{ overflow: "none" }}
             />
             <CircleGrid
               color='#10b981cc'
-              size='175px'
+              size='100px'
               zIndex={-1}
               position='absolute'
               top='-4em'
-              right='-2em'
+              right='3vw'
+              style={{ overflow: "none" }}
             />
             <Circle
               color='linear-gradient(135deg, #d8c395, #bba981)'
@@ -70,6 +72,7 @@ export default observer(function ActivityDashboard() {
               left={"-2%"}
               top={"6%"}
               position='absolute'
+              style={{ overflow: "none" }}
             />
             <Header
               size='huge'

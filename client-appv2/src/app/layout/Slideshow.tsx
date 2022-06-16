@@ -10,24 +10,44 @@ import {
 import "pure-react-carousel/dist/react-carousel.es.css";
 import "pure-react-carousel/dist/react-carousel.es.css";
 import { Icon } from "semantic-ui-react";
+import { useMediaQuery } from "../common/util/hooks";
 
 export default function Slideshow() {
+  const isNotMobile = useMediaQuery("(min-width: 450px)");
+
   return (
     <CarouselProvider
       //   hasMasterSpinner={true}
-      naturalSlideWidth={750}
-      naturalSlideHeight={350}
+      naturalSlideWidth={isNotMobile ? 750 : 375}
+      naturalSlideHeight={isNotMobile ? 350 : 200}
       interval={5000}
       isPlaying={true}
       totalSlides={5}
       infinite={true}>
       <Slider
-        style={{
-          height: "350px",
-          width: "750px",
-          justifyContent: "center",
-          alignItems: "fill",
-        }}>
+        style={
+          isNotMobile
+            ? {
+                // height: "350px",
+                // width: "750px",
+                height: "350px",
+                width: "750px",
+                justifyContent: "center",
+                alignItems: "fill",
+                overflow: "none",
+                maxWidth: "90vw",
+              }
+            : {
+                // height: "350px",
+                // width: "750px",
+                height: "200px",
+                width: "375px",
+                justifyContent: "center",
+                alignItems: "fill",
+                overflow: "none",
+                maxWidth: "90vw",
+              }
+        }>
         <Slide index={0}>
           {" "}
           <Image
