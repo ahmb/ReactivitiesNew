@@ -190,6 +190,7 @@ const NavBar: React.FC<IProps> = ({ className }) => {
                         top: "120px",
                         left: "-80px",
                         borderRadius: "20px",
+                        zIndex: "5 !important",
                       }}>
                       <Dropdown.Item
                         as={Link}
@@ -217,7 +218,7 @@ const NavBar: React.FC<IProps> = ({ className }) => {
               ? {
                   backgroundColor: "white",
                   width: "100%",
-                  // zIndex: "0",
+                  zIndex: "2",
                   marginLeft: "0px",
                   marginRight: "0px",
                   marginTop: "68px",
@@ -226,7 +227,7 @@ const NavBar: React.FC<IProps> = ({ className }) => {
                   backgroundColor: "white",
                   width: "100%",
                   borderBottom: "1px solid #f4f4f4",
-                  // zIndex: "1",
+                  zIndex: "2",
                   marginLeft: "0px",
                   marginRight: "0px",
                   marginTop: "68px",

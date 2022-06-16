@@ -88,6 +88,7 @@ export default function ActivityListItem({ activity }: Props) {
                   paddingBottom: "20px",
                   paddingLeft: "2%",
                   paddingRight: "2%",
+                  display: "inline",
                 }}>
                 {activity.title}
               </Item.Header>

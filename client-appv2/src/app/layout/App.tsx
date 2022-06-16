@@ -102,7 +102,7 @@ function App() {
       <ToastContainer position='top-center' hideProgressBar />
       <ModalContainer />
       {/* <Route exact path='/' component={HomePage} /> */}
-      <div id='mySliderMenuContainer'>
+      <div id='mySliderMenuContainer' style={{ width: "100vw" }}>
         <Route
           path={"/(.*)"}
           render={() => (

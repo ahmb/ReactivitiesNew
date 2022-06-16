@@ -78,6 +78,7 @@ export default observer(function ActivityFilters() {
       <br />
 
       <Grid.Row
+        centered
         className='aliceBlueBg'
         style={{
           padding: "2% 2% 2%",
@@ -168,8 +169,7 @@ export default observer(function ActivityFilters() {
               <HorizontalScrollItem
                 id={id}
                 key={id}
-                style={{ display: "inline" }}
-                >
+                style={{ display: "inline" }}>
                 <Menu.Item
                   key={id}
                   active={(predicate.get("category") as string) === value}
