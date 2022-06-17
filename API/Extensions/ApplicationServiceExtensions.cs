@@ -37,7 +37,9 @@ namespace API.Extensions
                                 .AllowAnyMethod()
                                 .AllowCredentials()//this will allow signalr to connect when sending the creds
                                 .WithExposedHeaders(new string[] { "WWW-Authenticate", "Pagination" })
-                                .WithOrigins("http://localhost:3000");
+                                .WithOrigins("http://localhost:3000", "https://iwannagoapp.com",
+                                 "http://iwannagoapp.com", "https://www.iwannagoapp.com",
+                                  "http://www.iwannagoapp.com", "www.iwannagoapp.com");
                       });
                   });
 
