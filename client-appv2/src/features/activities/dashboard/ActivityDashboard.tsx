@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Header, Loader, Popup } from "semantic-ui-react";
+import { Container, Grid, Header, Loader, Popup } from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
 import ActivityList from "./ActivityList";
 import { observer } from "mobx-react-lite";
@@ -74,109 +74,130 @@ export default observer(function ActivityDashboard() {
               position='absolute'
               style={{ overflow: "none" }}
             />
-            <Header
-              size='huge'
-              floated='left'
-              style={{
-                // paddingLeft: "10px",
-                paddingTop: "35px",
-                fontSize: "67px",
-                fontWeight: "900",
-              }}>
-              <span
+          </Grid.Row>
+          <Container>
+            <Grid.Row>
+              <Header
+                size='huge'
+                floated='left'
                 style={{
-                  paddingTop: "0px",
-                  paddingBottom: "0px",
-                }}
-                id='guestHeader'>
-                <p
+                  // paddingLeft: "10px",
+                  paddingTop: "35px",
+                  fontSize: "67px",
+                  fontWeight: "900",
+                }}>
+                <span
                   style={{
                     paddingTop: "0px",
                     paddingBottom: "0px",
-                    marginBottom: "0px",
-                  }}>
-                  Do
-                </p>
-                <p
-                  style={{
-                    paddingTop: "0px",
-                    paddingBottom: "0px",
-                    marginBottom: "0px",
-                  }}>
-                  cool stuff
-                </p>
-                <p
-                  style={{
-                    paddingTop: "0px",
-                    paddingBottom: "0px",
-                    marginBottom: "0px",
-                  }}>
-                  with
-                </p>
-                <span style={{ whiteSpace: "nowrap" }}>
+                  }}
+                  id='guestHeader'>
                   <p
                     style={{
                       paddingTop: "0px",
                       paddingBottom: "0px",
                       marginBottom: "0px",
                     }}>
-                    cool people{" "}
-                    <Popup trigger={<span className='altFontColor'>*</span>}>
-                      <span className='altFontColor'>*</span>psst..you're cool
-                    </Popup>
+                    Do
+                  </p>
+                  <p
+                    style={{
+                      paddingTop: "0px",
+                      paddingBottom: "0px",
+                      marginBottom: "0px",
+                    }}>
+                    cool stuff
+                  </p>
+                  <p
+                    style={{
+                      paddingTop: "0px",
+                      paddingBottom: "0px",
+                      marginBottom: "0px",
+                    }}>
+                    with
+                  </p>
+                  <span style={{ whiteSpace: "nowrap" }}>
+                    <p
+                      style={{
+                        paddingTop: "0px",
+                        paddingBottom: "0px",
+                        marginBottom: "0px",
+                      }}>
+                      cool people{" "}
+                      <Popup trigger={<span className='altFontColor'>*</span>}>
+                        <span className='altFontColor'>*</span>psst..you're cool
+                      </Popup>
+                    </p>
+                  </span>
+                  <p
+                    style={{
+                      paddingTop: "0px",
+                      paddingBottom: "0px",
+                      marginBottom: "0px",
+                    }}>
+                    globally
+                    {/* <span className='altFontColor'>*</span> */}
                   </p>
                 </span>
-                <p
-                  style={{
-                    paddingTop: "0px",
-                    paddingBottom: "0px",
-                    marginBottom: "0px",
-                  }}>
-                  globally
-                  {/* <span className='altFontColor'>*</span> */}
-                </p>
+              </Header>
+              <br />
+            </Grid.Row>
+          </Container>
+
+          <Container>
+            <Grid.Row>
+              <span
+                style={{
+                  width: "20em",
+                  height: "5em",
+                  display: "inline",
+                  fontSize: "32px",
+                }}>
+                Wanna{" "}
               </span>
-            </Header>
-          </Grid.Row>
-          <Grid.Row>
-            <span
-              style={{
-                width: "20em",
-                height: "5em",
-                display: "inline",
-                fontSize: "32px",
-              }}
-              className='fontColor'>
-              #
-              <span style={{ display: "inline" }}>
-                <Typed
-                  strings={[
-                    "Coding",
-                    "Art",
-                    "Design",
-                    "Videogames",
-                    "Watch TV and Movies",
-                    "Startup",
-                    "Business",
-                    "Study",
-                    "Projects",
-                    "Learn by doing",
-                    "No strings attached",
-                    "Make friends!",
-                    "Anything!",
-                    "Let's gooo!",
-                    "In-Person coming soon!",
-                    "Scroll down already!",
-                  ]}
-                  // typeSpeed={75}
-                  // backSpeed={50}
-                  loop
-                  style={{ color: "black" }}
-                />
+              <span
+                style={{
+                  width: "20em",
+                  height: "5em",
+                  display: "inline",
+                  fontSize: "32px",
+                }}
+                className='fontColor'>
+                #
+                <span style={{ display: "inline-block" }}>
+                  <Typed
+                    strings={[
+                      "Code",
+                      "Draw",
+                      "Design",
+                      "Do what you love doing",
+                      "Game",
+                      "Watch TV and Movies",
+                      "Startup",
+                      "Business",
+                      "Study",
+                      "Collaborate",
+                      "Follow your dreams",
+                      "Learn by doing",
+                      "No strings attached",
+                      "Make friends!",
+                      "Anything!",
+                      "Let's gooo!",
+                      "In-Person coming soon!",
+                      "Scroll down already!",
+                    ]}
+                    // typeSpeed={75}
+                    // backSpeed={50}
+                    loop
+                    style={{ color: "black" }}
+                  />
+                </span>
               </span>
-            </span>
-          </Grid.Row>
-          {/* <Header
+            </Grid.Row>
+            <br />
+            <br />
+
+            {/* <Header
         size='huge'
         style={{
           marginBottom: "0px",
@@ -186,36 +207,35 @@ export default observer(function ActivityDashboard() {
         }}>
         <span className='altFontColor'>*</span>psst..you're cool 😁
       </Header> */}
-          <Grid.Row>
-            <Header
-              content={
-                "Built-in real time text, audio, video & screensharing in the browser"
-              }
-              size='huge'
-              style={{
-                marginBottom: "0px",
-                marginTop: "-60px",
+            <Grid.Row>
+              <Header
+                content={
+                  "Built-in real time text, audio, video & screensharing in the browser"
+                }
+                size='huge'
+                style={{
+                  marginBottom: "0px",
+                  // marginTop: "-60px",
 
-                // paddingTop: "5px",
-              }}
-            />
-            <br />
-            <br />
-            <br />
-            <Header
-              content={
-                "Instantly create, schedule or join engaging activities, in groups of 2 to 6"
-              }
-              color='grey'
-              size='medium'
-              style={{
-                marginBottom: "0px",
-                marginTop: "-60px",
-                paddingBottom: "0px",
-                // paddingTop: "5px",
-              }}
-            />
-          </Grid.Row>
+                  // paddingTop: "5px",
+                }}
+              />
+
+              <Header
+                content={
+                  "Instantly create, schedule and participate in engaging activities with a small group of 2 to 6"
+                }
+                color='grey'
+                size='medium'
+                style={{
+                  marginBottom: "0px",
+                  // marginTop: "-60px",
+                  paddingBottom: "0px",
+                  // paddingTop: "5px",
+                }}
+              />
+            </Grid.Row>
+          </Container>
           <Grid.Row>
             <div
               style={{

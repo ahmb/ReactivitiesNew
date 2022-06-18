@@ -38,7 +38,7 @@ export default observer(function RegisterForm() {
               .email("Incorrect email format"),
             password: Yup.string()
               .required("No password provided")
-              .min(9, "Password must be atleast 9 characters")
+              .min(6, "Password must be atleast 6 characters")
               .matches(
                 /[A-Z]/,
                 "Password must contain atleast 1 uppercase character"
