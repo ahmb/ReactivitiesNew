@@ -55,8 +55,8 @@ namespace Application.Activities
                 pendingAttendanceQuery = pendingAttendanceQuery
                                            .Where(a => a.Attendees.Any(aa => aa.ApprovalStatus == ApprovalStatus.Pending));
 
-                pendingAttendanceQuery = pendingAttendanceQuery.Where(a => a.Date.AddMinutes(-a.Duration).AddDays(-a.OngoingDays)
-                                                                         >= DateTime.UtcNow);
+                // pendingAttendanceQuery = pendingAttendanceQuery.Where(a => a.Date.AddMinutes(-a.Duration).AddDays(-a.OngoingDays)
+                //                                                          >= DateTime.UtcNow);
 
                 pendingAttendanceQuery = pendingAttendanceQuery.OrderBy(a => a.Date);
 

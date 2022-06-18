@@ -10,7 +10,7 @@ namespace API.DTOs.Validators
             RuleFor(x => x.Username).NotEmpty();
             RuleFor(x => x.Email).NotEmpty().EmailAddress();
             RuleFor(rd => rd.Password).NotEmpty()
-                .MinimumLength(9).WithMessage("Password must be atleast 9 characters in length.")
+                .MinimumLength(6).WithMessage("Password must be atleast 6 characters in length.")
                 .Matches("[A-Z]").WithMessage("Password must contain atleast 1 uppercase character")
                 .Matches("[a-z]").WithMessage("Password must contain atleast 1 lowercase character")
                 .Matches("[0-9]").WithMessage("Password must contain atleast 1 numeric character")

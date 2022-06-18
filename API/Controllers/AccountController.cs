@@ -57,7 +57,7 @@ namespace API.Controllers
 
             if (user == null) return Unauthorized("Invalid email");
 
-            if (user.UserName == "bob") user.EmailConfirmed = true; //for testing with Bob
+            if (user.UserName == "bob" || user.UserName == "jane") user.EmailConfirmed = true; //for testing with Bob
 
             if (!user.EmailConfirmed) return Unauthorized("Email not confirmed");
 
@@ -103,7 +103,7 @@ namespace API.Controllers
             var user = new AppUser
             {
                 DisplayName = registerDto.DisplayName,
-                Email = registerDto.Email,
+                Email = registerDto.Email.ToLower(),
                 UserName = registerDto.Username
             };
 
