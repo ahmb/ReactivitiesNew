@@ -152,7 +152,7 @@ export default observer(function ActivityDashboard() {
                   width: "20em",
                   height: "5em",
                   display: "inline",
-                  fontSize: "24px",
+                  fontSize: "20px",
                   paddingLeft: "0px",
                 }}>
                 Wanna{" "}
@@ -162,7 +162,7 @@ export default observer(function ActivityDashboard() {
                   width: "20em",
                   height: "5em",
                   display: "inline",
-                  fontSize: "24px",
+                  fontSize: "20px",
                 }}
                 className='fontColor'>
                 #
