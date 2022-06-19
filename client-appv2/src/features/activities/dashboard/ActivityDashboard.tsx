@@ -75,7 +75,7 @@ export default observer(function ActivityDashboard() {
               style={{ overflow: "none" }}
             />
           </Grid.Row>
-          <Container>
+          <Container style={{ maxWidth: "100vw", paddingLeft: "0px" }}>
             <Grid.Row>
               <Header
                 size='huge'
@@ -85,6 +85,7 @@ export default observer(function ActivityDashboard() {
                   paddingTop: "35px",
                   fontSize: "67px",
                   fontWeight: "900",
+                  maxWidth: "80vw",
                 }}>
                 <span
                   style={{
@@ -144,14 +145,15 @@ export default observer(function ActivityDashboard() {
             </Grid.Row>
           </Container>
 
-          <Container>
+          <Container style={{ maxWidth: "100vw", paddingLeft: "0px" }}>
             <Grid.Row>
               <span
                 style={{
                   width: "20em",
                   height: "5em",
                   display: "inline",
-                  fontSize: "32px",
+                  fontSize: "24px",
+                  paddingLeft: "0px",
                 }}>
                 Wanna{" "}
               </span>
@@ -160,7 +162,7 @@ export default observer(function ActivityDashboard() {
                   width: "20em",
                   height: "5em",
                   display: "inline",
-                  fontSize: "32px",
+                  fontSize: "24px",
                 }}
                 className='fontColor'>
                 #
@@ -170,21 +172,19 @@ export default observer(function ActivityDashboard() {
                       "Code",
                       "Draw",
                       "Design",
-                      "Do what you love doing",
+                      "Chase your dreams",
                       "Game",
-                      "Watch TV and Movies",
+                      "Watch TV",
+                      "Watch Movies",
                       "Startup",
                       "Business",
                       "Study",
                       "Collaborate",
-                      "Follow your dreams",
                       "Learn by doing",
                       "No strings attached",
-                      "Make friends!",
-                      "Anything!",
-                      "Let's gooo!",
-                      "In-Person coming soon!",
-                      "Scroll down already!",
+                      "Make friends",
+                      "Do anything",
+                      "Scroll down",
                     ]}
                     // typeSpeed={75}
                     // backSpeed={50}
@@ -332,8 +332,8 @@ export default observer(function ActivityDashboard() {
               size='175px'
               zIndex={-1}
               position='absolute'
-              top='15em'
-              right='-2em'
+              top='1em'
+              right='0em'
             />
             <Circle
               color='linear-gradient(135deg, #d8c395, #bba981)'
