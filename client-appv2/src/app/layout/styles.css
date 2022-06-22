@@ -391,3 +391,8 @@ input {
 .flyoutMenuMenu {
   border:none !important;
 }
+
+.centeredSliderItem{
+  text-align: left!important;
+  padding-left: 45vw!important;
+}

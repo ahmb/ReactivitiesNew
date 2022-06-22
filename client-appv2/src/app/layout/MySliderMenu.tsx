@@ -79,27 +79,39 @@ function MySliderMenu(props: Props) {
           </Menu.Item>
           <Menu.Item></Menu.Item>
 
-          <Menu.Item as='a' onClick={(_) => closeSideBarAndNav("/home")}>
+          <Menu.Item
+            as='a'
+            onClick={(_) => closeSideBarAndNav("/home")}
+            className='centeredSliderItem'>
             <Header size='huge' style={{ display: "inline" }}>
               🏠{" "}
             </Header>
             Home
           </Menu.Item>
-          <Menu.Item as='a' onClick={(_) => closeSideBarAndNav("/")}>
+          <Menu.Item
+            as='a'
+            onClick={(_) => closeSideBarAndNav("/")}
+            className='centeredSliderItem'>
             <Header size='huge' style={{ display: "inline" }}>
               💡{" "}
             </Header>
             Activities
           </Menu.Item>
 
-          <Menu.Item as='a' onClick={(_) => closeSideBarAndNav("/code")}>
+          <Menu.Item
+            as='a'
+            onClick={(_) => closeSideBarAndNav("/code")}
+            className='centeredSliderItem'>
             <Header size='huge' style={{ display: "inline" }}>
               🤝{" "}
             </Header>
             Code of Conduct
           </Menu.Item>
 
-          <Menu.Item as='a' onClick={(_) => closeSideBarAndNav("/contact")}>
+          <Menu.Item
+            as='a'
+            onClick={(_) => closeSideBarAndNav("/contact")}
+            className='centeredSliderItem'>
             <Header size='huge' style={{ display: "inline" }}>
               💬{" "}
             </Header>
