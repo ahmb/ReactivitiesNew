@@ -22,7 +22,7 @@ export default function MyTagsTextInput(props: Props) {
 
   const onKeyDown = (e: any) => {
     const { key } = e;
-    const trimmedInput = input!.trim();
+    const trimmedInput = input!.trim().substring(0, 10);
 
     if (key === " " && trimmedInput.length && !tags.includes(trimmedInput)) {
       e.preventDefault();

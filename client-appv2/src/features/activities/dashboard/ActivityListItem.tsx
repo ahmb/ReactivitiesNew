@@ -110,6 +110,7 @@ export default function ActivityListItem({ activity }: Props) {
           <Item style={{ paddingBottom: "0px", marginBottom: "0px" }}>
             <Item.Content style={{ width: "100%" }}>
               <Item.Header
+                className='itemHeader'
                 as={Link}
                 to={`/activities/${activity.id}`}
                 style={
@@ -119,12 +120,14 @@ export default function ActivityListItem({ activity }: Props) {
                         paddingLeft: "2%",
                         paddingRight: "2%",
                         paddingTop: "2%",
+                        // display: "content",
                       }
                     : {
                         paddingBottom: "20px",
                         paddingLeft: "2%",
                         paddingRight: "2%",
                         paddingTop: "0px",
+                        // display: "content",
                       }
                 }>
                 {activity.title}
@@ -419,7 +422,7 @@ export default function ActivityListItem({ activity }: Props) {
           paddingTop: "0px",
         }}
         clearing>
-        <Grid style={{ padding: "10px", paddingTop: "5px" }}>
+        <Grid style={{ padding: "10px", paddingTop: "5px", width: "100%" }}>
           <Grid.Row
             style={{ paddingBottom: "0px", paddingTop: "5px" }}
             // style={{ paddingTop: "10px", paddingBottom: "5px" }}
