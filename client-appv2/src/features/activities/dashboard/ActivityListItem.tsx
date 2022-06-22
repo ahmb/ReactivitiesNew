@@ -108,17 +108,25 @@ export default function ActivityListItem({ activity }: Props) {
             paddingTop: "0px",
           }}>
           <Item style={{ paddingBottom: "0px", marginBottom: "0px" }}>
-            <Item.Content>
+            <Item.Content style={{ width: "100%" }}>
               <Item.Header
                 as={Link}
                 to={`/activities/${activity.id}`}
-                style={{
-                  paddingTop: "3%",
-                  paddingBottom: "20px",
-                  paddingLeft: "2%",
-                  paddingRight: "2%",
-                  display: "inline",
-                }}>
+                style={
+                  activity.isHost
+                    ? {
+                        paddingBottom: "20px",
+                        paddingLeft: "2%",
+                        paddingRight: "2%",
+                        paddingTop: "2%",
+                      }
+                    : {
+                        paddingBottom: "20px",
+                        paddingLeft: "2%",
+                        paddingRight: "2%",
+                        paddingTop: "0px",
+                      }
+                }>
                 {activity.title}
               </Item.Header>
               <Item.Description>
