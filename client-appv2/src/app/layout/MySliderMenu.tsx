@@ -1,13 +1,15 @@
 import { observer } from "mobx-react-lite";
-import React, { useEffect, useState } from "react";
+import React from //  useEffect, useState
+"react";
 import { Menu, Icon, Button, Header } from "semantic-ui-react";
 import { useStore } from "../stores/store";
 import { history } from "../../index";
 import {
-  disableBodyScroll,
+  // disableBodyScroll,
   clearAllBodyScrollLocks,
-  BodyScrollOptions,
+  // BodyScrollOptions,
 } from "body-scroll-lock";
+import { useMediaQuery } from "../common/util/hooks";
 
 interface Props {
   handleMouseDown: () => void;
@@ -16,28 +18,28 @@ interface Props {
 
 function MySliderMenu(props: Props) {
   const { commonStore } = useStore();
-  const { toggleSidebar, isSidebarOpen } = commonStore;
-  const [targetElement, setTargetElement] = useState<Element | null>(null);
-  const [scrollPosition, setScrollPosition] = useState(window.pageYOffset);
+  const { isSidebarOpen } = commonStore;
+  // const [targetElement, setTargetElement] = useState<Element | null>(null);
+  const isNotMobile = useMediaQuery("(min-width: 450px)");
 
-  const options: BodyScrollOptions = {
-    reserveScrollBarGap: true,
-  };
+  // const options: BodyScrollOptions = {
+  //   reserveScrollBarGap: true,
+  // };
 
-  useEffect(() => {
-    setTargetElement(document.querySelector("body"));
-    if (isSidebarOpen && targetElement !== null) {
-      // console.log(scrollPosition);
-      // window.scrollTo(0, 0);
-      disableBodyScroll(targetElement, options);
-    }
-    if (!isSidebarOpen && targetElement !== null) {
-      // console.log(scrollPosition);
-      // window.scrollTo(0, scrollPosition);
-      // enableBodyScroll(targetElement);
-      clearAllBodyScrollLocks();
-    }
-  }, []);
+  // useEffect(() => {
+  //   setTargetElement(document.querySelector("body"));
+  //   if (isSidebarOpen && targetElement !== null) {
+  //     // console.log(scrollPosition);
+  //     // window.scrollTo(0, 0);
+  //     disableBodyScroll(targetElement, options);
+  //   }
+  //   if (!isSidebarOpen && targetElement !== null) {
+  //     // console.log(scrollPosition);
+  //     // window.scrollTo(0, scrollPosition);
+  //     // enableBodyScroll(targetElement);
+  //     clearAllBodyScrollLocks();
+  //   }
+  // }, []);
 
   const closeSideBarAndNav = (to: string) => {
     clearAllBodyScrollLocks();
@@ -82,7 +84,9 @@ function MySliderMenu(props: Props) {
           <Menu.Item
             as='a'
             onClick={(_) => closeSideBarAndNav("/home")}
-            className='centeredSliderItem'>
+            className={
+              isNotMobile ? "centeredSliderItem" : "centeredSliderItemMobile"
+            }>
             <Header size='huge' style={{ display: "inline" }}>
               🏠{" "}
             </Header>
@@ -91,7 +95,9 @@ function MySliderMenu(props: Props) {
           <Menu.Item
             as='a'
             onClick={(_) => closeSideBarAndNav("/")}
-            className='centeredSliderItem'>
+            className={
+              isNotMobile ? "centeredSliderItem" : "centeredSliderItemMobile"
+            }>
             <Header size='huge' style={{ display: "inline" }}>
               💡{" "}
             </Header>
@@ -101,7 +107,9 @@ function MySliderMenu(props: Props) {
           <Menu.Item
             as='a'
             onClick={(_) => closeSideBarAndNav("/code")}
-            className='centeredSliderItem'>
+            className={
+              isNotMobile ? "centeredSliderItem" : "centeredSliderItemMobile"
+            }>
             <Header size='huge' style={{ display: "inline" }}>
               🤝{" "}
             </Header>
@@ -111,7 +119,9 @@ function MySliderMenu(props: Props) {
           <Menu.Item
             as='a'
             onClick={(_) => closeSideBarAndNav("/contact")}
-            className='centeredSliderItem'>
+            className={
+              isNotMobile ? "centeredSliderItem" : "centeredSliderItemMobile"
+            }>
             <Header size='huge' style={{ display: "inline" }}>
               💬{" "}
             </Header>
