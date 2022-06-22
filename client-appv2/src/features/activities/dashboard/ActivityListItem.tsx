@@ -411,8 +411,9 @@ export default function ActivityListItem({ activity }: Props) {
           paddingTop: "0px",
         }}
         clearing>
-        <Grid style={{ padding: "10px" }}>
+        <Grid style={{ padding: "10px", paddingTop: "5px" }}>
           <Grid.Row
+            style={{ paddingBottom: "0px", paddingTop: "5px" }}
             // style={{ paddingTop: "10px", paddingBottom: "5px" }}
             verticalAlign='middle'>
             {activity.categories.map((c) => (
@@ -434,6 +435,7 @@ export default function ActivityListItem({ activity }: Props) {
 
           {activity.tag.length > 0 && (
             <Grid.Row
+              style={{ paddingTop: "5px" }}
               verticalAlign='middle'
               // style={{
               //   paddingTop: "0px",
