@@ -3,7 +3,6 @@ import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import {
   Item,
-  Button,
   Segment,
   Icon,
   Label,
@@ -15,27 +14,30 @@ import {
 import { Activity, Language, SkillLevel } from "../../../app/models/activity";
 import { categoryOptions } from "../../../app/common/options/categoryOptions";
 import Avatar from "boring-avatars";
+import { useMediaQuery } from "../../../app/common/util/hooks";
 
 interface Props {
   activity: Activity;
 }
 
 export default function ActivityListItem({ activity }: Props) {
+  const isNotMobile = useMediaQuery("(min-width: 450px)");
+
   return (
     <Segment.Group
       raised
       className='activityDateGroup'
-      style={{ borderRadius: "50px" }}>
+      style={{ borderRadius: "40px" }}>
       <Segment
         style={{
-          borderTopLeftRadius: "50px",
-          borderTopRightRadius: "50px",
+          borderTopLeftRadius: "40px",
+          borderTopRightRadius: "40px",
           paddingBottom: "5px",
         }}>
         <Container
           style={{
             paddingLeft: "10px",
-            paddingTop: "10px",
+            paddingTop: "20px",
             float: "right",
             color: "blue",
           }}>
@@ -48,6 +50,27 @@ export default function ActivityListItem({ activity }: Props) {
             />
           )}
 
+          {activity.date!.getDate() === new Date().getDate() && (
+            <>
+              <Label
+                // circular
+                horizontal
+                size='large'
+                attached='top'
+                style={{
+                  // marginTop: "-10px",
+                  marginRight: "20px",
+                  backgroundColor: "#5162FA",
+                  paddingTop: "20px",
+                  color: "white",
+                }}>
+                <Icon size='large' name='podcast' />
+                LIVE
+              </Label>
+              <br />
+            </>
+          )}
+
           {activity.isHost && (
             <Label
               circular
@@ -55,6 +78,7 @@ export default function ActivityListItem({ activity }: Props) {
               attached='top right'
               style={{
                 marginTop: "20px",
+                marginBottom: "10px",
                 marginRight: "20px",
                 backgroundColor: "#37cf37",
                 color: "white",
@@ -77,7 +101,11 @@ export default function ActivityListItem({ activity }: Props) {
             </Label>
           )}
         </Container>
-        <Item.Group style={{ borderRadius: "inherit", paddingTop: "0px" }}>
+        <Item.Group
+          style={{
+            borderRadius: "inherit",
+            paddingTop: "0px",
+          }}>
           <Item style={{ paddingBottom: "0px", marginBottom: "0px" }}>
             <Item.Content>
               <Item.Header
@@ -117,7 +145,7 @@ export default function ActivityListItem({ activity }: Props) {
                               src={activity.host?.image || "/assets/user.png"}
                               circular
                               spaced='right'
-                              style={{ height: 65, width: 65 }}
+                              style={{ height: 40, width: 40 }}
                               as={NavLink}
                               to={`/profiles/${activity.host?.username}`}
                             />
@@ -126,7 +154,7 @@ export default function ActivityListItem({ activity }: Props) {
                             <NavLink
                               to={`/profiles/${activity.host?.username}`}>
                               <Avatar
-                                size={65}
+                                size={40}
                                 name={activity.host?.username}
                                 variant='beam'
                                 colors={[
@@ -163,7 +191,7 @@ export default function ActivityListItem({ activity }: Props) {
                         {/* <br /> */}
                         <Icon
                           name='users'
-                          size='big'
+                          size='large'
                           color='grey'
                           style={{
                             paddigBottom: "0px",
@@ -210,16 +238,29 @@ export default function ActivityListItem({ activity }: Props) {
                             )[0].src
                             // `/assets/categoryImages/${activity.categories[0].name}.jpg`
                           }
-                          style={{
-                            borderRadius: "20px",
-                            boxShadow: "0px 10px 2px 0px aliceblue",
-                            // maxWidth: "18em",
-                            // maxHeight: "13em",
-                            maxWidth: "100%",
-                            maxHeight: "250px",
-                            alignSelf: "center",
-                            objectFit: "none",
-                          }}
+                          style={
+                            isNotMobile
+                              ? {
+                                  borderRadius: "20px",
+                                  boxShadow: "0px 10px 2px 0px aliceblue",
+                                  // maxWidth: "18em",
+                                  // maxHeight: "13em",
+                                  maxWidth: "100%",
+                                  maxHeight: "30vh",
+                                  alignSelf: "center",
+                                  objectFit: "none",
+                                }
+                              : {
+                                  borderRadius: "20px",
+                                  boxShadow: "0px 10px 2px 0px aliceblue",
+                                  // maxWidth: "18em",
+                                  // maxHeight: "13em",
+                                  maxWidth: "100%",
+                                  maxHeight: "15vh",
+                                  alignSelf: "center",
+                                  objectFit: "none",
+                                }
+                          }
                         />
                       </Grid.Column>
                     </Grid.Row>
@@ -259,7 +300,7 @@ export default function ActivityListItem({ activity }: Props) {
                           style={{
                             color: "grey",
                             fontSize: "10px",
-                            marginBottom: "-7px",
+                            marginBottom: "10px",
                           }}>
                           {Intl.DateTimeFormat().resolvedOptions().timeZone}
                         </p>
@@ -293,7 +334,7 @@ export default function ActivityListItem({ activity }: Props) {
                           .toLowerCase()} */}
 
                       <Grid.Column width={4} textAlign='center'>
-                        <p style={{ fontSize: "small" }}>Skill Level</p>
+                        <p style={{ fontSize: "small" }}>Skill</p>
                         <p>{SkillLevel[activity.skillLevel]}</p>
                       </Grid.Column>
                       <Grid.Column width={4} textAlign='center'>
@@ -304,33 +345,7 @@ export default function ActivityListItem({ activity }: Props) {
                       </Grid.Column>
                     </Grid.Row>
 
-                    <Grid.Row
-                      style={
-                        {
-                          // paddingBottom: "0px",
-                          // paddingLeft: "15px",
-                        }
-                      }>
-                      {activity.categories.map((c) => (
-                        <Grid.Column
-                          key={c.name}
-                          width={4}
-                          textAlign='center'
-                          style={{ paddingLeft: "0px" }}>
-                          <p id='listCategories'>
-                            {categoryOptions.filter(
-                              (co) => co.value === c.name
-                            )[0].icon +
-                              " " +
-                              categoryOptions.filter(
-                                (co) => co.value === c.name
-                              )[0].text +
-                              "  "}
-                          </p>
-                        </Grid.Column>
-                      ))}
-                    </Grid.Row>
-                    {activity.tag.length > 0 && (
+                    {/* {activity.tag.length > 0 && (
                       <Grid.Row
                         style={{
                           paddingTop: "0px",
@@ -351,7 +366,7 @@ export default function ActivityListItem({ activity }: Props) {
                           </Grid.Column>
                         ))}
                       </Grid.Row>
-                    )}
+                    )} */}
                     {/* <Grid.Row
                       style={{
                         paddingTop: "0px",
@@ -387,15 +402,54 @@ export default function ActivityListItem({ activity }: Props) {
 
       <Segment
         style={{
-          borderBottomRightRadius: "50px",
-          borderBottomLeftRadius: "50px",
+          borderBottomRightRadius: "40px",
+          borderBottomLeftRadius: "40px",
           padding: "10px",
+          // paddingLeft: "30px",
           borderTop: "none",
           paddingTop: "0px",
         }}
         clearing>
-        {/* <span>{activity.description}</span> */}
-        <Button
+        <Grid style={{ padding: "10px" }}>
+          <Grid.Row style={{ paddingTop: "10px", paddingBottom: "5px" }}>
+            {activity.categories.map((c) => (
+              <Grid.Column
+                key={c.name}
+                width={4}
+                textAlign='center'
+                style={{ paddingLeft: "0px" }}>
+                <p id='listCategories' key={c.name}>
+                  {categoryOptions.filter((co) => co.value === c.name)[0].icon +
+                    " " +
+                    categoryOptions.filter((co) => co.value === c.name)[0]
+                      .text +
+                    "  "}
+                </p>
+              </Grid.Column>
+            ))}
+          </Grid.Row>
+
+          {activity.tag.length > 0 && (
+            <Grid.Row
+              style={{
+                paddingTop: "0px",
+                // paddingBottom: "0px",
+                // paddingLeft: "15px",
+                // marginBottom: "10px",
+              }}>
+              {activity.tag.map((t) => (
+                <Grid.Column key={t.name} width={4} textAlign='center'>
+                  <p id='listTags'>
+                    {" "}
+                    <span className='fontColor'>#</span>
+                    {t.name}
+                  </p>
+                </Grid.Column>
+              ))}
+            </Grid.Row>
+          )}
+        </Grid>
+        {/* <Button
           as={Link}
           to={`/activities/${activity.id}`}
           floated='right'
@@ -409,7 +463,7 @@ export default function ActivityListItem({ activity }: Props) {
             backgroundColor: "#5162FA",
             color: "white",
           }}
-        />
+        /> */}
       </Segment>
     </Segment.Group>
   );

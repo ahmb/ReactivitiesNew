@@ -3,7 +3,7 @@ import { Header, Label, Segment } from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import ActivityListItem from "./ActivityListItem";
-import { format, formatDistance } from "date-fns";
+import { format } from "date-fns";
 
 export default observer(function ActivityList() {
   const { activityStore } = useStore();
@@ -60,6 +60,22 @@ export default observer(function ActivityList() {
                   .replace("1 day ago", "yesterday")} */}
               {format(new Date(group), "eeee do MMMM")}
             </Label>
+
+            {new Date(group).getDate() === new Date().getDate() && (
+              <Header
+                size='huge'
+                textAlign='center'
+                style={{ color: "#5162FA" }}>
+                Today!
+              </Header>
+            )}
+
+            {new Date(group).getDate() === new Date().getDate() + 1 &&
+              new Date(group).getHours() !== new Date().getHours() && (
+                <Header size='huge' textAlign='center'>
+                  Tomorrow!
+                </Header>
+              )}
 
             {activities.map((activity) => (
               <ActivityListItem key={activity.id} activity={activity} />

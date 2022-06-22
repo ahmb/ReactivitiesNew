@@ -20,3 +20,6 @@ export const useMediaQuery = (query: string) => {
 
   return matches;
 };
+
+export const useMountEffect = (fun: () => void | undefined) =>
+  useEffect(fun, []);

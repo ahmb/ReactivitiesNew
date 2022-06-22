@@ -221,7 +221,7 @@ const NavBar: React.FC<IProps> = ({ className }) => {
                   zIndex: "2",
                   marginLeft: "0px",
                   marginRight: "0px",
-                  marginTop: "68px",
+                  marginTop: "66px",
                 }
               : {
                   backgroundColor: "white",
@@ -230,7 +230,7 @@ const NavBar: React.FC<IProps> = ({ className }) => {
                   zIndex: "2",
                   marginLeft: "0px",
                   marginRight: "0px",
-                  marginTop: "68px",
+                  marginTop: "66px",
                 }
           }>
           <Container>

@@ -9,7 +9,7 @@ import InfiniteScroll from "react-infinite-scroller";
 import ActivityListItemPlaceholder from "./ActivityListItemPlaceholder";
 import Slideshow from "../../../app/layout/Slideshow";
 import Typed from "react-typed";
-import { Circle, CircleGrid, Diamond, Cross } from "react-awesome-shapes";
+import { Circle, CircleGrid, Diamond } from "react-awesome-shapes";
 import { NavLink } from "react-router-dom";
 
 export default observer(function ActivityDashboard() {
@@ -348,7 +348,7 @@ export default observer(function ActivityDashboard() {
         )}
       </Grid.Row>
 
-      {!isLoggedIn && (
+      {/* {!isLoggedIn && (
         <Cross
           position='absolute'
           size='150px'
@@ -358,7 +358,7 @@ export default observer(function ActivityDashboard() {
           top='34em'
           left='-2em'
         />
-      )}
+      )} */}
 
       <ActivityFilters />
 

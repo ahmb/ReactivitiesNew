@@ -10,6 +10,7 @@ import {
   HorizontalScrollItem,
 } from "react-simple-horizontal-scroller";
 import { useLocation } from "react-router-dom";
+import { useMountEffect } from "../../../app/common/util/hooks";
 
 export default observer(function ActivityFilters() {
   const {
@@ -34,6 +35,11 @@ export default observer(function ActivityFilters() {
   }
 
   const location = useLocation();
+
+  // const isNotMobile = useMediaQuery("(min-width: 450px)");
+  useMountEffect(() => {
+    ToggleIsCalendarVisible();
+  });
 
   return (
     <>
