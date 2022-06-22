@@ -66,7 +66,7 @@ export default observer(function ActivityList() {
                 size='huge'
                 textAlign='center'
                 style={{ color: "#5162FA" }}>
-                Today!
+                Today
               </Header>
             )}
 
@@ -75,7 +75,7 @@ export default observer(function ActivityList() {
                 size='huge'
                 textAlign='center'
                 style={{ color: "#5162FA" }}>
-                Tomorrow!
+                Tomorrow
               </Header>
             )}
 
