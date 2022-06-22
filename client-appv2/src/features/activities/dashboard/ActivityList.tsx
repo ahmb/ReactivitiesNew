@@ -70,12 +70,14 @@ export default observer(function ActivityList() {
               </Header>
             )}
 
-            {new Date(group).getDate() === new Date().getDate() + 1 &&
-              new Date(group).getHours() !== new Date().getHours() && (
-                <Header size='huge' textAlign='center'>
-                  Tomorrow!
-                </Header>
-              )}
+            {new Date(group).getDate() === new Date().getDate() + 1 && (
+              <Header
+                size='huge'
+                textAlign='center'
+                style={{ color: "#5162FA" }}>
+                Tomorrow!
+              </Header>
+            )}
 
             {activities.map((activity) => (
               <ActivityListItem key={activity.id} activity={activity} />

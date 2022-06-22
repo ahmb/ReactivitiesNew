@@ -50,26 +50,27 @@ export default function ActivityListItem({ activity }: Props) {
             />
           )}
 
-          {activity.date!.getDate() === new Date().getDate() && (
-            <>
-              <Label
-                // circular
-                horizontal
-                size='large'
-                attached='top'
-                style={{
-                  // marginTop: "-10px",
-                  marginRight: "20px",
-                  backgroundColor: "#5162FA",
-                  paddingTop: "20px",
-                  color: "white",
-                }}>
-                <Icon size='large' name='podcast' />
-                LIVE
-              </Label>
-              <br />
-            </>
-          )}
+          {activity.date!.getDate() === new Date().getDate() &&
+            activity.date!.getHours() === new Date().getHours() && (
+              <>
+                <Label
+                  // circular
+                  horizontal
+                  size='large'
+                  attached='top'
+                  style={{
+                    // marginTop: "-10px",
+                    marginRight: "20px",
+                    backgroundColor: "#5162FA",
+                    paddingTop: "20px",
+                    color: "white",
+                  }}>
+                  <Icon size='large' name='podcast' />
+                  LIVE
+                </Label>
+                <br />
+              </>
+            )}
 
           {activity.isHost && (
             <Label
@@ -196,7 +197,7 @@ export default function ActivityListItem({ activity }: Props) {
                           style={{
                             paddigBottom: "0px",
                             marginBottom: "0px",
-                            marginTop: "20%",
+                            // marginTop: "20%",
 
                             // alignSelf: "center",
                           }}></Icon>
@@ -246,7 +247,7 @@ export default function ActivityListItem({ activity }: Props) {
                                   // maxWidth: "18em",
                                   // maxHeight: "13em",
                                   maxWidth: "100%",
-                                  maxHeight: "30vh",
+                                  maxHeight: "25vh",
                                   alignSelf: "center",
                                   objectFit: "none",
                                 }
@@ -411,7 +412,9 @@ export default function ActivityListItem({ activity }: Props) {
         }}
         clearing>
         <Grid style={{ padding: "10px" }}>
-          <Grid.Row style={{ paddingTop: "10px", paddingBottom: "5px" }}>
+          <Grid.Row
+            // style={{ paddingTop: "10px", paddingBottom: "5px" }}
+            verticalAlign='middle'>
             {activity.categories.map((c) => (
               <Grid.Column
                 key={c.name}
@@ -431,12 +434,14 @@ export default function ActivityListItem({ activity }: Props) {
 
           {activity.tag.length > 0 && (
             <Grid.Row
-              style={{
-                paddingTop: "0px",
-                // paddingBottom: "0px",
-                // paddingLeft: "15px",
-                // marginBottom: "10px",
-              }}>
+              verticalAlign='middle'
+              // style={{
+              //   paddingTop: "0px",
+              // paddingBottom: "0px",
+              // paddingLeft: "15px",
+              // marginBottom: "10px",
+              // }}
+            >
               {activity.tag.map((t) => (
                 <Grid.Column key={t.name} width={4} textAlign='center'>
                   <p id='listTags'>
