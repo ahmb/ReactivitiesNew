@@ -12,8 +12,8 @@ using Persistance;
 namespace Persistance.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220511215746_AddedPictureIsActivity")]
-    partial class AddedPictureIsActivity
+    [Migration("20241111001611_PostgresInitial")]
+    partial class PostgresInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,6 +54,9 @@ namespace Persistance.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
+                    b.Property<int>("Duration")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("timestamp with time zone");
 
@@ -69,6 +72,9 @@ namespace Persistance.Migrations
                     b.Property<bool>("IsSpam")
                         .HasColumnType("boolean");
 
+                    b.Property<int>("Language")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("LastUpdated")
                         .HasColumnType("timestamp with time zone");
 
@@ -78,6 +84,12 @@ namespace Persistance.Migrations
                     b.Property<double>("Longitude")
                         .HasColumnType("double precision");
 
+                    b.Property<bool>("Ongoing")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("OngoingDays")
+                        .HasColumnType("integer");
+
                     b.Property<string>("PictureId")
                         .HasColumnType("text");
 
@@ -86,6 +98,12 @@ namespace Persistance.Migrations
 
                     b.Property<bool>("Published")
                         .HasColumnType("boolean");
+
+                    b.Property<bool>("PublishedToProfile")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("SkillLevel")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Tags")
                         .HasColumnType("text");
@@ -115,6 +133,9 @@ namespace Persistance.Migrations
 
                     b.Property<Guid>("ActivityId")
                         .HasColumnType("uuid");
+
+                    b.Property<string>("ApprovalRequestComment")
+                        .HasColumnType("text");
 
                     b.Property<int>("ApprovalStatus")
                         .HasColumnType("integer");

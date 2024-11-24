@@ -310,3 +310,30 @@ Client App Webrtc - SimpleWebRTC
 setup Heroku with GoDaddy
 
 https://www.youtube.com/watch?v=CxrzD73r6Rw&ab_channel=NDCConferences
+
+
+------------
+
+
+Build a docker image for docker hub
+===============================
+
+ docker build -t raufguy/reactivities .
+
+- Test the app using a temp docker container:
+
+docker run --rm -it -p 8080:80 raufguy/reactivities
+
+Then push the image to docker hub:
+a. docker login
+b. docker push raufguy/reactivities:latest
+
+
+FLY.io
+======
+flyctl auth login
+
+#generate docker file/toml 
+fly launch --image raufguy/reactivities:latest 
+
+fly status

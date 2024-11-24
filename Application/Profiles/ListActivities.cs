@@ -54,11 +54,11 @@ namespace Application.Profiles
 
                 query = request.Predicate switch
                 {
-                    "past" => query.Where(a => a.Date <= DateTime.Now).OrderByDescending(a => a.Date),
+                    "past" => query.Where(a => a.Date <= DateTime.UtcNow).OrderByDescending(a => a.Date),
                     "hosting" => query.Where(a => a.HostUsername == request.Username),
-                    "future" => query.Where(a => a.Date > DateTime.Now).OrderBy(a => a.Date),
+                    "future" => query.Where(a => a.Date > DateTime.UtcNow).OrderBy(a => a.Date),
                     "published" => query.OrderByDescending(a => a.Date),
-                    _ => query.Where(a => a.Date > DateTime.Now).OrderBy(a => a.Date)
+                    _ => query.Where(a => a.Date > DateTime.UtcNow).OrderBy(a => a.Date)
                 };
 
                 var activities = await query.ToListAsync(cancellationToken: cancellationToken);

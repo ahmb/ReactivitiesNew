@@ -130,7 +130,7 @@ namespace Persistance
                     new Activity
                     {
                         Title = "Past Activity 1",
-                        Date = DateTime.Now.AddMonths(-2),
+                        Date = DateTime.UtcNow.AddMonths(-2),
                         Description = "Activity 2 months ago <- just videogames",
                         Categories = new List<ActivityCategories>{
                             new ActivityCategories{
@@ -178,7 +178,7 @@ namespace Persistance
                     new Activity
                     {
                         Title = "Past Activity 2",
-                        Date = DateTime.Now.AddMonths(-1),
+                        Date = DateTime.UtcNow.AddMonths(-1),
                         Description = "Activity 1 month ago <- watch + videogames",
                         // Category = "watch",
                         Categories = new List<ActivityCategories>{
@@ -241,7 +241,7 @@ namespace Persistance
                      new Activity
                     {
                         Title = "Past Activity 3 ongoing",
-                        Date = DateTime.Now.AddMonths(-1),
+                        Date = DateTime.UtcNow.AddMonths(-1),
                         Description = "Activity 1 month ago <- watch + videogames",
                         // Category = "watch",
                         Categories = new List<ActivityCategories>{
@@ -299,7 +299,7 @@ namespace Persistance
                     new Activity
                     {
                         Title = "Future Activity 1",
-                        Date = DateTime.Now.AddMonths(1),
+                        Date = DateTime.UtcNow.AddMonths(1),
                         Description = "Activity 1 month in future <-- business",
                         // Category = "business",
                         Categories = new List<ActivityCategories>{
@@ -357,7 +357,7 @@ namespace Persistance
                     new Activity
                     {
                         Title = "Future Activity 2",
-                        Date = DateTime.Now.AddMonths(2),
+                        Date = DateTime.UtcNow.AddMonths(2),
                         Description = "Activity 2 months in future <-- study + misc",
                         // Category = "study",
                         Categories = new List<ActivityCategories>{
@@ -425,7 +425,7 @@ namespace Persistance
                     new Activity
                     {
                         Title = "Future Activity 3",
-                        Date = DateTime.Now.AddMonths(3),
+                        Date = DateTime.UtcNow.AddMonths(3),
                         Description = "Activity 3 months in future<--- coding",
                         Category = "coding",
                         Categories = new List<ActivityCategories>{
@@ -482,7 +482,7 @@ namespace Persistance
                     new Activity
                     {
                         Title = "Future Activity 4",
-                        Date = DateTime.Now.AddMonths(4),
+                        Date = DateTime.UtcNow.AddMonths(4),
                         Description = "Activity 4 months in future<---artdesign + misc",
                         // Category = "artdesign",
                         Categories = new List<ActivityCategories>{
@@ -539,7 +539,7 @@ namespace Persistance
                     new Activity
                     {
                         Title = "Future Activity 5",
-                        Date = DateTime.Now.AddMonths(5),
+                        Date = DateTime.UtcNow.AddMonths(5),
                         Description = "Activity 5 months in future <---art design",
                         Category = "artdesign",
                         Categories = new List<ActivityCategories>{
@@ -588,7 +588,7 @@ namespace Persistance
                     new Activity
                     {
                         Title = "Future Activity 6",
-                        Date = DateTime.Now.AddMonths(6),
+                        Date = DateTime.UtcNow.AddMonths(6),
                         Description = "Activity 6 months in future <--coding",
                         Category = Utilities.FlattenCategories(
                             new List<ActivityCategories>{
@@ -631,7 +631,7 @@ namespace Persistance
                     new Activity
                     {
                         Title = "Future Activity 7",
-                        Date = DateTime.Now.AddMonths(7),
+                        Date = DateTime.UtcNow.AddMonths(7),
                         Description = "Activity 7 months in future<-misc",
                         Category = "misc",
                           Categories = new List<ActivityCategories>{
@@ -682,7 +682,7 @@ namespace Persistance
                     new Activity
                     {
                         Title = "Future Activity 8",
-                        Date = DateTime.Now.AddMonths(8),
+                        Date = DateTime.UtcNow.AddMonths(8),
                         Description = "Activity 8 months in future",
                         Categories = new List<ActivityCategories>{
                             new ActivityCategories{
@@ -739,7 +739,7 @@ namespace Persistance
                      new Activity
                     {
                         Title = "Future Activity 9 - private",
-                        Date = DateTime.Now.AddMonths(9),
+                        Date = DateTime.UtcNow.AddMonths(9),
                         Description = "Activity 9 months in future <--private",
                         Categories = new List<ActivityCategories>{
                             new ActivityCategories{

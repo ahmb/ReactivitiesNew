@@ -17,7 +17,7 @@ namespace Application.Activities
         public class Command : IRequest<Result<Unit>>
         {
             public Activity Activity { get; set; }
-            
+
 
         }
 
@@ -53,7 +53,7 @@ namespace Application.Activities
                     AppUser = user,
                     Activity = request.Activity,
                     IsHost = true,
-                    DateJoined = DateTime.Now.ToUniversalTime(),
+                    DateJoined = DateTime.UtcNow,
                     IsApproved = true,
                     ApprovalStatus = ApprovalStatus.Accepted
                 };

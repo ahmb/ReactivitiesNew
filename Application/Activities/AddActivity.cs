@@ -128,7 +128,7 @@ namespace Application.Activities
                         AppUser = user,
                         Activity = newActivity,
                         IsHost = true,
-                        DateJoined = DateTime.Now.ToUniversalTime(),
+                        DateJoined = DateTime.UtcNow,
                         IsApproved = true,
                         ApprovalStatus = ApprovalStatus.Accepted
                     };
