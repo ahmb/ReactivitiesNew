@@ -74,7 +74,7 @@ export default class UserStore {
       window.FB.getLoginStatus((response) => {
         //when not connected the status is "unknown"
         if (response.status === "connected") {
-          this.fbAccessToken = response.authResponse.accessToken;
+          this.fbAccessToken = response.authResponse.accessToken ?? null;
         }
       });
     } catch (error) {
@@ -105,7 +105,7 @@ export default class UserStore {
     } else {
       window.FB.login(
         (response) => {
-          apiLogin(response.authResponse.accessToken);
+          apiLogin(response.authResponse.accessToken ?? "");
         },
         { scope: "public_profile,email" }
       );
@@ -132,7 +132,7 @@ export default class UserStore {
     this.refrehTokenTimeout = setTimeout(this.refreshToken, timeout); //refresh the token in the background
   }
 
-  private stopRefreshTokenTimer(user: IUser) {
-    clearTimeout(this.refrehTokenTimeout);
-  }
+  // private stopRefreshTokenTimer(user: IUser) {
+  //   clearTimeout(this.refrehTokenTimeout);
+  // }
 }

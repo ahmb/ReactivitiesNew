@@ -50,7 +50,7 @@ export default observer(function ActivityLog() {
     // }
   }, [loadUserActivities, profile, unreadActivities?.length, setCurrentTabName]);
 
-  const handleTabChange = (e: SyntheticEvent, data: TabProps) => {
+  const handleTabChange = (_e: SyntheticEvent, data: TabProps) => {
     console.log("activity log ");
     console.log(data);
 

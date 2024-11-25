@@ -1,4 +1,4 @@
-import { Container, Dimmer, Grid, Loader } from "semantic-ui-react";
+import { Dimmer, Grid, Loader } from "semantic-ui-react";
 
 interface Props {
   inverted?: boolean;
@@ -19,6 +19,7 @@ export default function LoadingComponent({
     <Grid
       style={{
         height: segmentHeightPx + "em",
+        outerWidth: segmentWidthPx + "em",
         backgroundColor: "#eaeaea",
         zIndex: 1,
         top: "-20em",

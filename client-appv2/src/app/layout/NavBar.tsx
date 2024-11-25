@@ -19,7 +19,7 @@ interface IProps {
   className?: string;
 }
 
-const NavBar: React.FC<IProps> = ({ className }) => {
+const NavBar: React.FC<IProps> = () => {
   const {
     userStore: { user, logout, isLoggedIn },
     commonStore: {
@@ -64,7 +64,7 @@ const NavBar: React.FC<IProps> = ({ className }) => {
             // as={NavLink}
             // to='/activities'
             header
-            onClick={(e, d) => {
+            onClick={(e, _d) => {
               toggleSidebar();
               e.stopPropagation();
             }}
@@ -264,7 +264,7 @@ const NavBar: React.FC<IProps> = ({ className }) => {
               onClick={() => setPredicate("isHost", "true")}
               style={{ paddingTop: "20px" }}
             /> */}
-            {categoryOptions.map(({ id, text, icon, label, value }) => (
+            {categoryOptions.map(({ id, label, value }) => (
               // <HorizontalScrollItem id={id} key={id}>
               <Menu.Item
                 key={id}

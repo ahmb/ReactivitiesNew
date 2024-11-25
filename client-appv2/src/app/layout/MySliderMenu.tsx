@@ -1,5 +1,4 @@
 import { observer } from "mobx-react-lite";
-import React from "react"; //  useEffect, useState
 import { Menu, Icon, Button, Header } from "semantic-ui-react";
 import { useStore } from "../stores/store";
 import {
@@ -15,7 +14,7 @@ interface Props {
   menuVisibility: boolean;
 }
 
-function MySliderMenu(props: Props) {
+function MySliderMenu(_props: Props) {
   const { commonStore } = useStore();
   const { isSidebarOpen } = commonStore;
   // const [targetElement, setTargetElement] = useState<Element | null>(null);

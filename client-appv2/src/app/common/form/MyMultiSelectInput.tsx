@@ -1,5 +1,4 @@
 import { useField } from "formik";
-import { useState } from "react";
 import { Form, Label } from "semantic-ui-react";
 import Select from "react-select";
 
@@ -10,18 +9,8 @@ interface Props {
   label?: string;
 }
 
-const options = [
-  { value: "chocolate", label: "Chocolate" },
-  { value: "strawberry", label: "Strawberry" },
-  { value: "vanilla", label: "Vanilla" },
-  { value: "vanilla2", label: "Vanilla2" },
-  { value: "vanilla3", label: "Vanilla3" },
-  { value: "vanilla4", label: "Vanilla4" },
-];
-
 export default function MyMultiSelectInput(props: Props) {
   const [field, meta, helpers] = useField(props.name);
-  const [selectedOption, setSelectedOption] = useState(null);
 
   return (
     <Form.Field error={meta.touched && !!meta.error}>

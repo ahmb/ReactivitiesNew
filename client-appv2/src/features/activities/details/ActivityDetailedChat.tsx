@@ -6,7 +6,6 @@ import { Link, NavLink } from "react-router-dom";
 import { Segment, Header, Comment, Loader } from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
 import * as Yup from "yup";
-import SimpleWebRTC from "../../../app/webrtc/SimpleWebRtc";
 import Avatar from "boring-avatars";
 
 interface Props {

@@ -25,7 +25,6 @@ import MyCheckboxInput from "../../../app/common/form/MyCheckboxInput";
 import MyCheckboxWithTextNumberInput from "../../../app/common/form/MyCheckboxWithTextNumberInput";
 import MyFileUpload from "../../../app/common/form/MyFileUpload";
 import MyTagsTextInput from "../../../app/common/form/MyTagsTextInput";
-import { Circle, CircleGrid, Diamond } from "react-awesome-shapes";
 import { router } from "../../../app/router/routes";
 
 export default observer(function ActivityForm() {
@@ -158,7 +157,7 @@ export default observer(function ActivityForm() {
         tag: activity["tag"]
           ? // activity.tag !== undefined || activity.tag !== null
             Object.entries(activity.tag).map(
-              (k, v): ITag => ({
+              (k, _v): ITag => ({
                 name: k.toString().split(",")[1],
               })
             )
@@ -198,7 +197,7 @@ export default observer(function ActivityForm() {
         tag: activity["tag"]
           ? // activity.tag !== undefined || activity.tag !== null
             Object.entries(activity.tag).map(
-              (k, v): ITag => ({
+              (k, _v): ITag => ({
                 name: k.toString().split(",")[1],
               })
             )
@@ -215,7 +214,7 @@ export default observer(function ActivityForm() {
     <LoadingComponent content='Loading Activity' />;
   return (
     <>
-      <CircleGrid
+      {/* <CircleGrid
         color='#10b981cc'
         size='175px'
         zIndex={-1}
@@ -231,7 +230,7 @@ export default observer(function ActivityForm() {
         left={"-2%"}
         top={"6%"}
         position='absolute'
-      />
+      /> */}
       {/* <Message
         color='linear-gradient(135deg, #00b09b, #96c93d)'
         height='150px'
@@ -242,7 +241,7 @@ export default observer(function ActivityForm() {
         right='-1em'
       /> */}
 
-      <Diamond
+      {/* <Diamond
         // color='linear-gradient(135deg, #dc493a, #5162FA)'
         color='linear-gradient(135deg, #93c5fd, #10b981cc)'
         size='100px'
@@ -250,7 +249,7 @@ export default observer(function ActivityForm() {
         position='absolute'
         top='70%'
         right='-0.7em'
-      />
+      /> */}
 
       <Header
         content='Fortune favours the brave'

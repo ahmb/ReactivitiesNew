@@ -35,7 +35,7 @@ export default observer(function ProfileContent({ profile }: Props) {
       menu={{ fluid: true, vertical: false }}
       // menuPosition='right'
       panes={isLoggedIn ? panes : panesGuest}
-      onTabChange={(e, data) => profileStore.setActiveTab(data.activeIndex)}
+      onTabChange={(_e, data) => profileStore.setActiveTab(data.activeIndex)}
     />
   );
 });

@@ -12,7 +12,7 @@ import {
   Button,
   Grid,
 } from "semantic-ui-react";
-import { Activity, ActivityDetails } from "../../../app/models/activity";
+import { ActivityDetails } from "../../../app/models/activity";
 import { useStore } from "../../../app/stores/store";
 
 interface Props {
@@ -23,7 +23,7 @@ export default observer(function ActivityDetailedSidebar({
   activity: { attendees, host, isGoing, isHost },
 }: Props) {
   const {
-    activityStore: { updateAttendance, loading, cancelActivityToggle },
+    activityStore: { updateAttendance, loading },
   } = useStore();
 
   if (!attendees) return null;

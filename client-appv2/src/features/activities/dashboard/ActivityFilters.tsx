@@ -93,7 +93,7 @@ export default observer(function ActivityFilters() {
             isCalendarVisible && (
               <animated.div style={styles}>
                 <Calendar
-                  onChange={(date: Date) => setPredicate("startDate", date)}
+                  onChange={(date: any) => setPredicate("startDate", date)}
                   value={predicate.get("startDate") || new Date()}
                 />
               </animated.div>
@@ -167,7 +167,7 @@ export default observer(function ActivityFilters() {
               style={{ paddingTop: "20px" }}
             /> */}
 
-          {categoryOptions.map(({ id, text, icon, label, value }) => (
+          {categoryOptions.map(({ id, label, value }) => (
             // <HorizontalScrollItem
             //   id={id}
             //   key={id}

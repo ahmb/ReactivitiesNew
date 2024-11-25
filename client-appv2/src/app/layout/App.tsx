@@ -17,14 +17,13 @@ import {
 } from "body-scroll-lock";
 import MySliderMenu from "./MySliderMenu";
 import ScrollToTop from "./ScrollToTop";
-import { router } from "../router/routes";
 import HomePage from "../../features/home/HomePage";
 
 function App() {
   const location = useLocation();
   const { commonStore, userStore } = useStore();
   const [targetElement, setTargetElement] = useState<Element | null>(null);
-  const [scrollPosition, setScrollPosition] = useState(window.pageYOffset);
+  const [_scrollPosition, setScrollPosition] = useState(window.pageYOffset);
 
   const lockScrollStyle = {
     // maxHeight: window.innerHeight,
@@ -33,12 +32,6 @@ function App() {
 
   const unlockScrollStyle = {
     // height: "100%",
-  };
-
-  const closeSideBarAndNav = (to: string) => {
-    clearAllBodyScrollLocks();
-    commonStore.toggleSidebar();
-    router.navigate(to);
   };
 
   useEffect(() => {

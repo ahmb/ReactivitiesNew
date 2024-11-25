@@ -33,8 +33,8 @@ export const useStickyChecker = (
 };
 
 function onScrollHandler(
-  setScrollPosition: any,
-  scrollPosition: number,
+  _setScrollPosition: any,
+  _scrollPosition: number,
   elementClass: string,
   originalElDistanceToTop: number,
   setIsReadyForSticky: any,

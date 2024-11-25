@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Form, Label } from "semantic-ui-react";
 
 interface Props {
   file: any;
@@ -10,7 +9,7 @@ interface Props {
 }
 
 export default function MyFileUploadPreview(props: Props) {
-  const [loading, setLoading] = useState(false);
+  const [_loading, setLoading] = useState(false);
 
   const [thumb, setThumb] = useState<any>(undefined);
 

@@ -55,7 +55,7 @@ export default observer(function Newsletter() {
                 "Password must contain atleast 1 symbol ($,%,#,^,@,! etc) character"
               ),
             passwordConfirmation: Yup.string().oneOf(
-              [Yup.ref("password"), null],
+              [Yup.ref("password"), ""],
               "Passwords must match"
             ),
           })}>

@@ -12,7 +12,7 @@ interface Props {
 
 export default function MyTextNumberInput(props: Props) {
   const [field, meta, helpers] = useField(props.name);
-  const [value, setValue] = useState(props.defaultValue);
+  const [value] = useState(props.defaultValue);
 
   useEffect(() => {
     helpers.setValue(value);

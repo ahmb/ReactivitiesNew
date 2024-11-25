@@ -1,16 +1,12 @@
 import { useField } from "formik";
 import { useEffect, useState } from "react";
 import {
-  Button,
   Checkbox,
   CheckboxProps,
   Form,
   Icon,
   Label,
   Popup,
-  PopupContent,
-  Select,
-  StrictCheckboxProps,
 } from "semantic-ui-react";
 import MyTextNumberInput from "./MyTextNumberInput";
 
@@ -53,7 +49,7 @@ export default function MyCheckboxWithTextNumberInput(props: Props) {
         checked={field.value === 0 ? false : true}
         onChange={
           props.onChange ??
-          ((e, data) => {
+          ((_e, data) => {
             console.log(data);
             helpers.setValue(data.checked ? 1 : 0);
             setIsChecked(data.checked ?? false);
