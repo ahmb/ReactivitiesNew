@@ -1,12 +1,12 @@
 import { useField } from "formik";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Form, Label } from "semantic-ui-react";
 import Select from "react-select";
 
 interface Props {
   placeholder: string;
   name: string;
-  options: any;
+  options: any | null;
   label?: string;
 }
 
@@ -41,7 +41,7 @@ export default function MyMultiSelectInput(props: Props) {
         value={field.value || "null"}
         isClearable
         isMulti
-        defaultValue={[props.options[1]] ?? "Select upto 3"}
+        defaultValue={[props.options[1]]}
         name='multiCategorySelect'
         className='basic-multi-select'
         classNamePrefix='select'

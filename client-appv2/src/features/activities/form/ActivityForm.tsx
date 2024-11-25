@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Header, Segment, Label } from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
@@ -333,7 +333,7 @@ export default observer(function ActivityForm() {
                   label='Repeat until filled? (private setting)'
                   popUpContent='Note: Display this post on the main page for the desired
                   number of days or until the number of attendees is reached'
-                  defaultValue={(activity.ongoing ? 1 : 0) ?? 0}
+                  defaultValue={activity.ongoing ? 1 : 0}
                   textInputName='ongoingDays'
                   textInputPlaceholder='Number of days to renew for if not filled, only you can see this'
                   textInputLabel='Repeat for (days)'
@@ -345,13 +345,13 @@ export default observer(function ActivityForm() {
                   popUpContent='Note: Private activities do not appear on the main page, but
                     can be accessed via the URL. Use this when connecting with
                     someone you already know'
-                  defaultValue={(activity.private ? 1 : 0) ?? 0}
+                  defaultValue={activity.private ? 1 : 0}
                 />
                 <MyCheckboxInput
                   name='publishedToProfile'
                   label='Visible to others on your profile?'
                   popUpContent='Note: Do you want this activity to appear in your profile when someone else is viewing it'
-                  defaultValue={(activity.publishedToProfile ? 1 : 0) ?? 0}
+                  defaultValue={activity.publishedToProfile ? 1 : 0}
                 />
                 <MySelectInput
                   label='Language'

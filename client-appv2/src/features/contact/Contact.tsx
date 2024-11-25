@@ -1,4 +1,3 @@
-import React from "react";
 import { Container, Grid, Header, Segment } from "semantic-ui-react";
 
 export default function Contact() {

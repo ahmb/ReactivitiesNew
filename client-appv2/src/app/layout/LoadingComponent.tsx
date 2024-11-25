@@ -1,4 +1,3 @@
-import React from "react";
 import { Container, Dimmer, Grid, Loader } from "semantic-ui-react";
 
 interface Props {

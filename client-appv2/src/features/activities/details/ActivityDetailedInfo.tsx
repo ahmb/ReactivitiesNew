@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import React from "react";
+
 import { Segment, Grid, Container, Button } from "semantic-ui-react";
 import { categoryOptions } from "../../../app/common/options/categoryOptions";
 import { onClickUrl } from "../../../app/common/util/helpers";

@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Menu,
   Button,
@@ -11,10 +10,6 @@ import { Link, NavLink } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../stores/store";
 import { categoryOptions } from "../common/options/categoryOptions";
-import {
-  HorizontalScrollContainer,
-  HorizontalScrollItem,
-} from "react-simple-horizontal-scroller";
 import { useStickyChecker } from "../common/util/useStickyChecker";
 import { useLocation } from "react-router-dom";
 import Avatar from "boring-avatars";
@@ -234,10 +229,24 @@ const NavBar: React.FC<IProps> = ({ className }) => {
                 }
           }>
           <Container>
-            <HorizontalScrollContainer>
+            {/* <HorizontalScrollContainer> */}
+            <Menu.Item
+              active={predicate.has("all")}
+              onClick={() => setPredicate("all", "true")}>
+              <p
+                style={{
+                  whiteSpace: "nowrap",
+                  paddingTop: "7px",
+                  paddingBottom: "7px",
+                  fontSize: "14px",
+                }}>
+                💡 All
+              </p>
+            </Menu.Item>
+            {isLoggedIn && (
               <Menu.Item
-                active={predicate.has("all")}
-                onClick={() => setPredicate("all", "true")}>
+                active={predicate.has("isGoing")}
+                onClick={() => setPredicate("isGoing", "true")}>
                 <p
                   style={{
                     whiteSpace: "nowrap",
@@ -245,49 +254,35 @@ const NavBar: React.FC<IProps> = ({ className }) => {
                     paddingBottom: "7px",
                     fontSize: "14px",
                   }}>
-                  💡 All
+                  ✅ Mine
                 </p>
               </Menu.Item>
-              {isLoggedIn && (
-                <Menu.Item
-                  active={predicate.has("isGoing")}
-                  onClick={() => setPredicate("isGoing", "true")}>
-                  <p
-                    style={{
-                      whiteSpace: "nowrap",
-                      paddingTop: "7px",
-                      paddingBottom: "7px",
-                      fontSize: "14px",
-                    }}>
-                    ✅ Mine
-                  </p>
-                </Menu.Item>
-              )}
-              {/* <Menu.Item
+            )}
+            {/* <Menu.Item
               content='Hosting'
               active={predicate.has("isHost")}
               onClick={() => setPredicate("isHost", "true")}
               style={{ paddingTop: "20px" }}
             /> */}
-              {categoryOptions.map(({ id, text, icon, label, value }) => (
-                <HorizontalScrollItem id={id} key={id}>
-                  <Menu.Item
-                    key={id}
-                    active={(predicate.get("category") as string) === value}
-                    onClick={() => setPredicate("category", value)}>
-                    <p
-                      style={{
-                        whiteSpace: "nowrap",
-                        paddingTop: "7px",
-                        paddingBottom: "7px",
-                        fontSize: "14px",
-                      }}>
-                      {label}
-                    </p>
-                  </Menu.Item>
-                </HorizontalScrollItem>
-              ))}
-            </HorizontalScrollContainer>
+            {categoryOptions.map(({ id, text, icon, label, value }) => (
+              // <HorizontalScrollItem id={id} key={id}>
+              <Menu.Item
+                key={id}
+                active={(predicate.get("category") as string) === value}
+                onClick={() => setPredicate("category", value)}>
+                <p
+                  style={{
+                    whiteSpace: "nowrap",
+                    paddingTop: "7px",
+                    paddingBottom: "7px",
+                    fontSize: "14px",
+                  }}>
+                  {label}
+                </p>
+              </Menu.Item>
+              // </HorizontalScrollItem>
+            ))}
+            {/* </HorizontalScrollContainer> */}
           </Container>
         </Menu>
       )}

@@ -1,17 +1,8 @@
 import Avatar from "boring-avatars";
 import { format } from "date-fns";
 import { observer } from "mobx-react-lite";
-import React from "react";
-import {
-  Divider,
-  Grid,
-  Header,
-  Icon,
-  Item,
-  Popup,
-  Segment,
-  Statistic,
-} from "semantic-ui-react";
+
+import { Grid, Header, Icon, Item, Popup } from "semantic-ui-react";
 import { Profile } from "../../app/models/profile";
 import { useStore } from "../../app/stores/store";
 import FollowButton from "./FollowButton";

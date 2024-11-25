@@ -1,6 +1,6 @@
 import Avatar from "boring-avatars";
 import { observer } from "mobx-react-lite";
-import React from "react";
+
 import { Link, NavLink } from "react-router-dom";
 import {
   Segment,

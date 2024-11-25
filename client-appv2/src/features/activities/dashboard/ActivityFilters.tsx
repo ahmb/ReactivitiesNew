@@ -1,14 +1,11 @@
 import { observer } from "mobx-react-lite";
-import React, { useState } from "react";
+import { useState } from "react";
 import Calendar from "react-calendar";
 import { Button, Grid, Header, Menu, Container } from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
 import { useTransition, animated, config } from "react-spring";
 import { categoryOptions } from "../../../app/common/options/categoryOptions";
-import {
-  HorizontalScrollContainer,
-  HorizontalScrollItem,
-} from "react-simple-horizontal-scroller";
+
 import { useLocation } from "react-router-dom";
 import { useMountEffect } from "../../../app/common/util/hooks";
 
@@ -130,11 +127,10 @@ export default observer(function ActivityFilters() {
           }
           className='filterNavMain'>
           {/* <Header icon='filter' attached style={{ color: "#009ee6" }}/> */}
-          <HorizontalScrollContainer>
-            <Menu.Item
-              active={predicate.has("all")}
-              onClick={() => setPredicate("all", "true")}>
-              {/* <Header
+          <Menu.Item
+            active={predicate.has("all")}
+            onClick={() => setPredicate("all", "true")}>
+            {/* <Header
                 size='medium'
                 style={
                   {
@@ -143,56 +139,55 @@ export default observer(function ActivityFilters() {
                 }
                 content='💡'
               /> */}
+            <p
+              style={{
+                fontSize: "18px",
+
+                // paddingTop: "5px", paddingLeft: "5px"
+              }}>
+              💡 All
+            </p>
+          </Menu.Item>
+          {isLoggedIn && (
+            <Menu.Item
+              active={predicate.has("isGoing")}
+              onClick={() => setPredicate("isGoing", "true")}>
               <p
                 style={{
                   fontSize: "18px",
-
-                  // paddingTop: "5px", paddingLeft: "5px"
                 }}>
-                💡 All
+                ✅ Mine
               </p>
             </Menu.Item>
-            {isLoggedIn && (
-              <Menu.Item
-                active={predicate.has("isGoing")}
-                onClick={() => setPredicate("isGoing", "true")}>
-                <p
-                  style={{
-                    fontSize: "18px",
-                  }}>
-                  ✅ Mine
-                </p>
-              </Menu.Item>
-            )}
-            {/* <Menu.Item
+          )}
+          {/* <Menu.Item
               content='Hosting'
               active={predicate.has("isHost")}
               onClick={() => setPredicate("isHost", "true")}
               style={{ paddingTop: "20px" }}
             /> */}
 
-            {categoryOptions.map(({ id, text, icon, label, value }) => (
-              <HorizontalScrollItem
-                id={id}
-                key={id}
-                style={{ display: "inline" }}>
-                <Menu.Item
-                  key={id}
-                  active={(predicate.get("category") as string) === value}
-                  onClick={() => setPredicate("category", value)}>
-                  <p
-                    style={{
-                      whiteSpace: "nowrap",
-                      paddingTop: "7px",
-                      paddingBottom: "7px",
-                      fontSize: "18px",
-                    }}>
-                    {label}
-                  </p>
-                </Menu.Item>
-              </HorizontalScrollItem>
-            ))}
-          </HorizontalScrollContainer>
+          {categoryOptions.map(({ id, text, icon, label, value }) => (
+            // <HorizontalScrollItem
+            //   id={id}
+            //   key={id}
+            //   style={{ display: "inline" }}>
+            <Menu.Item
+              key={id}
+              active={(predicate.get("category") as string) === value}
+              onClick={() => setPredicate("category", value)}>
+              <p
+                style={{
+                  whiteSpace: "nowrap",
+                  paddingTop: "7px",
+                  paddingBottom: "7px",
+                  fontSize: "18px",
+                }}>
+                {label}
+              </p>
+            </Menu.Item>
+            // </HorizontalScrollItem>
+          ))}
         </Menu>
       </Grid.Row>
     </>

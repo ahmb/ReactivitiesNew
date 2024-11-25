@@ -170,7 +170,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 //in order to accept requests from the react app when its running via npm
-app.UseCors("CorsPolicy");
+// app.UseCors("CorsPolicy");
 
 app.MapControllers();
 app.MapHub<ChatHub>("/chat");

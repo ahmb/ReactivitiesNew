@@ -1,4 +1,3 @@
-import React from "react";
 import { Cropper } from "react-cropper";
 import "cropperjs/dist/cropper.css";
 
@@ -22,7 +21,7 @@ export default function PhotoWidgetCropper({
       viewMode={1}
       autoCropArea={1}
       background={false}
-      onInitialized={cropper=>setCropper(cropper)}
+      onInitialized={(cropper) => setCropper(cropper)}
     />
   );
 }

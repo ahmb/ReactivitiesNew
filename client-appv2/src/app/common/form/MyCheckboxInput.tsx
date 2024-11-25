@@ -1,16 +1,12 @@
 import { useField } from "formik";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
-  Button,
   Checkbox,
   CheckboxProps,
   Form,
   Icon,
   Label,
   Popup,
-  PopupContent,
-  Select,
-  StrictCheckboxProps,
 } from "semantic-ui-react";
 
 interface Props extends CheckboxProps {
@@ -49,6 +45,7 @@ export default function MyCheckboxInput(props: Props) {
           props.onChange ??
           ((e, data) => {
             console.log(data);
+            console.log(e);
             helpers.setValue(data.checked ? 1 : 0);
             data.checked ? setIsChecked(true) : setIsChecked(false);
           })

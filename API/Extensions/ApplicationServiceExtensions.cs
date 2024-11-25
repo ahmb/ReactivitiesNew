@@ -39,7 +39,7 @@ namespace API.Extensions
                                 .WithExposedHeaders(new string[] { "WWW-Authenticate", "Pagination" })
                                 .WithOrigins("http://localhost:3000", "https://iwannagoapp.com",
                                  "http://iwannagoapp.com", "https://www.iwannagoapp.com",
-                                  "http://www.iwannagoapp.com", "www.iwannagoapp.com");
+                                  "http://www.iwannagoapp.com", "www.iwannagoapp.com", "http://localhost:3000");
                       });
                   });
 

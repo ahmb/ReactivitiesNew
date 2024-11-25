@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Container, Grid, Header, Loader, Popup } from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
 import ActivityList from "./ActivityList";
@@ -8,8 +8,7 @@ import { PagingParams } from "../../../app/models/pagination";
 import InfiniteScroll from "react-infinite-scroller";
 import ActivityListItemPlaceholder from "./ActivityListItemPlaceholder";
 import Slideshow from "../../../app/layout/Slideshow";
-import Typed from "react-typed";
-import { Circle, CircleGrid, Diamond } from "react-awesome-shapes";
+// import { Circle, CircleGrid, Diamond } from "react-awesome-shapes";
 import { NavLink } from "react-router-dom";
 
 export default observer(function ActivityDashboard() {
@@ -46,7 +45,7 @@ export default observer(function ActivityDashboard() {
             </span>
           </Grid.Row>
           <Grid.Row>
-            <Diamond
+            {/* <Diamond
               color='linear-gradient(135deg, #93c5fd, #10b981cc)'
               size='100px'
               zIndex={-1}
@@ -54,8 +53,8 @@ export default observer(function ActivityDashboard() {
               top='17em'
               right='5vw'
               style={{ overflow: "none" }}
-            />
-            <CircleGrid
+            /> */}
+            {/* <CircleGrid
               color='#10b981cc'
               size='100px'
               zIndex={-1}
@@ -73,7 +72,7 @@ export default observer(function ActivityDashboard() {
               top={"6%"}
               position='absolute'
               style={{ overflow: "none" }}
-            />
+            /> */}
           </Grid.Row>
           <Container style={{ maxWidth: "100vw", paddingLeft: "0px" }}>
             <Grid.Row>
@@ -167,7 +166,7 @@ export default observer(function ActivityDashboard() {
                 className='fontColor'>
                 #
                 <span style={{ display: "inline-block" }}>
-                  <Typed
+                  {/* <Typed
                     strings={[
                       "Code",
                       "Draw",
@@ -190,7 +189,7 @@ export default observer(function ActivityDashboard() {
                     // backSpeed={50}
                     loop
                     style={{ color: "black" }}
-                  />
+                  /> */}
                 </span>
               </span>
             </Grid.Row>
@@ -319,7 +318,7 @@ export default observer(function ActivityDashboard() {
         <Slideshow />
         {isLoggedIn && (
           <>
-            <Diamond
+            {/* <Diamond
               color='linear-gradient(135deg, #93c5fd, #10b981cc)'
               size='100px'
               zIndex={-1}
@@ -343,7 +342,7 @@ export default observer(function ActivityDashboard() {
               left={"-2%"}
               top={"10em"}
               position='absolute'
-            />
+            /> */}
           </>
         )}
       </Grid.Row>

@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { Button, Container, Header, Divider } from "semantic-ui-react";
 import LoadingComponent from "../../app/layout/LoadingComponent";

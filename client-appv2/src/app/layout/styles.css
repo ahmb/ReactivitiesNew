@@ -1,3 +1,9 @@
+/* WannaGo Styles */
+/* @import url("https://fonts.googleapis.com/css?family=Pacifico");
+@import url("https://fonts.googleapis.com/css?family=OpenSans");
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap"); */
+
 /* Semantic UI Overrides  */
 
 /* sidebar */
@@ -9,11 +15,7 @@
 background: white;
 }
 
-/* WannaGo Styles */
-@import url("https://fonts.googleapis.com/css?family=Pacifico");
-@import url("https://fonts.googleapis.com/css?family=OpenSans");
-@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap");
+
 
 .aliceBlueBg{
   background-color: aliceblue;

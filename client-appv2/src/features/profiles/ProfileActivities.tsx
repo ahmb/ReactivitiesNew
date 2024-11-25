@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { Tab, Grid, Header, Card } from "semantic-ui-react";
 import { Link } from "react-router-dom";

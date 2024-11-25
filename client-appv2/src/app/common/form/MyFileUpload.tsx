@@ -1,5 +1,5 @@
 import { useField } from "formik";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Form, Label } from "semantic-ui-react";
 import MyFileUploadPreview from "./MyFileUploadPreview";
 

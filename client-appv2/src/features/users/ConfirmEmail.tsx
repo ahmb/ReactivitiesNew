@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Button, Header, Icon, Segment } from "semantic-ui-react";
 import agent from "../../app/api/agent";
 import useQuery from "../../app/common/util/hooks";
-import { useStore } from "../../app/stores/store";
-import LoginForm from "./LoginForm";
+// import { useStore } from "../../app/stores/store";
+// import LoginForm from "./LoginForm";
 
 export default function ConfirmEmail() {
-  const { modalStore } = useStore();
+  // const { modalStore } = useStore();
   const email = useQuery().get("email") as string;
   const token = useQuery().get("token") as string;
 

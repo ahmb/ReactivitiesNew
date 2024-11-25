@@ -1,5 +1,4 @@
 import { Formik, Form, ErrorMessage } from "formik";
-import React from "react";
 import { Button, Header, Segment } from "semantic-ui-react";
 import MyTextInput from "../../app/common/form/MyTextInput";
 import { useStore } from "../../app/stores/store";

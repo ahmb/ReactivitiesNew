@@ -5,7 +5,6 @@ import {
   ActivityDetails,
   ActivityFormValues,
   ActivityFormValuesNew,
-  IUserActivitiesUnreadDto,
   UnreadActivity,
 } from "../models/activity";
 import { history } from "../../index";
@@ -14,7 +13,6 @@ import { IUser, IUserFormValues } from "../models/user";
 import { IPhoto, Profile, UserActivity } from "../models/profile";
 import { PaginatedResult } from "../models/pagination";
 import Axios from "axios";
-import { act } from "react-dom/test-utils";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -22,7 +20,7 @@ const sleep = (delay: number) => {
   });
 };
 
-axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 
 axios.interceptors.request.use((config) => {
   const token = store.commonStore.token;
@@ -35,7 +33,7 @@ axios.interceptors.request.use((config) => {
 //According to 'Access-Control-Expose-Headers' to process the POST response headers
 axios.interceptors.response.use(
   async (response) => {
-    if (process.env.NODE_ENV === "development") {
+    if (import.meta.env.DEV) {
       await sleep(1000);
     }
     const pagination = response.headers["pagination"];
