@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Button, Header, Segment, Label } from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
 import { v4 as uuid } from "uuid";
 import { Formik, Form } from "formik";
@@ -26,9 +26,9 @@ import MyCheckboxWithTextNumberInput from "../../../app/common/form/MyCheckboxWi
 import MyFileUpload from "../../../app/common/form/MyFileUpload";
 import MyTagsTextInput from "../../../app/common/form/MyTagsTextInput";
 import { Circle, CircleGrid, Diamond } from "react-awesome-shapes";
+import { router } from "../../../app/router/routes";
 
 export default observer(function ActivityForm() {
-  const history = useHistory();
   const { activityStore } = useStore();
   const {
     // createActivity,
@@ -173,7 +173,7 @@ export default observer(function ActivityForm() {
       console.log(JSON.stringify(newActivity));
 
       createActivityNew(newActivity, file).then(() =>
-        history.push(`/activities/${newActivity.id}`)
+        router.navigate(`/activities/${newActivity.id}`)
       );
     } else {
       //TODO:fix updteActivity
@@ -206,7 +206,7 @@ export default observer(function ActivityForm() {
       };
 
       updateActivityNew(newActivity, file).then(() =>
-        history.push(`/activities/${newActivity.id}`)
+        router.navigate(`/activities/${newActivity.id}`)
       );
     }
   }

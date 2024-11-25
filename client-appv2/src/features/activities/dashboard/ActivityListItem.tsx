@@ -1,4 +1,4 @@
-import format from "date-fns/format";
+import { format } from "date-fns/format";
 
 import { Link, NavLink } from "react-router-dom";
 import {

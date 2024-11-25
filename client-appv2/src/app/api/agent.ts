@@ -7,12 +7,12 @@ import {
   ActivityFormValuesNew,
   UnreadActivity,
 } from "../models/activity";
-import { history } from "../../index";
 import { store } from "../stores/store";
 import { IUser, IUserFormValues } from "../models/user";
 import { IPhoto, Profile, UserActivity } from "../models/profile";
 import { PaginatedResult } from "../models/pagination";
 import Axios from "axios";
+import { router } from "../router/routes";
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
@@ -24,7 +24,7 @@ axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 
 axios.interceptors.request.use((config) => {
   const token = store.commonStore.token;
-  if (token) config.headers.Authorization = `Bearer ${token}`;
+  if (token && config.headers) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
 
@@ -47,7 +47,7 @@ axios.interceptors.response.use(
     return response;
   },
   (error: AxiosError) => {
-    const { data, status, config, headers } = error.response!;
+    const { data, status, config, headers } = error.response as AxiosResponse;
     switch (status) {
       case 400:
         if (typeof data === "string") {
@@ -55,7 +55,7 @@ axios.interceptors.response.use(
         }
         // BAD GUID case
         if (config.method === "get" && data.errors.hasOwnProperty("id")) {
-          history.push("/not-found");
+          router.navigate("/not-found");
         }
         // VALIDATION ERROR CASE
         if (data.errors) {
@@ -80,13 +80,13 @@ axios.interceptors.response.use(
         }
         break;
       case 404:
-        history.push("/not-found");
+        router.navigate("/not-found");
         toast.error("not found");
         break;
       case 500:
         toast.error("server error");
         store.commonStore.setServerError(data);
-        history.push("/server-error");
+        router.navigate("/server-error");
         break;
     }
     return Promise.reject(error);

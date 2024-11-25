@@ -1,5 +1,5 @@
 import Avatar from "boring-avatars";
-import format from "date-fns/format";
+import { format } from "date-fns/format";
 import { observer } from "mobx-react-lite";
 import { Link, NavLink } from "react-router-dom";
 import {

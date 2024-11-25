@@ -43,7 +43,7 @@ export default function PhotoWidgetDropzone({
   };
 
   const onDrop = useCallback(
-    (acceptedFiles) => {
+    (acceptedFiles: any) => {
       setFiles(
         acceptedFiles.map((file: any) =>
           Object.assign(file, {

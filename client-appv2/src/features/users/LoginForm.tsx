@@ -1,5 +1,5 @@
 import { Formik, Form, ErrorMessage } from "formik";
-import { Redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Button,
   Divider,
@@ -11,10 +11,16 @@ import {
 import MyTextInput from "../../app/common/form/MyTextInput";
 import { useStore } from "../../app/stores/store";
 import RegisterForm from "./RegisterForm";
+import { useEffect } from "react";
 
 export default function LoginForm() {
   const { userStore } = useStore();
   const { isLoggedIn } = userStore;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isLoggedIn) navigate("/");
+  });
 
   return (
     <>
@@ -50,7 +56,6 @@ export default function LoginForm() {
         </Grid.Column>
       </Grid>
       <Segment style={{ borderRadius: "20px", maxWidth: "95vw" }} raised>
-        {isLoggedIn && <Redirect to='/' />}
         <Formik
           initialValues={{ email: "", password: "", error: null }}
           onSubmit={(values, { setErrors }) =>
@@ -78,7 +83,7 @@ export default function LoginForm() {
                     style={{ marginBottom: 10 }}
                     basic
                     color='red'
-                    content={errors.error}
+                    content={errors.error as string}
                   />
                 )}
               />

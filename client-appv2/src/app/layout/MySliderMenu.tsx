@@ -1,15 +1,14 @@
 import { observer } from "mobx-react-lite";
-import React from //  useEffect, useState
-"react";
+import React from "react"; //  useEffect, useState
 import { Menu, Icon, Button, Header } from "semantic-ui-react";
 import { useStore } from "../stores/store";
-import { history } from "../../index";
 import {
   // disableBodyScroll,
   clearAllBodyScrollLocks,
   // BodyScrollOptions,
 } from "body-scroll-lock";
 import { useMediaQuery } from "../common/util/hooks";
+import { router } from "../router/routes";
 
 interface Props {
   handleMouseDown: () => void;
@@ -44,7 +43,7 @@ function MySliderMenu(props: Props) {
   const closeSideBarAndNav = (to: string) => {
     clearAllBodyScrollLocks();
     commonStore.toggleSidebar();
-    history.push(to);
+    router.navigate(to);
   };
 
   return (
